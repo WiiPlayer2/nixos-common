@@ -8,6 +8,7 @@
         "domain"
     ],
     "files.exclude": {
-        ".tsrc": true
+        ".tsrc": true,
+        "common/.common": true
     }
 }
