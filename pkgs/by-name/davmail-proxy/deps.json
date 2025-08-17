@@ -1,0 +1,22 @@
+[
+  {
+    "pname": "Microsoft.AspNetCore.OpenApi",
+    "version": "8.0.18",
+    "hash": "sha256-5EWIq4xLawqU/6iZV3vLZdMdi3KxtlTUeNdHmJ2hImE="
+  },
+  {
+    "pname": "Microsoft.OpenApi",
+    "version": "1.4.3",
+    "hash": "sha256-vk47e78OwopXJx2LhDRbKFObqF3GShHfNHR2SzvbQeA="
+  },
+  {
+    "pname": "System.IO.Hashing",
+    "version": "8.0.0",
+    "hash": "sha256-szOGt0TNBo6dEdC3gf6H+e9YW3Nw0woa6UnCGGGK5cE="
+  },
+  {
+    "pname": "Yarp.ReverseProxy",
+    "version": "2.3.0",
+    "hash": "sha256-/xLvX5xGw/PoFVdaRbdZjGgEO56xAamqsY7TvYwCWiQ="
+  }
+]
