@@ -33,4 +33,6 @@ flutter327.buildFlutterApplication rec {
   gitHashes = {
     window_size = "sha256-71PqQzf+qY23hTJvcm0Oye8tng3Asr42E2vfF1nBmVA=";
   };
+
+  meta.broken = true;
 }
