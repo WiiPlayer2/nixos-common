@@ -11,6 +11,10 @@
       url = "github:nix-community/poetry2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-archipelago = {
+      url = "github:WiiPlayer2/nix-archipelago";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
