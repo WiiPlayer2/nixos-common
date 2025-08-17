@@ -1,0 +1,10 @@
+{
+    "editor.tabSize": 2,
+    "git.autofetch": "all",
+    "git.postCommitCommand": "push",
+    "dotnet.defaultSolution": "disable",
+    "git.scanRepositories": [
+        "common",
+        "domain"
+    ]
+}
