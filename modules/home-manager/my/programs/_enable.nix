@@ -1,5 +1,11 @@
+{ lib, ... }:
+with lib;
+let
+  programs = [
+    "ripgrep-all"
+    "bat"
+  ];
+in
 {
-  programs = {
-    ripgrep-all.enable = true;
-  };
+  programs = genAttrs programs (x: { enable = true; });
 }
