@@ -1,0 +1,3 @@
+{
+  virtualisation.vmVariant = ./configuration.nix;
+}
