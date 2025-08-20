@@ -1,8 +1,8 @@
 {
   lib,
-  config,
+        config,
   pkgs,
-  ...
+              ...
 }:
 with lib;
 let
