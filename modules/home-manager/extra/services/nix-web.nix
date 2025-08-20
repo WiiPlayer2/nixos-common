@@ -11,12 +11,12 @@ let
   # TODO: check if realpath is in store
   nixWebShow = pkgs.writeShellApplication {
     name = "nix-web-show";
-    text = ''
-      # Uses xdg-open from environment
-      _realpath=$(realpath "$1")
-      echo "$_realpath"
-      xdg-open "http://localhost:8649''${_realpath}"
-    '';
+                        text = ''
+                          # Uses xdg-open from environment
+                          _realpath=$(realpath "$1")
+                          echo "$_realpath"
+                          xdg-open "http://localhost:8649''${_realpath}"
+                        '';
   };
 in
 {
