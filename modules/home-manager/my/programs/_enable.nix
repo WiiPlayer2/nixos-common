@@ -2,8 +2,8 @@
 with lib;
 let
   programs = [
-    "ripgrep-all"
     "bat"
+    "ripgrep-all"
   ];
 in
 {

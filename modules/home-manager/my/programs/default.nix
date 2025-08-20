@@ -5,6 +5,7 @@
     ./fzf.nix
     ./git.nix
     ./mangohud.nix
+    ./nix-index.nix
     ./ripgrep.nix
     ./rofi.nix
     ./starship.nix
