@@ -4,6 +4,7 @@
     inputs.git-hooks-nix.flakeModule
 
     ../apps
+    ../devShells
     ../modules
     ../overlays
     ../pkgs
