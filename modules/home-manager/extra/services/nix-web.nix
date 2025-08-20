@@ -1,6 +1,4 @@
-{
-  lib,
-        config,
+{  lib,        config,
   pkgs,
               ...
 }:
