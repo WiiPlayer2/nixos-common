@@ -5,6 +5,17 @@ inputs:
       flake-inputs = inputs;
     };
     common.modules = {
+      global = [
+        # Legacy compatibility
+        (
+          { hostConfig, ... }:
+          {
+            my.config.mainUser.name = hostConfig.mainUser;
+            my.config.hostname = hostConfig.hostname;
+            my.meta.configurationNames.nixos = hostConfig.name;
+          }
+        )
+      ];
       nixos = [
         inputs.lanzaboote.nixosModules.lanzaboote
         inputs.sops-nix.nixosModules.sops

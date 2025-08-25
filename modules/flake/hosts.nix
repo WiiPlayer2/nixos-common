@@ -30,7 +30,7 @@ let
 
         hostname = mkOption {
           type = types.str;
-          default = config.hostname;
+          default = config.name;
         };
 
         mainUser = mkOption {
@@ -61,7 +61,9 @@ let
   mkNixosConfig =
     host:
     let
-      extraSpecialArgs = config.hosts.common.specialArgs // host.specialArgs;
+      extraSpecialArgs = config.hosts.common.specialArgs // host.specialArgs // {
+        hostConfig = host;
+      };
       globalModules = getModules "global" host;
       configNixosModules = getModules "nixos" host;
       commonHomeModules = config.hosts.common.modules.home-manager;
