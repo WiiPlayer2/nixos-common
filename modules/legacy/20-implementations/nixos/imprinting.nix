@@ -1,6 +1,7 @@
 { lib
 , config
 , pkgs
+, flakeRoot
 , ...
 }:
 with lib;
@@ -13,7 +14,7 @@ in
 
   environment.systemPackages =
     let
-      identity = ../../../secrets/identities/yubikey.pub;
+      identity = flakeRoot + "/secrets/identities/yubikey.pub";
       getScriptName = name: "imprint-${name}";
       imprintingScript =
         { name
