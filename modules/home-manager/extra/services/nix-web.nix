@@ -1,6 +1,7 @@
-{  lib,        config,
-  pkgs,
-              ...
+{ lib
+, config
+, pkgs
+, ...
 }:
 with lib;
 let
@@ -9,12 +10,12 @@ let
   # TODO: check if realpath is in store
   nixWebShow = pkgs.writeShellApplication {
     name = "nix-web-show";
-                        text = ''
-                          # Uses xdg-open from environment
-                          _realpath=$(realpath "$1")
-                          echo "$_realpath"
-                          xdg-open "http://localhost:8649''${_realpath}"
-                        '';
+    text = ''
+      # Uses xdg-open from environment
+      _realpath=$(realpath "$1")
+      echo "$_realpath"
+      xdg-open "http://localhost:8649''${_realpath}"
+    '';
   };
 in
 {
@@ -49,6 +50,10 @@ in
 
       Socket = {
         ListenStream = "0.0.0.0:8649";
+      };
+
+      Install = {
+        WantedBy = [ "sockets.target" ];
       };
     };
   };
