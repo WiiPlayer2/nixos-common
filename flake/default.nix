@@ -2,6 +2,7 @@
 {
   imports = [
     inputs.git-hooks-nix.flakeModule
+    ../modules/flake/all.nix # Avoid referencing self due to infinite recursion
 
     ../apps
     ../devShells
