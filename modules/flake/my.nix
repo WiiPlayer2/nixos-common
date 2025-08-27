@@ -1,8 +1,9 @@
 inputs:
+args:
 {
   hosts = {
     common.specialArgs = {
-      flake-inputs = inputs;
+      flake-inputs = args.inputs;
     };
     common.modules = {
       global = [
