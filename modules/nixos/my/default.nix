@@ -9,6 +9,7 @@
     ./programs
     ./services
     ./specials
+    ./unified
     ./virtualisation
   ];
 }
