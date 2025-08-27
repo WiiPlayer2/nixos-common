@@ -66,6 +66,7 @@ in
                 "${modifier}+d" = "exec rofi -show combi";
                 "${modifier}+Ctrl+E" = "exec xdg-open \"$HOME\"";
                 "${modifier}+Ctrl+F" = "exec ${getExe execFirefox}";
+                "${modifier}+Shift+v" = mkIf (config.services.copyq.enable) "exec ${getExe config.services.copyq.package} menu";
 
                 # https://unix.stackexchange.com/a/439487
                 "XF86AudioPlay" = "exec ${getExe pkgs.playerctl} play-pause";
