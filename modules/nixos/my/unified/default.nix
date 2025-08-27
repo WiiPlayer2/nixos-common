@@ -3,5 +3,6 @@
   imports = [
     ./device-type
     ./hardware
+    ./profiles
   ];
 }
