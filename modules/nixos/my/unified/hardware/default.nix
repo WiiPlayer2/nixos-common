@@ -2,5 +2,6 @@
 {
   imports = [
     ./framework-laptop-16.nix
+    ./wacom-tablet.nix
   ];
 }
