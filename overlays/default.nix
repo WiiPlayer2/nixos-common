@@ -3,6 +3,7 @@
   imports = [
     ./all.nix
     ./bubblewrapped.nix
+    ./external.nix
     ./legacy.nix
     ./overrides.nix
     ./packages

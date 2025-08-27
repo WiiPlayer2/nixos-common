@@ -29,6 +29,11 @@ inputs:
         inputs.comin.nixosModules.comin
 
         inputs.self.nixosModules.default
+        {
+          nixpkgs.overlays = [
+            inputs.self.overlays.default
+          ];
+        }
       ];
       home-manager = [
         inputs.sops-nix.homeManagerModules.sops

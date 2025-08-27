@@ -7,6 +7,7 @@
         self.overlays.bubblewrapped
         self.overlays.packages
         self.overlays.overrides
+        self.overlays.external
       ];
     in
     {
