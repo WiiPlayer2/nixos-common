@@ -2,5 +2,6 @@
 {
   imports = [
     ./casual.nix
+    ./graphical.nix
   ];
 }
