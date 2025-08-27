@@ -1,6 +1,4 @@
-{ lib
-, ...
-}:
+{ lib, pkgs, ... }:
 with lib;
 let
   colored = cmd: "${cmd} --color=auto";
@@ -24,5 +22,13 @@ in
     sessionVariables = {
       "DiffEngine_ToolOrder" = "VisualStudioCode";
     };
+
+    packages = with pkgs; [
+      tgpt
+      file
+      lshw
+      pciutils
+      usbutils
+    ];
   };
 }
