@@ -9,6 +9,7 @@
     ../modules
     ../overlays
     ../pkgs
+    ../templates
   ];
 
   systems = [
