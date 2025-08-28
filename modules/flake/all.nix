@@ -4,6 +4,8 @@ inputs:
     ./home-modules.nix
     ./nix-on-droid-modules.nix
     ./hosts.nix
-    (import ./my.nix inputs)
+    ./common.nix
+    (import ./domain.nix inputs)
+    (import ./flake-imports.nix inputs)
   ];
 }

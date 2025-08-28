@@ -4,9 +4,11 @@
     default = self.flakeModules.all;
     all = import ./all.nix inputs;
 
+    flakeImports = import ./flake-imports.nix inputs;
     homeModules = ./home-modules.nix;
     nixOnDroidModules = ./nix-on-droid-modules.nix;
     hosts = ./hosts.nix;
-    my = import ./my.nix inputs;
+    domain = import ./domain.nix inputs;
+    common = ./common.nix;
   };
 }

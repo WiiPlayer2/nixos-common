@@ -1,0 +1,7 @@
+{
+  imports = [
+    ../devShells
+    ../hosts
+    ../modules
+  ];
+}

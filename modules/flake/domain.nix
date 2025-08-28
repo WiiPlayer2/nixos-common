@@ -44,4 +44,17 @@ args:
       ];
     };
   };
+
+  perSystem =
+    { inputs', self', lib, pkgs, ... }:
+    {
+      agenix-rekey.nixosConfigurations = args.inputs.self.nixosConfigurations;
+      pre-commit.settings.hooks = {
+        update-common = {
+          enable = true;
+          entry = "nix flake update common";
+          pass_filenames = false;
+        };
+      };
+    };
 }

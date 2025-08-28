@@ -6,6 +6,7 @@
     nixpkgs-unstable.follows = "common/nixpkgs-unstable";
 
     flake-parts.follows = "common/flake-parts";
+    home-manager.follows = "common/home-manager";
   };
 
   outputs =
