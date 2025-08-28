@@ -1,0 +1,14 @@
+diff --git a/src/read-randr-json.cc b/src/read-randr-json.cc
+index c7afd67..229e773 100644
+--- a/src/read-randr-json.cc
++++ b/src/read-randr-json.cc
+@@ -5,9 +5,7 @@
+ #include <string.h>
+ #include <inttypes.h>
+ static const char* display_name = ":0";
+-static const char* xauthority = "/home/zignage/.Xauthority";
+ int main(void) {
+-    setenv("XAUTHORITY", xauthority, 1);
+     xcb_connection_t* conn = xcb_connect(display_name, nullptr);
+     if(xcb_connection_has_error(conn)) {
+         return EXIT_FAILURE;
