@@ -34,7 +34,7 @@ in
         [
           (writeShellScriptBin "forward-ssh-agent" ''
             #!/usr/bin/env -S bash -e
-            LOCAL_IP=192.168.122.1
+            LOCAL_IP=192.168.69.1
             LOCAL_PORT=2222
             echo "================================================================================"
             echo "Run socat on your client machine:"
@@ -43,7 +43,7 @@ in
             echo "  linux: socat UNIX-LISTEN:\$SSH_AUTH_SOCK,fork TCP:$LOCAL_IP:$LOCAL_PORT"
             echo "================================================================================"
             echo ""
-            socat -dd TCP-LISTEN:$LOCAL_PORT,fork,bind=$LOCAL_IP UNIX-CONNECT:$SSH_AUTH_SOCK
+            ${getExe pkgs.socat} -dd TCP-LISTEN:$LOCAL_PORT,fork,bind=$LOCAL_IP UNIX-CONNECT:$SSH_AUTH_SOCK
           '')
         ]
         ++ (optionals isNixOs (
