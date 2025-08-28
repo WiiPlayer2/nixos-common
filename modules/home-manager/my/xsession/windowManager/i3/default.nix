@@ -95,6 +95,7 @@ in
         for_window [title="Overlayed - Main"] floating enable, sticky enable
         for_window [class="Nemo"] floating enable, resize set 1280 720
         for_window [class="Logseq"] move scratchpad, exec "${pkgs.libnotify}/bin/notify-send \\"Logseq has been moved to the scratchpad.\\""
+        for_window [class="copyq"] floating enable
       '';
     };
   };
