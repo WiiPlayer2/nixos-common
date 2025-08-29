@@ -51,7 +51,7 @@ in
             flakeArgs = "--override-input common path:/etc/nixos/flakes/common";
             mkNixosRebuild =
               command:
-              "sudo nixos-rebuild ${command} --flake /etc/nixos#${config.my.meta.configurationNames.nixos} ${flakeArgs} \"$@\"";
+              "sudo nixos-rebuild ${command} --flake /etc/nixos#${config.my.meta.configurationNames.nixos} ${flakeArgs} --log-format internal-json --verbose \"$@\" |& ${getExe pkgs.nix-output-monitor} --json";
           in
           [
             (writeShellScriptBin "nrs" (mkNixosRebuild "switch"))

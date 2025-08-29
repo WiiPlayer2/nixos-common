@@ -4,5 +4,6 @@
     btop
     tmux
     lsof
+    nix-output-monitor
   ];
 }
