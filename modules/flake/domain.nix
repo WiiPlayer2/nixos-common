@@ -48,6 +48,10 @@ args:
   perSystem =
     { inputs', self', lib, pkgs, ... }:
     {
+      inherit (inputs'.common)
+        packages
+        legacyPackages;
+
       agenix-rekey.nixosConfigurations = args.inputs.self.nixosConfigurations;
       pre-commit.settings.hooks = {
         update-common = {
