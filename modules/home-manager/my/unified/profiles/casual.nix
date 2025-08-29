@@ -50,6 +50,7 @@ with lib;
       maestral
       maestral-gui
       whatsie
+      music-assistant-companion-appimage
     ];
 
     my.startup = {
