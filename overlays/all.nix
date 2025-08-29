@@ -8,6 +8,7 @@
         self.overlays.packages
         self.overlays.overrides
         self.overlays.external
+        self.overlays.unstable
       ];
     in
     {
