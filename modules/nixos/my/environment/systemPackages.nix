@@ -5,6 +5,6 @@
     tmux
     lsof
     nix-output-monitor
-    iotop
+    iotop-c
   ];
 }
