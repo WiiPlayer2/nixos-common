@@ -80,7 +80,7 @@ in
         #     }
         #   ];
         # };
-        startup.taskwarrior.command = mainUiCommand;
+        # startup.taskwarrior.command = mainUiCommand;
       };
   };
 }
