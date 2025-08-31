@@ -46,19 +46,32 @@ args:
   };
 
   perSystem =
-    { inputs', self', lib, pkgs, ... }:
-    {
-      inherit (inputs'.common)
-        packages
-        legacyPackages;
+    { inputs', self', lib, pkgs, system, ... }:
+      with lib;
+      {
+        inherit (inputs'.common)
+          packages
+          legacyPackages;
 
-      agenix-rekey.nixosConfigurations = args.inputs.self.nixosConfigurations;
-      pre-commit.settings.hooks = {
-        update-common = {
-          enable = true;
-          entry = "nix flake update common";
-          pass_filenames = false;
+        agenix-rekey.nixosConfigurations = args.inputs.self.nixosConfigurations;
+        pre-commit.settings.hooks = {
+          update-common = {
+            enable = true;
+            entry = "nix flake update common";
+            pass_filenames = false;
+          };
         };
+        apps =
+          let
+            commonApps = inputs.self.apps.${system};
+            isCiApp =
+              name:
+              (builtins.match "__ci__.*" name) != null;
+            ciApps =
+              filterAttrs
+                (n: v: isCiApp n)
+                commonApps;
+          in
+          ciApps;
       };
-    };
 }
