@@ -4,6 +4,7 @@ let
   programs = [
     "bat"
     "ripgrep-all"
+    "git"
   ];
 in
 {
