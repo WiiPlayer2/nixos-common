@@ -30,7 +30,7 @@
                   text = ''
                     TARGET="$1"
                     shift
-                    deploy --skip-checks .#"$TARGET" "$@"
+                    deploy --skip-checks .#"$TARGET" "$@" -- --override-input common path:"$FLAKE_ROOT"/flakes/common
                   '';
                 })
                 (
