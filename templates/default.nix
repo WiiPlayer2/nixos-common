@@ -5,16 +5,13 @@
     domain = {
       path = ./domain;
       welcomeText = ''
-        Run the following commands to complete setup:
+        Run the following command to complete setup:
 
         ```
-        git init
-        git add .
-        git commit -m "Add domain nixos files"
-        direnv allow
+        nix run .#__repo__init-domain
         ```
 
-        You might also want to add automatic pipelines for updating the common input using `apps.*.__ci__update` and add the common repository as a submodule under `flakes/common`.
+        You might also want to add automatic pipelines for updating the common input using `apps.*.__ci__update`.
       '';
     };
   };

@@ -64,14 +64,17 @@ args:
         apps =
           let
             commonApps = inputs.self.apps.${system};
-            isCiApp =
-              name:
-              (builtins.match "__ci__.*" name) != null;
-            ciApps =
+            startsWith =
+              str: value:
+              (builtins.match "${str}.*" value) != null;
+            isCiApp = startsWith "__ci__";
+            isRepoApp = startsWith "__repo__";
+            isDomainApp = n: isCiApp n || isRepoApp n;
+            domainApps =
               filterAttrs
-                (n: v: isCiApp n)
+                (n: v: isDomainApp n)
                 commonApps;
           in
-          ciApps;
+          domainApps;
       };
 }
