@@ -59,6 +59,7 @@ args:
             enable = true;
             entry = "nix flake update common";
             pass_filenames = false;
+            always_run = true;
           };
         };
         apps =
