@@ -11,5 +11,6 @@
     in
     {
       jetbrains = unstable.jetbrains;
+      teams-for-linux = unstable.teams-for-linux;
     };
 }
