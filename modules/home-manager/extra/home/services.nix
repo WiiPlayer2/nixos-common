@@ -1,5 +1,7 @@
 import ../../../_lib/enabled.nix {
-  oldConfigPath = [ "services" ];
-  newConfigPath = [ "home" "services" ];
-  setPath = [ "servicesSet" ];
+  getNewConfig = x: x.home.services;
+  setNewConfig = x: { home.services = x; };
+  setAttrs = x: { servicesSet = x; };
+  getOldConfig = x: x.services;
+  setOldConfig = x: { services = x; };
 }

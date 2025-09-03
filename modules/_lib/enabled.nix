@@ -1,21 +1,22 @@
-{ oldConfigPath
-, newConfigPath
-, setPath
-,
+{ getNewConfig
+, setNewConfig
+, setAttrs
+, getOldConfig
+, setOldConfig
 }:
 { lib, config, options, ... }:
 with lib;
 let
-  cfg = attrByPath newConfigPath null config;
+  cfg = getNewConfig config;
 in
 {
   options =
     let
-      newOption = setAttrByPath newConfigPath (mkOption {
+      newOption = setNewConfig (mkOption {
         type = with types; listOf str;
         default = [ ];
       });
-      setOption = setAttrByPath setPath (mkOption {
+      setOption = setAttrs (mkOption {
         type = with types; lazyAttrsOf str;
         readOnly = true;
       });
@@ -24,17 +25,17 @@ in
 
   config =
     let
-      newConfig = setAttrByPath newConfigPath (
+      oldConfig = setOldConfig (
         genAttrs
           cfg
           (_: { enable = true; })
       );
 
-      setConfig = setAttrByPath setPath (
+      setConfig = setAttrs (
         mapAttrs
           (n: _: n)
-          (attrByPath oldConfigPath null options)
+          (getOldConfig options)
       );
     in
-    newConfig // setConfig;
+    oldConfig // setConfig;
 }
