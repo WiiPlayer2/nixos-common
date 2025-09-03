@@ -26,6 +26,7 @@ in
         shadowExclude = [
           # "class_general = 'i3bar'"
           "class_g ?= 'overlayed'"
+          "class_g ?= 'Screenkey'"
         ];
         vSync = true;
         settings = {
@@ -44,6 +45,7 @@ in
           blur-background-exclude = [
             "class_g ?= 'xfce4-screenshooter'" # https://www.reddit.com/r/linuxquestions/comments/15xoqa4/compositor_blur_and_xfce4screenshooter/
             "class_g ?= 'overlayed'"
+            "class_g ?= 'Screenkey'"
           ];
         };
         # extraArgs = [
