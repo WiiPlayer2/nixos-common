@@ -1,5 +1,5 @@
 import ../../../_lib/enabled.nix {
   oldConfigPath = [ "programs" ];
-  newConfigPath = [ "home" "programs" ];
+  newConfigPath = [ "environment" "programs" ];
   setPath = [ "programsSet" ];
 }
