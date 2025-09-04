@@ -28,6 +28,7 @@ args:
         inputs.disko.nixosModules.default
         inputs.home-manager.nixosModules.home-manager
         inputs.comin.nixosModules.comin
+        inputs.nixos-generators.nixosModules.all-formats
 
         inputs.self.nixosModules.default
         {
@@ -59,7 +60,6 @@ args:
             enable = true;
             entry = "nix flake update common";
             pass_filenames = false;
-            always_run = true;
           };
         };
         apps =
