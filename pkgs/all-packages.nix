@@ -4,7 +4,6 @@ let
     { pkgsPath
     , additionalPackages ? (_: _: { })
     , additionalInput ? (_: _: { })
-    ,
     }:
     final: prev:
     let
@@ -27,6 +26,18 @@ let
       packages = packages' // additionalPackages';
     in
     packages;
+
+  overridePython =
+    pkgs: prevPython:
+    let
+      python = prevPython.override {
+        self = python;
+        packageOverrides = buildOverlay {
+          pkgsPath = ./python-pkgs;
+        };
+      };
+    in
+    python;
 in
 buildOverlay {
   pkgsPath = ./by-name;
@@ -36,4 +47,7 @@ buildOverlay {
       loadPyproject = inputs.pyproject-nix.lib.project.loadPyproject;
     })
   ];
+  additionalPackages = final: prev: {
+    python3 = overridePython final prev.python3;
+  };
 }
