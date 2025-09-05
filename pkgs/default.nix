@@ -5,10 +5,10 @@
     let
       packages = import ./all-packages.nix
         {
-          inherit inputs;
+          inherit lib inputs;
         }
-        { }
-        pkgs; # TODO: final should probably not be {}
+        (pkgs // packages)
+        pkgs;
     in
     {
       legacyPackages = packages;

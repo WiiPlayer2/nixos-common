@@ -3,7 +3,7 @@
   flake.overlays.packages =
     let
       pkgsOverlay = import ../../pkgs/all-packages.nix {
-        inherit inputs;
+        inherit lib inputs;
       };
       pkgsExtendsOverlay = import ./pkgs-extends;
       combinedOverlay = lib.fixedPoints.composeManyExtensions [
