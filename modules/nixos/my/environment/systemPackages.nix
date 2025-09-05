@@ -6,5 +6,8 @@
     lsof
     nix-output-monitor
     iotop-c
+    entr
+    tree
+    dig.dnsutils
   ];
 }
