@@ -29,6 +29,9 @@
                 fi
 
                 if [ -n "''${CI:-}" ]; then
+                  git submodule update --recursive --remote
+                  git commit -am "Update common" || true
+
                   git pull origin "$(git rev-parse --abbrev-ref HEAD)" --rebase
                   git push
                 fi
