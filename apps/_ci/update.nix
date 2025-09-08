@@ -23,15 +23,15 @@
                 nix flake update $NIX_FLAKE_UPDATE_ARGS
                 POST_UPDATE_HASH=$(sha256sum flake.lock)
 
+                git submodule update --recursive --remote
+
                 if [ "$PRE_UPDATE_HASH" == "$POST_UPDATE_HASH" ]; then
                   echo "Flake inputs already up-to-date"
                   exit 0
                 fi
 
                 if [ -n "''${CI:-}" ]; then
-                  git submodule update --recursive --remote
-                  git commit -am "Update common" || true
-
+                  git commit -am "Update submodules" || true
                   git pull origin "$(git rev-parse --abbrev-ref HEAD)" --rebase
                   git push
                 fi
