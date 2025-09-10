@@ -97,6 +97,7 @@ in
         for_window [class="Logseq"] move scratchpad, exec "${pkgs.libnotify}/bin/notify-send \\"Logseq has been moved to the scratchpad.\\""
         for_window [class="copyq"] floating enable
         for_window [class="Screenkey"] floating enable, sticky enable, border none
+        for_window [class="davmail-DavGateway" title="Office 365 - Manual authentication"] floating enable
       '';
     };
   };
