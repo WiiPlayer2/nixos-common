@@ -27,6 +27,10 @@ in
             MutatingAdmissionPolicy = true;
           };
         };
+
+        extraFlags = [
+          "--nonroot-devices"
+        ];
       };
 
       multipath = {
