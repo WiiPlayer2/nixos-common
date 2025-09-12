@@ -3,6 +3,8 @@
 , runCommand
 
 , gcc9
+, bison
+, flex
 }:
 let
   pname = "tigcc";
@@ -57,6 +59,8 @@ let
     {
       buildInputs = [
         gcc9
+        flex
+        bison
       ];
     } ''
     ${prepareStep { prev = step1; }}
