@@ -53,6 +53,9 @@ let
 
     cd $_src/scripts
     ./Install_step_1
+
+    cd $_src/download/gcc.ti/gcc
+    patch -F 5 < ${./gcc.patch}
   '';
 
   step2 = runCommand "${pname}-step2-${version}"
@@ -67,6 +70,8 @@ let
 
     cd $_src/scripts
     ./Install_step_2
+
+    test -f $_out/bin/gcc
   '';
 
   step3 = runCommand "${pname}-step3-${version}"
