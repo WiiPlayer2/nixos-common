@@ -13,7 +13,6 @@ let
       rev = "adc5de7c0ef52c5869f9a7f72ccb4bc9ddc5b898";
       hash = "sha256-HjRSNgXb/gZehFKO36m4HED2I8rvvtes8UPQ+Q2RLBY=";
     };
-    useFetchCargoVendor = true;
     cargoHash = "sha256-Vwrnpbaem6QnHK/BT+jZ2qeO8m/hrS3IvxT0j0q98WQ=";
     passthru.updateScript = nix-update-script {
       extraArgs = [ "--version=branch=update-to-rust-1.80.0" ];
