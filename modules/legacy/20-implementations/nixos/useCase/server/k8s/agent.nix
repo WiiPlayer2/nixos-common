@@ -13,15 +13,6 @@ in
           tokenFile
           ;
 
-        package = pkgs.unstable.k3s;
-
-        gracefulNodeShutdown = {
-          enable = true;
-          # default is 30s/10s
-          shutdownGracePeriod = "2m";
-          shutdownGracePeriodCriticalPods = "30s";
-        };
-
         extraKubeletConfig = {
           featureGates = {
             MutatingAdmissionPolicy = true;

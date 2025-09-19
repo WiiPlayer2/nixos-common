@@ -2,5 +2,6 @@
 {
   imports = [
     ./_enable.nix
+    ./k3s.nix
   ];
 }
