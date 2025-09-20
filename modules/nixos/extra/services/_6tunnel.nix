@@ -46,7 +46,7 @@ in
           { name, localPort, remotePort, remoteHost, ... }:
           {
             after = [ "network-online.target" ];
-            script = "${getExe cfg.package} -d ${localPort} ${remoteHost} ${remotePort}";
+            script = "${getExe cfg.package} -d ${builtins.toString localPort} ${remoteHost} ${builtins.toString remotePort}";
             # serviceConfig = {
             #   Restart = "always";
             #   RestartSec = "10s";
