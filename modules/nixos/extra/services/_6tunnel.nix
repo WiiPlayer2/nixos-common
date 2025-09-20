@@ -32,6 +32,10 @@ in
             remoteHost = mkOption {
               type = types.str;
             };
+            extraFlags = mkOption {
+              type = types.listOf types.str;
+              default = [ ];
+            };
           };
         }
       ));
@@ -43,10 +47,13 @@ in
     systemd.services =
       let
         mkService =
-          { name, localPort, remotePort, remoteHost, ... }:
+          { name, localPort, remotePort, remoteHost, extraFlags, ... }:
+          let
+            extraFlags' = concatStringsSep " " extraFlags;
+          in
           {
             after = [ "network-online.target" ];
-            script = "${getExe cfg.package} -d ${builtins.toString localPort} ${remoteHost} ${builtins.toString remotePort}";
+            script = "${getExe cfg.package} -d ${extraFlags'} ${builtins.toString localPort} ${remoteHost} ${builtins.toString remotePort}";
             # serviceConfig = {
             #   Restart = "always";
             #   RestartSec = "10s";
