@@ -27,6 +27,7 @@ in
           # "class_general = 'i3bar'"
           "class_g ?= 'overlayed'"
           "class_g ?= 'Screenkey'"
+          "class_g ?= 'gnome-calculator'"
         ];
         vSync = true;
         settings = {
@@ -46,6 +47,7 @@ in
             "class_g ?= 'xfce4-screenshooter'" # https://www.reddit.com/r/linuxquestions/comments/15xoqa4/compositor_blur_and_xfce4screenshooter/
             "class_g ?= 'overlayed'"
             "class_g ?= 'Screenkey'"
+            "class_g ?= 'gnome-calculator'"
           ];
         };
         # extraArgs = [
