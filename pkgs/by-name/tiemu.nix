@@ -117,4 +117,6 @@ stdenv.mkDerivation {
     # "CFLAGS=\"-Wno-error=implicit-int\""
     "MAKEINFO=true"
   ];
+
+  passthru.skipUpdate = true;
 }

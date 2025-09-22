@@ -25,4 +25,6 @@ stdenv.mkDerivation {
   patches = [
     ./checkout.patch
   ];
+
+  passthru.skipUpdate = true;
 }

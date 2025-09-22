@@ -44,4 +44,6 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [ glib ];
+
+  passthru.skipUpdate = true;
 }

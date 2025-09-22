@@ -30,12 +30,21 @@ let
   overridePython =
     pkgs: prevPython:
     let
-      python = prevPython.override {
-        self = python;
-        packageOverrides = buildOverlay {
-          pkgsPath = ./python-pkgs;
-        };
-      };
+      python =
+        let
+          overriddenPython = (prevPython.override {
+            self = python;
+            packageOverrides = buildOverlay {
+              pkgsPath = ./python-pkgs;
+            };
+          });
+          withPassthru = overriddenPython // {
+            passthru = overriddenPython.passthru // {
+              skipUpdate = true;
+            };
+          };
+        in
+        withPassthru;
     in
     python;
 in

@@ -150,7 +150,10 @@ let
     echo Done.
   '';
 
-  pkg = runCommand "${pname}-${version}" { } ''
+  pkg = runCommand "${pname}-${version}"
+    {
+      passthru.skipUpdate = true;
+    } ''
     mkdir -p $out
     cp -r ${step5}/out/* $out
   '';

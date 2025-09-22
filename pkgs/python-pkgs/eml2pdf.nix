@@ -55,4 +55,6 @@ buildPythonPackage {
     hurry-filesize
     beautifulsoup4'
   ];
+
+  passthru.skipUpdate = true;
 }
