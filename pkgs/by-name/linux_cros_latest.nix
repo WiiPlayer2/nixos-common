@@ -1,1 +1,1 @@
-{ ninelore-monoflake, system }: ninelore-monoflake.linux_cros_latest
+{ ninelore-monoflake, ... } @ args: ninelore-monoflake.linux_cros_latest.override args

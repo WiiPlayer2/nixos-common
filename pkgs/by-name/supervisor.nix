@@ -15,8 +15,7 @@ pkgs.python3Packages.buildPythonApplication {
     hash = "sha256-wfc/V7ZRmP3t99w06zpDNL0x4ocbZcLk+t6l3HDlgWk=";
   };
   doCheck = false;
-  propagatedBuildInputs = with python3Packages; [
-    setuptools
-  ];
+  pyproject = true;
+  build-system = with python3Packages; [ setuptools ];
   passthru.updateScript = nix-update-script { };
 }
