@@ -16,6 +16,7 @@
               name = "nix-configs";
               packages = with pkgs; [
                 config.agenix-rekey.package
+                age-plugin-yubikey
                 inputs'.deploy-rs.packages.default
                 inputs'.disko.packages.default
 
