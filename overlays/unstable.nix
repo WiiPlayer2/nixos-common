@@ -11,6 +11,8 @@
     in
     {
       jetbrains = unstable.jetbrains;
+      phosh = unstable.phosh;
+      phosh-mobile-settings = unstable.phosh-mobile-settings;
       # teams-for-linux = unstable.teams-for-linux;
     };
 }

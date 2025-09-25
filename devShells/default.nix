@@ -42,7 +42,7 @@
                   text = ''
                     TARGET="$1"
                     shift
-                    nom build "$FLAKE_ROOT"#nixosConfigurations."$TARGET".config.system.build.toplevel "$@"
+                    nom build "$FLAKE_ROOT"#nixosConfigurations."$TARGET".config.system.build.toplevel --override-input common path:"$FLAKE_ROOT"/flakes/common "$@"
                   '';
                 })
                 (
