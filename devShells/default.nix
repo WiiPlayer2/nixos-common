@@ -34,6 +34,17 @@
                     deploy --skip-checks .#"$TARGET" "$@" -- --override-input common path:"$FLAKE_ROOT"/flakes/common
                   '';
                 })
+                (writeShellApplication {
+                  name = "build-nixos";
+                  runtimeInputs = [
+                    nix-output-monitor
+                  ];
+                  text = ''
+                    TARGET="$1"
+                    shift
+                    nom build "$FLAKE_ROOT"#nixosConfigurations."$TARGET".config.system.build.toplevel "$@"
+                  '';
+                })
                 (
                   let
                     createDefaultNix = writeShellApplication {
