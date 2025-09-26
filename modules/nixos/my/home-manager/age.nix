@@ -1,13 +1,16 @@
 { config, hostConfig, inputs, ... }:
+let
+  identityBasePath = inputs.self + "/secrets/hosts/${hostConfig.name}/identity-${hostConfig.mainUser}";
+in
 {
   age.secrets."user-identity-${hostConfig.mainUser}" = {
-    rekeyFile = inputs.self + "/hosts/${hostConfig.name}/${hostConfig.mainUser}-identity.age";
+    rekeyFile = identityBasePath + ".age";
     generator.script = "age-identity";
   };
 
   home-manager.users.${hostConfig.mainUser}.age = {
     rekey = {
-      hostPubkey = inputs.self + "/hosts/${hostConfig.name}/${hostConfig.mainUser}-identity.pub";
+      hostPubkey = identityBasePath + ".pub";
       masterIdentities = [
         {
           identity = inputs.self + "/secrets/identities/yubikey.pub";
