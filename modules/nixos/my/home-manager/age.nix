@@ -6,6 +6,7 @@ in
   age.secrets."user-identity-${hostConfig.mainUser}" = {
     rekeyFile = identityBasePath + ".age";
     generator.script = "age-identity";
+    owner = hostConfig.mainUser;
   };
 
   home-manager.users.${hostConfig.mainUser}.age = {
