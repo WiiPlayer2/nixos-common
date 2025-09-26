@@ -76,6 +76,7 @@ in
           };
         };
         "chat.agent.enabled" = false;
+        "workbench.secondarySideBar.defaultVisibility" = "hidden";
       };
     };
   };
