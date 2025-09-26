@@ -1,6 +1,6 @@
-{ config, hostConfig, inputs, ... }:
+{ config, hostConfig, flakeRoot, ... }:
 let
-  identityBasePath = inputs.self + "/secrets/hosts/${hostConfig.name}/identity-${hostConfig.mainUser}";
+  identityBasePath = flakeRoot + "/secrets/hosts/${hostConfig.name}/identity-${hostConfig.mainUser}";
 in
 {
   age.secrets."user-identity-${hostConfig.mainUser}" = {
