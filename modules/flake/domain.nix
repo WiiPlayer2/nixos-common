@@ -42,6 +42,7 @@ args:
         inputs.sops-nix.homeManagerModules.sops
         inputs.flatpaks.homeManagerModules.nix-flatpak
         inputs.agenix.homeManagerModules.default
+        inputs.agenix-rekey.homeManagerModules.default
 
         inputs.self.homeModules.default
       ];
