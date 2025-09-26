@@ -6,6 +6,7 @@
     ./stylix.nix
     ./boot
     ./environment
+    ./home-manager
     ./programs
     ./services
     ./specials

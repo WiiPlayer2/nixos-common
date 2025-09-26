@@ -3,7 +3,8 @@ args:
 {
   hosts = {
     common.specialArgs = {
-      flake-inputs = args.inputs;
+      flake-inputs = args.inputs; # deprecated
+      inputs = args.inputs;
     };
     common.modules = {
       global = [
@@ -40,6 +41,7 @@ args:
       home-manager = [
         inputs.sops-nix.homeManagerModules.sops
         inputs.flatpaks.homeManagerModules.nix-flatpak
+        inputs.agenix.homeManagerModules.default
 
         inputs.self.homeModules.default
       ];
