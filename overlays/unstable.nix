@@ -11,8 +11,9 @@
     in
     {
       jetbrains = unstable.jetbrains;
-      phosh = unstable.phosh;
-      phosh-mobile-settings = unstable.phosh-mobile-settings;
+      phoc = final.callPackage unstable.phoc.override { };
+      phosh = final.callPackage unstable.phosh.override { };
+      phosh-mobile-settings = final.callPackage unstable.phosh-mobile-settings.override { };
       # teams-for-linux = unstable.teams-for-linux;
     };
 }
