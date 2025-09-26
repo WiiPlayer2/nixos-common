@@ -6,10 +6,6 @@ in
 {
   config = mkIf cfg.enable {
     services = {
-      displayManager.sddm = {
-        enable = true;
-        wayland.enable = true;
-      };
       xserver = {
         enable = true;
         desktopManager.phosh = {
@@ -18,12 +14,21 @@ in
           phocConfig.xwayland = "true";
         };
       };
+      displayManager = {
+        defaultSession = "phosh";
+        autoLogin = {
+          enable = true;
+          user = hostConfig.mainUser;
+        };
+        sddm = {
+          enable = true;
+          wayland.enable = true;
+          autoLogin.relogin = true;
+        };
+      };
     };
 
-    systemd.services.display-manager.serviceConfig = {
-      SuccessExitStatus = "SUCCESS 23";
-      Restart = mkForce "no";
-    };
+    systemd.services.phosh.enable = false;
 
     environment.systemPackages = with pkgs; [
       phosh-mobile-settings
