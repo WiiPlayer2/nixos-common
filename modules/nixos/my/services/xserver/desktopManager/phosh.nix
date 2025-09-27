@@ -26,6 +26,9 @@ in
           autoLogin.relogin = true;
         };
       };
+      gnome = {
+        core-apps.enable = true;
+      };
     };
 
     systemd.services.phosh.enable = false;

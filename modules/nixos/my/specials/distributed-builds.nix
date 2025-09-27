@@ -64,7 +64,7 @@ in
         let
           _getSystems =
             config: system:
-            [ system ] ++ config.nix.settings.extra-platforms;
+            [ system ] ++ (config.nix.settings.extra-platforms or [ ]);
           _getEmulatedSystems =
             config:
             unique config.boot.binfmt.emulatedSystems;
