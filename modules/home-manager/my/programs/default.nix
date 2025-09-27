@@ -4,6 +4,7 @@
     ./_enable.nix
     ./fzf.nix
     ./git.nix
+    ./keepassxc.nix
     ./mangohud.nix
     ./nix-index.nix
     ./ripgrep.nix
