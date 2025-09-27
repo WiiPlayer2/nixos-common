@@ -3,5 +3,6 @@
   imports = [
     ./davmail.nix
     ./keepassxc.nix
+    ./rclone.nix
   ];
 }
