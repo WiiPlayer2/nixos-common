@@ -1,4 +1,5 @@
-{ inputs, ... }:
+{ lib, inputs, ... }:
+with lib;
 {
   flake.overlays.unstable =
     final: prev:
@@ -8,12 +9,23 @@
           system
           config;
       };
+      refPkgs = [
+        "firefoxpwa"
+        "jetbrains"
+      ];
+      scopePkgs = [
+        "phoc"
+        "phosh"
+        "phosh-mobile-settings"
+      ];
+      refPkgs' =
+        genAttrs
+          refPkgs
+          (name: unstable.${name});
+      scopePkgs' =
+        genAttrs
+          scopePkgs
+          (name: final.callPackage unstable.${name}.override { });
     in
-    {
-      jetbrains = unstable.jetbrains;
-      phoc = final.callPackage unstable.phoc.override { };
-      phosh = final.callPackage unstable.phosh.override { };
-      phosh-mobile-settings = final.callPackage unstable.phosh-mobile-settings.override { };
-      # teams-for-linux = unstable.teams-for-linux;
-    };
+    refPkgs' // scopePkgs';
 }

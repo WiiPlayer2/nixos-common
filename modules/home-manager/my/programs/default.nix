@@ -2,6 +2,7 @@
 {
   imports = [
     ./_enable.nix
+    ./firefox.nix
     ./fzf.nix
     ./git.nix
     ./keepassxc.nix

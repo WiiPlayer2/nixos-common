@@ -92,6 +92,10 @@
     ninelore-monoflake = {
       url = "github:ninelore/flake";
     };
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
