@@ -4,5 +4,6 @@
     ./davmail.nix
     ./keepassxc.nix
     ./rclone.nix
+    ./wezterm
   ];
 }

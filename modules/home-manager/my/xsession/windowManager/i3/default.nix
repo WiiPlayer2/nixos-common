@@ -100,6 +100,7 @@ in
         for_window [class="davmail-DavGateway" title="Office 365 - Manual authentication"] floating enable
         for_window [class="gnome-calculator"] floating enable
         for_window [class="KeePassXC"] floating enable
+        for_window [window_role="PictureInPicture"] sticky enable
       '';
     };
   };

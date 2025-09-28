@@ -28,11 +28,12 @@
                   name = "deploy-to";
                   runtimeInputs = [
                     inputs'.deploy-rs.packages.default
+                    pkgs.nix-output-monitor
                   ];
                   text = ''
                     TARGET="$1"
                     shift
-                    deploy --skip-checks .#"$TARGET" "$@" -- --override-input common path:"$FLAKE_ROOT"/flakes/common
+                    deploy --skip-checks .#"$TARGET" "$@" -- --override-input common path:"$FLAKE_ROOT"/flakes/common --log-format internal-json --verbose |& nom --json
                   '';
                 })
                 (writeShellApplication {
