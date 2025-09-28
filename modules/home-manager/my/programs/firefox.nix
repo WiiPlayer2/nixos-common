@@ -44,6 +44,18 @@ in
               definedAliases = [ "@nw" ];
             };
 
+            nueschtos = {
+              name = "NüschtOS";
+              urls = [{
+                template = "https://search.nüschtos.de";
+                params = [
+                  { name = "query"; value = "{searchTerms}"; }
+                ];
+              }];
+              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+              definedAliases = [ "@nm" ];
+            };
+
             bing.metaData.hidden = true;
             google.metaData.alias = "@g"; # builtin engines only support specifying one additional alias
           };
