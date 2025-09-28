@@ -6,6 +6,7 @@
     ./firefox.nix
     ./fzf.nix
     ./git.nix
+    ./helix.nix
     ./keepassxc.nix
     ./mangohud.nix
     ./nix-index.nix
