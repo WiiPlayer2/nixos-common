@@ -42,11 +42,18 @@
                   name = "build-nixos";
                   runtimeInputs = [
                     nix-fast-build
+                    nix-output-monitor
                   ];
                   text = ''
                     TARGET="$1"
                     shift
-                    nix-fast-build --flake "$FLAKE_ROOT"#nixosConfigurations."$TARGET".config.system.build.toplevel --override-input common path:"$FLAKE_ROOT"/flakes/common "$@"
+                    _cpus=$(nproc)
+                    _freeMB=$(free --mega --line | awk '{ print $8 }')
+                    _workerMB=$((_freeMB / (_cpus * 4)))
+                    _workers=$((_freeMB / (4096 * 2)))
+                    # nix-fast-build --flake "$FLAKE_ROOT"#nixosConfigurations."$TARGET".config.system.build.toplevel --override-input common path:"$FLAKE_ROOT"/flakes/common "$@"
+                    # nix-fast-build --flake "$FLAKE_ROOT"#nixosConfigurations."$TARGET".config.system.build.toplevel --override-input common path:"$FLAKE_ROOT"/flakes/common --eval-workers "$_workers" "$@"
+                    nom build "$FLAKE_ROOT"#nixosConfigurations."$TARGET".config.system.build.toplevel --override-input common path:"$FLAKE_ROOT"/flakes/common "$@"
                   '';
                 })
                 (
