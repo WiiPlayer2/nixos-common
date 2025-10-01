@@ -23,6 +23,8 @@
 
                 nix-update
                 nix-diff
+                nix-eval-jobs
+                nix-fast-build
 
                 (writeShellApplication {
                   name = "deploy-to";
@@ -39,12 +41,12 @@
                 (writeShellApplication {
                   name = "build-nixos";
                   runtimeInputs = [
-                    nix-output-monitor
+                    nix-fast-build
                   ];
                   text = ''
                     TARGET="$1"
                     shift
-                    nom build "$FLAKE_ROOT"#nixosConfigurations."$TARGET".config.system.build.toplevel --override-input common path:"$FLAKE_ROOT"/flakes/common "$@"
+                    nix-fast-build --flake "$FLAKE_ROOT"#nixosConfigurations."$TARGET".config.system.build.toplevel --override-input common path:"$FLAKE_ROOT"/flakes/common "$@"
                   '';
                 })
                 (
