@@ -17,5 +17,6 @@
     ./zoxide.nix
     ./zsh.nix
     ./i3status-rust
+    ./wezterm
   ];
 }
