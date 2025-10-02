@@ -14,10 +14,13 @@ in
           "network.websocket.allowInsecureFromHTTPS" = true;
           "extensions.autoDisableScopes" = 0;
         };
+        # https://nur.nix-community.org/repos/rycee/
         extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           ublock-origin
           pwas-for-firefox
           keepassxc-browser
+          omnisearch
+          i-dont-care-about-cookies
         ];
         search = {
           default = "ddg";
@@ -54,6 +57,18 @@ in
               }];
               icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
               definedAliases = [ "@nm" ];
+            };
+
+            noogle = {
+              name = "Noogle";
+              urls = [{
+                template = "https://noogle.dev/q";
+                params = [
+                  { name = "term"; value = "{searchTerms}"; }
+                ];
+              }];
+              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+              definedAliases = [ "@no" ];
             };
 
             bing.metaData.hidden = true;
