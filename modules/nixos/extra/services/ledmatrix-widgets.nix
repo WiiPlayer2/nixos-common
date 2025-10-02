@@ -2,6 +2,14 @@
 with lib;
 let
   cfg = config.services.ledmatrix-widgets;
+
+  # switch-to-configuration always checks if ExitMainStatus != 0 (hardcoded) to check if service ran successfully
+  wrapperScript = pkgs.writeShellApplication {
+    name = "ledmatrix-widgets";
+    text = ''
+      ${getExe cfg.package} "$@" || true
+    '';
+  };
 in
 {
   options.services.ledmatrix-widgets = {
@@ -20,11 +28,10 @@ in
 
     systemd.services.ledmatrix-widgets = {
       after = [ "multi-user.target" ];
-      script = "${getExe cfg.package}";
+      script = "${getExe wrapperScript}";
       serviceConfig = {
         Restart = "always";
         RestartSec = "10s";
-        # SuccessExitStatus = "1"; # allow failure due to missing hardware
       };
       wantedBy = [ "multi-user.target" ];
     };
