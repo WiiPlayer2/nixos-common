@@ -24,6 +24,7 @@ in
       serviceConfig = {
         Restart = "always";
         RestartSec = "10s";
+        # SuccessExitStatus = "1"; # allow failure due to missing hardware
       };
       wantedBy = [ "multi-user.target" ];
     };
