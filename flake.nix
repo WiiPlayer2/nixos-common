@@ -83,6 +83,7 @@
     };
     comin = {
       url = "github:nlewo/comin";
+      # url = "github:nlewo/comin/expose-username";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nueschtos = {
