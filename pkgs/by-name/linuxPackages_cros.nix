@@ -9,4 +9,5 @@ let
 in
 upstreamPackages // {
   cross-compiled = crossCompiledPackages;
+  passthru.skipUpdate = true;
 }
