@@ -61,6 +61,7 @@ in
         };
         "terminal.integrated.enableVisualBell" = true;
         "git.blame.editorDecoration.enabled" = true;
+        "git.openRepositoryInParentFolders" = "always";
         "git-assistant.checkConfigVariables" = "disabled";
         "editor.tokenColorCustomizations" = {
           "[Stylix]" = {
