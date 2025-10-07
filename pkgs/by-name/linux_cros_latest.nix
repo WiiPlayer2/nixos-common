@@ -13,4 +13,5 @@ let
 in
 upstreamKernel // {
   cross-compiled = crossCompiledKernel;
+  passthru.skipUpdate = true;
 }

@@ -32,7 +32,9 @@
                     echo "[ ${name} ]"
                     echo ">>" ${command}
 
-                    ${command}
+                    if ! ${command}; then
+                      _failures="$_failures ${name}"
+                    fi
                   '';
               in
               updateCommand;
@@ -60,12 +62,19 @@
                   NIX_UPDATE_ARGS="--commit"
                 fi
 
+                _failures=""
                 ${updatePackages}
 
                 if [ -n "''${CI:-}" ]; then
                   echo "===[ Sync with repository ]==="
                   git pull origin "$(git rev-parse --abbrev-ref HEAD)" --rebase
                   git push
+                fi
+
+                if [[ -n "$_failures" ]]; then
+                  echo "===[ FAILURE ]==="
+                  echo "The following packages did not update successfully:$_failures"
+                  exit 1
                 fi
 
                 echo "===[ DONE ]==="

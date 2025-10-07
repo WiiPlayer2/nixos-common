@@ -13,10 +13,10 @@
 }:
 let
   pname = "randovania";
-  version = "10.1.0";
+  version = "10.2.0";
   src = fetchzip {
     url = "https://github.com/randovania/randovania/releases/download/v${version}/randovania-${version}-linux.tar.gz";
-    hash = "sha256-w41gSyyeja4JA7S5w0hEO0fA7gktQhovLeDUHt6f8lE=";
+    hash = "sha256-wbpuRfAei0UfUUGTCj037gRM3qiWwMJ+siGDVoslWg4=";
   };
   binary-pkgs = stdenv.mkDerivation {
     inherit pname src version;
