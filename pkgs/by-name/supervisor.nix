@@ -1,13 +1,13 @@
-{ stdenv
-, lib
-, pkgs
-, fetchFromGitHub
+{ fetchFromGitHub
 , python3Packages
 , nix-update-script
 }:
-pkgs.python3Packages.buildPythonApplication {
+let
+  pyPkgs = python3Packages;
+in
+pyPkgs.buildPythonApplication {
   pname = "supervisor";
-  version = "4.3.0";
+  version = "4.2.5";
   src = fetchFromGitHub {
     owner = "Supervisor";
     repo = "supervisor";
@@ -16,6 +16,7 @@ pkgs.python3Packages.buildPythonApplication {
   };
   doCheck = false;
   pyproject = true;
-  build-system = with python3Packages; [ setuptools ];
+  build-system = with pyPkgs; [ setuptools ];
+  propagatedBuildInputs = with pyPkgs; [ setuptools ];
   passthru.updateScript = nix-update-script { };
 }
