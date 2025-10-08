@@ -1,5 +1,9 @@
 { inputs, ... }:
 {
+  imports = [
+    ../../_shared/stylix.nix
+  ];
+
   stylix = {
     overlays.enable = false;
     homeManagerIntegration.autoImport = false;
