@@ -30,7 +30,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-on-droid = {
-      url = "github:WiiPlayer2/nix-on-droid/?ref=feature/environment-extra-setup";
+      # url = "github:WiiPlayer2/nix-on-droid/?ref=feature/environment-extra-setup";
+      url = "github:nix-community/nix-on-droid";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };

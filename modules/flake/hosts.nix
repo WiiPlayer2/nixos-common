@@ -81,12 +81,16 @@ let
     host:
     config.hosts.common.overlays ++ host.overlays;
 
+  getSpecialArgs =
+    host:
+    config.hosts.common.specialArgs // host.specialArgs // {
+      hostConfig = host;
+    };
+
   mkNixosConfig =
     host:
     let
-      extraSpecialArgs = config.hosts.common.specialArgs // host.specialArgs // {
-        hostConfig = host;
-      };
+      extraSpecialArgs = getSpecialArgs host;
       globalModules = getModules "global" host;
       configNixosModules = getModules "nixos" host;
       commonHomeModules = config.hosts.common.modules.home-manager;
@@ -127,15 +131,9 @@ let
         inherit (host) system;
         overlays = getOverlays host;
       };
-      extraSpecialArgs = config.hosts.common.specialArgs // host.specialArgs // {
-        hostConfig = host;
-      };
-      # globalModules = getModules "global" host;
+      extraSpecialArgs = getSpecialArgs host;
       nixOnDroidModules = getModules "nix-on-droid" host;
       homeModules = getModules "home-manager" host;
-      # commonHomeModules = config.hosts.common.modules.home-manager;
-      # sharedHomeModules = globalModules ++ commonHomeModules;
-      # hostHomeModules = host.modules.home-manager;
     in
     inputs.nix-on-droid.lib.nixOnDroidConfiguration {
       inherit pkgs extraSpecialArgs;
@@ -148,7 +146,10 @@ let
             useGlobalPkgs = true;
             useUserPackages = true;
             sharedModules = homeModules;
+            config = { };
           };
+
+          user.userName = host.mainUser;
         }
       ] ++ nixOnDroidModules;
     };

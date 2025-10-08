@@ -7,6 +7,8 @@ args:
       inputs = args.inputs;
     };
     common.overlays = [
+      inputs.nix-on-droid.overlays.default
+
       inputs.self.overlays.default
     ];
     common.modules = {
@@ -51,6 +53,7 @@ args:
       ];
       nix-on-droid = [
         inputs.self.nixOnDroidModules.default
+        inputs.stylix.nixOnDroidModules.stylix
       ];
     };
   };

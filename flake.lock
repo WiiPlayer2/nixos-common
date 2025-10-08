@@ -1082,16 +1082,15 @@
         "nmd": "nmd"
       },
       "locked": {
-        "lastModified": 1751189278,
-        "narHash": "sha256-SXNrB0QIN0ueteTFQAL51NDuzZUUc0pO12lfxuVF07g=",
-        "owner": "WiiPlayer2",
+        "lastModified": 1753100895,
+        "narHash": "sha256-nEuGlpIT7q4c/otPu00pGhb5Y12FtQm00pH3MXOJpfw=",
+        "owner": "nix-community",
         "repo": "nix-on-droid",
-        "rev": "ac78a46109707040a4093e70200bdca234e1d5d1",
+        "rev": "27696cac81d4444319bb9158037b0da45e213f5e",
         "type": "github"
       },
       "original": {
-        "owner": "WiiPlayer2",
-        "ref": "feature/environment-extra-setup",
+        "owner": "nix-community",
         "repo": "nix-on-droid",
         "type": "github"
       }

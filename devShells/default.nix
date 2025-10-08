@@ -27,6 +27,15 @@
                 nix-fast-build
 
                 (writeShellApplication {
+                  name = "repl";
+                  runtimeInputs = [
+                    
+                  ];
+                  text = ''
+                    nix repl --extra-experimental-features 'repl-flake' "$FLAKE_ROOT" --override-input common path:"$FLAKE_ROOT"/flakes/common
+                  '';
+                })
+                (writeShellApplication {
                   name = "deploy-to";
                   runtimeInputs = [
                     inputs'.deploy-rs.packages.default

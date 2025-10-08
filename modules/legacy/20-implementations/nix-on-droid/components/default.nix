@@ -1,7 +1,6 @@
 {
   imports = [
     ./nixOnDroid
-    ./stylix.nix
   ];
 
   # nixpkgs.config.allowUnfree = true;
