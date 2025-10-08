@@ -56,6 +56,28 @@
                     nom build "$FLAKE_ROOT"#nixosConfigurations."$TARGET".config.system.build.toplevel --override-input common path:"$FLAKE_ROOT"/flakes/common "$@"
                   '';
                 })
+                (writeShellApplication {
+                  name = "build-nix-on-droid";
+                  runtimeInputs = [
+                    nix-output-monitor
+                  ];
+                  text = ''
+                    TARGET="$1"
+                    shift
+                    nom build "$FLAKE_ROOT"#nixOnDroidConfigurations."$TARGET".activationPackage --override-input common path:"$FLAKE_ROOT"/flakes/common --impure "$@"
+                  '';
+                })
+                (writeShellApplication {
+                  name = "eval-nix-on-droid";
+                  runtimeInputs = [
+                    # nix
+                  ];
+                  text = ''
+                    TARGET="$1"
+                    shift
+                    nix eval "$FLAKE_ROOT"#nixOnDroidConfigurations."$TARGET".activationPackage --override-input common path:"$FLAKE_ROOT"/flakes/common --impure "$@"
+                  '';
+                })
                 (
                   let
                     createDefaultNix = writeShellApplication {

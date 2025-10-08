@@ -6,6 +6,9 @@ args:
       flake-inputs = args.inputs; # deprecated
       inputs = args.inputs;
     };
+    common.overlays = [
+      inputs.self.overlays.default
+    ];
     common.modules = {
       global = [
         # Legacy compatibility
@@ -45,6 +48,9 @@ args:
         inputs.agenix-rekey.homeManagerModules.default
 
         inputs.self.homeModules.default
+      ];
+      nix-on-droid = [
+        inputs.self.nixOnDroidModules.default
       ];
     };
   };

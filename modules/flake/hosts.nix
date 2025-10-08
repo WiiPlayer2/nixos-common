@@ -18,10 +18,26 @@ let
     default = [ ];
   };
 
+  commonOptions = {
+    specialArgs = specialArgsOption;
+
+    overlays = mkOption {
+      type = with types; listOf (functionTo (functionTo attrs));
+      default = [];
+    };
+
+    modules = {
+      global = modulesOption;
+      nixos = modulesOption;
+      home-manager = modulesOption;
+      nix-on-droid = modulesOption;
+    };
+  };
+
   hostSubmodule = types.submodule (
     { config, ... }:
     {
-      options = {
+      options = commonOptions // {
         name = mkOption {
           readOnly = true;
           type = types.str;
@@ -40,15 +56,13 @@ let
         type = mkOption {
           type = types.enum [
             "nixos"
+            "nix-on-droid"
           ];
         };
 
-        specialArgs = specialArgsOption;
-
-        modules = {
-          global = modulesOption;
-          nixos = modulesOption;
-          home-manager = modulesOption;
+        # TODO: implement for nixos
+        system = mkOption {
+          type = types.str;
         };
       };
     }
@@ -56,7 +70,16 @@ let
 
   getModules =
     type: host:
-    config.hosts.common.modules.${type} ++ host.modules.${type};
+    let
+      globalModules = getModules "global" host;
+      typeModules = config.hosts.common.modules.${type} ++ host.modules.${type};
+      modules = typeModules ++ (optionals (type != "global") globalModules);
+    in
+    modules;
+
+  getOverlays =
+    host:
+    config.hosts.common.overlays ++ host.overlays;
 
   mkNixosConfig =
     host:
@@ -97,6 +120,39 @@ let
       modules = nixosModules;
     };
 
+  mkNixOnDroidConfig =
+    host:
+    let
+      pkgs = import inputs.nixpkgs {
+        inherit (host) system;
+        overlays = getOverlays host;
+      };
+      extraSpecialArgs = config.hosts.common.specialArgs // host.specialArgs // {
+        hostConfig = host;
+      };
+      # globalModules = getModules "global" host;
+      nixOnDroidModules = getModules "nix-on-droid" host;
+      homeModules = getModules "home-manager" host;
+      # commonHomeModules = config.hosts.common.modules.home-manager;
+      # sharedHomeModules = globalModules ++ commonHomeModules;
+      # hostHomeModules = host.modules.home-manager;
+    in
+    inputs.nix-on-droid.lib.nixOnDroidConfiguration {
+      inherit pkgs extraSpecialArgs;
+      modules = [
+        {
+          home-manager = {
+            inherit extraSpecialArgs;
+
+            backupFileExtension = "bak";
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            sharedModules = homeModules;
+          };
+        }
+      ] ++ nixOnDroidModules;
+    };
+
   mkConfigs =
     type: mkConfig:
     let
@@ -113,15 +169,7 @@ let
 in
 {
   options.hosts = {
-    common = {
-      specialArgs = specialArgsOption;
-
-      modules = {
-        global = modulesOption;
-        nixos = modulesOption;
-        home-manager = modulesOption;
-      };
-    };
+    common = commonOptions;
 
     config = mkOption {
       type = types.attrsOf hostSubmodule;
@@ -130,5 +178,6 @@ in
 
   config = {
     flake.nixosConfigurations = mkConfigs "nixos" mkNixosConfig;
+    flake.nixOnDroidConfigurations = mkConfigs "nix-on-droid" mkNixOnDroidConfig;
   };
 }
