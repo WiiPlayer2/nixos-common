@@ -7,7 +7,7 @@ let
 in
 pyPkgs.buildPythonApplication {
   pname = "supervisor";
-  version = "4.2.5";
+  version = "4.3.0";
   src = fetchFromGitHub {
     owner = "Supervisor";
     repo = "supervisor";
