@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, config, ... }:
 {
   age.generators.wireguard-priv = { pkgs, file, ... }: ''
     priv=$(${pkgs.wireguard-tools}/bin/wg genkey)
@@ -12,9 +12,16 @@
     ${lib.getExe pkgs.gnused} 's/Public key: //' -i "$publicKeyFile"
   '';
 
-  age.generators.ssh-key = { pkgs, file, target, name, ... }: ''
-    publicKeyFile=${lib.escapeShellArg (lib.removeSuffix ".age" file + ".pub")}
-    privateKey=$(exec 3>&1; ${pkgs.openssh}/bin/ssh-keygen -q -t ed25519 -N "" -C ${lib.escapeShellArg "${target}:${name}"} -f /proc/self/fd/3 <<<y >/dev/null 2>&1; true)
-    echo "$privateKey" | ssh-keygen -f /proc/self/fd/0 -y > "$publicKeyFile"
-  '';
+  age.generators.ssh-key = { pkgs, file, name, ... }:
+    let
+      target =
+        if config ? networking.hostName
+        then config.networking.hostName
+        else config.home.username;
+    in
+    ''
+      publicKeyFile=${lib.escapeShellArg (lib.removeSuffix ".age" file + ".pub")}
+      privateKey=$(exec 3>&1; ${pkgs.openssh}/bin/ssh-keygen -q -t ed25519 -N "" -C ${lib.escapeShellArg "${target}:${name}"} -f /proc/self/fd/3 <<<y >/dev/null 2>&1; true)
+      echo "$privateKey" | ssh-keygen -f /proc/self/fd/0 -y > "$publicKeyFile"
+    '';
 }
