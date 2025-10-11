@@ -5,6 +5,8 @@ let
     "bat"
     "ripgrep-all"
     "git"
+    "ssh"
+    "direnv"
   ];
 in
 {

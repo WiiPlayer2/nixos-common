@@ -29,6 +29,7 @@ in
       lshw
       pciutils
       usbutils
+      mob
     ];
   };
 }
