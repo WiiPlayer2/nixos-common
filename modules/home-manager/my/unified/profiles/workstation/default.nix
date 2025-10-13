@@ -17,6 +17,7 @@ with lib;
       woke
       nbgv
       caligula
+      git-sim
 
       (writeShellApplication {
         name = "k8s-toolbox-rename-pvc";
@@ -44,21 +45,21 @@ with lib;
         text = builtins.readFile ./scripts/k8s-toolbox-change-pvc-sc.sh;
       })
     ] ++ (lib.optionals (config.my.features.hypervisor.enable && config.my.features.hypervisor.domains.presets.windows.enable) [
-          virt-viewer
-          (
-            let
-              startScript = writeShellScript "vm-windows" ''
-                virsh --connect qemu:///system start windows
-                ${virt-viewer}/bin/virt-viewer --connect qemu:///system windows
-              '';
-            in
-            makeDesktopItem {
-              name = "vm-windows";
-              desktopName = "Show windows VM";
-              exec = startScript;
-            }
-          )
-        ]);
+      virt-viewer
+      (
+        let
+          startScript = writeShellScript "vm-windows" ''
+            virsh --connect qemu:///system start windows
+            ${virt-viewer}/bin/virt-viewer --connect qemu:///system windows
+          '';
+        in
+        makeDesktopItem {
+          name = "vm-windows";
+          desktopName = "Show windows VM";
+          exec = startScript;
+        }
+      )
+    ]);
 
     programs.direnv.enable = true;
 
