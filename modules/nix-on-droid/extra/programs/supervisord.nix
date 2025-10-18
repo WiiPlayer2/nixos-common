@@ -159,6 +159,7 @@ in
     (mkIf cfg.enableSystemdShim {
       programs.supervisord.settings =
         let
+          # Use https://noogle.dev/f/lib/textClosureList for priority based on dependencies etc.
           mkServiceShim =
             { name, value }:
             {
