@@ -37,7 +37,29 @@ in
               mkSubGroup = mkSubGroupUseCaseOption self;
             in
             {
-              server = mkSub "Server";
+              server = mkSubGroup {
+                description = "Server";
+                options = {
+                  tokenFile = mkOption {
+                    description = "Token file";
+                    type = types.path;
+                  };
+                  allowedPorts =
+                    let
+                      mkPortsOption =
+                        description:
+                        mkOption {
+                          inherit description;
+                          type = types.listOf types.port;
+                          default = [ ];
+                        };
+                    in
+                    {
+                      tcp = mkPortsOption "TCP";
+                      udp = mkPortsOption "UDP";
+                    };
+                };
+              };
               agent = mkSubGroup {
                 description = "Agent";
                 options = {
