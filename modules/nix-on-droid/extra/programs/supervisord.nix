@@ -18,10 +18,6 @@ let
   configFile = format.generate "supervisord.conf" cfg.settings;
 in
 {
-  # imports = [
-  #   (mkRenamedOptionModule ["programs" "supervisord" "config"] ["programs" "supervisord" "settings"])
-  # ];
-
   options.programs.supervisord = with lib; {
     enable = mkEnableOption "Whether supervisord is available.";
     enableSystemdShim = mkOption {
@@ -159,6 +155,31 @@ in
           $DRY_RUN_CMD ${pkgs.supervisor}/bin/supervisord
         fi
       '';
+    })
+    (mkIf cfg.enableSystemdShim {
+      programs.supervisord.settings =
+        let
+          mkServiceShim =
+            { name, value }:
+            {
+              name = "program:systemd-${name}";
+              value = {
+                command = value.Service.ExecStart;
+              };
+            };
+
+          serviceShims =
+            map
+              mkServiceShim
+              (attrsToList config.home-manager.config.systemd.user.services);
+
+          settings =
+            listToAttrs
+              (
+                serviceShims
+              );
+        in
+        settings;
     })
   ];
 }
