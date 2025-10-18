@@ -3,6 +3,7 @@
 , config
 , ...
 }:
+with lib;
 let
   cfg = config.programs.supervisord;
   mkDefaultEnableOption =
@@ -13,10 +14,24 @@ let
       default = true;
     };
   dataDir = "${config.user.home}/supervisord";
+  format = pkgs.formats.ini { };
+  configFile = format.generate "supervisord.conf" cfg.settings;
 in
 {
+  # imports = [
+  #   (mkRenamedOptionModule ["programs" "supervisord" "config"] ["programs" "supervisord" "settings"])
+  # ];
+
   options.programs.supervisord = with lib; {
     enable = mkEnableOption "Whether supervisord is available.";
+    enableSystemdShim = mkOption {
+      type = types.bool;
+      default = true;
+    };
+    settings = mkOption {
+      type = format.type;
+      default = { };
+    };
     config = {
       inetHttpServer = {
         enable = mkOption {
@@ -97,15 +112,32 @@ in
     };
   };
 
-  config =
-    with lib;
-    mkIf cfg.enable {
+  config = with lib; mkMerge [
+    {
+      programs.supervisord.settings = {
+        inet_http_server = mkIf (cfg.config.inetHttpServer.enable) {
+          port = cfg.config.inetHttpServer.port;
+        };
+        supervisord = cfg.config.supervisord;
+        supervisorctl = { };
+        "rpcinterface:supervisor"."supervisor.rpcinterface_factory" = "supervisor.rpcinterface:make_main_rpcinterface";
+      } // (
+        mapAttrs'
+          (n: v: nameValuePair "program:${n}" {
+            command = v.command;
+            startsecs = mkIf (v.startsecs != null) v.startsecs;
+            redirect_stderr = mkIf (v.redirect_stderr != null) v.redirect_stderr;
+          })
+          cfg.config.programs
+      );
+    }
+    (mkIf cfg.enable {
       environment.packages = with pkgs; [
         supervisor
         (writeShellScriptBin "start-supervisord" ''
           ${
-            if cfg.config.supervisord.directory != null then
-              "echo \"Switching to ${cfg.config.supervisord.directory}\"; cd \"${cfg.config.supervisord.directory}\""
+            if cfg.settings.supervisord.directory != null then
+              "echo \"Switching to ${cfg.settings.supervisord.directory}\"; cd \"${cfg.settings.supervisord.directory}\""
             else
               ""
           }
@@ -113,61 +145,7 @@ in
         '')
       ];
 
-      environment.etc."supervisord.conf" = {
-        text =
-          let
-            writeNullable = name: value: if value == null then "" else "${name}=${toString value}";
-            buildSections =
-              mapSection: sections:
-              concatStringsSep "\n" (
-                map (x: mapSection x.name x.value) (filter (x: x.value.enable) (attrsToList sections))
-              );
-            inetHttpServerSection =
-              if cfg.config.inetHttpServer.enable then
-                ''
-                  [inet_http_server]
-                  port=${cfg.config.inetHttpServer.port}
-                ''
-              else
-                "";
-            supervisordSection =
-              let
-                section = cfg.config.supervisord;
-              in
-              ''
-                [supervisord]
-                ${writeNullable "logfile" section.logfile}
-                ${writeNullable "pidfile" section.pidfile}
-                ${writeNullable "directory" section.directory}
-              '';
-            supervisorctlSection = ''
-              [supervisorctl]
-            '';
-            programSection = name: program: ''
-              [program:${name}]
-              command=${program.command}
-              ${writeNullable "startsecs" program.startsecs}
-              ${writeNullable "redirect_stderr" program.redirect_stderr}
-            '';
-            programSections = concatStringsSep "\n" (
-              map (x: programSection x.name x.value) (
-                filter (x: x.value.enable) (attrsToList cfg.config.programs)
-              )
-            );
-            rpcinterfaceSection = name: rpcinterface: ''
-              [rpcinterface:${name}]
-              supervisor.rpcinterface_factory=${rpcinterface.rpcinterface_factory}
-            '';
-            rpcinterfaceSections = buildSections rpcinterfaceSection cfg.config.rpcinterfaces;
-          in
-          ''
-            ${inetHttpServerSection}
-            ${supervisordSection}
-            ${supervisorctlSection}
-            ${programSections}
-            ${rpcinterfaceSections}
-          '';
-      };
+      environment.etc."supervisord.conf".source = configFile;
 
       build.activation.supervisord = ''
         $VERBOSE_ECHO "Ensuring data directory ${dataDir} exists"
@@ -181,5 +159,6 @@ in
           $DRY_RUN_CMD ${pkgs.supervisor}/bin/supervisord
         fi
       '';
-    };
+    })
+  ];
 }
