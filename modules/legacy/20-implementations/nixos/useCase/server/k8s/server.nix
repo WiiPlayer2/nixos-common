@@ -17,6 +17,7 @@ in
 
     networking.firewall = {
       allowedTCPPorts = [
+        6443 # kube apiserver
         10250 # kubelet HTTPS metrics
         10255 # kubelet HTTP metrics
         4194 # kubelet cadvisor
