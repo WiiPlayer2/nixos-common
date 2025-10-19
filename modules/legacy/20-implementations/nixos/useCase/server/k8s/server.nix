@@ -11,6 +11,7 @@ in
         inherit (cfg)
           tokenFile
           ;
+        configPath = ./k3s-config.yaml;
       };
     };
 

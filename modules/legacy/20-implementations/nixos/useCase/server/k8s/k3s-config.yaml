@@ -1,0 +1,13 @@
+flannel-backend: none
+# flannel-ipv6-masq: true
+cluster-cidr:
+  - 10.42.0.0/16
+  # - 2001:cafe:42::/56
+service-cidr:
+  - 10.43.0.0/16
+  # - 2001:cafe:43::/112
+disable:
+  - traefik
+node-ip:
+  - 192.168.100.191
+  # - 2a02:8071:7101:1240:106f:e4ff:fe41:cacf
