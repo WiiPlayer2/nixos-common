@@ -12,4 +12,5 @@ in
         linux_6_16 = lpkgs.linux_6_16.extend linuxPackages;
       };
   };
+  linuxPackages_latest = prev.linuxPackages_latest.extend linuxPackages;
 }
