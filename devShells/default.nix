@@ -29,7 +29,7 @@
                 (writeShellApplication {
                   name = "repl";
                   runtimeInputs = [
-                    
+
                   ];
                   text = ''
                     nix repl --extra-experimental-features 'repl-flake' "$FLAKE_ROOT" --override-input common path:"$FLAKE_ROOT"/flakes/common
@@ -63,6 +63,17 @@
                     # nix-fast-build --flake "$FLAKE_ROOT"#nixosConfigurations."$TARGET".config.system.build.toplevel --override-input common path:"$FLAKE_ROOT"/flakes/common "$@"
                     # nix-fast-build --flake "$FLAKE_ROOT"#nixosConfigurations."$TARGET".config.system.build.toplevel --override-input common path:"$FLAKE_ROOT"/flakes/common --eval-workers "$_workers" "$@"
                     nom build "$FLAKE_ROOT"#nixosConfigurations."$TARGET".config.system.build.toplevel --override-input common path:"$FLAKE_ROOT"/flakes/common "$@"
+                  '';
+                })
+                (writeShellApplication {
+                  name = "eval-nixos";
+                  runtimeInputs = [
+                    # nix
+                  ];
+                  text = ''
+                    TARGET="$1"
+                    shift
+                    nix eval "$FLAKE_ROOT"#nixosConfigurations."$TARGET".config.system.build.toplevel --override-input common path:"$FLAKE_ROOT"/flakes/common "$@"
                   '';
                 })
                 (writeShellApplication {
