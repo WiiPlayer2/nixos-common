@@ -12,12 +12,12 @@ with lib;
       refPkgs = [
         "firefoxpwa"
         "jetbrains"
-        "modemmanager"
+        # "modemmanager"
       ];
       scopePkgs = [
-        "phoc"
-        "phosh"
-        "phosh-mobile-settings"
+        # "phoc"
+        # "phosh"
+        # "phosh-mobile-settings"
       ];
       refPkgs' =
         genAttrs
