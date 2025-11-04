@@ -23,5 +23,7 @@
       #   popups = 14; # = desktop;
       # };
     };
+
+    targets.gtksourceview.enable = false;
   };
 }
