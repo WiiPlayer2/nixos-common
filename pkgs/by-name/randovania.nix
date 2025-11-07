@@ -33,6 +33,10 @@ let
       lttng-ust_2_12
     ];
 
+    autoPatchelfIgnoreMissingDeps = [
+      "libtiff.so.5"
+    ];
+
     installPhase = ''
       runHook preInstall
       mkdir -p $out/{bin,lib}
