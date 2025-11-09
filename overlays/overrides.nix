@@ -21,5 +21,21 @@
           # });
         };
       };
+
+      poptracker = prev.poptracker.overrideAttrs (finalAttrs: prevAttrs: {
+        installPhase =
+          let
+            elaboratedSystem = prev.lib.systems.elaborate prev.system;
+            arch = elaboratedSystem.qemuArch;
+            fixedInstallPhase = prev.lib.replaceStrings [ "x86_64" ] [ arch ] prevAttrs.installPhase;
+          in
+          fixedInstallPhase;
+
+        meta = prevAttrs.meta // {
+          platforms = prevAttrs.meta.platforms ++ [
+            "aarch64-linux"
+          ];
+        };
+      });
     };
 }
