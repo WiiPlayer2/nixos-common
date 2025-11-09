@@ -24,6 +24,6 @@
       # };
     };
 
-    targets.gtksourceview.enable = false;
+    overlays.enable = false;
   };
 }
