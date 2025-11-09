@@ -10,7 +10,8 @@ in
 {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      nix-archipelago.archipelago-appimage
+      # nix-archipelago.archipelago-appimage
+      archipelago
     ];
   };
 }

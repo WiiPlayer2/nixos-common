@@ -12,6 +12,7 @@ with lib;
       refPkgs = [
         "firefoxpwa"
         "jetbrains"
+        "archipelago"
         # "modemmanager"
       ];
       scopePkgs = [

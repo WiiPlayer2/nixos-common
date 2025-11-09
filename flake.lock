@@ -988,11 +988,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1730229652,
-        "narHash": "sha256-kRsNZ4wB+moDRYZ2hY6LB8Hy2edTz8wIO1iPg50KRts=",
+        "lastModified": 1762683768,
+        "narHash": "sha256-xUUPd3ogY+NfPzpzMKX7c2Fzm8m1+SpWXGmHFEDDGpM=",
         "owner": "WiiPlayer2",
         "repo": "nix-archipelago",
-        "rev": "7de2eba6dbf05696fd93acfd013554eebb43928b",
+        "rev": "d81a2ddd9a399f7f50902040011a420a536d6f99",
         "type": "github"
       },
       "original": {
