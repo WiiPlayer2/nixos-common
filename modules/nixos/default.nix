@@ -9,7 +9,6 @@
         self.nixosModules.legacy
       ];
     };
-    my = import ./my;
     extra = import ./extra;
   };
 }
