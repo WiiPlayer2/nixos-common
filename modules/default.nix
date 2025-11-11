@@ -5,6 +5,5 @@
     ./home-manager
     ./legacy
     ./nix-on-droid
-    ./nixos
   ];
 }
