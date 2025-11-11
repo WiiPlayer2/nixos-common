@@ -1,1 +1,1 @@
-inputs: ./my
+_: ./my

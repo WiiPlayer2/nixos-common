@@ -9,6 +9,5 @@
         self.nixosModules.legacy
       ];
     };
-    extra = import ./extra;
   };
 }
