@@ -3,15 +3,19 @@ with lib;
 let
   cfg = config.nixDir3;
 
-  globalInputs = {
+  globalInputs = cfg.extraInputs // {
     inherit inputs;
   };
 
   loaderType =
-    extraInputsList:
+    extraModule:
     types.submodule (
       { config, ... }:
       {
+        imports = [
+          extraModule
+        ];
+
         options = {
           paths = mkOption {
             type = with types; listOf str;
@@ -48,25 +52,102 @@ let
 
         config = {
           paths = [ config._module.args.name ] ++ config.aliases;
+          # haumeaArgs =
+          #   let
+          #     inputsList =
+          #       map
+          #         (x: cfg.extraInputs // config.extraInputs // globalInputs // x)
+          #         extraInputsList;
+          #     argsForInputs =
+          #       inputs:
+          #       map
+          #         (path: {
+          #           src = cfg.src + "/${path}";
+          #           inherit inputs;
+          #           inherit (config) loader transformer;
+          #         })
+          #         config.paths;
+          #   in
+          #   concatMap
+          #     argsForInputs
+          #     inputsList;
+        };
+      }
+    );
+
+  perSystemLoaderType =
+    types.submodule (
+      { config, ... }:
+      {
+        options = {
+          paths = mkOption {
+            type = with types; listOf str;
+            internal = true;
+            readOnly = true;
+          };
+
+          haumeaArgs = mkOption {
+            type = types.raw;
+            internal = true;
+            readOnly = true;
+          };
+
+          aliases = mkOption {
+            type = with types; listOf str;
+            default = [ ];
+          };
+
+          extraInputs = mkOption {
+            type = types.lazyAttrsOf types.anything;
+            default = { };
+          };
+
+          loader = mkOption {
+            type = with types; raw; # haumea loader function or matchers list
+            default = _: inputs.haumea.lib.loaders.default;
+          };
+
+          transformer = mkOption {
+            type = with types; raw; # TODO: haumea transformer or transformers list
+            default = _: [ ];
+          };
+        };
+
+        config = {
+          paths = [ config._module.args.name ] ++ config.aliases;
           haumeaArgs =
+            pkgs:
             let
-              inputsList =
+              _inputs =
+                config.extraInputs //
+                globalInputs //
+                (
+                  withSystem
+                    pkgs.system
+                    (
+                      { inputs', ... }:
+                      {
+                        inherit
+                          pkgs
+                          inputs'
+                          ;
+                      }
+                    )
+                );
+              forPath =
+                path:
+                {
+                  src = cfg.src + "/${path}";
+                  inputs = _inputs;
+                  loader = config.loader pkgs;
+                  transformer = config.transformer pkgs;
+                };
+              args =
                 map
-                  (x: cfg.extraInputs // config.extraInputs // globalInputs // x)
-                  extraInputsList;
-              argsForInputs =
-                inputs:
-                map
-                  (path: {
-                    src = cfg.src + "/${path}";
-                    inherit inputs;
-                    inherit (config) loader transformer;
-                  })
+                  forPath
                   config.paths;
             in
-            concatMap
-              argsForInputs
-              inputsList;
+            args;
         };
       }
     );
@@ -91,14 +172,32 @@ in
       type = types.submoduleWith {
         modules = [
           {
-            freeformType = types.lazyAttrsOf (loaderType [{ }]);
+            freeformType = types.lazyAttrsOf (loaderType ({ config, ... }: {
+              config = {
+                haumeaArgs =
+                  let
+                    _inputs = cfg.extraInputs // config.extraInputs // globalInputs;
+                    inputsList =
+                      map
+                        (x: cfg.extraInputs // config.extraInputs // globalInputs // x)
+                        extraInputsList;
+                    argsForInputs =
+                      inputs:
+                      map
+                        (path: {
+                          src = cfg.src + "/${path}";
+                          inherit inputs;
+                          inherit (config) loader transformer;
+                        })
+                        config.paths;
+                  in
+                  argsForInputs
+                    _inputs;
+              };
+            }));
             options = {
               perSystem = mkOption {
-                type = types.lazyAttrsOf (loaderType (
-                  map
-                    (system: withSystem system ({ pkgs, inputs', ... }: { inherit pkgs inputs'; }))
-                    config.systems
-                ));
+                type = types.lazyAttrsOf perSystemLoaderType;
                 default = { };
               };
             };
@@ -106,80 +205,82 @@ in
         ];
       };
     };
-
-    loadables = {
-      tmp = mkOption {
-        type = types.raw;
-      };
-      devShells = mkOption {
-        type = types.lazyAttrsOf (types.submodule (
-          { config, ... }:
-          {
-            options = {
-              name = mkOption {
-                type = types.str;
-                default = config._module.args.name;
-              };
-
-              packages = mkOption {
-                type = with types; functionTo (listOf package);
-                default = [ ];
-              };
-            };
-          }
-        ));
-      };
-    };
   };
 
   config = {
     nixDir3 = {
-      loaders.perSystem.devShells = { };
-      loadables.tmp =
-        let
-          load =
-            loadCfg:
-            mergeAttrsList
-              (
-                map
-                  inputs.haumea.lib.load
-                  loadCfg.haumeaArgs
-              );
-          perSystemResult =
-            mapAttrs
-              (_: load)
-              cfg.loaders.perSystem;
-          globalResult =
-            mapAttrs
-              (_: load)
-              (removeAttrs cfg.loaders [ "perSystem" ]);
-          result =
-            recursiveUpdate globalResult perSystemResult;
-        in
-        result;
+      loaders.perSystem.devShells = {
+        transformer =
+          pkgs:
+          cursor:
+          data:
+          let
+            defaultArgs =
+              { name ? (elemAt cursor 0)
+              , ...
+              } @ args: {
+                inherit name;
+              } // args;
+          in
+          if length cursor != 1
+          then data
+          else pkgs.mkShell (defaultArgs data);
+      };
     };
 
-    flake.tmp = config.nixDir3.loadables.tmp;
-    flake.devShells =
+    flake =
       let
-        mkDevShell =
-          pkgs:
-          devShellCfg:
-          pkgs.mkShell {
-            inherit (devShellCfg) name;
-            packages = devShellCfg.packages pkgs;
-          };
-
-        devShellSet =
-          pkgs:
-          mapAttrs
-            (_: mkDevShell pkgs);
-
-        devShells =
+        # load =
+        #   listArgs:
+        #   loadCfg:
+        #   mergeAttrsList
+        #     (
+        #       map
+        #         inputs.haumea.lib.load
+        #         (listArgs loadCfg.haumeaArgs)
+        #     );
+        # perSystemResult =
+        #   mapAttrs
+        #     (_: loadCfg:
+        #       genAttrs
+        #       (attrNames loadCfg.haumeaArgs)
+        #       (system: load (x: x.${system}) loadCfg)
+        #     )
+        #     cfg.loaders.perSystem;
+        # globalResult =
+        #   mapAttrs
+        #     (_: load (x: x))
+        #     (removeAttrs cfg.loaders [ "perSystem" ]);
+        systemResult =
+          loadCfg:
+          system:
+          let
+            pkgs = inputs.nixpkgs.legacyPackages.${system};
+            load =
+              loadCfg:
+              mergeAttrsList
+                (
+                  map
+                    inputs.haumea.lib.load
+                    (loadCfg.haumeaArgs pkgs)
+                );
+            result =
+              load loadCfg;
+          in
+          result;
+        perSystemLoaderResult =
+          loadCfg:
           genAttrs
             config.systems
-            (system: devShellSet inputs.nixpkgs.legacyPackages.${system} config.nixDir3.loadables.devShells);
+            (systemResult loadCfg);
+        perSystemResult =
+          mapAttrs
+            (_: perSystemLoaderResult)
+            cfg.loaders.perSystem;
+        globalResult = { };
+        result =
+          recursiveUpdate globalResult perSystemResult;
       in
-      devShells;
+      result;
   };
 }

@@ -1,5 +1,5 @@
-_:
-pkgs: with pkgs; [
+{ pkgs }:
+with pkgs; [
   (writeShellApplication {
     name = "test-app";
     text = ''
