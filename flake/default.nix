@@ -5,7 +5,7 @@
     ../modules/flake/common.nix # Avoid referencing self due to infinite recursion
     ../modules/flake/nixDir.nix # Avoid referencing self due to infinite recursion
     ../modules/flake/nixDir2.nix # Avoid referencing self due to infinite recursion
-    ../modules/flake/nixDir3.nix # Avoid referencing self due to infinite recursion
+    ../modules/flake/nixDir3 # Avoid referencing self due to infinite recursion
 
     ../apps
     ../devShells
