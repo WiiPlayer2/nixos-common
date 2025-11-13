@@ -18,7 +18,7 @@ with lib;
       scopePkgs = [
         "phoc"
         # "phosh"
-        "phosh-mobile-settings"
+        # "phosh-mobile-settings"
       ];
       refPkgs' =
         genAttrs
@@ -30,6 +30,17 @@ with lib;
           (name: final.callPackage unstable.${name}.override { });
     in
     refPkgs' // scopePkgs' // {
-      phosh = final.callPackage unstable.phosh.override { inherit (unstable) modemmanager; };
+      phosh = final.callPackage unstable.phosh.override {
+        inherit (unstable)
+          modemmanager
+          gmobile
+          ;
+      };
+      phosh-mobile-settings = final.callPackage unstable.phosh-mobile-settings.override {
+        inherit (unstable)
+          modemmanager
+          gmobile
+          ;
+      };
     };
 }
