@@ -11,7 +11,7 @@
     ../modules
     ../overlays
     ../pkgs
-    ../templates
+    # ../templates
   ];
 
   systems = [

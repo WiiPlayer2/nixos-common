@@ -2,5 +2,9 @@
     "editor.tabSize": 2,
     "git.autofetch": "all",
     "git.postCommitCommand": "push",
-    "dotnet.defaultSolution": "disable"
+    "dotnet.defaultSolution": "disable",
+    "files.associations": {
+        "*.nix": "nix",
+        "*.md": "markdown"
+    }
 }

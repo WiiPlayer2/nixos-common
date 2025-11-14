@@ -7,6 +7,19 @@ let
     inherit inputs config;
   };
 
+  transformerForPath =
+    path:
+    transformer:
+    cursor:
+    transformer ([ path ] ++ cursor);
+
+  transformersForPath =
+    path:
+    transformerConfig:
+    if isList transformerConfig
+    then map (transformerForPath path) transformerConfig
+    else transformerForPath path transformerConfig;
+
   loaderType =
     types.submodule (
       { config, ... }:
@@ -76,7 +89,8 @@ let
                 {
                   src = cfg.src + "/${path}";
                   inputs = _inputs;
-                  inherit (config) loader transformer;
+                  inherit (config) loader;
+                  transformer = transformersForPath path config.transformer;
                 };
               args =
                 map
@@ -154,7 +168,7 @@ let
                   src = cfg.src + "/${path}";
                   inputs = _inputs;
                   loader = config.loader pkgs;
-                  transformer = config.transformer pkgs;
+                  transformer = transformersForPath path (config.transformer pkgs);
                 };
               args =
                 map

@@ -14,7 +14,7 @@ with lib;
             inherit name;
           } // args;
       in
-      if length cursor != 1
+      if length cursor != 2
       then data
       else pkgs.mkShell (defaultArgs data);
   };
