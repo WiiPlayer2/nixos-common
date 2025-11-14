@@ -4,7 +4,7 @@ let
   cfg = config.nixDir3;
 
   globalInputs = cfg.extraInputs // {
-    inherit inputs;
+    inherit inputs config;
   };
 
   loaderType =
@@ -138,12 +138,13 @@ let
                   withSystem
                     pkgs.system
                     (
-                      { inputs', ... }:
+                      { inputs', config, ... }:
                       {
                         inherit
                           pkgs
                           inputs'
                           ;
+                        config' = config;
                       }
                     )
                 );
