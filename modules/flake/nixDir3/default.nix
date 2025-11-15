@@ -4,7 +4,7 @@ let
   cfg = config.nixDir3;
 
   globalInputs = cfg.extraInputs // {
-    inherit inputs config;
+    inherit lib inputs config;
   };
 
   transformerForPath =
