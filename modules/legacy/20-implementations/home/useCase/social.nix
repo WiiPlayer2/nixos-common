@@ -23,7 +23,7 @@ in
         # paper-plane
         # nchat
         # materialgram
-        unstable.ayugram-desktop
+        ayugram-desktop
       ];
       my.startup.ayugram-desktop.command = "ayugram-desktop -startintray";
     })
