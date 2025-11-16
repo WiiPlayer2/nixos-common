@@ -25,31 +25,55 @@ let
     then map (transformerForPath path) transformerConfig
     else transformerForPath path transformerConfig;
 
+  commonLoaderTypeModule =
+    { config, ... }:
+    {
+      options = {
+        paths = mkOption {
+          type = with types; listOf str;
+          internal = true;
+          readOnly = true;
+        };
+
+        aliases = mkOption {
+          type = with types; listOf str;
+          default = [ ];
+        };
+
+        extraInputs = mkOption {
+          type = types.lazyAttrsOf types.anything;
+          default = { };
+        };
+
+        target = mkOption {
+          type = with types; str;
+          default = config._module.args.name;
+        };
+
+        loadTransformer = mkOption {
+          type = with types; functionTo raw;
+          default = load: load { };
+        };
+      };
+
+      config = {
+        paths = [ config._module.args.name ] ++ config.aliases;
+      };
+    };
+
   loaderType =
     types.submodule (
       { config, ... }:
       {
-        options = {
-          paths = mkOption {
-            type = with types; listOf str;
-            internal = true;
-            readOnly = true;
-          };
+        imports = [
+          commonLoaderTypeModule
+        ];
 
+        options = {
           haumeaArgs = mkOption {
             type = types.raw;
             internal = true;
             readOnly = true;
-          };
-
-          aliases = mkOption {
-            type = with types; listOf str;
-            default = [ ];
-          };
-
-          extraInputs = mkOption {
-            type = types.lazyAttrsOf types.anything;
-            default = { };
           };
 
           loader = mkOption {
@@ -61,15 +85,9 @@ let
             type = with types; raw; # TODO: haumea transformer or transformers list
             default = [ ];
           };
-
-          target = mkOption {
-            type = with types; str;
-            default = config._module.args.name;
-          };
         };
 
         config = {
-          paths = [ config._module.args.name ] ++ config.aliases;
           haumeaArgs =
             let
               _inputs =
@@ -97,27 +115,15 @@ let
     types.submodule (
       { config, ... }:
       {
-        options = {
-          paths = mkOption {
-            type = with types; listOf str;
-            internal = true;
-            readOnly = true;
-          };
+        imports = [
+          commonLoaderTypeModule
+        ];
 
+        options = {
           haumeaArgs = mkOption {
             type = types.raw;
             internal = true;
             readOnly = true;
-          };
-
-          aliases = mkOption {
-            type = with types; listOf str;
-            default = [ ];
-          };
-
-          extraInputs = mkOption {
-            type = types.lazyAttrsOf types.anything;
-            default = { };
           };
 
           loader = mkOption {
@@ -129,15 +135,9 @@ let
             type = with types; raw; # TODO: haumea transformer or transformers list
             default = _: [ ];
           };
-
-          target = mkOption {
-            type = with types; str;
-            default = config._module.args.name;
-          };
         };
 
         config = {
-          paths = [ config._module.args.name ] ++ config.aliases;
           haumeaArgs =
             pkgs:
             let
@@ -221,11 +221,17 @@ in
           transformResult:
           loadCfg:
           let
+            load =
+              args:
+              extraInputs:
+              inputs.haumea.lib.load (args // {
+                inputs = extraInputs // args.inputs;
+              });
             result =
               mergeAttrsList
                 (
                   map
-                    inputs.haumea.lib.load
+                    (args: loadCfg.loadTransformer (load args))
                     (transformArgs loadCfg.haumeaArgs)
                 );
           in
