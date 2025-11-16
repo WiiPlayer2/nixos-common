@@ -1,7 +1,7 @@
 {
   imports = [
     ./devShells.nix
-    ./nixosModules.nix
+    ./modules.nix
     ./templates.nix
   ];
 }
