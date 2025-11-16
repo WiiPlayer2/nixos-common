@@ -24,11 +24,12 @@ types.submodule (
 
       transformer = mkOption {
         type = with types; raw; # TODO: haumea transformer or transformers list
-        default = _: [ ];
+        default = _: _: [ ];
       };
     };
 
     config = {
+      _isPerSystem = true;
       haumeaArgs =
         pkgs:
         let

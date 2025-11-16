@@ -28,6 +28,17 @@ with lib;
       type = with types; functionTo raw;
       default = load: load { };
     };
+
+    loadByAttribute = mkOption {
+      type = types.bool;
+      default = false;
+    };
+
+    _isPerSystem = mkOption {
+      type = types.bool;
+      internal = true;
+      readOnly = true;
+    };
   };
 
   config = {

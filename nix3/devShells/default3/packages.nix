@@ -1,6 +1,6 @@
-{ pkgs, config', inputs' }:
+{ pkgs, flakeConfig', inputs' }:
 with pkgs; [
-  config'.agenix-rekey.package
+  flakeConfig'.agenix-rekey.package
   rage
   age-plugin-yubikey
   inputs'.deploy-rs.packages.default
