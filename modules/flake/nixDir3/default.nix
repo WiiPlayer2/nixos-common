@@ -3,6 +3,11 @@ with lib;
 let
   cfg = config.nixDir3;
 
+  recursiveMergeAttrsList =
+    foldl
+      recursiveUpdate
+      { };
+
   globalInputs = cfg.extraInputs // {
     inherit lib inputs config;
   };
@@ -56,29 +61,15 @@ let
             type = with types; raw; # TODO: haumea transformer or transformers list
             default = [ ];
           };
+
+          target = mkOption {
+            type = with types; str;
+            default = config._module.args.name;
+          };
         };
 
         config = {
           paths = [ config._module.args.name ] ++ config.aliases;
-          # haumeaArgs =
-          #   let
-          #     inputsList =
-          #       map
-          #         (x: cfg.extraInputs // config.extraInputs // globalInputs // x)
-          #         extraInputsList;
-          #     argsForInputs =
-          #       inputs:
-          #       map
-          #         (path: {
-          #           src = cfg.src + "/${path}";
-          #           inherit inputs;
-          #           inherit (config) loader transformer;
-          #         })
-          #         config.paths;
-          #   in
-          #   concatMap
-          #     argsForInputs
-          #     inputsList;
           haumeaArgs =
             let
               _inputs =
@@ -137,6 +128,11 @@ let
           transformer = mkOption {
             type = with types; raw; # TODO: haumea transformer or transformers list
             default = _: [ ];
+          };
+
+          target = mkOption {
+            type = with types; str;
+            default = config._module.args.name;
           };
         };
 
@@ -205,29 +201,6 @@ in
         modules = [
           {
             freeformType = types.lazyAttrsOf loaderType;
-            # freeformType = types.lazyAttrsOf (loaderType ({ config, ... }: {
-            #   config = {
-            #     haumeaArgs =
-            #       let
-            #         _inputs = cfg.extraInputs // config.extraInputs // globalInputs;
-            #         inputsList =
-            #           map
-            #             (x: cfg.extraInputs // config.extraInputs // globalInputs // x)
-            #             extraInputsList;
-            #         argsForInputs =
-            #           inputs:
-            #           map
-            #             (path: {
-            #               src = cfg.src + "/${path}";
-            #               inherit inputs;
-            #               inherit (config) loader transformer;
-            #             })
-            #             config.paths;
-            #       in
-            #       argsForInputs
-            #         _inputs;
-            #   };
-            # }));
             options = {
               perSystem = mkOption {
                 type = types.lazyAttrsOf perSystemLoaderType;
@@ -243,69 +216,43 @@ in
   config = {
     flake =
       let
-        # load =
-        #   listArgs:
-        #   loadCfg:
-        #   mergeAttrsList
-        #     (
-        #       map
-        #         inputs.haumea.lib.load
-        #         (listArgs loadCfg.haumeaArgs)
-        #     );
-        # perSystemResult =
-        #   mapAttrs
-        #     (_: loadCfg:
-        #       genAttrs
-        #       (attrNames loadCfg.haumeaArgs)
-        #       (system: load (x: x.${system}) loadCfg)
-        #     )
-        #     cfg.loaders.perSystem;
-        # globalResult =
-        #   mapAttrs
-        #     (_: load (x: x))
-        #     (removeAttrs cfg.loaders [ "perSystem" ]);
-        systemResult =
+        evalLoader =
+          transformArgs:
+          transformResult:
           loadCfg:
-          system:
           let
-            pkgs = inputs.nixpkgs.legacyPackages.${system};
-            load =
-              loadCfg:
-              mergeAttrsList
-                (
-                  map
-                    inputs.haumea.lib.load
-                    (loadCfg.haumeaArgs pkgs)
-                );
             result =
-              load loadCfg;
-          in
-          result;
-        perSystemLoaderResult =
-          loadCfg:
-          genAttrs
-            config.systems
-            (systemResult loadCfg);
-        perSystemResult =
-          mapAttrs
-            (_: perSystemLoaderResult)
-            cfg.loaders.perSystem;
-        loaderResult =
-          loadCfg:
-          let
-            load =
               mergeAttrsList
                 (
                   map
                     inputs.haumea.lib.load
-                    loadCfg.haumeaArgs
+                    (transformArgs loadCfg.haumeaArgs)
                 );
           in
-          load;
+          { ${loadCfg.target} = transformResult result; };
+        perSystemResult =
+          recursiveMergeAttrsList
+            (
+              concatMap
+                (
+                  system:
+                  map
+                    (
+                      evalLoader
+                        (args: args inputs.nixpkgs.legacyPackages.${system})
+                        (result: { ${system} = result; })
+                    )
+                    (attrValues cfg.loaders.perSystem)
+                )
+                config.systems
+            );
         globalResult =
-          mapAttrs
-            (_: loaderResult)
-            (removeAttrs cfg.loaders [ "perSystem" ]);
+          mergeAttrsList
+            (
+              map
+                (evalLoader id id)
+                (attrValues (removeAttrs cfg.loaders [ "perSystem" ]))
+            );
         result =
           recursiveUpdate globalResult perSystemResult;
       in
