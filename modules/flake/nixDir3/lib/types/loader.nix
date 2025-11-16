@@ -2,23 +2,6 @@
 with lib;
 let
   cfg = config.nixDir3;
-
-  globalInputs = cfg.extraInputs // {
-    inherit lib inputs config;
-  };
-
-  transformerForPath =
-    path:
-    transformer:
-    cursor:
-    transformer ([ path ] ++ cursor);
-
-  transformersForPath =
-    path:
-    transformerConfig:
-    if isList transformerConfig
-    then map (transformerForPath path) transformerConfig
-    else transformerForPath path transformerConfig;
 in
 types.submodule (
   { config, ... }:
@@ -50,14 +33,14 @@ types.submodule (
         let
           _inputs =
             config.extraInputs //
-            globalInputs;
+            super.globalInputs;
           forPath =
             path:
             {
               src = cfg.src + "/${path}";
               inputs = _inputs;
               inherit (config) loader;
-              transformer = transformersForPath path config.transformer;
+              transformer = super.transformersForPath path config.transformer;
             };
           args =
             map
