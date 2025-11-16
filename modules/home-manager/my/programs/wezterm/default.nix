@@ -14,12 +14,11 @@ in
       #   return require 'cfg/config'
       # '';
       extraConfig = mkMerge [
-        (mkBefore "config = wezterm.config_builder()")
         ''
-          config.front_end = "OpenGL"
+          -- config.front_end = "OpenGL"
 
           -- for some reason WezTerm does not launch zsh on kiryu (maybe due to AD login)
-          config.default_prog = { 'zsh' }
+          -- config.default_prog = { 'zsh' }
           config.hide_tab_bar_if_only_one_tab = true
           config.mux_enable_ssh_agent = false
 
@@ -35,7 +34,6 @@ in
             },
           }
         ''
-        (mkAfter "return config")
       ];
     };
 
