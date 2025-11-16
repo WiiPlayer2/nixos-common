@@ -19,5 +19,6 @@ with lib;
   loadTransformer =
     load:
     src:
-    setDefaultModuleLocation src (load { });
+    { pkgs, ... }:
+    setDefaultModuleLocation src (load { inherit pkgs; });
 }
