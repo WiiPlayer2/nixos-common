@@ -2,179 +2,12 @@
 with lib;
 let
   cfg = config.nixDir3;
+  nixDirLib = cfg.lib;
 
   recursiveMergeAttrsList =
     foldl
       recursiveUpdate
       { };
-
-  globalInputs = cfg.extraInputs // {
-    inherit lib inputs config;
-  };
-
-  transformerForPath =
-    path:
-    transformer:
-    cursor:
-    transformer ([ path ] ++ cursor);
-
-  transformersForPath =
-    path:
-    transformerConfig:
-    if isList transformerConfig
-    then map (transformerForPath path) transformerConfig
-    else transformerForPath path transformerConfig;
-
-  commonLoaderTypeModule =
-    { config, ... }:
-    {
-      options = {
-        paths = mkOption {
-          type = with types; listOf str;
-          internal = true;
-          readOnly = true;
-        };
-
-        aliases = mkOption {
-          type = with types; listOf str;
-          default = [ ];
-        };
-
-        extraInputs = mkOption {
-          type = types.lazyAttrsOf types.anything;
-          default = { };
-        };
-
-        target = mkOption {
-          type = with types; str;
-          default = config._module.args.name;
-        };
-
-        loadTransformer = mkOption {
-          type = with types; functionTo raw;
-          default = load: load { };
-        };
-      };
-
-      config = {
-        paths = [ config._module.args.name ] ++ config.aliases;
-      };
-    };
-
-  loaderType =
-    types.submodule (
-      { config, ... }:
-      {
-        imports = [
-          commonLoaderTypeModule
-        ];
-
-        options = {
-          haumeaArgs = mkOption {
-            type = types.raw;
-            internal = true;
-            readOnly = true;
-          };
-
-          loader = mkOption {
-            type = with types; raw; # haumea loader function or matchers list
-            default = inputs.haumea.lib.loaders.default;
-          };
-
-          transformer = mkOption {
-            type = with types; raw; # TODO: haumea transformer or transformers list
-            default = [ ];
-          };
-        };
-
-        config = {
-          haumeaArgs =
-            let
-              _inputs =
-                config.extraInputs //
-                globalInputs;
-              forPath =
-                path:
-                {
-                  src = cfg.src + "/${path}";
-                  inputs = _inputs;
-                  inherit (config) loader;
-                  transformer = transformersForPath path config.transformer;
-                };
-              args =
-                map
-                  forPath
-                  config.paths;
-            in
-            args;
-        };
-      }
-    );
-
-  perSystemLoaderType =
-    types.submodule (
-      { config, ... }:
-      {
-        imports = [
-          commonLoaderTypeModule
-        ];
-
-        options = {
-          haumeaArgs = mkOption {
-            type = types.raw;
-            internal = true;
-            readOnly = true;
-          };
-
-          loader = mkOption {
-            type = with types; raw; # haumea loader function or matchers list
-            default = _: inputs.haumea.lib.loaders.default;
-          };
-
-          transformer = mkOption {
-            type = with types; raw; # TODO: haumea transformer or transformers list
-            default = _: [ ];
-          };
-        };
-
-        config = {
-          haumeaArgs =
-            pkgs:
-            let
-              _inputs =
-                config.extraInputs //
-                globalInputs //
-                (
-                  withSystem
-                    pkgs.system
-                    (
-                      { inputs', config, ... }:
-                      {
-                        inherit
-                          pkgs
-                          inputs'
-                          ;
-                        config' = config;
-                      }
-                    )
-                );
-              forPath =
-                path:
-                {
-                  src = cfg.src + "/${path}";
-                  inputs = _inputs;
-                  loader = config.loader pkgs;
-                  transformer = transformersForPath path (config.transformer pkgs);
-                };
-              args =
-                map
-                  forPath
-                  config.paths;
-            in
-            args;
-        };
-      }
-    );
 in
 {
   imports = [
@@ -182,6 +15,19 @@ in
   ];
 
   options.nixDir3 = {
+    lib = mkOption {
+      type = types.raw;
+      readOnly = true;
+      default =
+        inputs.haumea.lib.load {
+          src = ./lib;
+          inputs = {
+            inherit config inputs withSystem;
+            lib = extend (_: _: inputs.haumea.lib);
+          };
+        };
+    };
+
     root = mkOption {
       type = types.path;
     };
@@ -200,10 +46,10 @@ in
       type = types.submoduleWith {
         modules = [
           {
-            freeformType = types.lazyAttrsOf loaderType;
+            freeformType = types.lazyAttrsOf nixDirLib.types.loader;
             options = {
               perSystem = mkOption {
-                type = types.lazyAttrsOf perSystemLoaderType;
+                type = types.lazyAttrsOf nixDirLib.types.perSystemLoader;
                 default = { };
               };
             };
