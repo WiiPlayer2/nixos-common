@@ -138,7 +138,7 @@ in
                     load =
                       extraInputs:
                       inputs.haumea.lib.load (haumeaArgsFn cursor extraInputs);
-                    result = loadCfg.loadTransformer load;
+                    result = loadCfg.loadTransformer load (srcFn cursor);
                   in
                   result
                 );

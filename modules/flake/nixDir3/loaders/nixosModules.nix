@@ -16,5 +16,10 @@ with inputs.haumea.lib;
         config = { };
       })
     ];
+
+    loadTransformer =
+      load:
+      src:
+      setDefaultModuleLocation src (load { });
   };
 }

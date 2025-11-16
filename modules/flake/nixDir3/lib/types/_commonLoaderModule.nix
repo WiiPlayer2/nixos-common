@@ -26,7 +26,7 @@ with lib;
 
     loadTransformer = mkOption {
       type = with types; functionTo raw;
-      default = load: load { };
+      default = load: _: load { };
     };
 
     loadByAttribute = mkOption {
