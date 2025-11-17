@@ -1,0 +1,3 @@
+{
+  poptracker.enable = true;
+}

@@ -8,7 +8,7 @@ let
       (
         map
           (pack: {
-            ".config/PopTracker/packs/${pack.name}".source = pack;
+            "PopTracker/packs/${pack.name}".source = pack;
           })
           (cfg.packs super.packs)
       );
