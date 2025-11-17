@@ -9,16 +9,19 @@ with lib;
     (transformers.hoistLists "imports" "imports")
     (transformers.hoistAttrs "options" "options")
     (transformers.hoistAttrs "config" "config")
-    (_: intersectAttrs {
-      imports = [ ];
-      options = { };
-      config = { };
-    })
   ];
 
   loadTransformer =
     load:
     src:
-    { pkgs, ... }:
-    setDefaultModuleLocation src (load { inherit pkgs; });
+    { pkgs, config, ... }:
+    let
+      baseModule = load { inherit pkgs config; };
+      module = intersectAttrs {
+        imports = [ ];
+        options = { };
+        config = { };
+      } baseModule;
+    in
+    setDefaultModuleLocation src module;
 }
