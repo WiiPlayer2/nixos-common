@@ -14,7 +14,7 @@ with lib;
         "jetbrains"
         "archipelago"
         # "modemmanager"
-        "poptracker"
+        # "poptracker" # see overrides
       ];
       scopePkgs = [
         "phoc"

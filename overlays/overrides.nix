@@ -22,7 +22,7 @@
         };
       };
 
-      poptracker = prev.poptracker.overrideAttrs (finalAttrs: prevAttrs: {
+      poptracker = prev.unstable.poptracker.overrideAttrs (finalAttrs: prevAttrs: {
         installPhase =
           let
             elaboratedSystem = prev.lib.systems.elaborate prev.system;
