@@ -3,7 +3,6 @@
   imports = [
     ./android-studio.nix
     ./android-tools.nix
-    ./archipelago.nix
     ./aseprite.nix
     ./atlauncher.nix
     ./attic-client.nix

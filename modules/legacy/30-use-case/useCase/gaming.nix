@@ -25,7 +25,6 @@ in
     # TODO: This should be in a sub group/option
     (mkIf cfg.enable {
       my.programs = {
-        archipelago.enable = true;
         atlauncher.enable = true;
         bottles.enable = true;
         lutris.enable = true;

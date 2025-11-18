@@ -4,7 +4,6 @@ let
   programs = [
     "android-studio"
     "android-tools"
-    "archipelago"
     "aseprite"
     "atlauncher"
     "attic-client"
