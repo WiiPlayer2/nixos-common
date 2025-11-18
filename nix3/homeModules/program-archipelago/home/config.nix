@@ -8,7 +8,9 @@ let
       (
         map
           (world: {
-            "Archipelago/worlds/${world.name}".source = world;
+            ".local/share/Archipelago/worlds/${world.meta.name}.apworld" = {
+              source = "${world}/${world.meta.name}.apworld";
+            };
           })
           cfg.worlds
       );
