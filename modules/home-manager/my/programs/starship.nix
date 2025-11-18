@@ -42,6 +42,8 @@
       };
 
       direnv.disabled = false;
+
+      time.disabled = false;
     };
   };
 }
