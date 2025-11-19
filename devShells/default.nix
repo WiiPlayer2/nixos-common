@@ -66,7 +66,25 @@
                   text = ''
                     TARGET="$1"
                     shift
-                    deploy --skip-checks .#"$TARGET" "$@" -- --override-input common path:"$FLAKE_ROOT"/flakes/common --log-format internal-json --verbose |& nom --json
+
+                    _deployRsArgs=()
+                    _nixArgs=()
+                    _doubleHyphenSeen=false
+
+                    for arg in "$@"; do
+                      if [ "$_doubleHyphenSeen" == false ] && [ "$arg" == "--" ]; then
+                        _doubleHyphenSeen=true
+                        continue
+                      fi
+
+                      if [ "$_doubleHyphenSeen" == false ]; then
+                        _deployRsArgs+=("$arg")
+                      else
+                        _nixArgs+=("$arg")
+                      fi
+                    done
+
+                    deploy --skip-checks .#"$TARGET" "''${_deployRsArgs[@]}" -- --override-input common path:"$FLAKE_ROOT"/flakes/common --log-format internal-json --verbose "''${_nixArgs[@]}" |& nom --json
                   '';
                 })
                 (writeShellApplication {

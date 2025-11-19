@@ -166,6 +166,7 @@ in
               name = "program:systemd-${name}";
               value = {
                 command = value.Service.ExecStart;
+                startsecs = mkIf (value.Service.Type == "oneshot") 0;
               };
             };
 
