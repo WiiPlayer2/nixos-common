@@ -8,6 +8,7 @@
         self.nixOnDroidModules.extra
         self.nixOnDroidModules.nixosCompat
         self.nixOnDroidModules.legacy
+        self.nixOnDroidModules.profile-base
       ];
     };
     my = import ./my;

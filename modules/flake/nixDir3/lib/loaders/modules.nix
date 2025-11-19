@@ -17,11 +17,18 @@ with lib;
     { pkgs, config, ... }:
     let
       baseModule = load { inherit pkgs config; };
-      module = intersectAttrs {
+      restModule = removeAttrs baseModule ["imports" "options" "config"];
+      coreModule = intersectAttrs {
         imports = [ ];
         options = { };
         config = { };
       } baseModule;
+      module = coreModule // {
+        config = mkMerge [
+          coreModule.config or {}
+          restModule
+        ];
+      };
     in
     setDefaultModuleLocation src module;
 }

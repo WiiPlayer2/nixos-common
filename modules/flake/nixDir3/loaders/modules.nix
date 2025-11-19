@@ -7,6 +7,7 @@ with config.nixDir3.lib;
       [
         "nixosModules"
         "homeModules"
+        "nixOnDroidModules"
       ]
       (_: loaders.modules { });
 }
