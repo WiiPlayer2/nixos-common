@@ -5,7 +5,7 @@
 }:
 let
   pname = "freelens-appimage";
-  version = "1.6.1";
+  version = "1.6.2";
   icon = fetchurl {
     url = "https://raw.githubusercontent.com/freelensapp/freelens/v${version}/freelens/build/icons/512x512.png";
     hash = "sha256-YgugB0dJrr/fFwA9H8E0Oc3hhyvFIolR+RetXR01Y7Y=";
@@ -23,7 +23,7 @@ appimageTools.wrapType2 {
 
   src = fetchurl {
     url = "https://github.com/freelensapp/freelens/releases/download/v${version}/Freelens-${version}-linux-amd64.AppImage";
-    hash = "sha256-RiA9OWcs6goRPN8dGsLV3ViBe/ZWB3M7yzTmDHgB3mo=";
+    hash = "sha256-92hiXEwe6w2rm7QUN/KcgW4Ro9OydOwNawaW3cZiJGA=";
   };
 
   extraInstallCommands = ''
