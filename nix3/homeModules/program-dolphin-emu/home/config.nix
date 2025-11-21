@@ -16,7 +16,7 @@ let
       #!${pkgs.runtimeShell}
       set -euo pipefail
 
-      exec ${cfg.prefixCommand} "$_source" "$@"
+      exec ${cfg.prefixCommand} "$_source" "\$@"
       EOF
 
         chmod +x "$_target"
