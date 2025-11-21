@@ -1,7 +1,6 @@
 { pkgs }:
 {
   packages = with pkgs; [
-    bizhawk
     randovania
 
     (writeShellApplication {
@@ -14,5 +13,9 @@
 
   sessionVariables = {
     DME_DOLPHIN_PROCESS_NAME = ".dolphin-emu-wr";
+  };
+
+  file = {
+    ".config/ludusavi/additional-games.yaml".source = ./__ludusavi-manifest.yaml;
   };
 }

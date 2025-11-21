@@ -1,0 +1,9 @@
+# TODO needs some fine tuning
+Bizhawk:
+  files:
+    "<xdgData>/emuhawk-monort-2.10.1-local/*/SaveRAM":
+      tags:
+        - save
+        # - config
+      when:
+        - os: linux
