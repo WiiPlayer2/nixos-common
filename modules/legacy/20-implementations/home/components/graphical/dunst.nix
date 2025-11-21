@@ -23,11 +23,14 @@ in
           transparency = 10;
           gap_size = 5;
           corner_radius = 10;
-          # font = "Ubuntu 12"; # managed by stylix
           width = "(300, 800)";
           idle_threshold = "5m";
           fullscreen = "delay";
           dmenu = "${pkgs.rofi}/bin/rofi -dmenu -p dunst";
+        };
+
+        urgency_critical = {
+          override_pause_level = 75;
         };
       };
     };
