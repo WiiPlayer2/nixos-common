@@ -2,6 +2,7 @@
 {
   packages = with pkgs; [
     bizhawk
+    randovania
 
     (writeShellApplication {
       name = "fix-dolphin-read-memory-for-archipelago";

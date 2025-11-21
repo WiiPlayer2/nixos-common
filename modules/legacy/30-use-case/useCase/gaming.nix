@@ -29,7 +29,6 @@ in
         bottles.enable = true;
         lutris.enable = true;
         obs-studio.enable = true;
-        poptracker.enable = true;
         protontricks.enable = true;
         retroarch.enable = true;
         ryujinx.enable = true;
