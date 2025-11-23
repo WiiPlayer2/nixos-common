@@ -1,4 +1,4 @@
-{ lib, config, pkgs }:
+{ lib, config, pkgs, super }:
 with lib;
 let
   cfg = config.age.imprinting;
