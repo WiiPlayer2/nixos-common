@@ -23,7 +23,8 @@ mkIf cfg.enable {
       if [ ! -f ${targetArg} ]; then
         echo "Imprinting ${targetArg}..."
 
-        if ! ${pathEnv} ${getExe pkgs.age} -d ${imprintingIdentityArg} -o ${targetArg} ${imprintingFileArg}; then
+        install -m 0777 -d /tmp
+        if ! ${pathEnv} TMPDIR=$(mktemp -d) ${getExe pkgs.age} -d ${imprintingIdentityArg} -o ${targetArg} ${imprintingFileArg}; then
           echo "Imprinting failed. To retry ensure the target file does not exist when activating again."
           sleep 10
           _localstatus=1
