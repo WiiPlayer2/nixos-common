@@ -10,6 +10,7 @@ let
     if cfg.plugins != [ ]
     then "PATH=\"${makeBinPath cfg.plugins}:$PATH\""
     else "";
+  targetArg = escapeShellArg cfg.target;
 in
 mkIf cfg.enable {
   agenixNewGeneration.deps = [ "agenixImprinting" ];
@@ -17,10 +18,10 @@ mkIf cfg.enable {
   agenixImprinting = {
     deps = [ "specialfs" ];
     text = ''
-      if [ ! -f ${cfg.target}" ]; then
-        echo "Imprinting \"${cfg.target}\"..."
+      if [ ! -f ${targetArg} ]; then
+        echo "Imprinting ${targetArg}..."
 
-        if ! ${pathEnv} ${getExe pkgs.age} -d ${imprintingIdentityArg} -o ${escapeShellArg cfg.target} ${escapeShellArg cfg.imprintingFile}; then
+        if ! ${pathEnv} ${getExe pkgs.age} -d ${imprintingIdentityArg} -o ${targetArg} ${escapeShellArg cfg.imprintingFile}; then
           echo "Imprinting failed. To retry ensure the target file does not exist when activating again."
           sleep 10
           _localstatus=1
