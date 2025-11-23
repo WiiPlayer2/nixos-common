@@ -6,6 +6,7 @@ with lib;
   dolphin-emu = {
     enable = true;
     prefixCommand = "${getExe pkgs.ludusavi} wrap --name Dolphin --gui --force --no-force-cloud-conflict -- ${getExe pkgs.gamemode}";
+    prefixEnvironmentVariables.MANGOHUD = ""; # see https://bugs.dolphin-emu.org/issues/13837
     additionalVariants = with pkgs; [
       dolphin-emu-primehack
     ];

@@ -25,6 +25,11 @@ with lib;
     default = null;
   };
 
+  prefixEnvironmentVariables = mkOption {
+    type = with types; attrsOf str;
+    default = { };
+  };
+
   additionalVariants = mkOption {
     type = with types; listOf package;
     default = [ ];

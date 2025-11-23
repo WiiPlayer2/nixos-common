@@ -3,6 +3,15 @@ with lib;
 let
   cfg = config.programs.dolphin-emu;
 
+  environmentVariableScript =
+    join
+      "\n"
+      (
+        map
+          ({ name, value }: "export ${name}=${escapeShellArg value}")
+          (attrsToList cfg.prefixEnvironmentVariables)
+      );
+
   wrappedFiles =
     pkg:
     pkgs.runCommand "wrapped-files-${pkg.name}" { } ''
@@ -16,9 +25,9 @@ let
       #!${pkgs.runtimeShell}
       set -euo pipefail
 
+      ${environmentVariableScript}
       exec ${cfg.prefixCommand} "$_source" "\$@"
       EOF
-
         chmod +x "$_target"
       done
     '';
