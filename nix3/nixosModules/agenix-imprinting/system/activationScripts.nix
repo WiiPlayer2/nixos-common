@@ -2,6 +2,14 @@
 with lib;
 let
   cfg = config.age.imprinting;
+  imprintingIdentityArg =
+    if cfg.imprintingIdentityFile != null
+    then "-i ${escapeShellArg cfg.imprintingIdentityFile}"
+    else "";
+  pathEnv =
+    if cfg.plugins != [ ]
+    then "PATH=\"${makeBinPath cfg.plugins}:$PATH\""
+    else "";
 in
 mkIf cfg.enable {
   agenixNewGeneration.deps = [ "agenixImprinting" ];
@@ -12,9 +20,10 @@ mkIf cfg.enable {
       if [ ! -f ${cfg.target}" ]; then
         echo "Imprinting \"${cfg.target}\"..."
 
-        if ! PATH="${makeBinPath (cfg.plugins ++ ["$PATH"])}" ${getExe pkgs.age} -d ${if cfg.imprintingIdentityFile != null then "-i ${escapeShellArg cfg.imprintingIdentityFile}" else ""} -o ${escapeShellArg cfg.target} ${escapeShellArg cfg.imprintingFile}; then
+        if ! ${pathEnv} ${getExe pkgs.age} -d ${imprintingIdentityArg} -o ${escapeShellArg cfg.target} ${escapeShellArg cfg.imprintingFile}; then
           echo "Imprinting failed. To retry ensure the target file does not exist when activating again."
           sleep 10
+          _localstatus=1
         fi
       fi
     '';
