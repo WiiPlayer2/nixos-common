@@ -10,4 +10,9 @@ with pkgs;
     url = "https://github.com/Kizugaya/TPRAP_poptracker/releases/download/v0.10.0/TPRAP_poptracker_v0.10.0.zip";
     hash = "sha256-JyeJCErIiIOXaSfYyhY3c8Sp5ITQkU4+nUsyO8OVXMY=";
   };
+
+  MetroidPrimeAP_PopTrackerPack = fetchurl {
+    url = "https://github.com/lilDavid/MetroidPrimeAP-PoptrackerPack/releases/download/1.0.1/MetroidPrimeAP_PopTrackerPack.zip";
+    hash = "sha256-49LZQFWJsWeXY2aVEkL/ygCkRzL8V+PTeiBNUADGtuQ=";
+  };
 }

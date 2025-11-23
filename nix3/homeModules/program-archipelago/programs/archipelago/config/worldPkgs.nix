@@ -39,4 +39,23 @@ with pkgs;
       '';
     in
     world;
+
+  Metroid_Prime =
+    let
+      src = fetchurl {
+        url = "https://github.com/Electro1512/MetroidAPrime/releases/download/v0.5.0/metroidprime.apworld";
+        hash = "sha256-Xh/rDXNux5SIq4TWyCZLlB7z6o21i5cUBucXxGL83Js=";
+      };
+      world = runCommand "metroid-prime-apworld"
+        {
+          passthru = {
+            inherit src;
+          };
+          meta.name = "metroidprime";
+        } ''
+        mkdir -p $out
+        ln -sf ${src} $out/metroidprime.apworld
+      '';
+    in
+    world;
 }
