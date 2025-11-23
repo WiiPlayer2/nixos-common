@@ -4,6 +4,7 @@
     , config
     , pkgs
     , system
+    , self'
     , inputs'
     , ...
     }:
@@ -14,10 +15,12 @@
             pkgs.mkShell
             {
               name = "nix-configs";
-              packages = with pkgs; [
+              packages = with pkgs; with self'.legacyPackages; [
                 config.agenix-rekey.package
                 rage
+                amnesia
                 age-plugin-yubikey
+                age-plugin-amnesia
                 inputs'.deploy-rs.packages.default
                 inputs'.disko.packages.default
 
