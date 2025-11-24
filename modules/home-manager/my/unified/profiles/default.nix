@@ -3,6 +3,5 @@
   imports = [
     ./casual.nix
     ./graphical.nix
-    ./workstation
   ];
 }

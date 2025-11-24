@@ -25,7 +25,7 @@ with lib;
           kubectl
           jq
         ];
-        text = builtins.readFile ./scripts/k8s-toolbox-rename-pvc.sh;
+        text = builtins.readFile ./__scripts/k8s-toolbox-rename-pvc.sh;
       })
       (writeShellApplication {
         name = "k8s-toolbox-copy-pvc";
@@ -33,7 +33,7 @@ with lib;
           kubectl
           jq
         ];
-        text = builtins.readFile ./scripts/k8s-toolbox-copy-pvc.sh;
+        text = builtins.readFile ./__scripts/k8s-toolbox-copy-pvc.sh;
       })
       (writeShellApplication {
         name = "k8s-toolbox-change-pvc-sc";
@@ -42,7 +42,7 @@ with lib;
           jq
           pv-migrate
         ];
-        text = builtins.readFile ./scripts/k8s-toolbox-change-pvc-sc.sh;
+        text = builtins.readFile ./__scripts/k8s-toolbox-change-pvc-sc.sh;
       })
     ] ++ (lib.optionals (config.my.features.hypervisor.enable && config.my.features.hypervisor.domains.presets.windows.enable) [
       virt-viewer
