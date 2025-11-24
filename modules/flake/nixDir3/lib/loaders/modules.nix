@@ -14,18 +14,20 @@ with lib;
   loadTransformer =
     load:
     src:
-    { pkgs, config, ... }:
+    { pkgs, config, options, ... }:
     let
-      baseModule = load { inherit pkgs config; };
-      restModule = removeAttrs baseModule ["imports" "options" "config"];
-      coreModule = intersectAttrs {
-        imports = [ ];
-        options = { };
-        config = { };
-      } baseModule;
+      baseModule = load { inherit pkgs config options; };
+      restModule = removeAttrs baseModule [ "imports" "options" "config" ];
+      coreModule = intersectAttrs
+        {
+          imports = [ ];
+          options = { };
+          config = { };
+        }
+        baseModule;
       module = coreModule // {
         config = mkMerge [
-          coreModule.config or {}
+          coreModule.config or { }
           restModule
         ];
       };
