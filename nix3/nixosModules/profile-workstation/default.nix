@@ -1,14 +1,9 @@
 { lib, config, pkgs, inputs, ... }:
 with lib;
 {
-  options.unified.profiles.workstation.enable = mkEnableOption "";
-
-  config = mkIf config.unified.profiles.workstation.enable {
+  config = {
     home-manager.sharedModules = [
       inputs.self.homeModules.profile-workstation
-      {
-        unified.profiles.workstation.enable = true;
-      }
     ];
 
     boot.binfmt.emulatedSystems = [

@@ -1,9 +1,7 @@
 { lib, config, pkgs, ... }:
 with lib;
 {
-  options.unified.profiles.workstation.enable = mkEnableOption "";
-
-  config = mkIf config.unified.profiles.workstation.enable {
+  config = {
     home.packages = with pkgs; [
       logseq
       nix-btm
