@@ -135,8 +135,5 @@ in
         };
       };
     };
-    dunst = {
-      enable = mkEnableOption "Whether to enable dunst";
-    };
   };
 }

@@ -69,7 +69,6 @@ in
               music.enable = true;
             };
           };
-          dunst.enable = true;
           social = {
             misc = true;
             element.enable = true;

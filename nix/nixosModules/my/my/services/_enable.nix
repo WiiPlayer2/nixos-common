@@ -1,3 +1,5 @@
+{ lib, config, ... }:
+with lib;
 {
   services = {
     openssh.enable = true;

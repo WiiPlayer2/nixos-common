@@ -8,6 +8,5 @@
     ./tools.nix
     ./flatpak.nix
     ./scripts.nix
-    ./dunst.nix
   ];
 }

@@ -2,5 +2,6 @@
 {
   imports = [
     ./age.nix
+    ./dunst.nix
   ];
 }
