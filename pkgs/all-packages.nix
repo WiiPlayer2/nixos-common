@@ -9,6 +9,7 @@ let
     let
       evalPkgs = {
         inherit prev;
+        inherit inputs;
       } // (additionalInput final prev);
 
       finalPkgs = final // evalPkgs;

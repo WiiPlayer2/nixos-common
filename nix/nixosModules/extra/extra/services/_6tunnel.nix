@@ -28,6 +28,7 @@ in
             remotePort = mkOption {
               type = types.port;
               default = config.localPort;
+              defaultText = literalExpression "config.localPort";
             };
             remoteHost = mkOption {
               type = types.str;
