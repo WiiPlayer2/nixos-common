@@ -1,6 +1,6 @@
 { config, ... }:
 {
   programs = {
-    sway.enable = config.services.xserver.enable;
+    # sway.enable = config.services.xserver.enable;
   };
 }
