@@ -28,7 +28,6 @@ in
           };
         };
         desktopManager = {
-          cinnamon.enable = true; # TODO: disable (certain might need to be added manually)
           xfce = {
             enable = true;
             noDesktop = true;
@@ -55,7 +54,19 @@ in
       displayManager = {
         defaultSession = "xfce+i3";
       };
+
+
+      cinnamon = {
+        apps.enable = true;
+      };
     };
+
+    environment.cinnamon.excludePackages = with pkgs; [
+      gnome-terminal
+      xed-editor
+      gnome-calendar
+      gnome-screenshot
+    ];
 
     users.users.${config.my.config.mainUser.name}.extraGroups = [
       "audio"
