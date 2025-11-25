@@ -20,8 +20,8 @@ in
           lightdm = {
             enable = true;
             greeters = {
-              slick.enable = false;
-              gtk.enable = true;
+              slick.enable = true;
+              # gtk.enable = true;
             };
             # TODO set this in domain stylix settings
             background = pkgs.nixos-artwork.wallpapers.catppuccin-mocha.gnomeFilePath;
@@ -55,11 +55,14 @@ in
         defaultSession = "xfce+i3";
       };
 
-
       cinnamon = {
         apps.enable = true;
       };
+
+      gnome.gnome-keyring.enable = true;
     };
+
+    programs.seahorse.enable = true;
 
     environment.cinnamon.excludePackages = with pkgs; [
       gnome-terminal
