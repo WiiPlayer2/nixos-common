@@ -30,7 +30,6 @@
     ./helmfile.nix
     ./inkscape.nix
     ./k8s-bridge.nix
-    ./keyviz.nix
     ./krita.nix
     ./kubecolor.nix
     ./kubernetes-helm.nix

@@ -32,7 +32,6 @@ let
     "helmfile"
     "inkscape"
     "k8s-bridge"
-    "keyviz"
     "krita"
     "kubecolor"
     "kubernetes-helm"

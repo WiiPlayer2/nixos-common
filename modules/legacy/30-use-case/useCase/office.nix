@@ -27,10 +27,8 @@ in
       my.programs.libreoffice.enable = true;
       my.programs.presenterm.enable = true;
       my.programs.slides.enable = true;
-      # my.programs.slidev.enable = true;
       my.programs.screenkey.enable = true;
       my.programs.bubbly.enable = true;
-      # my.programs.keyviz.enable = true; # TODO: fix package
     })
   ];
 }
