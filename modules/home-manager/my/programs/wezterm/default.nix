@@ -6,19 +6,11 @@ in
 {
   config = mkIf cfg.enable {
     programs.wezterm = {
-      # package = pkgs.wezterm-unstable;
       enableZshIntegration = true;
       enableBashIntegration = true;
       # TODO: config from folder should be moved here or cleaned up properly
-      # extraConfig = ''
-      #   return require 'cfg/config'
-      # '';
       extraConfig = mkMerge [
         ''
-          -- config.front_end = "OpenGL"
-
-          -- for some reason WezTerm does not launch zsh on kiryu (maybe due to AD login)
-          -- config.default_prog = { 'zsh' }
           config.hide_tab_bar_if_only_one_tab = true
           config.mux_enable_ssh_agent = false
 
@@ -27,10 +19,19 @@ in
           config.background = {
             {
               source = {
-                File = os.getenv( "HOME" ) .. '/Dropbox/Bilder/Wallpaper/untagged/Touhou/Th06/Sakuya Izayoi/12501205.png',
+                Color = "#${config.lib.stylix.colors.base00}",
               },
-              hsb = { brightness = 0.1 }, -- TODO: fix this to apply proper styled color etc., but first the background image needs to be cut out
+              height = "100%",
+              width = "100%",
+            },
+            {
+              source = {
+                File = '${config.my.assets.root + /images/wezterm_bg.png}',
+              },
+              opacity = 0.5,
               horizontal_align = "Right",
+              height = "Contain",
+              width = "Contain",
             },
           }
         ''
@@ -38,7 +39,6 @@ in
     };
 
     home.packages = with pkgs; [
-      # wezterm
       (writeShellScriptBin "open-wezterm-here" ''
         # This script is a helper that starts a new terminal window
         # in the cwd of the calling process, rather than using the
