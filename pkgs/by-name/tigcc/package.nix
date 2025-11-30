@@ -2,11 +2,13 @@
 , stdenv
 , runCommand
 
-, gcc9
+, gcc13
 , bison
 , flex
 }:
 let
+  gcc = gcc13;
+
   pname = "tigcc";
   version = "0.96-beta8-r1";
   src = fetchzip {
@@ -61,7 +63,7 @@ let
   step2 = runCommand "${pname}-step2-${version}"
     {
       buildInputs = [
-        gcc9
+        gcc
         flex
         bison
       ];
@@ -100,7 +102,7 @@ let
   step4 = runCommand "${pname}-step4-${version}"
     {
       buildInputs = [
-        gcc9
+        gcc
       ];
     } ''
     ${prepareStep { prev = step3; }}

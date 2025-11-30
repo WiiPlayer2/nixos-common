@@ -10,7 +10,7 @@ with lib;
   };
   services.snapserver = {
     enable = true;
-    streams.default.location = "pipe:///tmp/snapfifo?name=default";
+    settings.stream.source = "pipe:///tmp/snapfifo?name=default";
   };
   systemd.services.snapserver.serviceConfig = {
     ExecStart = mkForce "${config.services.snapserver.package}/bin/snapserver";
