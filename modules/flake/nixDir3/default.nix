@@ -63,7 +63,24 @@ in
           loadCfg:
           path:
           let
-            byAttrsNameFn = cursor: (attrNames (filterAttrs (_: v: v == "directory") (builtins.readDir (cfg.src + "/${first cursor}"))));
+            byAttrsNameFn =
+              cursor:
+              let
+                src = cfg.src + "/${first cursor}";
+                names =
+                  attrNames
+                    (
+                      filterAttrs
+                        (_: v: v == "directory")
+                        (builtins.readDir src)
+                    );
+              in
+              if path == "devShells"
+              then break { }
+              else
+                if builtins.pathExists src
+                then names
+                else [ ];
 
             nestedNamesFn =
               let
@@ -135,12 +152,14 @@ in
                 (
                   cursor:
                   let
+                    src = srcFn cursor;
+                    srcExists = builtins.pathExists src;
                     load =
                       extraInputs:
                       inputs.haumea.lib.load (haumeaArgsFn cursor extraInputs);
-                    result = loadCfg.loadTransformer load (srcFn cursor);
+                    result = loadCfg.loadTransformer load src;
                   in
-                  result
+                  optionalAttrs srcExists result
                 );
           in
           {
