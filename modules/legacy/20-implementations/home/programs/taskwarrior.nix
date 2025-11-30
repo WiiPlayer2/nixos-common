@@ -14,7 +14,6 @@ in
       taskwarrior-tui
       vit
       tasknc
-      # syncall
       taskopen
 
       # (
@@ -63,9 +62,6 @@ in
         mainUiCommand = "wezterm start vit";
       in
       {
-        meta.brokenPackages = with pkgs; [
-          syncall
-        ];
         # disabled due to interval not working
         # components.graphical.windowManager.i3.extraBlocks.taskwarrior.block = {
         #   block = "taskwarrior";

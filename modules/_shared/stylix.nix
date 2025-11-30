@@ -8,7 +8,7 @@
     fonts = with pkgs; rec {
       sansSerif = serif;
       serif = {
-        package = ubuntu_font_family;
+        package = ubuntu-classic;
         name = "Ubuntu";
       };
       monospace = {

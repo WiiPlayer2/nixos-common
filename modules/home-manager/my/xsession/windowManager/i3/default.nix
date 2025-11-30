@@ -28,7 +28,6 @@ in
 
     # https://itsfoss.com/i3-customization/
     xsession.windowManager.i3 = {
-      package = pkgs.i3-gaps;
       config =
         let
           sharedConfig = import ../../../shared/i3-sway args {

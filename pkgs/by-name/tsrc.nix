@@ -1,7 +1,8 @@
+# Currently broken because types-typed-ast was removed (dependency of mypy, which itself is a dependency of tsrc)
 { stdenv
 , lib
 , fetchFromGitHub
-, python3
+, python312
 , loadPyproject
 , poetry2nix
 ,
@@ -17,6 +18,7 @@ let
   };
   package = poetry2nix.mkPoetryApplication
     {
+      python = python312;
       projectDir = src;
       preferWheels = true;
       overrides = poetry2nix.overrides.withDefaults (
@@ -26,6 +28,7 @@ let
           });
         }
       );
+      meta.broken = true;
     };
 in
 lib.recursiveUpdate package {

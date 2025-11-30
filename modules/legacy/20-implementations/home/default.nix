@@ -10,7 +10,6 @@
 
     ./accounts.nix
     ./config.nix
-    ./personalization.nix
     ./pkgs.nix
   ];
 
