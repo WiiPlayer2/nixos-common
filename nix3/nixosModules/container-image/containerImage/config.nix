@@ -2,15 +2,17 @@
 with lib;
 let
   cfg = config.containerImage;
-
-  script = pkgs.writeShellScript "container-script" cfg.script;
-  entrypointScript = pkgs.writeShellScript "container-command-script" ''
-    ${config.system.build.toplevel}/activate
-    exec ${script}
-  '';
 in
 {
   imageConfig = {
-    Cmd = [ entrypointScript ];
+    Cmd = [ cfg.entrypointActivateScript ];
   };
+
+  entrypointScript = pkgs.writeShellScript "entrypoint" cfg.script;
+
+  entrypointActivateScript = pkgs.writeShellScript "entrypoint-activate" ''
+    ${config.system.build.toplevel}/activate
+
+    exec ${cfg.entrypointScript}
+  '';
 }

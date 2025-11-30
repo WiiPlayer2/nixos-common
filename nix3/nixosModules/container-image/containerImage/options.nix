@@ -8,4 +8,16 @@ with lib;
   script = mkOption {
     type = types.lines;
   };
+
+  entrypointScript = mkOption {
+    type = types.package;
+    readOnly = true;
+    internal = true;
+  };
+
+  entrypointActivateScript = mkOption {
+    type = types.package;
+    readOnly = true;
+    internal = true;
+  };
 }

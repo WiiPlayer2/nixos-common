@@ -15,9 +15,11 @@ in
       paths = [
         pkgs.busybox
       ];
-      pathsToLink = [
-        "/bin"
-      ];
+      postBuild = ''
+        ln -sf ${config.system.build.toplevel}/activate $out/activate
+        ln -sf ${cfg.entrypointScript} $out/entrypoint
+        ln -sf ${cfg.entrypointActivateScript} $out/entrypoint-activate
+      '';
     };
     config = cfg.imageConfig;
   };
