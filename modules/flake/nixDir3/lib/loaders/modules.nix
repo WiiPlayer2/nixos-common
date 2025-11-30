@@ -1,6 +1,7 @@
 { lib }:
 with lib;
-{}:
+{ extraInputs ? [ ]
+}:
 {
   loadByAttribute = true;
 
@@ -14,9 +15,17 @@ with lib;
   loadTransformer =
     load:
     src:
-    { pkgs, config, options, ... }:
+    { pkgs, config, ... } @ moduleArgs:
     let
-      baseModule = load { inherit pkgs config options; };
+      extraModuleArgs = intersectAttrs
+        (
+          genAttrs
+            extraInputs
+            (_: null)
+        )
+        moduleArgs;
+      extraLoadInputs = { inherit pkgs config; } // extraModuleArgs;
+      baseModule = load extraLoadInputs;
       restModule = removeAttrs baseModule [ "imports" "options" "config" ];
       coreModule = intersectAttrs
         {
