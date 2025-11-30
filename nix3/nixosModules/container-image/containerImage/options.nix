@@ -20,4 +20,9 @@ with lib;
     readOnly = true;
     internal = true;
   };
+
+  systemdService = mkOption {
+    type = with types; nullOr str;
+    default = "";
+  };
 }

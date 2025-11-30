@@ -19,6 +19,7 @@ in
         ln -sf ${config.system.build.toplevel}/activate $out/activate
         ln -sf ${cfg.entrypointScript} $out/entrypoint
         ln -sf ${cfg.entrypointActivateScript} $out/entrypoint-activate
+        mkdir -p $out/tmp
       '';
     };
     config = cfg.imageConfig;
