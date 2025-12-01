@@ -2,6 +2,7 @@
 {
   imports = [
     ./_enable.nix
+    ./gnome.nix
     ./k3s.nix
     ./xserver
   ];
