@@ -7,28 +7,30 @@ in
   options.networking.networkmanager = {
     ensureProfiles = {
       wifi = mkOption {
-        type = types.attrsOf (types.submodule (
-          { config, ... }:
-          {
-            options = {
-              ssid = mkOption {
-                readOnly = true;
-                type = types.str;
-                default = config._module.args.name;
-              };
+        type = types.attrsOf (
+          types.submodule (
+            { config, ... }:
+            {
+              options = {
+                ssid = mkOption {
+                  readOnly = true;
+                  type = types.str;
+                  default = config._module.args.name;
+                };
 
-              psk = mkOption {
-                type = types.nullOr types.str;
-                default = null;
-              };
+                psk = mkOption {
+                  type = types.nullOr types.str;
+                  default = null;
+                };
 
-              priority = mkOption {
-                type = types.int;
-                default = 0;
+                priority = mkOption {
+                  type = types.int;
+                  default = 0;
+                };
               };
-            };
-          }
-        ));
+            }
+          )
+        );
         default = { };
       };
     };
@@ -38,7 +40,11 @@ in
     networking.networkmanager.ensureProfiles.profiles =
       let
         mkWifiProfile =
-          { ssid, psk, priority }:
+          {
+            ssid,
+            psk,
+            priority,
+          }:
           {
             connection = {
               id = ssid;
@@ -58,10 +64,7 @@ in
               key-mgmt = "wpa-psk";
             };
           };
-        wifiProfiles =
-          mapAttrs
-            (n: mkWifiProfile)
-            cfg.ensureProfiles.wifi;
+        wifiProfiles = mapAttrs (n: mkWifiProfile) cfg.ensureProfiles.wifi;
         allProfiles = wifiProfiles;
       in
       allProfiles;

@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.services._6tunnel;
@@ -9,37 +14,39 @@ in
     package = mkPackageOption pkgs "_6tunnel" { };
 
     servers = mkOption {
-      type = types.attrsOf (types.submodule (
-        { config, ... }:
-        {
-          options = {
-            enable = mkOption {
-              type = types.bool;
-              default = true;
+      type = types.attrsOf (
+        types.submodule (
+          { config, ... }:
+          {
+            options = {
+              enable = mkOption {
+                type = types.bool;
+                default = true;
+              };
+              name = mkOption {
+                type = types.str;
+                readOnly = true;
+                default = config._module.args.name;
+              };
+              localPort = mkOption {
+                type = types.port;
+              };
+              remotePort = mkOption {
+                type = types.port;
+                default = config.localPort;
+                defaultText = literalExpression "config.localPort";
+              };
+              remoteHost = mkOption {
+                type = types.str;
+              };
+              extraFlags = mkOption {
+                type = types.listOf types.str;
+                default = [ ];
+              };
             };
-            name = mkOption {
-              type = types.str;
-              readOnly = true;
-              default = config._module.args.name;
-            };
-            localPort = mkOption {
-              type = types.port;
-            };
-            remotePort = mkOption {
-              type = types.port;
-              default = config.localPort;
-              defaultText = literalExpression "config.localPort";
-            };
-            remoteHost = mkOption {
-              type = types.str;
-            };
-            extraFlags = mkOption {
-              type = types.listOf types.str;
-              default = [ ];
-            };
-          };
-        }
-      ));
+          }
+        )
+      );
       default = { };
     };
   };
@@ -48,7 +55,14 @@ in
     systemd.services =
       let
         mkService =
-          { name, localPort, remotePort, remoteHost, extraFlags, ... }:
+          {
+            name,
+            localPort,
+            remotePort,
+            remoteHost,
+            extraFlags,
+            ...
+          }:
           let
             extraFlags' = concatStringsSep " " extraFlags;
           in
@@ -62,23 +76,15 @@ in
             # };
             wantedBy = [ "multi-user.target" ];
           };
-        services =
-          listToAttrs
-            (
-              map
-                ({ name, value }: {
-                  name = "_6tunnel-${name}";
-                  value = mkService value;
-                })
-                (
-                  attrsToList
-                    (
-                      filterAttrs
-                        (n: v: v.enable)
-                        cfg.servers
-                    )
-                )
-            );
+        services = listToAttrs (
+          map (
+            { name, value }:
+            {
+              name = "_6tunnel-${name}";
+              value = mkService value;
+            }
+          ) (attrsToList (filterAttrs (n: v: v.enable) cfg.servers))
+        );
       in
       services;
   };

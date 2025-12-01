@@ -1,18 +1,20 @@
-{ lib, config, pkgs, super }:
+{
+  lib,
+  config,
+  pkgs,
+  super,
+}:
 with lib;
 let
   cfg = config.age.imprinting;
   imprintingIdentityArg =
-    if cfg.imprintingIdentityFile != null
-    then "-i ${escapeShellArg "${super.imprintingPkg}/imprinting-identity"}"
-    else "";
-  pathEnv =
-    if cfg.plugins != [ ]
-    then "PATH=\"${makeBinPath cfg.plugins}:$PATH\""
-    else "";
+    if cfg.imprintingIdentityFile != null then
+      "-i ${escapeShellArg "${super.imprintingPkg}/imprinting-identity"}"
+    else
+      "";
+  pathEnv = if cfg.plugins != [ ] then "PATH=\"${makeBinPath cfg.plugins}:$PATH\"" else "";
   targetArg = escapeShellArg cfg.target;
-  imprintingFileArg =
-    escapeShellArg "${super.imprintingPkg}/imprinting-file";
+  imprintingFileArg = escapeShellArg "${super.imprintingPkg}/imprinting-file";
 in
 mkIf cfg.enable {
   agenixNewGeneration.deps = [ "agenixImprinting" ];

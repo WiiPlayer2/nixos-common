@@ -1,6 +1,7 @@
-{ appimageTools
-, fetchurl
-, makeDesktopItem
+{
+  appimageTools,
+  fetchurl,
+  makeDesktopItem,
 }:
 let
   pname = "music-assistant-companion-appimage";
@@ -14,7 +15,10 @@ let
     desktopName = "Music Assistant Companion (AppImage)";
     exec = "${pname} %U";
     icon = icon;
-    categories = [ "AudioVideo" "Audio" ];
+    categories = [
+      "AudioVideo"
+      "Audio"
+    ];
   };
 in
 appimageTools.wrapType2 {

@@ -1,9 +1,10 @@
-{ templates
-, cfg
-, pkgs
-, NixVirt
-, _lib
-, ...
+{
+  templates,
+  cfg,
+  pkgs,
+  NixVirt,
+  _lib,
+  ...
 }:
 let
   inherit (pkgs.lib)
@@ -44,7 +45,7 @@ let
     devices = base.devices // {
       disk =
         base.devices.disk
-          ++ optionals presetCfg.installMode [
+        ++ optionals presetCfg.installMode [
           {
             type = "file";
             device = "cdrom";
@@ -91,7 +92,8 @@ let
         in
         [
           (mkDisplay true)
-        ] ++ (lists.genList (_: mkDisplay false) (displayCount - 1));
+        ]
+        ++ (lists.genList (_: mkDisplay false) (displayCount - 1));
     };
   };
 in

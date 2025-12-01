@@ -1,22 +1,28 @@
-{ lib, config, pkgs }:
+{
+  lib,
+  config,
+  pkgs,
+}:
 with lib;
 let
   cfg = config.containerImage;
 
-  systemdService = config.systemd.services.${cfg.systemdService} or {
-    path = [ ];
-    environment = { };
-    serviceConfig.ExecStart = "";
-  };
-  systemdScript = pkgs.writeShellApplication
-    {
+  systemdService =
+    config.systemd.services.${cfg.systemdService} or {
+      path = [ ];
+      environment = { };
+      serviceConfig.ExecStart = "";
+    };
+  systemdScript =
+    pkgs.writeShellApplication {
       name = "run-${cfg.systemdService}";
       runtimeInputs = systemdService.path;
       text = ''
         ${systemdService.serviceConfig.ExecStartPre or ""}
         ${systemdService.serviceConfig.ExecStart}
       '';
-    } // systemdService.environment;
+    }
+    // systemdService.environment;
 in
 {
   imageConfig = {

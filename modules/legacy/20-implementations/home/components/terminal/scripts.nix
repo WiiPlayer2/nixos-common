@@ -1,7 +1,8 @@
-{ pkgs
-, lib
-, config
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  ...
 }:
 with lib;
 let
@@ -12,9 +13,9 @@ let
   isNixOs = cfgOs.type == "nixos";
   isHomeManagerStandalone = cfgOs.isHomeManagerStandalone;
   writeUpdateScript =
-    { command
-    , needsRoot ? false
-    ,
+    {
+      command,
+      needsRoot ? false,
     }:
     pkgs.writeShellScriptBin "${command}-update" ''
       ${if needsRoot then "sudo " else ""}echo "Pulling & applying latest configuration"

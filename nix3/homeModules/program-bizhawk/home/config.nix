@@ -1,4 +1,8 @@
-{ lib, config, pkgs }:
+{
+  lib,
+  config,
+  pkgs,
+}:
 with lib;
 let
   cfg = config.programs.bizhawk;
@@ -32,11 +36,7 @@ let
         pkg
       ];
     };
-  wrapPackageIfNeeded =
-    pkg:
-    if cfg.prefixCommand == null
-    then pkg
-    else wrappedPackage pkg;
+  wrapPackageIfNeeded = pkg: if cfg.prefixCommand == null then pkg else wrappedPackage pkg;
 in
 mkIf cfg.enable {
   packages = [

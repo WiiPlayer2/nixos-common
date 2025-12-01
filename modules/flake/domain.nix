@@ -1,6 +1,4 @@
-inputs:
-args:
-{
+inputs: args: {
   hosts = {
     common.specialArgs = {
       flake-inputs = args.inputs; # deprecated
@@ -59,41 +57,43 @@ args:
   };
 
   perSystem =
-    { inputs', self', lib, pkgs, system, ... }:
-      with lib;
-      {
-        inherit (inputs'.common)
-          packages
-          legacyPackages;
+    {
+      inputs',
+      self',
+      lib,
+      pkgs,
+      system,
+      ...
+    }:
+    with lib;
+    {
+      inherit (inputs'.common)
+        packages
+        legacyPackages
+        ;
 
-        agenix-rekey = {
-          nixosConfigurations = args.inputs.self.nixosConfigurations;
-          homeConfigurations =
-            mapAttrs'
-              (n: v: nameValuePair "phone-${n}-user" { config = v.config.home-manager.config; })
-              args.inputs.self.nixOnDroidConfigurations;
-        };
-        pre-commit.settings.hooks = {
-          update-common = {
-            enable = true;
-            entry = "nix flake update common";
-            pass_filenames = false;
-          };
-        };
-        apps =
-          let
-            commonApps = inputs.self.apps.${system};
-            startsWith =
-              str: value:
-              (builtins.match "${str}.*" value) != null;
-            isCiApp = startsWith "__ci__";
-            isRepoApp = startsWith "__repo__";
-            isDomainApp = n: isCiApp n || isRepoApp n;
-            domainApps =
-              filterAttrs
-                (n: v: isDomainApp n)
-                commonApps;
-          in
-          domainApps;
+      agenix-rekey = {
+        nixosConfigurations = args.inputs.self.nixosConfigurations;
+        homeConfigurations = mapAttrs' (
+          n: v: nameValuePair "phone-${n}-user" { config = v.config.home-manager.config; }
+        ) args.inputs.self.nixOnDroidConfigurations;
       };
+      pre-commit.settings.hooks = {
+        update-common = {
+          enable = true;
+          entry = "nix flake update common";
+          pass_filenames = false;
+        };
+      };
+      apps =
+        let
+          commonApps = inputs.self.apps.${system};
+          startsWith = str: value: (builtins.match "${str}.*" value) != null;
+          isCiApp = startsWith "__ci__";
+          isRepoApp = startsWith "__repo__";
+          isDomainApp = n: isCiApp n || isRepoApp n;
+          domainApps = filterAttrs (n: v: isDomainApp n) commonApps;
+        in
+        domainApps;
+    };
 }

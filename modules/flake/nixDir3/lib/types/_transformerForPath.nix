@@ -1,5 +1,2 @@
-_:
-path:
-transformer:
-cursor:
+_: path: transformer: cursor:
 transformer ([ path ] ++ cursor)

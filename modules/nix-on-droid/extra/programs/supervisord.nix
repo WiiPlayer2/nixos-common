@@ -1,7 +1,8 @@
-{ lib
-, pkgs
-, config
-, ...
+{
+  lib,
+  pkgs,
+  config,
+  ...
 }:
 with lib;
 let
@@ -108,82 +109,77 @@ in
     };
   };
 
-  config = with lib; mkMerge [
-    {
-      programs.supervisord.settings = {
-        inet_http_server = mkIf (cfg.config.inetHttpServer.enable) {
-          port = cfg.config.inetHttpServer.port;
-        };
-        supervisord = cfg.config.supervisord;
-        supervisorctl = { };
-        "rpcinterface:supervisor"."supervisor.rpcinterface_factory" = "supervisor.rpcinterface:make_main_rpcinterface";
-      } // (
-        mapAttrs'
-          (n: v: nameValuePair "program:${n}" {
+  config =
+    with lib;
+    mkMerge [
+      {
+        programs.supervisord.settings = {
+          inet_http_server = mkIf (cfg.config.inetHttpServer.enable) {
+            port = cfg.config.inetHttpServer.port;
+          };
+          supervisord = cfg.config.supervisord;
+          supervisorctl = { };
+          "rpcinterface:supervisor"."supervisor.rpcinterface_factory" =
+            "supervisor.rpcinterface:make_main_rpcinterface";
+        }
+        // (mapAttrs' (
+          n: v:
+          nameValuePair "program:${n}" {
             command = v.command;
             startsecs = mkIf (v.startsecs != null) v.startsecs;
             redirect_stderr = mkIf (v.redirect_stderr != null) v.redirect_stderr;
-          })
-          cfg.config.programs
-      );
-    }
-    (mkIf cfg.enable {
-      environment.packages = with pkgs; [
-        supervisor
-        (writeShellScriptBin "start-supervisord" ''
-          ${
-            if cfg.settings.supervisord.directory != null then
-              "echo \"Switching to ${cfg.settings.supervisord.directory}\"; cd \"${cfg.settings.supervisord.directory}\""
-            else
-              ""
           }
-          supervisord --nodaemon
-        '')
-      ];
+        ) cfg.config.programs);
+      }
+      (mkIf cfg.enable {
+        environment.packages = with pkgs; [
+          supervisor
+          (writeShellScriptBin "start-supervisord" ''
+            ${
+              if cfg.settings.supervisord.directory != null then
+                "echo \"Switching to ${cfg.settings.supervisord.directory}\"; cd \"${cfg.settings.supervisord.directory}\""
+              else
+                ""
+            }
+            supervisord --nodaemon
+          '')
+        ];
 
-      environment.etc."supervisord.conf".source = configFile;
+        environment.etc."supervisord.conf".source = configFile;
 
-      build.activation.supervisord = ''
-        $VERBOSE_ECHO "Ensuring data directory ${dataDir} exists"
-        $DRY_RUN_CMD mkdir --parents "${dataDir}"
+        build.activation.supervisord = ''
+          $VERBOSE_ECHO "Ensuring data directory ${dataDir} exists"
+          $DRY_RUN_CMD mkdir --parents "${dataDir}"
 
-        if ${pkgs.supervisor}/bin/supervisorctl version; then
-          $VERBOSE_ECHO "Reloading supervisord configuration and updating program states..."
-          $DRY_RUN_CMD ${pkgs.supervisor}/bin/supervisorctl update all || true
-        else
-          $VERBOSE_ECHO "Starting supervisord..."
-          $DRY_RUN_CMD ${pkgs.supervisor}/bin/supervisord
-        fi
-      '';
-    })
-    (mkIf cfg.enableSystemdShim {
-      programs.supervisord.settings =
-        let
+          if ${pkgs.supervisor}/bin/supervisorctl version; then
+            $VERBOSE_ECHO "Reloading supervisord configuration and updating program states..."
+            $DRY_RUN_CMD ${pkgs.supervisor}/bin/supervisorctl update all || true
+          else
+            $VERBOSE_ECHO "Starting supervisord..."
+            $DRY_RUN_CMD ${pkgs.supervisor}/bin/supervisord
+          fi
+        '';
+      })
+      (mkIf cfg.enableSystemdShim {
+        programs.supervisord.settings =
+          let
 
-
-          # Use https://noogle.dev/f/lib/textClosureList for priority based on dependencies etc.
-          mkServiceShim =
-            { name, value }:
-            {
-              name = "program:systemd-${name}";
-              value = {
-                command = escapeShellArgs value.Service.ExecStart;
-                startsecs = mkIf (value.Service.Type == "oneshot") 0;
+            # Use https://noogle.dev/f/lib/textClosureList for priority based on dependencies etc.
+            mkServiceShim =
+              { name, value }:
+              {
+                name = "program:systemd-${name}";
+                value = {
+                  command = escapeShellArgs value.Service.ExecStart;
+                  startsecs = mkIf (value.Service.Type == "oneshot") 0;
+                };
               };
-            };
 
-          serviceShims =
-            map
-              mkServiceShim
-              (attrsToList config.home-manager.config.systemd.user.services);
+            serviceShims = map mkServiceShim (attrsToList config.home-manager.config.systemd.user.services);
 
-          settings =
-            listToAttrs
-              (
-                serviceShims
-              );
-        in
-        settings;
-    })
-  ];
+            settings = listToAttrs (serviceShims);
+          in
+          settings;
+      })
+    ];
 }

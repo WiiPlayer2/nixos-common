@@ -1,6 +1,6 @@
-{ config
-, writeShellApplication
-,
+{
+  config,
+  writeShellApplication,
 }:
 let
   mainUser = config.my.config.mainUser.name;

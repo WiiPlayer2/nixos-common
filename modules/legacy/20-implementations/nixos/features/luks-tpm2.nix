@@ -1,8 +1,9 @@
 # https://discourse.nixos.org/t/a-modern-and-secure-desktop-setup/41154
-{ lib
-, config
-, pkgs
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  ...
 }:
 with lib;
 let

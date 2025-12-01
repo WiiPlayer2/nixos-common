@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 {
   options.unified.hardware.wacom-tablet.enable = mkEnableOption "";

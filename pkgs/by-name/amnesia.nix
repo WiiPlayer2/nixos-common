@@ -1,6 +1,6 @@
-{ fetchFromGitHub
-, buildGoModule
-,
+{
+  fetchFromGitHub,
+  buildGoModule,
 }:
 let
   pname = "amnesia";

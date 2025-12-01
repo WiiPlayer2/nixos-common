@@ -22,11 +22,9 @@ rec {
       "${modifier}+Shift+${numberKey}" = moveToWorkspace identifier;
     };
   allWorkspaceKeyBindings = lib.listToAttrs (
-    builtins.concatMap
-      (
-        { workspace, number }: lib.attrsToList (workspaceKeyBindings workspace number)
-      )
-      (lib.imap (number: workspace: { inherit number workspace; }) workspaces)
+    builtins.concatMap (
+      { workspace, number }: lib.attrsToList (workspaceKeyBindings workspace number)
+    ) (lib.imap (number: workspace: { inherit number workspace; }) workspaces)
   );
   workspaceHasAssigns = workspace: builtins.hasAttr "assigns" workspace;
   workspaceAssignsList =

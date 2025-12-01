@@ -23,12 +23,10 @@ let
     enable = mkEnableOption description;
   };
   serviceOptions = listToAttrs (
-    map
-      (x: {
-        name = x;
-        value = mkServiceOption x;
-      })
-      services
+    map (x: {
+      name = x;
+      value = mkServiceOption x;
+    }) services
   );
 in
 {

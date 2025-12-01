@@ -1,11 +1,11 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, nix-update-script
-, eww
-, xorg
-, dash
-,
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  nix-update-script,
+  eww,
+  xorg,
+  dash,
 }:
 let
   inherit (lib)

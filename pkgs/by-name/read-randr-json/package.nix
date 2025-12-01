@@ -1,6 +1,7 @@
-{ stdenv
-, fetchFromGitHub
-, xorg
+{
+  stdenv,
+  fetchFromGitHub,
+  xorg,
 }:
 
 let

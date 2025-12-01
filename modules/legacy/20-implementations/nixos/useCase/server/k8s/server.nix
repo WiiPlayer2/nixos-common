@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.my.useCase.server.k8s.server;
@@ -21,10 +26,12 @@ in
         10250 # kubelet HTTPS metrics
         10255 # kubelet HTTP metrics
         4194 # kubelet cadvisor
-      ] ++ cfg.allowedPorts.tcp;
+      ]
+      ++ cfg.allowedPorts.tcp;
       allowedUDPPorts = [
         8472 # flannel VXLAN
-      ] ++ cfg.allowedPorts.udp;
+      ]
+      ++ cfg.allowedPorts.udp;
     };
   };
 }

@@ -1,39 +1,23 @@
 {
   perSystem =
-    { pkgs, self', lib, ... }:
+    {
+      pkgs,
+      self',
+      lib,
+      ...
+    }:
     {
       apps.build-all.program =
         let
-          allPackages =
-            lib.map
-            ({ value, ... }: value)
-            (
-              lib.attrsToList
-              self'.packages
-            );
-          mkPkgsList =
-            pkgs:
-            lib.concatStringsSep
-            "\n"
-            (
-              lib.map
-              (x: x.pname or x.name)
-              pkgs
-            );
-          brokenPackages =
-            lib.filter
-            (x: x.meta.broken or true)
-            allPackages;
+          allPackages = lib.map ({ value, ... }: value) (lib.attrsToList self'.packages);
+          mkPkgsList = pkgs: lib.concatStringsSep "\n" (lib.map (x: x.pname or x.name) pkgs);
+          brokenPackages = lib.filter (x: x.meta.broken or true) allPackages;
           brokenPackages' = mkPkgsList brokenPackages;
-          unbrokenPackages =
-            lib.filter
-            (x: !(x.meta.broken or false))
-            allPackages;
+          unbrokenPackages = lib.filter (x: !(x.meta.broken or false)) allPackages;
           unbrokenPackages' = mkPkgsList unbrokenPackages;
-          closureInfo =
-            pkgs.closureInfo {
-              rootPaths = unbrokenPackages;
-            };
+          closureInfo = pkgs.closureInfo {
+            rootPaths = unbrokenPackages;
+          };
           script = pkgs.writeShellApplication {
             name = "build-all";
             text = ''
@@ -54,6 +38,6 @@
             '';
           };
         in
-          lib.getExe script;
+        lib.getExe script;
     };
 }

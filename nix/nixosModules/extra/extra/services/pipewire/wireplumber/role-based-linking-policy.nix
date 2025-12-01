@@ -25,12 +25,12 @@ in
       "wireplumber.components" =
         let
           mkLoopbackSink =
-            { name
-            , description
-            , intendedRoles
-            , priority
-            , lowerPriorityAction
-            ,
+            {
+              name,
+              description,
+              intendedRoles,
+              priority,
+              lowerPriorityAction,
             }:
             {
               type = "pw-module";
@@ -38,7 +38,10 @@ in
               arguments = {
                 "node.name" = "loopback.sink.role.${name}";
                 "node.description" = description;
-                "audio.position" = [ "FL" "FR" ];
+                "audio.position" = [
+                  "FL"
+                  "FR"
+                ];
                 "capture.props" = {
                   "device.intended-roles" = intendedRoles;
                   "policy.role-based.priority" = priority;
@@ -68,7 +71,12 @@ in
           (mkLoopbackSink {
             name = "multimedia";
             description = "Multimedia";
-            intendedRoles = [ "Music" "Movie" "Game" "Multimedia" ];
+            intendedRoles = [
+              "Music"
+              "Movie"
+              "Game"
+              "Multimedia"
+            ];
             priority = 10;
             lowerPriorityAction = "mix";
           })

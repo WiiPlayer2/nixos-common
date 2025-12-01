@@ -1,4 +1,9 @@
-{ super, lib, inputs, config }:
+{
+  super,
+  lib,
+  inputs,
+  config,
+}:
 with lib;
 let
   cfg = config.nixDir3;
@@ -32,21 +37,14 @@ types.submodule (
       _isPerSystem = false;
       haumeaArgs =
         let
-          _inputs =
-            config.extraInputs //
-            super.globalInputs;
-          forPath =
-            path:
-            {
-              src = cfg.src + "/${path}";
-              inputs = _inputs;
-              inherit (config) loader;
-              transformer = super.transformersForPath path config.transformer;
-            };
-          args =
-            map
-              forPath
-              config.paths;
+          _inputs = config.extraInputs // super.globalInputs;
+          forPath = path: {
+            src = cfg.src + "/${path}";
+            inputs = _inputs;
+            inherit (config) loader;
+            transformer = super.transformersForPath path config.transformer;
+          };
+          args = map forPath config.paths;
         in
         args;
     };

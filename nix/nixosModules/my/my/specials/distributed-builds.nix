@@ -1,4 +1,9 @@
-{ lib, config, flake-inputs, ... }:
+{
+  lib,
+  config,
+  flake-inputs,
+  ...
+}:
 let
   inherit (lib)
     mkOption
@@ -62,27 +67,21 @@ in
       # nix.distributedBuilds = true;
       nix.buildMachines =
         let
-          _getSystems =
-            config: system:
-            [ system ] ++ (config.nix.settings.extra-platforms or [ ]);
-          _getEmulatedSystems =
-            config:
-            unique config.boot.binfmt.emulatedSystems;
+          _getSystems = config: system: [ system ] ++ (config.nix.settings.extra-platforms or [ ]);
+          _getEmulatedSystems = config: unique config.boot.binfmt.emulatedSystems;
           _getNativeSystems =
             config: system:
             let
               systems = _getSystems config system;
               emulatedSystems = _getEmulatedSystems config;
             in
-            fold
-              (cur: acc: remove cur acc)
-              systems
-              emulatedSystems;
+            fold (cur: acc: remove cur acc) systems emulatedSystems;
 
           mkRemote =
-            { configuration
-            , systems
-            , speedFactor
+            {
+              configuration,
+              systems,
+              speedFactor,
             }:
             {
               inherit systems speedFactor;
@@ -107,25 +106,17 @@ in
             };
           mkRemotes =
             configuration:
-            filter
-              (x: length x.systems > 0)
-              [
-                (mkNativeRemote configuration)
-                (mkEmulatedRemote configuration)
-              ];
-          configurations =
-            filter
-              (
-                { value, ... }:
-                value.config.my.specials.distributedBuilds.allowBuilding
-                && value.config.my.specials.distributedBuilds.domain == cfg.domain
-                && value.config.networking.hostName != config.networking.hostName
-              )
-              (attrsToList flake-inputs.self.nixosConfigurations);
-          remotes =
-            concatMap
-              ({ value, ... }: mkRemotes value)
-              configurations;
+            filter (x: length x.systems > 0) [
+              (mkNativeRemote configuration)
+              (mkEmulatedRemote configuration)
+            ];
+          configurations = filter (
+            { value, ... }:
+            value.config.my.specials.distributedBuilds.allowBuilding
+            && value.config.my.specials.distributedBuilds.domain == cfg.domain
+            && value.config.networking.hostName != config.networking.hostName
+          ) (attrsToList flake-inputs.self.nixosConfigurations);
+          remotes = concatMap ({ value, ... }: mkRemotes value) configurations;
         in
         remotes;
     })

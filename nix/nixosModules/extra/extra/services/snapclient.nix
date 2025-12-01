@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.services.snapclient;
@@ -48,7 +53,8 @@ in
                 cfg.player
                 "--sampleformat"
                 cfg.sampleFormat
-              ] ++ cfg.extraArgs;
+              ]
+              ++ cfg.extraArgs;
               args' = escapeShellArgs args;
             in
             "${cfg.package}/bin/snapclient ${args'}";
@@ -59,33 +65,39 @@ in
         };
       in
       {
-        services.snapclient = mkIf (!cfg.asUserService) (baseServiceConfig // {
-          after = [
-            "network-online.target"
-            "sound.target"
-          ];
-          requires = [
-            "network-online.target"
-            "sound.target"
-          ];
-          wantedBy = [
-            "multi-user.target"
-          ];
-          serviceConfig = baseServiceConfig.serviceConfig // {
-            User = mkIf (cfg.user != null) cfg.user;
-          };
-        });
-        user.services.snapclient = mkIf cfg.asUserService (baseServiceConfig // {
-          after = [
-            "sockets.target"
-          ];
-          requires = [
-            "sockets.target"
-          ];
-          wantedBy = [
-            "default.target"
-          ];
-        });
+        services.snapclient = mkIf (!cfg.asUserService) (
+          baseServiceConfig
+          // {
+            after = [
+              "network-online.target"
+              "sound.target"
+            ];
+            requires = [
+              "network-online.target"
+              "sound.target"
+            ];
+            wantedBy = [
+              "multi-user.target"
+            ];
+            serviceConfig = baseServiceConfig.serviceConfig // {
+              User = mkIf (cfg.user != null) cfg.user;
+            };
+          }
+        );
+        user.services.snapclient = mkIf cfg.asUserService (
+          baseServiceConfig
+          // {
+            after = [
+              "sockets.target"
+            ];
+            requires = [
+              "sockets.target"
+            ];
+            wantedBy = [
+              "default.target"
+            ];
+          }
+        );
       };
   };
 }

@@ -1,6 +1,7 @@
 { lib }:
 with lib;
-{ extraInputs ? [ ]
+{
+  extraInputs ? [ ],
 }:
 {
   loadByAttribute = true;
@@ -13,27 +14,25 @@ with lib;
   ];
 
   loadTransformer =
-    load:
-    src:
-    { pkgs, config, ... } @ moduleArgs:
+    load: src:
+    { pkgs, config, ... }@moduleArgs:
     let
-      extraModuleArgs = intersectAttrs
-        (
-          genAttrs
-            extraInputs
-            (_: null)
-        )
-        moduleArgs;
-      extraLoadInputs = { inherit pkgs config; } // extraModuleArgs;
+      extraModuleArgs = intersectAttrs (genAttrs extraInputs (_: null)) moduleArgs;
+      extraLoadInputs = {
+        inherit pkgs config;
+      }
+      // extraModuleArgs;
       baseModule = load extraLoadInputs;
-      restModule = removeAttrs baseModule [ "imports" "options" "config" ];
-      coreModule = intersectAttrs
-        {
-          imports = [ ];
-          options = { };
-          config = { };
-        }
-        baseModule;
+      restModule = removeAttrs baseModule [
+        "imports"
+        "options"
+        "config"
+      ];
+      coreModule = intersectAttrs {
+        imports = [ ];
+        options = { };
+        config = { };
+      } baseModule;
       module = coreModule // {
         config = mkMerge [
           coreModule.config or { }

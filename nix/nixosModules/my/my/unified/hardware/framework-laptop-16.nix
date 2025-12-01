@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 with lib;
 {
   options.unified.hardware.framework-laptop-16.enable = mkEnableOption "";

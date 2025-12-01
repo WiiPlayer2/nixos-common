@@ -1,7 +1,8 @@
-{ lib
-, config
-, pkgs
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  ...
 }:
 with lib;
 let
@@ -30,22 +31,18 @@ in
       home.packages =
         with pkgs;
         (
-          (map
-            (
-              x:
-              writeShellScriptBin (setBootOrderScriptName x.name) (
-                setBootOrderScript x.name cfg.uefi.named cfg.uefi.extra
-              )
+          (map (
+            x:
+            writeShellScriptBin (setBootOrderScriptName x.name) (
+              setBootOrderScript x.name cfg.uefi.named cfg.uefi.extra
             )
-            (attrsToList cfg.uefi.named))
-          ++ (map
-            (
-              x:
-              writeShellScriptBin (rebootToScriptName x.name) (
-                rebootToScript x.name cfg.uefi.named cfg.uefi.extra
-              )
+          ) (attrsToList cfg.uefi.named))
+          ++ (map (
+            x:
+            writeShellScriptBin (rebootToScriptName x.name) (
+              rebootToScript x.name cfg.uefi.named cfg.uefi.extra
             )
-            (filter (x: x.name != cfg.uefi.current) (attrsToList cfg.uefi.named)))
+          ) (filter (x: x.name != cfg.uefi.current) (attrsToList cfg.uefi.named)))
         );
     }
   );

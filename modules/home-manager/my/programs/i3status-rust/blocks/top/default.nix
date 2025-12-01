@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }@inputs:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}@inputs:
 let
   i3lib = import ../../lib.nix { inherit lib config; };
   machineCfg = config.my.machine;
@@ -88,71 +93,70 @@ rec {
 
   extraBlocks = import ./extra.nix inputs;
 
-  all =
-    [
-      {
-        block = "focused_window";
-        format = {
-          short = " $title.str(max_w:15) |";
-          full = " $title.str(max_w:45) |";
-        };
-      }
-      (mkIf isNotNixOnDroid {
-        block = "net";
-        format = " $icon ^icon_net_down$speed_down.eng(w:1,p:K) ^icon_net_up$speed_up.eng(w:1,p:K) ";
-        format_alt = " $icon {$signal_strength $ssid $frequency.eng(w:1)|Wired connection} via $device ($ip) ^icon_net_down $graph_down $speed_down.eng(w:1,p:K) ^icon_net_up $graph_up $speed_up.eng(w:1,p:K) ";
-      })
-      speedtest
-    ]
-    ++ [
-      diskSpace
-      (mkIf isNotNixOnDroid {
-        block = "cpu";
-      })
-      memory
-      (mkIf machineCfg.devices.battery.enable {
-        block = "battery";
-        full_threshold = 84;
-        format = " $icon $percentage \\($time_remaining \\| $power\\) ";
-      })
-      (mkIf machineCfg.devices.displayBacklight.enable {
-        block = "backlight";
-        minimum = 0;
-      })
-      (mkIf isNotNixOnDroid {
-        block = "sound";
-        click = [
-          {
-            button = "left";
-            cmd = "pavucontrol";
-          }
-          {
-            button = "middle";
-            cmd =
-              let
-                audioDeviceSwitchScriptSrc = pkgs.fetchurl {
-                  url = "https://gist.githubusercontent.com/kbravh/1117a974f89cc53664e55823a55ac320/raw/9d04a10ae925074536047ae8100c6b0dbfc303d6/audio-device-switch.sh";
-                  hash = "sha256-OP7WFJlABxF06xsOyt99U3tJP1OYPjkYZCnyMp+K8rM=";
-                };
-                audioDeviceSwitchScript = pkgs.writeShellApplication {
-                  name = "audio-device-switch";
-                  runtimeInputs = with pkgs; [
-                    bash
-                    libnotify
-                    pulseaudio
-                  ];
-                  text = ''
-                    bash ${audioDeviceSwitchScriptSrc}
-                  '';
-                };
-              in
-              lib.getExe audioDeviceSwitchScript;
-          }
-        ];
-      })
-    ]
-    ++ extraBlocks
-    ++ time
-    ++ [ notifications ]
-    ++ moveButtons;
+  all = [
+    {
+      block = "focused_window";
+      format = {
+        short = " $title.str(max_w:15) |";
+        full = " $title.str(max_w:45) |";
+      };
+    }
+    (mkIf isNotNixOnDroid {
+      block = "net";
+      format = " $icon ^icon_net_down$speed_down.eng(w:1,p:K) ^icon_net_up$speed_up.eng(w:1,p:K) ";
+      format_alt = " $icon {$signal_strength $ssid $frequency.eng(w:1)|Wired connection} via $device ($ip) ^icon_net_down $graph_down $speed_down.eng(w:1,p:K) ^icon_net_up $graph_up $speed_up.eng(w:1,p:K) ";
+    })
+    speedtest
+  ]
+  ++ [
+    diskSpace
+    (mkIf isNotNixOnDroid {
+      block = "cpu";
+    })
+    memory
+    (mkIf machineCfg.devices.battery.enable {
+      block = "battery";
+      full_threshold = 84;
+      format = " $icon $percentage \\($time_remaining \\| $power\\) ";
+    })
+    (mkIf machineCfg.devices.displayBacklight.enable {
+      block = "backlight";
+      minimum = 0;
+    })
+    (mkIf isNotNixOnDroid {
+      block = "sound";
+      click = [
+        {
+          button = "left";
+          cmd = "pavucontrol";
+        }
+        {
+          button = "middle";
+          cmd =
+            let
+              audioDeviceSwitchScriptSrc = pkgs.fetchurl {
+                url = "https://gist.githubusercontent.com/kbravh/1117a974f89cc53664e55823a55ac320/raw/9d04a10ae925074536047ae8100c6b0dbfc303d6/audio-device-switch.sh";
+                hash = "sha256-OP7WFJlABxF06xsOyt99U3tJP1OYPjkYZCnyMp+K8rM=";
+              };
+              audioDeviceSwitchScript = pkgs.writeShellApplication {
+                name = "audio-device-switch";
+                runtimeInputs = with pkgs; [
+                  bash
+                  libnotify
+                  pulseaudio
+                ];
+                text = ''
+                  bash ${audioDeviceSwitchScriptSrc}
+                '';
+              };
+            in
+            lib.getExe audioDeviceSwitchScript;
+        }
+      ];
+    })
+  ]
+  ++ extraBlocks
+  ++ time
+  ++ [ notifications ]
+  ++ moveButtons;
 }

@@ -1,4 +1,10 @@
-{ lib, config, inputs, withSystem, ... }:
+{
+  lib,
+  config,
+  inputs,
+  withSystem,
+  ...
+}:
 with lib;
 let
   cfg = config.nixDir3;
@@ -15,14 +21,13 @@ in
     lib = mkOption {
       type = types.raw;
       readOnly = true;
-      default =
-        inputs.haumea.lib.load {
-          src = ./lib;
-          inputs = {
-            inherit config inputs withSystem;
-            lib = extend (_: _: inputs.haumea.lib);
-          };
+      default = inputs.haumea.lib.load {
+        src = ./lib;
+        inputs = {
+          inherit config inputs withSystem;
+          lib = extend (_: _: inputs.haumea.lib);
         };
+      };
     };
 
     root = mkOption {
@@ -60,56 +65,45 @@ in
     flake =
       let
         loaderPathResult =
-          loadCfg:
-          path:
+          loadCfg: path:
           let
             byAttrsNameFn =
               cursor:
               let
                 src = cfg.src + "/${first cursor}";
-                names =
-                  attrNames
-                    (
-                      filterAttrs
-                        (_: v: v == "directory")
-                        (builtins.readDir src)
-                    );
+                names = attrNames (filterAttrs (_: v: v == "directory") (builtins.readDir src));
               in
-              if path == "devShells"
-              then break { }
+              if path == "devShells" then
+                break { }
+              else if builtins.pathExists src then
+                names
               else
-                if builtins.pathExists src
-                then names
-                else [ ];
+                [ ];
 
             nestedNamesFn =
               let
-                byAttributeNames =
-                  if loadCfg.loadByAttribute
-                  then [ byAttrsNameFn ]
-                  else [ ];
-                systemsNames =
-                  if loadCfg._isPerSystem
-                  then [ config.systems ]
-                  else [ ];
+                byAttributeNames = if loadCfg.loadByAttribute then [ byAttrsNameFn ] else [ ];
+                systemsNames = if loadCfg._isPerSystem then [ config.systems ] else [ ];
               in
               [ [ path ] ] ++ systemsNames ++ byAttributeNames;
 
             srcFn =
-              if loadCfg.loadByAttribute
-              then (cursor: cfg.src + "/${first cursor}/${last cursor}")
-              else (cursor: cfg.src + "/${first cursor}");
+              if loadCfg.loadByAttribute then
+                (cursor: cfg.src + "/${first cursor}/${last cursor}")
+              else
+                (cursor: cfg.src + "/${first cursor}");
 
-            baseInputs = loadCfg.extraInputs // cfg.extraInputs // {
-              inherit lib inputs;
-            };
+            baseInputs =
+              loadCfg.extraInputs
+              // cfg.extraInputs
+              // {
+                inherit lib inputs;
+              };
 
             haumeaArgsFn =
-              if loadCfg._isPerSystem
-              then
+              if loadCfg._isPerSystem then
                 (
-                  cursor:
-                  extraInputs:
+                  cursor: extraInputs:
                   let
                     src = srcFn cursor;
                     system = elemAt cursor 1;
@@ -132,8 +126,7 @@ in
                 )
               else
                 (
-                  cursor:
-                  extraInputs:
+                  cursor: extraInputs:
                   let
                     src = srcFn cursor;
                     inherit (loadCfg) loader;
@@ -146,49 +139,32 @@ in
                   }
                 );
 
-            loadResult =
-              nixDirLib.helper.recursiveGenAttrs
-                nestedNamesFn
-                (
-                  cursor:
-                  let
-                    src = srcFn cursor;
-                    srcExists = builtins.pathExists src;
-                    load =
-                      extraInputs:
-                      inputs.haumea.lib.load (haumeaArgsFn cursor extraInputs);
-                    result = loadCfg.loadTransformer load src;
-                  in
-                  optionalAttrs srcExists result
-                );
+            loadResult = nixDirLib.helper.recursiveGenAttrs nestedNamesFn (
+              cursor:
+              let
+                src = srcFn cursor;
+                srcExists = builtins.pathExists src;
+                load = extraInputs: inputs.haumea.lib.load (haumeaArgsFn cursor extraInputs);
+                result = loadCfg.loadTransformer load src;
+              in
+              optionalAttrs srcExists result
+            );
           in
           {
             ${loadCfg.target} = loadResult.${path};
           };
 
-        loaderResult =
-          loadCfg:
-          mergeAttrsList
-            (
-              map
-                (loaderPathResult loadCfg)
-                loadCfg.paths
-            );
+        loaderResult = loadCfg: mergeAttrsList (map (loaderPathResult loadCfg) loadCfg.paths);
 
-        result =
-          mergeAttrsList
-            (
-              map
-                loaderResult
-                (
-                  (attrValues (removeAttrs cfg.loaders [ "perSystem" ]))
-                  ++ (attrValues cfg.loaders.perSystem)
-                )
-            );
+        result = mergeAttrsList (
+          map loaderResult (
+            (attrValues (removeAttrs cfg.loaders [ "perSystem" ])) ++ (attrValues cfg.loaders.perSystem)
+          )
+        );
       in
       # {
-        #   tmp = result;
-        # };
+      #   tmp = result;
+      # };
       result;
   };
 }

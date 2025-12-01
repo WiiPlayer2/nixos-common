@@ -1,17 +1,18 @@
-{ fetchzip
-, stdenv
+{
+  fetchzip,
+  stdenv,
 
-, autoreconfHook
+  autoreconfHook,
 
-, intltool
-, pkg-config
-, libtifiles2
-, libticalcs2
-, libticables2
-, libticonv
-, gtk2
+  intltool,
+  pkg-config,
+  libtifiles2,
+  libticalcs2,
+  libticables2,
+  libticonv,
+  gtk2,
 
-, glib
+  glib,
 }:
 let
   pname = "tilp2";

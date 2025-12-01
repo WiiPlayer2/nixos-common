@@ -7,10 +7,10 @@ with lib;
       cfg = config.services.pipewire.wireplumber.roles;
       loopbackSinkRoleName = role: "loopback.sink.role.${role}";
       mkLoopbackSink =
-        { name
-        , description
-        , intendedRoles
-        ,
+        {
+          name,
+          description,
+          intendedRoles,
         }:
         {
           type = "pw-module";
@@ -18,7 +18,10 @@ with lib;
           arguments = {
             "node.name" = "loopback.sink.role.${name}";
             "node.description" = description;
-            "audio.position" = [ "FL" "FR" ];
+            "audio.position" = [
+              "FL"
+              "FR"
+            ];
             "capture.props" = {
               "device.intended-roles" = intendedRoles;
               # "policy.roles.priority" = priority;
@@ -55,15 +58,11 @@ with lib;
 
         services.pipewire.wireplumber.extraConfig = {
           "roles" = {
-            "wireplumber.profiles".main =
-              genAttrs
-                (map loopbackSinkRoleName (attrNames cfg.roles))
-                (_: "required");
+            "wireplumber.profiles".main = genAttrs (map loopbackSinkRoleName (attrNames cfg.roles)) (
+              _: "required"
+            );
 
-            "wireplumber.components" =
-              map
-                mkLoopbackSink
-                (attrValues cfg.roles);
+            "wireplumber.components" = map mkLoopbackSink (attrValues cfg.roles);
           };
         };
       };

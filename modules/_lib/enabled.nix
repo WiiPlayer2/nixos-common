@@ -1,10 +1,16 @@
-{ getNewConfig
-, setNewConfig
-, setAttrs
-, getOldConfig
-, setOldConfig
+{
+  getNewConfig,
+  setNewConfig,
+  setAttrs,
+  getOldConfig,
+  setOldConfig,
 }:
-{ lib, config, options, ... }:
+{
+  lib,
+  config,
+  options,
+  ...
+}:
 with lib;
 let
   cfg = getNewConfig config;
@@ -26,16 +32,12 @@ in
   config =
     let
       oldConfig = setOldConfig (
-        genAttrs
-          cfg
-          (_: { enable = true; })
+        genAttrs cfg (_: {
+          enable = true;
+        })
       );
 
-      setConfig = setAttrs (
-        mapAttrs
-          (n: _: n)
-          (getOldConfig options)
-      );
+      setConfig = setAttrs (mapAttrs (n: _: n) (getOldConfig options));
     in
     oldConfig // setConfig;
 }

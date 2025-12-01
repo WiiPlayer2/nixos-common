@@ -1,4 +1,10 @@
-{ lib, config, hostConfig, flakeRoot, ... }:
+{
+  lib,
+  config,
+  hostConfig,
+  flakeRoot,
+  ...
+}:
 with lib;
 let
   identityBasePath = flakeRoot + "/secrets/hosts/${hostConfig.name}/identity-${hostConfig.mainUser}";
@@ -20,7 +26,9 @@ in
         rekey = mkIf hasHomeSecrets {
           hostPubkey = identityBasePath + ".pub";
         };
-        identityPaths = optional hasHomeSecrets config.age.secrets."user-identity-${hostConfig.mainUser}".path;
+        identityPaths =
+          optional hasHomeSecrets
+            config.age.secrets."user-identity-${hostConfig.mainUser}".path;
       };
     }
   ];

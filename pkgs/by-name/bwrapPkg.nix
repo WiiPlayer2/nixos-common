@@ -1,9 +1,10 @@
-{ bubblewrap
-, gnused
+{
+  bubblewrap,
+  gnused,
 
-, lib
-, writeShellApplication
-, runCommand
+  lib,
+  writeShellApplication,
+  runCommand,
 }:
 let
   linkDirectories = [
@@ -12,32 +13,36 @@ let
     "share/pixmaps"
   ];
 in
-{ package
-, name ? package.name
-, program ? package.meta.mainProgram
+{
+  package,
+  name ? package.name,
+  program ? package.meta.mainProgram,
 
-, bindNixStore ? true
-, binds ? [ ]
+  bindNixStore ? true,
+  binds ? [ ],
 
-, extraArgs ? [ ]
-, extraArgsRaw ? [ ]
+  extraArgs ? [ ],
+  extraArgsRaw ? [ ],
 }:
 let
   mkBindArgs =
-    { path
-    , target ? path
+    {
+      path,
+      target ? path,
       # ro, rw, dev
-    , type ? "ro"
-    , escape ? true
-    , quote ? true # only if not escaped
+      type ? "ro",
+      escape ? true,
+      quote ? true, # only if not escaped
     }:
     let
       mkPathArg =
         path:
-        if escape
-        then lib.escapeShellArg path
-        else if quote then "\"${path}\""
-        else path;
+        if escape then
+          lib.escapeShellArg path
+        else if quote then
+          "\"${path}\""
+        else
+          path;
     in
     [
       (if type != "rw" then "--${type}-bind" else "--bind")
@@ -66,35 +71,31 @@ let
       exec bwrap ${bwrapArgsRaw} -- ${package}/bin/${program} "$@"
     '';
   };
-  wrappedPackage = runCommand name
-    {
-      buildInputs = [
-        gnused
-      ];
+  wrappedPackage =
+    runCommand name
+      {
+        buildInputs = [
+          gnused
+        ];
 
-      # TODO: for some reason this breaks allowUnfreePredicate
-      # meta = package.meta;
+        # TODO: for some reason this breaks allowUnfreePredicate
+        # meta = package.meta;
 
-      meta.mainProgram = program;
-    } ''
-    mkdir -p $out/bin
-    ln -s ${wrappedProgram}/bin/${wrappedProgram.name} $out/bin/${program}
+        meta.mainProgram = program;
+      }
+      ''
+        mkdir -p $out/bin
+        ln -s ${wrappedProgram}/bin/${wrappedProgram.name} $out/bin/${program}
 
-    ${
-      lib.concatStringsSep
-      "\n"
-      (
-        lib.map
-        (x: ''
-          if [ -e ${package}/${x} ]; then
-            mkdir -p $out/${x}
-            rmdir $out/${x}
-            ln -s ${package}/${x} $out/${x}
-          fi
-        '')
-        linkDirectories
-      )
-    }
-  '';
+        ${lib.concatStringsSep "\n" (
+          lib.map (x: ''
+            if [ -e ${package}/${x} ]; then
+              mkdir -p $out/${x}
+              rmdir $out/${x}
+              ln -s ${package}/${x} $out/${x}
+            fi
+          '') linkDirectories
+        )}
+      '';
 in
 wrappedPackage

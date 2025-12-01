@@ -3,11 +3,11 @@ with lib;
 {
   enable = mkEnableOption "";
 
-  package = mkPackageOption pkgs "archipelago" {};
+  package = mkPackageOption pkgs "archipelago" { };
 
   worlds = mkOption {
     type = with types; listOf package;
-    default = [];
+    default = [ ];
   };
 
   worldPkgs = mkOption {

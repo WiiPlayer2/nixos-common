@@ -3,15 +3,13 @@ with lib;
 let
   getEntriesForPath =
     path:
-    mapAttrs
-      (
-        name: value:
-        let
-          fullPath = path + "/${name}";
-        in
-        if value == "directory" then getEntriesForPath fullPath else fullPath
-      )
-      (builtins.readDir path);
+    mapAttrs (
+      name: value:
+      let
+        fullPath = path + "/${name}";
+      in
+      if value == "directory" then getEntriesForPath fullPath else fullPath
+    ) (builtins.readDir path);
 
   cfg = config.my.assets;
 in

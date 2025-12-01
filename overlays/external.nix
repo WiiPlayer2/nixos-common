@@ -13,9 +13,10 @@
         cros-ectool
         ;
 
-      bizhawk = (import inputs.bizhawk {
-        system = prev.stdenv.hostPlatform.system;
-      }).emuhawk;
+      bizhawk =
+        (import inputs.bizhawk {
+          system = prev.stdenv.hostPlatform.system;
+        }).emuhawk;
     })
   ];
 }

@@ -1,4 +1,10 @@
-{ super, lib, inputs, config, withSystem }:
+{
+  super,
+  lib,
+  inputs,
+  config,
+  withSystem,
+}:
 with lib;
 let
   cfg = config.nixDir3;
@@ -34,34 +40,25 @@ types.submodule (
         pkgs:
         let
           _inputs =
-            config.extraInputs //
-            super.globalInputs //
-            (
-              withSystem
-                pkgs.stdenv.hostPlatform.system
-                (
-                  { inputs', config, ... }:
-                  {
-                    inherit
-                      pkgs
-                      inputs'
-                      ;
-                    config' = config;
-                  }
-                )
-            );
-          forPath =
-            path:
-            {
-              src = cfg.src + "/${path}";
-              inputs = _inputs;
-              loader = config.loader pkgs;
-              transformer = super.transformersForPath path (config.transformer pkgs);
-            };
-          args =
-            map
-              forPath
-              config.paths;
+            config.extraInputs
+            // super.globalInputs
+            // (withSystem pkgs.stdenv.hostPlatform.system (
+              { inputs', config, ... }:
+              {
+                inherit
+                  pkgs
+                  inputs'
+                  ;
+                config' = config;
+              }
+            ));
+          forPath = path: {
+            src = cfg.src + "/${path}";
+            inputs = _inputs;
+            loader = config.loader pkgs;
+            transformer = super.transformersForPath path (config.transformer pkgs);
+          };
+          args = map forPath config.paths;
         in
         args;
     };

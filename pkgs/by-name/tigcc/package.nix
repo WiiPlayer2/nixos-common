@@ -1,10 +1,11 @@
-{ fetchzip
-, stdenv
-, runCommand
+{
+  fetchzip,
+  stdenv,
+  runCommand,
 
-, gcc13
-, bison
-, flex
+  gcc13,
+  bison,
+  flex,
 }:
 let
   gcc = gcc13;
@@ -25,32 +26,34 @@ let
     hash = "sha256-galQzRm20/qwf7c6wFAF9YkFPfWiQpvNWmWyw4nM/CA=";
   };
 
-  prepareStep = { prev, isSrc ? false }: ''
-    mkdir -p $out/{src,out}
-    _src=$out/src
-    _out=$out/out
-    ${
-      if isSrc
-      then "cp -r ${prev}/* $out/src"
-      else "cp -r ${prev}/* $out"
-    }
-    chmod -R 777 $out/*
+  prepareStep =
+    {
+      prev,
+      isSrc ? false,
+    }:
+    ''
+      mkdir -p $out/{src,out}
+      _src=$out/src
+      _out=$out/out
+      ${if isSrc then "cp -r ${prev}/* $out/src" else "cp -r ${prev}/* $out"}
+      chmod -R 777 $out/*
 
-    export TIGCC="$_out"
-    export PATH="$PATH:$TIGCC/bin"
-  '';
+      export TIGCC="$_out"
+      export PATH="$PATH:$TIGCC/bin"
+    '';
 
-  step0 = runCommand "${pname}-step0-${version}"
-    { } ''
-    ${prepareStep { prev = src; isSrc = true; }}
+  step0 = runCommand "${pname}-step0-${version}" { } ''
+    ${prepareStep {
+      prev = src;
+      isSrc = true;
+    }}
 
     mkdir -p $_src/download/{gcc.ti,binutils.ti}
     cp -r ${gcc4-core}/* $_src/download/gcc.ti
     cp -r ${binutils}/* $_src/download/binutils.ti
   '';
 
-  step1 = runCommand "${pname}-step1-${version}"
-    { } ''
+  step1 = runCommand "${pname}-step1-${version}" { } ''
     ${prepareStep { prev = step0; }}
 
     cd $_src/scripts
@@ -60,24 +63,25 @@ let
     patch -F 5 < ${./gcc.patch}
   '';
 
-  step2 = runCommand "${pname}-step2-${version}"
-    {
-      buildInputs = [
-        gcc
-        flex
-        bison
-      ];
-    } ''
-    ${prepareStep { prev = step1; }}
+  step2 =
+    runCommand "${pname}-step2-${version}"
+      {
+        buildInputs = [
+          gcc
+          flex
+          bison
+        ];
+      }
+      ''
+        ${prepareStep { prev = step1; }}
 
-    cd $_src/scripts
-    ./Install_step_2
+        cd $_src/scripts
+        ./Install_step_2
 
-    test -f $_out/bin/gcc
-  '';
+        test -f $_out/bin/gcc
+      '';
 
-  step3 = runCommand "${pname}-step3-${version}"
-    { } ''
+  step3 = runCommand "${pname}-step3-${version}" { } ''
     ${prepareStep { prev = step2; }}
 
     cd $_src/scripts
@@ -99,20 +103,21 @@ let
     cp -Rf ../tigcclib/examples $TIGCC
   '';
 
-  step4 = runCommand "${pname}-step4-${version}"
-    {
-      buildInputs = [
-        gcc
-      ];
-    } ''
-    ${prepareStep { prev = step3; }}
+  step4 =
+    runCommand "${pname}-step4-${version}"
+      {
+        buildInputs = [
+          gcc
+        ];
+      }
+      ''
+        ${prepareStep { prev = step3; }}
 
-    cd $_src/scripts
-    ./Install_step_4
-  '';
+        cd $_src/scripts
+        ./Install_step_4
+      '';
 
-  step5 = runCommand "${pname}-step5-${version}"
-    { } ''
+  step5 = runCommand "${pname}-step5-${version}" { } ''
     ${prepareStep { prev = step4; }}
 
     cd $_src/scripts
@@ -152,12 +157,14 @@ let
     echo Done.
   '';
 
-  pkg = runCommand "${pname}-${version}"
-    {
-      passthru.skipUpdate = true;
-    } ''
-    mkdir -p $out
-    cp -r ${step5}/out/* $out
-  '';
+  pkg =
+    runCommand "${pname}-${version}"
+      {
+        passthru.skipUpdate = true;
+      }
+      ''
+        mkdir -p $out
+        cp -r ${step5}/out/* $out
+      '';
 in
 pkg

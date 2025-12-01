@@ -1,4 +1,10 @@
-{ self, lib, flake-parts-lib, moduleLocation, ... }:
+{
+  self,
+  lib,
+  flake-parts-lib,
+  moduleLocation,
+  ...
+}:
 let
   inherit (lib)
     mapAttrs
@@ -15,7 +21,12 @@ in
       nixOnDroidModules = mkOption {
         type = types.lazyAttrsOf types.deferredModule;
         default = { };
-        apply = mapAttrs (k: v: { _file = "${toString moduleLocation}#nixOnDroidModules.${k}"; imports = [ v ]; });
+        apply = mapAttrs (
+          k: v: {
+            _file = "${toString moduleLocation}#nixOnDroidModules.${k}";
+            imports = [ v ];
+          }
+        );
         description = ''
           Nix-on-Droid modules.
 

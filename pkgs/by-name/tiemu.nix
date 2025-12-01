@@ -1,25 +1,26 @@
-{ fetchzip
-, stdenv
-, symlinkJoin
+{
+  fetchzip,
+  stdenv,
+  symlinkJoin,
 
-, autoreconfHook
-, pkg-config
+  autoreconfHook,
+  pkg-config,
 
-, libtifiles2
-, libticalcs2
-, libticables2
-, libticonv
-, gtk2
-, gtk3
-, gnome2
-, SDL
-, xorg
-, libsForQt5
-, glib
-, gnused
-, texinfo
-, ncurses
-, flex
+  libtifiles2,
+  libticalcs2,
+  libticables2,
+  libticonv,
+  gtk2,
+  gtk3,
+  gnome2,
+  SDL,
+  xorg,
+  libsForQt5,
+  glib,
+  gnused,
+  texinfo,
+  ncurses,
+  flex,
 }:
 let
   pname = "tiemu";

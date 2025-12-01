@@ -1,11 +1,22 @@
-{ lib, pkgs, hostConfig, ... }:
+{
+  lib,
+  pkgs,
+  hostConfig,
+  ...
+}:
 with lib;
 let
   flakeArgs = "--override-input common path:/etc/nixos/flakes/common";
   mkNixosRebuild =
-    { name, useSudo, command }:
+    {
+      name,
+      useSudo,
+      command,
+    }:
     let
-      cmd = "${if useSudo then "sudo " else ""}nixos-rebuild ${command} --flake /etc/nixos#${hostConfig.name} ${flakeArgs} --log-format internal-json --verbose \"$@\" |& ${getExe pkgs.nix-output-monitor} --json";
+      cmd = "${
+        if useSudo then "sudo " else ""
+      }nixos-rebuild ${command} --flake /etc/nixos#${hostConfig.name} ${flakeArgs} --log-format internal-json --verbose \"$@\" |& ${getExe pkgs.nix-output-monitor} --json";
     in
     pkgs.writeShellApplication {
       inherit name;
@@ -29,9 +40,21 @@ in
     tree
     dig.dnsutils
 
-    (mkNixosRebuild { name = "nrs"; useSudo = true; command = "switch"; })
-    (mkNixosRebuild { name = "nrb"; useSudo = true; command = "boot"; })
-    (mkNixosRebuild { name = "nrt"; useSudo = true; command = "test"; })
+    (mkNixosRebuild {
+      name = "nrs";
+      useSudo = true;
+      command = "switch";
+    })
+    (mkNixosRebuild {
+      name = "nrb";
+      useSudo = true;
+      command = "boot";
+    })
+    (mkNixosRebuild {
+      name = "nrt";
+      useSudo = true;
+      command = "test";
+    })
     nixosEval
   ];
 }

@@ -8,5 +8,7 @@ let
   ];
 in
 {
-  programs = genAttrs programs (x: { enable = true; });
+  programs = genAttrs programs (x: {
+    enable = true;
+  });
 }

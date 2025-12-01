@@ -1,24 +1,27 @@
-{ lib, config, inputs, ... }:
+{
+  lib,
+  config,
+  inputs,
+  ...
+}:
 with lib;
 let
   cfg = config.nixDir;
 
   load =
-    loader:
-    loaderName:
+    loader: loaderName:
     let
       dirEntries = builtins.readDir (cfg.src + "/${loaderName}");
       nameFromEntry = removeSuffix ".nix";
-      pathMap =
-        listToAttrs
-          (
-            map
-              ({ name, value }: {
-                name = nameFromEntry name;
-                value = cfg.src + "/${loaderName}/${name}";
-              })
-              (attrsToList dirEntries)
-          );
+      pathMap = listToAttrs (
+        map (
+          { name, value }:
+          {
+            name = nameFromEntry name;
+            value = cfg.src + "/${loaderName}/${name}";
+          }
+        ) (attrsToList dirEntries)
+      );
       loaded = loader pathMap;
     in
     loaded;
@@ -41,9 +44,6 @@ in
       nixosModules = mapAttrs (_: p: setDefaultModuleLocation p (import p inputs));
     };
 
-    flake =
-      mapAttrs
-        (n: v: load v n)
-        cfg.loaders;
+    flake = mapAttrs (n: v: load v n) cfg.loaders;
   };
 }

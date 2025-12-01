@@ -1,12 +1,20 @@
-{ lib, flake-parts-lib, config, inputs, ... }:
+{
+  lib,
+  flake-parts-lib,
+  config,
+  inputs,
+  ...
+}:
 with lib;
 with flake-parts-lib;
 let
-  genericSubmoduleType = with types; oneOf [
-    path
-    attrs
-    (functionTo attrs)
-  ];
+  genericSubmoduleType =
+    with types;
+    oneOf [
+      path
+      attrs
+      (functionTo attrs)
+    ];
 
   specialArgsOption = mkOption {
     type = types.attrs;
@@ -23,7 +31,7 @@ let
 
     overlays = mkOption {
       type = with types; listOf (functionTo (functionTo attrs));
-      default = [];
+      default = [ ];
     };
 
     modules = {
@@ -77,13 +85,13 @@ let
     in
     modules;
 
-  getOverlays =
-    host:
-    config.hosts.common.overlays ++ host.overlays;
+  getOverlays = host: config.hosts.common.overlays ++ host.overlays;
 
   getSpecialArgs =
     host:
-    config.hosts.common.specialArgs // host.specialArgs // {
+    config.hosts.common.specialArgs
+    // host.specialArgs
+    // {
       hostConfig = host;
     };
 
@@ -116,8 +124,7 @@ let
           users.users."${host.mainUser}".isNormalUser = true;
         }
       ];
-      nixosModules =
-        globalModules ++ configNixosModules ++ extraNixosModules;
+      nixosModules = globalModules ++ configNixosModules ++ extraNixosModules;
     in
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = extraSpecialArgs;
@@ -151,20 +158,15 @@ let
 
           user.userName = host.mainUser;
         }
-      ] ++ nixOnDroidModules;
+      ]
+      ++ nixOnDroidModules;
     };
 
   mkConfigs =
     type: mkConfig:
     let
-      hosts =
-        filterAttrs
-          (n: v: v.type == type)
-          config.hosts.config;
-      configs =
-        mapAttrs
-          (n: v: mkConfig v)
-          hosts;
+      hosts = filterAttrs (n: v: v.type == type) config.hosts.config;
+      configs = mapAttrs (n: v: mkConfig v) hosts;
     in
     configs;
 in

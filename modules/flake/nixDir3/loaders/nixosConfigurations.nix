@@ -1,4 +1,9 @@
-{ lib, config, inputs, ... }:
+{
+  lib,
+  config,
+  inputs,
+  ...
+}:
 with lib;
 with config.nixDir3.lib;
 let
@@ -11,8 +16,7 @@ in
     ];
 
     loadTransformer =
-      load:
-      src:
+      load: src:
       let
         module = modulesLoader.loadTransformer load src;
       in

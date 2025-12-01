@@ -1,15 +1,15 @@
-{ fetchzip
-, stdenv
-, autoPatchelfHook
-, makeDesktopItem
-, symlinkJoin
-, writeShellScriptBin
-, libglvnd
-, SDL2
-, libdrm
-, libxcrypt-legacy
-, lttng-ust_2_12
-,
+{
+  fetchzip,
+  stdenv,
+  autoPatchelfHook,
+  makeDesktopItem,
+  symlinkJoin,
+  writeShellScriptBin,
+  libglvnd,
+  SDL2,
+  libdrm,
+  libxcrypt-legacy,
+  lttng-ust_2_12,
 }:
 let
   pname = "randovania";

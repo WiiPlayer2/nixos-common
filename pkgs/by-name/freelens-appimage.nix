@@ -1,7 +1,8 @@
-{ pkgs
-, appimageTools
-, fetchurl
-, makeDesktopItem
+{
+  pkgs,
+  appimageTools,
+  fetchurl,
+  makeDesktopItem,
 }:
 let
   pname = "freelens-appimage";

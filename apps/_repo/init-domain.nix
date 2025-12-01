@@ -1,6 +1,11 @@
 {
   perSystem =
-    { pkgs, self', lib, ... }:
+    {
+      pkgs,
+      self',
+      lib,
+      ...
+    }:
     {
       apps.__repo__init-domain = {
         program =

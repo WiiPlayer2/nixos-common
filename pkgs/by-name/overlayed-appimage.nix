@@ -1,6 +1,7 @@
-{ appimageTools
-, fetchurl
-, makeDesktopItem
+{
+  appimageTools,
+  fetchurl,
+  makeDesktopItem,
 }:
 let
   pname = "overlayed-appimage";

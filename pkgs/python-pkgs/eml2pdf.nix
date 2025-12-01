@@ -1,14 +1,15 @@
-{ buildPythonPackage
-, fetchPypi
+{
+  buildPythonPackage,
+  fetchPypi,
 
-, setuptools
-, setuptools-scm
+  setuptools,
+  setuptools-scm,
 
-, weasyprint
-, markdown
-, hurry-filesize
-, beautifulsoup4
-, typing-extensions
+  weasyprint,
+  markdown,
+  hurry-filesize,
+  beautifulsoup4,
+  typing-extensions,
 }:
 
 let

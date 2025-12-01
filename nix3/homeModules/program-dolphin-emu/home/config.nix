@@ -1,16 +1,17 @@
-{ lib, config, pkgs }:
+{
+  lib,
+  config,
+  pkgs,
+}:
 with lib;
 let
   cfg = config.programs.dolphin-emu;
 
-  environmentVariableScript =
-    join
-      "\n"
-      (
-        map
-          ({ name, value }: "export ${name}=${escapeShellArg value}")
-          (attrsToList cfg.prefixEnvironmentVariables)
-      );
+  environmentVariableScript = join "\n" (
+    map ({ name, value }: "export ${name}=${escapeShellArg value}") (
+      attrsToList cfg.prefixEnvironmentVariables
+    )
+  );
 
   wrappedFiles =
     pkg:
@@ -41,18 +42,11 @@ let
         pkg
       ];
     };
-  wrapPackageIfNeeded =
-    pkg:
-    if cfg.prefixCommand == null
-    then pkg
-    else wrappedPackage pkg;
-  allVariants =
-    map
-      wrapPackageIfNeeded
-      ([ cfg.package ] ++ cfg.additionalVariants);
+  wrapPackageIfNeeded = pkg: if cfg.prefixCommand == null then pkg else wrappedPackage pkg;
+  allVariants = map wrapPackageIfNeeded ([ cfg.package ] ++ cfg.additionalVariants);
   package =
-    if length allVariants == 1
-    then elemAt allVariants 0
+    if length allVariants == 1 then
+      elemAt allVariants 0
     else
       pkgs.buildEnv {
         name = join "-and-" (map (x: x.name) allVariants);

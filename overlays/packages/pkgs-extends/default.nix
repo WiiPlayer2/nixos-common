@@ -8,7 +8,8 @@ in
       let
         lpkgs = prev.linuxKernel.packages;
       in
-      lpkgs // {
+      lpkgs
+      // {
         linux_6_16 = lpkgs.linux_6_16.extend linuxPackages;
       };
   };

@@ -1,6 +1,7 @@
-{ rustPlatform
-, fetchFromGitHub
-, nix-update-script
+{
+  rustPlatform,
+  fetchFromGitHub,
+  nix-update-script,
 }:
 let
   pname = "p2p-clipboard";

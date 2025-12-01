@@ -1,7 +1,8 @@
-{ lib
-, buildDotnetModule
-, dotnet-aspnetcore
-, nix-update-script
+{
+  lib,
+  buildDotnetModule,
+  dotnet-aspnetcore,
+  nix-update-script,
 }:
 with lib;
 buildDotnetModule rec {

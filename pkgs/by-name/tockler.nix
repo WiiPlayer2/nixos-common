@@ -1,7 +1,8 @@
-{ pkgs
-, appimageTools
-, fetchurl
-, makeDesktopItem
+{
+  pkgs,
+  appimageTools,
+  fetchurl,
+  makeDesktopItem,
 }:
 let
   pname = "tockler-appimage";
@@ -26,9 +27,10 @@ appimageTools.wrapType2 {
     hash = "sha256-9Qwp3hXbAxnI4aif6PlX0WbVeefP7L67WP5GNW8rqaI=";
   };
 
-  extraPkgs = pkgs: with pkgs; [
-    xorg.xwininfo
-  ];
+  extraPkgs =
+    pkgs: with pkgs; [
+      xorg.xwininfo
+    ];
 
   extraInstallCommands = ''
     mkdir -p "$out/share"

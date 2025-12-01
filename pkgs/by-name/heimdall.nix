@@ -1,13 +1,14 @@
 # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/pkgs/tools/misc/heimdall/default.nix#L49
-{ lib
-, stdenv
-, fetchgit
-, cmake
-, zlib
-, libusb1
-, enableGUI ? false
-, qtbase ? null
-, pkg-config
+{
+  lib,
+  stdenv,
+  fetchgit,
+  cmake,
+  zlib,
+  libusb1,
+  enableGUI ? false,
+  qtbase ? null,
+  pkg-config,
 }:
 
 stdenv.mkDerivation rec {
@@ -29,7 +30,8 @@ stdenv.mkDerivation rec {
   buildInputs = [
     zlib
     libusb1
-  ] ++ lib.optional enableGUI qtbase;
+  ]
+  ++ lib.optional enableGUI qtbase;
   nativeBuildInputs = [
     cmake
     pkg-config
@@ -39,14 +41,13 @@ stdenv.mkDerivation rec {
     "-DDISABLE_FRONTEND=${if enableGUI then "OFF" else "ON"}"
   ];
 
-  preConfigure =
-    ''
-      # Give ownership of the Galaxy S USB device to the logged in user.
-      substituteInPlace heimdall/60-heimdall.rules --replace 'MODE="0666"' 'TAG+="uaccess"'
-    ''
-    + lib.optionalString stdenv.isDarwin ''
-      substituteInPlace libpit/CMakeLists.txt --replace "-std=gnu++11" ""
-    '';
+  preConfigure = ''
+    # Give ownership of the Galaxy S USB device to the logged in user.
+    substituteInPlace heimdall/60-heimdall.rules --replace 'MODE="0666"' 'TAG+="uaccess"'
+  ''
+  + lib.optionalString stdenv.isDarwin ''
+    substituteInPlace libpit/CMakeLists.txt --replace "-std=gnu++11" ""
+  '';
 
   installPhase =
     lib.optionalString (stdenv.isDarwin && enableGUI) ''

@@ -1,5 +1,12 @@
 # TODO: this should be moved and referenced correctly
-{ stdenv, lib, fetchFromGitHub, kernel, kmod, gnused }:
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  kernel,
+  kmod,
+  gnused,
+}:
 
 stdenv.mkDerivation rec {
   pname = "hid-spsdm";

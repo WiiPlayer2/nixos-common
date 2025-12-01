@@ -73,12 +73,10 @@ let
     enable = mkEnableOption description;
   };
   programOptions = listToAttrs (
-    map
-      (x: {
-        name = x;
-        value = mkProgramOption x;
-      })
-      programs
+    map (x: {
+      name = x;
+      value = mkProgramOption x;
+    }) programs
   );
 in
 {

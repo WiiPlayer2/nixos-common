@@ -1,23 +1,26 @@
 { lib, inputs }:
 let
   buildOverlay =
-    { pkgsPath
-    , additionalPackages ? (_: _: { })
-    , additionalInput ? (_: _: { })
+    {
+      pkgsPath,
+      additionalPackages ? (_: _: { }),
+      additionalInput ? (_: _: { }),
     }:
     final: prev:
     let
       evalPkgs = {
         inherit prev;
         inherit inputs;
-      } // (additionalInput final prev);
+      }
+      // (additionalInput final prev);
 
       finalPkgs = final // evalPkgs;
       prevPkgs = prev // packages // evalPkgs;
       callPackage =
-        if final ? callPackage
-        then prev.lib.callPackageWith finalPkgs
-        else prev.lib.callPackageWith prevPkgs;
+        if final ? callPackage then
+          prev.lib.callPackageWith finalPkgs
+        else
+          prev.lib.callPackageWith prevPkgs;
 
       packages' = prev.lib.packagesFromDirectoryRecursive {
         inherit callPackage;
@@ -33,12 +36,14 @@ let
     let
       python =
         let
-          overriddenPython = (prevPython.override {
-            self = python;
-            packageOverrides = buildOverlay {
-              pkgsPath = ./python-pkgs;
-            };
-          });
+          overriddenPython = (
+            prevPython.override {
+              self = python;
+              packageOverrides = buildOverlay {
+                pkgsPath = ./python-pkgs;
+              };
+            }
+          );
           withPassthru = overriddenPython // {
             passthru = overriddenPython.passthru // {
               skipUpdate = true;
@@ -55,7 +60,8 @@ buildOverlay {
     inputs.poetry2nix.overlays.default
     (_: prev: {
       ninelore-monoflake = inputs.ninelore-monoflake.legacyPackages.${prev.stdenv.hostPlatform.system};
-      ninelore-monoflake-pkgs = inputs.ninelore-monoflake.inputs.nixpkgs.legacyPackages.${prev.stdenv.hostPlatform.system};
+      ninelore-monoflake-pkgs =
+        inputs.ninelore-monoflake.inputs.nixpkgs.legacyPackages.${prev.stdenv.hostPlatform.system};
       ninelore-monoflake-input = inputs.ninelore-monoflake;
       loadPyproject = inputs.pyproject-nix.lib.project.loadPyproject;
     })

@@ -1,5 +1,10 @@
 # TODO: this all needs refactoring
-{ lib, config, pkgs, ... }@args:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}@args:
 with lib;
 let
   cfg = config.programs.i3status-rust;

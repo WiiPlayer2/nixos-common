@@ -41,10 +41,10 @@ with lib;
   };
 
   createConfigGenerationService =
-    { component
-    , description
-    , configFile
-    ,
+    {
+      component,
+      description,
+      configFile,
     }:
     {
       description = "SoftEther ${description} config generation";
@@ -60,11 +60,11 @@ with lib;
           createIndentString = indentLevel: concatStrings (map (x: "\t") (range 1 indentLevel));
           rootSection = config.services.softether.${component}.config;
           renderValue =
-            { valueName
-            , value
-            , indentLevel ? 0
-            , outFile
-            ,
+            {
+              valueName,
+              value,
+              indentLevel ? 0,
+              outFile,
             }:
             let
               indentString = createIndentString indentLevel;
@@ -85,11 +85,11 @@ with lib;
             in
             if value.dataFile != null then renderFileValue else renderDirectValue;
           renderSection =
-            { section
-            , sectionName
-            , indentLevel ? 0
-            , outFile
-            ,
+            {
+              section,
+              sectionName,
+              indentLevel ? 0,
+              outFile,
             }:
             let
               indentString = createIndentString indentLevel;
@@ -97,30 +97,26 @@ with lib;
                 echo "${indentString}${text}" >> '${outFile}'
               '';
               sections = concatStringsSep "\n" (
-                map
-                  (
-                    { name, value }:
-                    renderSection {
-                      inherit outFile;
-                      sectionName = name;
-                      section = value;
-                      indentLevel = indentLevel + 1;
-                    }
-                  )
-                  (attrsToList section.sections)
+                map (
+                  { name, value }:
+                  renderSection {
+                    inherit outFile;
+                    sectionName = name;
+                    section = value;
+                    indentLevel = indentLevel + 1;
+                  }
+                ) (attrsToList section.sections)
               );
               values = concatStringsSep "\n" (
-                map
-                  (
-                    { name, value }:
-                    renderValue {
-                      inherit outFile;
-                      valueName = name;
-                      value = value;
-                      indentLevel = indentLevel + 1;
-                    }
-                  )
-                  (attrsToList section.values)
+                map (
+                  { name, value }:
+                  renderValue {
+                    inherit outFile;
+                    valueName = name;
+                    value = value;
+                    indentLevel = indentLevel + 1;
+                  }
+                ) (attrsToList section.values)
               );
               hasValuesAndSections =
                 let

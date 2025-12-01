@@ -1,5 +1,10 @@
-{ pkgs, flakeConfig', inputs' }:
-with pkgs; [
+{
+  pkgs,
+  flakeConfig',
+  inputs',
+}:
+with pkgs;
+[
   flakeConfig'.agenix-rekey.package
   rage
   age-plugin-yubikey

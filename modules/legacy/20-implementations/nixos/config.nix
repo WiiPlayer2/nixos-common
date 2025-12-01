@@ -1,7 +1,8 @@
-{ lib
-, config
-, flakeRoot
-, ...
+{
+  lib,
+  config,
+  flakeRoot,
+  ...
 }:
 with lib;
 let
@@ -61,7 +62,8 @@ in
     trusted-users = [
       "@wheel"
     ];
-  } // cfg.nix.settings;
+  }
+  // cfg.nix.settings;
 
   networking.hostName = cfg.hostname;
 

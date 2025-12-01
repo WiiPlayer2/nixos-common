@@ -1,9 +1,10 @@
-{ nixos-artwork
-, runCommand
-, imagemagick
-, inkscape
-, fetchurl
-, nix-update-script
+{
+  nixos-artwork,
+  runCommand,
+  imagemagick,
+  inkscape,
+  fetchurl,
+  nix-update-script,
 }:
 let
   baseWallpaper = nixos-artwork.wallpapers.catppuccin-mocha.gnomeFilePath;
@@ -13,24 +14,25 @@ let
   };
 in
 runCommand "branded-wallpaper.png"
-{
-  # needed for nix-update
-  version = "none";
-  src = brandLogo;
+  {
+    # needed for nix-update
+    version = "none";
+    src = brandLogo;
 
-  buildInputs = [
-    imagemagick
-    inkscape
-  ];
+    buildInputs = [
+      imagemagick
+      inkscape
+    ];
 
-  passthru.updateScript = nix-update-script {
-    extraArgs = [ "--version=skip" ];
-  };
-} ''
-  mkdir -p $out
+    passthru.updateScript = nix-update-script {
+      extraArgs = [ "--version=skip" ];
+    };
+  }
+  ''
+    mkdir -p $out
 
-  inkscape \
-    --actions="select-all; object-set-property:fill,white;" \
-    -h 200 ${brandLogo} -o logo.png
-  magick ${baseWallpaper} -gravity SouthEast -draw 'image SrcOver 200,200,0,0 logo.png' $out/wallpaper.png
-''
+    inkscape \
+      --actions="select-all; object-set-property:fill,white;" \
+      -h 200 ${brandLogo} -o logo.png
+    magick ${baseWallpaper} -gravity SouthEast -draw 'image SrcOver 200,200,0,0 logo.png' $out/wallpaper.png
+  ''

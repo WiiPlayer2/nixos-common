@@ -8,16 +8,18 @@ with pkgs;
         hash = "sha256-h5tnlySZtaiAQODF27KJgPfWF9JueGDyddhD2PP0Pm8=";
         stripRoot = false;
       };
-      world = runCommand "twilight-princess-apworld"
-        {
-          passthru = {
-            inherit src;
-          };
-          meta.name = "Twilight Princess";
-        } ''
-        mkdir -p $out
-        ln -sf "${src}/Twilight Princess.apworld" $out/
-      '';
+      world =
+        runCommand "twilight-princess-apworld"
+          {
+            passthru = {
+              inherit src;
+            };
+            meta.name = "Twilight Princess";
+          }
+          ''
+            mkdir -p $out
+            ln -sf "${src}/Twilight Princess.apworld" $out/
+          '';
     in
     world;
 
@@ -27,16 +29,18 @@ with pkgs;
         url = "https://github.com/eternalcode0/Archipelago/releases/download/v0.2.0/tmc.apworld";
         hash = "sha256-vCyeuEoWEr41KhSvtZCEVaoblZSDxdepf5EQrYHqtWo=";
       };
-      world = runCommand "the-minish-cap-apworld"
-        {
-          passthru = {
-            inherit src;
-          };
-          meta.name = "tmc";
-        } ''
-        mkdir -p $out
-        ln -sf ${src} $out/tmc.apworld
-      '';
+      world =
+        runCommand "the-minish-cap-apworld"
+          {
+            passthru = {
+              inherit src;
+            };
+            meta.name = "tmc";
+          }
+          ''
+            mkdir -p $out
+            ln -sf ${src} $out/tmc.apworld
+          '';
     in
     world;
 
@@ -46,16 +50,18 @@ with pkgs;
         url = "https://github.com/Electro1512/MetroidAPrime/releases/download/v0.5.0/metroidprime.apworld";
         hash = "sha256-Xh/rDXNux5SIq4TWyCZLlB7z6o21i5cUBucXxGL83Js=";
       };
-      world = runCommand "metroid-prime-apworld"
-        {
-          passthru = {
-            inherit src;
-          };
-          meta.name = "metroidprime";
-        } ''
-        mkdir -p $out
-        ln -sf ${src} $out/metroidprime.apworld
-      '';
+      world =
+        runCommand "metroid-prime-apworld"
+          {
+            passthru = {
+              inherit src;
+            };
+            meta.name = "metroidprime";
+          }
+          ''
+            mkdir -p $out
+            ln -sf ${src} $out/metroidprime.apworld
+          '';
     in
     world;
 }

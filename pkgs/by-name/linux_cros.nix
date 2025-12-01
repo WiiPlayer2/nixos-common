@@ -1,4 +1,9 @@
-{ ninelore-monoflake, ninelore-monoflake-input, system, ... } @ args:
+{
+  ninelore-monoflake,
+  ninelore-monoflake-input,
+  system,
+  ...
+}@args:
 let
   upstreamKernel = ninelore-monoflake.linux_cros.override args;
   crossCompiledKernel =
@@ -11,7 +16,8 @@ let
     in
     crossPkg;
 in
-upstreamKernel // {
+upstreamKernel
+// {
   cross-compiled = crossCompiledKernel;
   passthru.skipUpdate = true;
 }

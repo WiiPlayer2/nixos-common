@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.programs.rclone;
@@ -29,32 +34,36 @@ in
 {
   options.programs.rclone = {
     remotes = mkOption {
-      type = types.attrsOf (types.submodule {
-        options = {
-          bisync = mkOption {
-            type = types.attrsOf (types.submodule (
-              { config, ... }:
-              {
-                options = {
-                  enable = mkOption {
-                    type = types.bool;
-                    default = false;
-                  };
-                  localPath = mkOption {
-                    type = types.path;
-                  };
-                  flags = mkOption {
-                    type = types.listOf types.str;
-                    default = [ ];
-                    apply = escapeShellArgs;
-                  };
-                };
-              }
-            ));
-            default = { };
+      type = types.attrsOf (
+        types.submodule {
+          options = {
+            bisync = mkOption {
+              type = types.attrsOf (
+                types.submodule (
+                  { config, ... }:
+                  {
+                    options = {
+                      enable = mkOption {
+                        type = types.bool;
+                        default = false;
+                      };
+                      localPath = mkOption {
+                        type = types.path;
+                      };
+                      flags = mkOption {
+                        type = types.listOf types.str;
+                        default = [ ];
+                        apply = escapeShellArgs;
+                      };
+                    };
+                  }
+                )
+              );
+              default = { };
+            };
           };
-        };
-      });
+        }
+      );
     };
   };
 
@@ -62,10 +71,13 @@ in
     systemd.user =
       let
         mkBisyncName =
-          { remoteName, remotePath, ... }:
-          "rclone-bisync:${replaceSlashes remotePath}@${remoteName}";
+          { remoteName, remotePath, ... }: "rclone-bisync:${replaceSlashes remotePath}@${remoteName}";
         mkBisyncTimer =
-          { remoteName, remotePath, bisyncConfig } @ args:
+          {
+            remoteName,
+            remotePath,
+            bisyncConfig,
+          }@args:
           nameValuePair (mkBisyncName args) {
             Unit.Description = "Regular rclone bisync for ${remoteName}:${remotePath}";
             Timer = {
@@ -77,7 +89,11 @@ in
             };
           };
         mkBisyncService =
-          { remoteName, remotePath, bisyncConfig } @ args:
+          {
+            remoteName,
+            remotePath,
+            bisyncConfig,
+          }@args:
           nameValuePair (mkBisyncName args) {
             Unit.Description = "Regular rclone bisync for ${remoteName}:${remotePath}";
             Service = {
@@ -90,7 +106,11 @@ in
             };
           };
         mkBisyncUnits =
-          { remoteName, remotePath, bisyncConfig } @ args:
+          {
+            remoteName,
+            remotePath,
+            bisyncConfig,
+          }@args:
           let
             timer = mkBisyncTimer args;
             service = mkBisyncService args;
@@ -99,35 +119,26 @@ in
             timers.${timer.name} = timer.value;
             services.${service.name} = service.value;
           };
-        units =
-          foldl
-            recursiveUpdate
-            { }
-            (
-              flatten
-                (
-                  map
-                    (
-                      { name, value }:
-                      let
-                        remoteName = name;
-                      in
-                      map
-                        (
-                          { name, value }:
-                          let
-                            remotePath = name;
-                          in
-                          mkBisyncUnits {
-                            inherit remoteName remotePath;
-                            bisyncConfig = value;
-                          }
-                        )
-                        (attrsToList (filterAttrs (n: v: v.enable) value.bisync))
-                    )
-                    (attrsToList cfg.remotes)
-                )
-            );
+        units = foldl recursiveUpdate { } (
+          flatten (
+            map (
+              { name, value }:
+              let
+                remoteName = name;
+              in
+              map (
+                { name, value }:
+                let
+                  remotePath = name;
+                in
+                mkBisyncUnits {
+                  inherit remoteName remotePath;
+                  bisyncConfig = value;
+                }
+              ) (attrsToList (filterAttrs (n: v: v.enable) value.bisync))
+            ) (attrsToList cfg.remotes)
+          )
+        );
       in
       units;
   };

@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 
 # Cut from https://raw.githubusercontent.com/NixOS/nixpkgs/refs/heads/master/nixos/modules/services/system/dbus.nix

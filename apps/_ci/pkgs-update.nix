@@ -1,6 +1,11 @@
 {
   perSystem =
-    { pkgs, self', lib, ... }:
+    {
+      pkgs,
+      self',
+      lib,
+      ...
+    }:
     {
       apps.__ci__pkgs_update = {
         program =
@@ -12,40 +17,36 @@
                 pkg = value;
                 isSkipped = if pkg.passthru ? skipUpdate then pkg.passthru.skipUpdate else false;
                 baseUpdateCommand =
-                  if pkg.passthru ? updateScript
-                  then
-                    if lib.isList pkg.passthru.updateScript
-                    then lib.escapeShellArgs pkg.passthru.updateScript
-                    else "${pkg.passthru.updateScript}"
-                  else "nix-update";
+                  if pkg.passthru ? updateScript then
+                    if lib.isList pkg.passthru.updateScript then
+                      lib.escapeShellArgs pkg.passthru.updateScript
+                    else
+                      "${pkg.passthru.updateScript}"
+                  else
+                    "nix-update";
                 baseUpdateCommand' =
-                  if (builtins.match ".*nix-update.*" baseUpdateCommand) != null
-                  then "${baseUpdateCommand} -F"
-                  else baseUpdateCommand;
+                  if (builtins.match ".*nix-update.*" baseUpdateCommand) != null then
+                    "${baseUpdateCommand} -F"
+                  else
+                    baseUpdateCommand;
                 command = "${baseUpdateCommand'} $NIX_UPDATE_ARGS ${name}";
                 updateCommand =
-                  if isSkipped
-                  then ''
-                    echo "[ ${name} (skipped) ]"
-                  ''
-                  else ''
-                    echo "[ ${name} ]"
-                    echo ">>" ${command}
+                  if isSkipped then
+                    ''
+                      echo "[ ${name} (skipped) ]"
+                    ''
+                  else
+                    ''
+                      echo "[ ${name} ]"
+                      echo ">>" ${command}
 
-                    if ! ${command}; then
-                      _failures="$_failures ${name}"
-                    fi
-                  '';
+                      if ! ${command}; then
+                        _failures="$_failures ${name}"
+                      fi
+                    '';
               in
               updateCommand;
-            updatePackages =
-              lib.concatStringsSep
-                "\n"
-                (
-                  lib.map
-                    updatePackage
-                    packages
-                );
+            updatePackages = lib.concatStringsSep "\n" (lib.map updatePackage packages);
 
             runScript = pkgs.writeShellApplication {
               name = "pkgs-update";

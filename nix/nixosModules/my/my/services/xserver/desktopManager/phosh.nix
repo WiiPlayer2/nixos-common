@@ -1,4 +1,10 @@
-{ lib, config, pkgs, hostConfig, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  hostConfig,
+  ...
+}:
 with lib;
 let
   cfg = config.services.xserver.desktopManager.phosh;

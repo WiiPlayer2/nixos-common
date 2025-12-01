@@ -1,12 +1,15 @@
-{ fetchFromGitHub
-, python3
-, writeShellApplication
-, runCommand
+{
+  fetchFromGitHub,
+  python3,
+  writeShellApplication,
+  runCommand,
 }:
 let
-  python = python3.withPackages (pypi: with pypi; [
-    libvirt
-  ]);
+  python = python3.withPackages (
+    pypi: with pypi; [
+      libvirt
+    ]
+  );
   src = fetchFromGitHub {
     owner = "nefelim4ag";
     repo = "libvirt-autoballoon";
@@ -26,13 +29,15 @@ let
       python ${src}/libvirt-autoballoon.py "$@"
     '';
   };
-  package = runCommand "${pname}-${version}"
-    {
-      inherit pname version src;
-      meta.mainProgram = pname;
-    } ''
-    mkdir -p $out/bin
-    ln -s ${script}/bin/${pname} $out/bin/
-  '';
+  package =
+    runCommand "${pname}-${version}"
+      {
+        inherit pname version src;
+        meta.mainProgram = pname;
+      }
+      ''
+        mkdir -p $out/bin
+        ln -s ${script}/bin/${pname} $out/bin/
+      '';
 in
 package

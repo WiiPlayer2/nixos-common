@@ -1,6 +1,7 @@
-{ fetchFromGitHub
-, python3Packages
-, nix-update-script
+{
+  fetchFromGitHub,
+  python3Packages,
+  nix-update-script,
 }:
 let
   pyPkgs = python3Packages;

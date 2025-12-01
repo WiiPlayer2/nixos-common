@@ -1,5 +1,4 @@
-inputs:
-{
+inputs: {
   imports = [
     ./hosts.nix
     ./common.nix

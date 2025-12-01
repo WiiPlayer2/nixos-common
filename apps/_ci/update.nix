@@ -1,6 +1,11 @@
 {
   perSystem =
-    { pkgs, self', lib, ... }:
+    {
+      pkgs,
+      self',
+      lib,
+      ...
+    }:
     {
       apps.__ci__update = {
         program =

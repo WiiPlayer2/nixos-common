@@ -1,6 +1,6 @@
-{ stdenv
-, fetchFromGitHub
-,
+{
+  stdenv,
+  fetchFromGitHub,
 }:
 let
   pname = "framework-udev-rules";

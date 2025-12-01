@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.programs.firefox;
@@ -28,13 +33,21 @@ in
           engines = {
             nix-packages = {
               name = "Nix Packages";
-              urls = [{
-                template = "https://search.nixos.org/packages";
-                params = [
-                  { name = "type"; value = "packages"; }
-                  { name = "query"; value = "{searchTerms}"; }
-                ];
-              }];
+              urls = [
+                {
+                  template = "https://search.nixos.org/packages";
+                  params = [
+                    {
+                      name = "type";
+                      value = "packages";
+                    }
+                    {
+                      name = "query";
+                      value = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
 
               icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
               definedAliases = [ "@np" ];
@@ -42,31 +55,41 @@ in
 
             nixos-wiki = {
               name = "NixOS Wiki";
-              urls = [{ template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; }];
+              urls = [ { template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; } ];
               iconMapObj."16" = "https://wiki.nixos.org/favicon.ico";
               definedAliases = [ "@nw" ];
             };
 
             nueschtos = {
               name = "NüschtOS";
-              urls = [{
-                template = "https://search.nüschtos.de";
-                params = [
-                  { name = "query"; value = "{searchTerms}"; }
-                ];
-              }];
+              urls = [
+                {
+                  template = "https://search.nüschtos.de";
+                  params = [
+                    {
+                      name = "query";
+                      value = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
               icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
               definedAliases = [ "@nm" ];
             };
 
             noogle = {
               name = "Noogle";
-              urls = [{
-                template = "https://noogle.dev/q";
-                params = [
-                  { name = "term"; value = "{searchTerms}"; }
-                ];
-              }];
+              urls = [
+                {
+                  template = "https://noogle.dev/q";
+                  params = [
+                    {
+                      name = "term";
+                      value = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
               icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
               definedAliases = [ "@no" ];
             };

@@ -1,7 +1,8 @@
-{ lib
-, config
-, pkgs
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  ...
 }:
 with lib;
 let
@@ -10,10 +11,12 @@ in
 {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      (retroarch.withCores (cores: with cores; [
-        bsnes-mercury-performance
-        dolphin
-      ]))
+      (retroarch.withCores (
+        cores: with cores; [
+          bsnes-mercury-performance
+          dolphin
+        ]
+      ))
     ];
   };
 }

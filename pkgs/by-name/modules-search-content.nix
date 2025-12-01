@@ -1,8 +1,9 @@
-{ lib
-, system
-, inputs
+{
+  lib,
+  system,
+  inputs,
 
-, formats
+  formats,
 }:
 with lib;
 
@@ -28,7 +29,8 @@ inputs.nueschtos.packages.${system}.mkMultiSearch {
     {
       name = "NixOS";
       urlPrefix = "https://github.com/NixOS/nixpkgs/tree/25.05/";
-      optionsJSON = (import "${inputs.nixpkgs}/nixos/release.nix" { }).options + /share/doc/nixos/options.json;
+      optionsJSON =
+        (import "${inputs.nixpkgs}/nixos/release.nix" { }).options + /share/doc/nixos/options.json;
     }
 
     {
@@ -75,7 +77,7 @@ inputs.nueschtos.packages.${system}.mkMultiSearch {
         pkgs = pkgs';
       };
       modules = [
-        # inputs.self.nixOnDroidModules.extra 
+        # inputs.self.nixOnDroidModules.extra
         # inputs.self.nixOnDroidModules.legacy
         inputs.self.nixOnDroidModules.my
         # inputs.self.nixOnDroidModules.nixosCompat

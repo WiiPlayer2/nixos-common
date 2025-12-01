@@ -7,7 +7,8 @@ with lib;
       unstable = import inputs.nixpkgs-unstable {
         inherit (prev)
           system
-          config;
+          config
+          ;
       };
       refPkgs = [
         "firefoxpwa"
@@ -21,16 +22,12 @@ with lib;
         # "phosh"
         # "phosh-mobile-settings"
       ];
-      refPkgs' =
-        genAttrs
-          refPkgs
-          (name: unstable.${name});
-      scopePkgs' =
-        genAttrs
-          scopePkgs
-          (name: final.callPackage unstable.${name}.override { });
+      refPkgs' = genAttrs refPkgs (name: unstable.${name});
+      scopePkgs' = genAttrs scopePkgs (name: final.callPackage unstable.${name}.override { });
     in
-    refPkgs' // scopePkgs' // {
+    refPkgs'
+    // scopePkgs'
+    // {
       phosh = final.callPackage unstable.phosh.override {
         inherit (unstable)
           modemmanager

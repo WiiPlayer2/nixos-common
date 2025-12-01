@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.services.libvirt-autoballoon;
@@ -13,7 +18,9 @@ in
     };
     settings = mkOption {
       type = types.anything;
-      default = { vms = { }; };
+      default = {
+        vms = { };
+      };
     };
   };
 

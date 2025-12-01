@@ -1,7 +1,8 @@
-{ fetchFromGitHub
-, rustPlatform
-, pkg-config
-, systemd
+{
+  fetchFromGitHub,
+  rustPlatform,
+  pkg-config,
+  systemd,
 }:
 let
   pname = "ledmatrix-widgets";

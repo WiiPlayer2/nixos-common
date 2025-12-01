@@ -1,8 +1,9 @@
-{ lib
-, config
-, pkgs
-, flakeRoot
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  flakeRoot,
+  ...
 }:
 with lib;
 let
@@ -17,12 +18,13 @@ in
       identity = flakeRoot + "/secrets/identities/yubikey.pub";
       getScriptName = name: "imprint-${name}";
       imprintingScript =
-        { name
-        , file
-        , path
-        , script
-        , mode
-        , ...
+        {
+          name,
+          file,
+          path,
+          script,
+          mode,
+          ...
         }:
         pkgs.writeShellApplication {
           name = getScriptName name;
@@ -49,18 +51,16 @@ in
           '';
         };
       imprintingScriptCalls = concatStringsSep "\n" (
-        map
-          (
-            { name, value }:
-            let
-              script = imprintingScript value;
-              scriptName = getScriptName name;
-            in
-            ''
-              ${script}/bin/${scriptName}
-            ''
-          )
-          (attrsToList cfg.files)
+        map (
+          { name, value }:
+          let
+            script = imprintingScript value;
+            scriptName = getScriptName name;
+          in
+          ''
+            ${script}/bin/${scriptName}
+          ''
+        ) (attrsToList cfg.files)
       );
       completeImprintingScript = pkgs.writeShellApplication {
         name = "imprint-system-files";

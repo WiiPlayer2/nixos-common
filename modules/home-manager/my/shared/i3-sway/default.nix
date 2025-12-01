@@ -1,7 +1,12 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 let
-  mkBarConfig = {}: { };
+  mkBarConfig = { }: { };
   mkConfig =
     { stylixBarConfig }:
     {
