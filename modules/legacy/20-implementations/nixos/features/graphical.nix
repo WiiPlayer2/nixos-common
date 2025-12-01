@@ -37,6 +37,10 @@ in
         };
         windowManager.i3 = {
           enable = true;
+          extraSessionCommands = ''
+            test -f $HOME/.xprofile && source $HOME/.xprofile
+            systemctl --user import-environment SSH_AUTH_SOCK
+          '';
         };
         videoDrivers =
           if cfg.drivers.nvidia.enable then

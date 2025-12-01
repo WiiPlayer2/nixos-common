@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 with lib;
 let
   colored = cmd: "${cmd} --color=auto";
@@ -21,6 +21,7 @@ in
 
     sessionVariables = {
       "DiffEngine_ToolOrder" = "VisualStudioCode";
+      SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/${config.services.ssh-agent.socket}";
     };
 
     packages = with pkgs; [

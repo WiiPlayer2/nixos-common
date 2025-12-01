@@ -27,6 +27,7 @@ in
     ];
 
     # https://itsfoss.com/i3-customization/
+    xsession.enable = true;
     xsession.windowManager.i3 = {
       config =
         let
