@@ -159,13 +159,15 @@ in
     (mkIf cfg.enableSystemdShim {
       programs.supervisord.settings =
         let
+
+
           # Use https://noogle.dev/f/lib/textClosureList for priority based on dependencies etc.
           mkServiceShim =
             { name, value }:
             {
               name = "program:systemd-${name}";
               value = {
-                command = value.Service.ExecStart;
+                command = escapeShellArgs value.Service.ExecStart;
                 startsecs = mkIf (value.Service.Type == "oneshot") 0;
               };
             };

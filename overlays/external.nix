@@ -5,16 +5,16 @@
     inputs.k8s-toolbox.overlays.default
     inputs.nur.overlays.default
     (final: prev: {
-      nueschtos = inputs.nueschtos.packages.${prev.system};
+      nueschtos = inputs.nueschtos.packages.${prev.stdenv.hostPlatform.system};
 
-      inherit (inputs.ninelore-monoflake.legacyPackages.${prev.system})
+      inherit (inputs.ninelore-monoflake.legacyPackages.${prev.stdenv.hostPlatform.system})
         submarine
         alsa-ucm-conf-cros
         cros-ectool
         ;
 
       bizhawk = (import inputs.bizhawk {
-        system = prev.system;
+        system = prev.stdenv.hostPlatform.system;
       }).emuhawk;
     })
   ];

@@ -4,8 +4,6 @@ let
   programs = [
     "bat"
     "ripgrep-all"
-    "git"
-    "ssh"
     "direnv"
   ];
 in

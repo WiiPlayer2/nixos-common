@@ -38,7 +38,7 @@ types.submodule (
             super.globalInputs //
             (
               withSystem
-                pkgs.system
+                pkgs.stdenv.hostPlatform.system
                 (
                   { inputs', config, ... }:
                   {

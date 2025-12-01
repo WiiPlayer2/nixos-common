@@ -25,7 +25,7 @@
       poptracker = prev.unstable.poptracker.overrideAttrs (finalAttrs: prevAttrs: {
         installPhase =
           let
-            elaboratedSystem = prev.lib.systems.elaborate prev.system;
+            elaboratedSystem = prev.lib.systems.elaborate prev.stdenv.hostPlatform.system;
             arch = elaboratedSystem.qemuArch;
             fixedInstallPhase = prev.lib.replaceStrings [ "x86_64" ] [ arch ] prevAttrs.installPhase;
           in

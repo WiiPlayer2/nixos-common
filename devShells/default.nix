@@ -39,7 +39,7 @@
                     PKG="$2"
 
                     printf "<resolving system: "
-                    _system=$(nix eval --override-input common path:"$FLAKE_ROOT"/flakes/common "$FLAKE_ROOT#nixosConfigurations.$HOST.pkgs.system" --raw 2>/dev/null)
+                    _system=$(nix eval --override-input common path:"$FLAKE_ROOT"/flakes/common "$FLAKE_ROOT#nixosConfigurations.$HOST.pkgs.stdenv.hostPlatform.system" --raw 2>/dev/null)
 
                     printf "%s>\n<evaluating nixos drv: " "$_system"
                     _nixosDrv=$(nix eval --override-input common path:"$FLAKE_ROOT"/flakes/common "$FLAKE_ROOT#nixosConfigurations.$HOST.pkgs.$PKG.drvPath" --raw 2>/dev/null)

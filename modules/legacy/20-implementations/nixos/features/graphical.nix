@@ -40,7 +40,7 @@ in
         };
         videoDrivers =
           if cfg.drivers.nvidia.enable then
-            warn "When NVidia driver is enabled no other driver can be enabled at the same time." [ "nvidia" ]
+            [ "nvidia" ]
           else
             [
               "modesetting"

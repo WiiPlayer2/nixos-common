@@ -95,7 +95,7 @@ in
             configuration:
             mkRemote {
               inherit configuration;
-              systems = _getNativeSystems configuration.config configuration.pkgs.system;
+              systems = _getNativeSystems configuration.config configuration.pkgs.stdenv.hostPlatform.system;
               speedFactor = 50;
             };
           mkEmulatedRemote =

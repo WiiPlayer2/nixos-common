@@ -18,7 +18,7 @@ in
           scrcpy
           xpra
         ]
-        ++ (optionals (pkgs.system == "x86_64-linux") [
+        ++ (optionals (pkgs.stdenv.hostPlatform.system == "x86_64-linux") [
           xwinwrap
         ]);
 

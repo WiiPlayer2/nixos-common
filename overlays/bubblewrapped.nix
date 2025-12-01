@@ -5,7 +5,7 @@
       # discord = final.bubblewrapped.discord;
 
       bubblewrapped = {
-        discord = self.legacyPackages.${prev.system}.bwrapPkg {
+        discord = self.legacyPackages.${prev.stdenv.hostPlatform.system}.bwrapPkg {
           package = prev.discord;
           binds = [
             {

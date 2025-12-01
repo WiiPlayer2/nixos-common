@@ -54,6 +54,7 @@ in
           in
           {
             after = [ "network-online.target" ];
+            wants = [ "network-online.target" ];
             script = "${getExe cfg.package} -d ${extraFlags'} ${builtins.toString localPort} ${remoteHost} ${builtins.toString remotePort}";
             # serviceConfig = {
             #   Restart = "always";

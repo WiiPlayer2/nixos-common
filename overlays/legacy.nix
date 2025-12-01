@@ -5,13 +5,13 @@ in
 {
   flake.overlays.legacy =
     final: prev: {
-      unstable = flake-inputs.nixpkgs-unstable.legacyPackages.${prev.system};
+      unstable = flake-inputs.nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system};
       nix-archipelago =
-        if prev.system == "x86_64-linux" then
-          flake-inputs.nix-archipelago.packages.${prev.system}
+        if prev.stdenv.hostPlatform.system == "x86_64-linux" then
+          flake-inputs.nix-archipelago.packages.${prev.stdenv.hostPlatform.system}
         else
           { archipelago-appimage = null; };
-      nixgl = flake-inputs.nixgl.packages.${prev.system};
+      nixgl = flake-inputs.nixgl.packages.${prev.stdenv.hostPlatform.system};
       retroarch-joypad-autoconfig = prev.retroarch-joypad-autoconfig.overrideAttrs {
         src = prev.fetchFromGitHub {
           owner = "WiiPlayer2";
@@ -20,7 +20,7 @@ in
           hash = "sha256-vHiYY8XlUcT/9DFKuSiM/thiEP0ksNNvNALoTYpA0q4=";
         };
       };
-      wezterm-unstable = flake-inputs.wezterm.packages.${prev.system}.default;
+      wezterm-unstable = flake-inputs.wezterm.packages.${prev.stdenv.hostPlatform.system}.default;
       pidginPackages = prev.pidginPackages.overrideScope (
         final': prev': {
           purple-slack = prev'.purple-slack.overrideAttrs {
