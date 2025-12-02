@@ -71,7 +71,7 @@ in
     };
 
     boot = {
-      kernel.sysctl."fs.inotify.max_user_instances" = 256;
+      kernel.sysctl."fs.inotify.max_user_instances" = 512;
       supportedFilesystems = [ "nfs" ];
     };
   };
