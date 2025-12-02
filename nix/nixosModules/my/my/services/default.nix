@@ -4,6 +4,7 @@
     ./_enable.nix
     ./gnome.nix
     ./k3s.nix
+    ./libinput.nix
     ./xserver
   ];
 }
