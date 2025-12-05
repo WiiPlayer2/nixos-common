@@ -32,7 +32,10 @@
         QuietSuccess = true;
       };
 
-      Security.IconDownloadFallback = true;
+      Security = {
+        IconDownloadFallback = true;
+        LockDatabaseIdle = false;
+      };
     };
   };
 }
