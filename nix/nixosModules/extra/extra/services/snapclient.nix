@@ -22,8 +22,8 @@ in
       type = types.str;
     };
     sampleFormat = mkOption {
-      type = types.str;
-      default = "44100:16:*";
+      type = with types; nullOr str;
+      default = null;
     };
     user = mkOption {
       type = with types; nullOr str;
@@ -51,9 +51,11 @@ in
                 cfg.host
                 "--player"
                 cfg.player
-                "--sampleformat"
-                cfg.sampleFormat
               ]
+              ++ (optionals (cfg.sampleFormat != null) [
+                "--sampleFormat"
+                cfg.sampleFormat
+              ])
               ++ cfg.extraArgs;
               args' = escapeShellArgs args;
             in
