@@ -15,18 +15,18 @@ in
     command = "spice-vdagent && sleep 5 && systemctl --user start spice-autorandr.service";
     notification = false;
   }
-  {
-    command = "nitrogen --restore";
-    notification = false;
-  }
-  {
-    command = "systemctl --user restart picom";
-    # notification = false;
-    always = true;
-  }
-  {
-    command = "env XDG_SESSION_DESKTOP=i3 variety";
-    notification = false;
-  }
+  # {
+  #   command = "nitrogen --restore";
+  #   notification = false;
+  # }
+  # {
+  #   command = "systemctl --user restart picom";
+  #   # notification = false;
+  #   always = true;
+  # }
+  # {
+  #   command = "env XDG_SESSION_DESKTOP=i3 variety";
+  #   notification = false;
+  # }
 ]
 ++ mappedStartups
