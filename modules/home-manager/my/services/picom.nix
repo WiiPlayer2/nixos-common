@@ -28,6 +28,12 @@ in
           "class_g ?= 'overlayed'"
           "class_g ?= 'Screenkey'"
           "class_g ?= 'gnome-calculator'"
+          "window_type = 'menu'"
+          "window_type = 'dropdown_menu'"
+          "window_type = 'popup_menu'"
+          "window_type = 'tooltip'"
+          "window_type = 'utility'"
+          "_GTK_FRAME_EXTENTS@:c"
         ];
         vSync = true;
         settings = {
@@ -48,6 +54,12 @@ in
             "class_g ?= 'overlayed'"
             "class_g ?= 'Screenkey'"
             "class_g ?= 'gnome-calculator'"
+            "window_type = 'menu'"
+            "window_type = 'dropdown_menu'"
+            "window_type = 'popup_menu'"
+            "window_type = 'tooltip'"
+            "window_type = 'utility'"
+            "_GTK_FRAME_EXTENTS@:c"
           ];
         };
         # extraArgs = [
