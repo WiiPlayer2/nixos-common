@@ -1,6 +1,6 @@
 {
   lib,
-  system,
+  stdenv,
   inputs,
 
   formats,
@@ -10,6 +10,8 @@ with lib;
 # will use `ran` for hosting (smallest closure)
 
 let
+  system = stdenv.system;
+
   # TODO: make better somehow
   pkgs' = {
     inherit formats;
