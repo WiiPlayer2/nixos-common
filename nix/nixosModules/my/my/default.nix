@@ -12,6 +12,7 @@
     ./services
     ./specials
     ./unified
+    ./users
     ./virtualisation
   ];
 }
