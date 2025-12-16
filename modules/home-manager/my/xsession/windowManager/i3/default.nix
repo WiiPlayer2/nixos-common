@@ -103,6 +103,7 @@ in
         for_window [class="gnome-calculator"] floating enable
         for_window [class="KeePassXC"] floating enable
         for_window [window_role="PictureInPicture"] sticky enable
+        for_window [class="nitrokeyapp"] floating enable
       '';
     };
   };
