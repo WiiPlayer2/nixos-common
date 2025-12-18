@@ -66,9 +66,9 @@ in
             subPath:
             let
               srcDir = cfg.src + "/${subPath}";
-              srcDirExists = pathExists srcDir;
+              srcDirExists = pathIsDirectory srcDir;
               srcFile = cfg.src + "/${subPath}.nix";
-              srcFileExists = pathExists srcFile;
+              srcFileExists = pathIsRegularFile srcFile;
             in
             assert assertMsg (
               !(srcFileExists && srcDirExists)

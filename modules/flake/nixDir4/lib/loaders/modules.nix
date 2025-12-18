@@ -23,7 +23,7 @@ in
               filePath = path + /module.nix;
               module = setDefaultModuleLocation filePath (fileModule' filePath);
             in
-            optional (pathIsFile filePath) module;
+            optional (pathIsRegularFile filePath) module;
           treeModule =
             let
               treePath = path + /tree;
@@ -34,7 +34,7 @@ in
         {
           imports = fileModule ++ treeModule;
         };
-      module = if pathIsFile path then fileModule else directoryModule;
+      module = if pathIsRegularFile path then fileModule else directoryModule;
     in
     setDefaultModuleLocation path module;
 }
