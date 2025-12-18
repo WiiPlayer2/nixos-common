@@ -36,7 +36,7 @@
                 fi
 
                 if [ -n "''${CI:-}" ]; then
-                  git commit -am "Update submodules" --amend --no-edit || true
+                  git commit -a --amend --no-edit || true
                   git pull origin "$(git rev-parse --abbrev-ref HEAD)" --rebase
                   git push
                 fi
