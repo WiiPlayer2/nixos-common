@@ -20,7 +20,7 @@ with lib;
     home.packages = with pkgs; [
       maestral
       maestral-gui
-      whatsie
+      # whatsie
       music-assistant-companion-appimage
     ];
 
@@ -28,7 +28,7 @@ with lib;
       # Wait 5 seconds for system theme to be correctly set
       keepassxc.command = "sleep 5 && keepassxc-startup && keepassxc-watch";
       maestral.command = "${pkgs.maestral-gui}/bin/maestral_qt";
-      whatsie.command = "${lib.getExe pkgs.whatsie}";
+      # whatsie.command = "${lib.getExe pkgs.whatsie}";
     };
   };
 }
