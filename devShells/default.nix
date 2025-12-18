@@ -22,6 +22,8 @@
             amnesia
             age-plugin-yubikey
             age-plugin-amnesia
+            age-plugin-openpgp-card
+            openpgp-card-tools
             inputs'.deploy-rs.packages.default
             inputs'.disko.packages.default
 
