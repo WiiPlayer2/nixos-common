@@ -106,6 +106,7 @@
       url = "github:TASEmulators/BizHawk/2.11";
       flake = false;
     };
+    import-tree.url = "github:vic/import-tree";
   };
 
   outputs =

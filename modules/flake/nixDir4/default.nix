@@ -14,7 +14,7 @@ let
 in
 {
   imports = [
-    ./loaders
+    (inputs.import-tree ./loaders)
   ];
 
   options.nixDir4 = {
@@ -62,11 +62,58 @@ in
       loaderPathResult =
         loadCfg: path:
         let
-          loadResult = loadCfg.loader path;
+          srcFor =
+            subPath:
+            let
+              srcDir = cfg.src + "/${subPath}";
+              srcDirExists = pathExists srcDir;
+              srcFile = cfg.src + "/${subPath}.nix";
+              srcFileExists = pathExists srcFile;
+            in
+            assert assertMsg (
+              !(srcFileExists && srcDirExists)
+            ) "${srcDir} and ${srcFile} can't exist simultaneously.";
+            if srcDirExists then
+              srcDir
+            else if srcFileExists then
+              srcFile
+            else
+              null;
+
+          attributeSources =
+            let
+              baseSrc = cfg.src + "/${path}"; # must be a directory
+              subSrcs =
+                let
+                  entries = builtins.readDir baseSrc;
+
+                  candidates = filterAttrs (n: v: v != "file" || hasSuffix ".nix" n) entries;
+
+                  paths = uniqueStrings (map (removeSuffix ".nix") (attrNames candidates));
+                in
+                genAttrs paths (x: srcFor "${path}/${x}");
+            in
+            assert assertMsg (pathExists baseSrc -> pathIsDirectory baseSrc) "${baseSrc} must be a directory.";
+            if pathExists baseSrc then subSrcs else { };
+
+          loadResultByAttribute = filterAttrs (_: v: v != { }) (
+            mapAttrs (n: path: loadCfg.loader { inherit path; }) attributeSources
+          );
+
+          loadResult =
+            if loadCfg._isPerSystem then
+              throw "TODO"
+            else if loadCfg.loadByAttribute then
+              loadResultByAttribute
+            else
+              throw "TODO";
         in
-        {
-          ${loadCfg.target} = loadResult;
-        };
+        if loadResult != { } then
+          {
+            ${loadCfg.target} = loadResult;
+          }
+        else
+          { };
 
       loaderResult = loadCfg: mergeAttrsList (map (loaderPathResult loadCfg) loadCfg.paths);
 

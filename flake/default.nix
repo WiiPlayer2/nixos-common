@@ -20,4 +20,5 @@
   ];
 
   nixDir3.root = ./..;
+  nixDir4.root = ./..;
 }
