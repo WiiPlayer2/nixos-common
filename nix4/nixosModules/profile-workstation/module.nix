@@ -7,6 +7,10 @@
 }:
 with lib;
 {
+  imports = [
+    inputs.self.nixosModules.security-cmd-polkit
+  ];
+
   home-manager.sharedModules = [
     inputs.self.homeModules.profile-workstation
   ];
