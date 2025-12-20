@@ -26,7 +26,7 @@ in
 
     sessionVariables = {
       "DiffEngine_ToolOrder" = "VisualStudioCode";
-      SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/${config.services.ssh-agent.socket}";
+      SSH_AUTH_SOCK = "\${SSH_AUTH_SOCK:-$XDG_RUNTIME_DIR/${config.services.ssh-agent.socket}}";
     };
 
     packages = with pkgs; [
