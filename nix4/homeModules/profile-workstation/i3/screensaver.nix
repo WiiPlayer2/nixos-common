@@ -18,4 +18,6 @@ with lib;
         "Control+Mod1+L" = "exec ${pkgs.cinnamon-screensaver}/bin/cinnamon-screensaver-command --lock";
       };
   };
+
+  services.inhibridge.enable = true;
 }

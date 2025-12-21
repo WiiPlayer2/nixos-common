@@ -1,4 +1,4 @@
-_:
+{ inputs, ... }:
 {
   lib,
   config,
@@ -7,7 +7,12 @@ _:
 }:
 with lib;
 {
+  imports = [
+    inputs.inhibridge.homeModules.default
+  ];
+
   config = {
+
     home.packages =
       with pkgs;
       [

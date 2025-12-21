@@ -107,6 +107,7 @@
       flake = false;
     };
     import-tree.url = "github:vic/import-tree";
+    inhibridge.url = "git+https://codeberg.org/Scrumplex/inhibridge";
   };
 
   outputs =
