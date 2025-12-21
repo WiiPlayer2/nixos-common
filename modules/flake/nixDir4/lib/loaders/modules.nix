@@ -16,6 +16,7 @@ in
     let
       fileModule' = path: import path args;
       fileModule = fileModule' path;
+      # TODO: use import tree for whole module and import specific files (in this case `module.nix`) using import args
       directoryModule =
         let
           fileModule =
@@ -26,8 +27,11 @@ in
             optional (pathIsRegularFile filePath) module;
           treeModule =
             let
-              treePath = path + /tree;
-              module = inputs.import-tree treePath;
+              treePath = path;
+              module = pipe inputs.import-tree [
+                (i: i.filter (x: x != "/module.nix"))
+                (i: i treePath)
+              ];
             in
             optional (pathIsDirectory treePath) module;
         in
