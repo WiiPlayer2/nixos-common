@@ -24,11 +24,11 @@
   users.users = {
     root = {
       password = "vm";
-      initialHashedPassword = lib.mkForce null;
+      initialHashedPassword = lib.mkVMOverride null;
     };
     ${config.my.config.mainUser.name} = {
       password = "vm";
-      initialHashedPassword = lib.mkForce null;
+      initialHashedPassword = lib.mkVMOverride null;
     };
   };
 }
