@@ -7,7 +7,7 @@
 }:
 with lib;
 let
-  cfg = config.nixDir4;
+  cfg = config.nixDir;
   nixDirLib = cfg.lib;
 
   first = ls: elemAt ls 0;
@@ -17,7 +17,7 @@ in
     (inputs.import-tree ./loaders)
   ];
 
-  options.nixDir4 = {
+  options.nixDir = {
     lib = mkOption {
       type = types.raw;
       readOnly = true;
@@ -36,7 +36,7 @@ in
 
     src = mkOption {
       type = types.path;
-      default = cfg.root + /nix4;
+      default = cfg.root + /nix;
     };
 
     loaders = mkOption {
