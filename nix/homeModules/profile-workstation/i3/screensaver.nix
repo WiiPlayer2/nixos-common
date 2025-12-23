@@ -1,5 +1,17 @@
 { lib, pkgs, ... }:
 with lib;
+let
+  xsetConfig = pkgs.writeShellApplication {
+    name = "xset-config";
+    runtimeInputs = with pkgs; [
+      xorg.xset
+    ];
+    text = ''
+      xset -dpms
+      xset s off
+    '';
+  };
+in
 {
   home.packages = with pkgs; [
     cinnamon-screensaver
@@ -8,6 +20,7 @@ with lib;
   xsession.windowManager.i3.config = {
     startup = [
       { command = "${pkgs.cinnamon-screensaver}/bin/cinnamon-screensaver --hold"; }
+      { command = "${getExe xsetConfig}"; }
     ];
 
     keybindings =
