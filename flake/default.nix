@@ -19,4 +19,10 @@
 
   nixDir.root = ./..;
   nixDir3.root = ./..;
+
+  flake.ociImages = {
+    test = inputs.self.lib.ociImages.ociImage {
+      name = "test";
+    };
+  };
 }

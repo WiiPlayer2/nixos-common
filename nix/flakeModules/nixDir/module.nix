@@ -100,9 +100,13 @@ in
             assert assertMsg (pathExists baseSrc -> pathIsDirectory baseSrc) "${baseSrc} must be a directory.";
             if pathExists baseSrc then subSrcs else { };
 
+          directSource = srcFor path;
+
           loadResultByAttribute = filterAttrs (_: v: v != { }) (
             mapAttrs (n: path: loadCfg.loader { inherit path; }) attributeSources
           );
+
+          loadResultDirect = if directSource != null then loadCfg.loader { path = directSource; } else null;
 
           loadResult =
             if loadCfg._isPerSystem then
@@ -110,7 +114,7 @@ in
             else if loadCfg.loadByAttribute then
               loadResultByAttribute
             else
-              throw "TODO";
+              loadResultDirect;
         in
         if loadResult != { } then
           {

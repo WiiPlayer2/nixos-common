@@ -1,6 +1,15 @@
-{ lib, pkgs }:
+{
+  lib,
+  pkgs,
+  config,
+}:
 with lib;
 {
+  name = mkOption {
+    type = types.str;
+    default = "nixos-oci-container-${config.system.name}";
+  };
+
   imageConfig = mkOption {
     type = (pkgs.formats.json { }).type;
   };

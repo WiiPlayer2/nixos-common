@@ -9,7 +9,7 @@ with lib;
 haumea.lib.load {
   src = ./lib;
   inputs = {
-    inherit inputs import-tree;
+    inherit inputs haumea import-tree;
     lib = extend (_: _: haumea.lib);
   };
 }
