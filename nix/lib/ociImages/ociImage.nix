@@ -47,7 +47,7 @@ let
           NIX_ARCH="$1"
           IMAGE_PATH="$2"
           FULL_NAME="$REPOSITORY:$TAG-$NIX_ARCH"
-          IMAGE_TAG="$(docker load < "$IMAGE_PATH" | awk '{print $NF}')"
+          IMAGE_TAG="$(podman load < "$IMAGE_PATH" | awk '{print $NF}')"
 
           podman tag "$IMAGE_TAG" "$FULL_NAME"
           podman push "$FULL_NAME"
@@ -58,12 +58,12 @@ let
         )}
 
         FULL_NAME="$REPOSITORY:$TAG"
-        docker manifest rm "$FULL_NAME" 2> /dev/null || true
-        docker manifest create --amend \
+        podman manifest rm "$FULL_NAME" 2> /dev/null || true
+        podman manifest create --amend \
           "$FULL_NAME" \
           ${concatLines (map (system: "  \"$FULL_NAME-${system}\" \\") systems)}
 
-        docker manifest push "$FULL_NAME"
+        podman manifest push "$FULL_NAME"
       '';
     };
 in
