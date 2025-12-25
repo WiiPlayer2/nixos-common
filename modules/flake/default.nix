@@ -1,7 +1,7 @@
 { self, inputs, ... }:
 {
-  flake.flakeModules = {
-    default = self.flakeModules.all;
+  flake.flakeModules = rec {
+    default = all;
     all = import ./all.nix inputs;
 
     flakeImports = import ./flake-imports.nix inputs;

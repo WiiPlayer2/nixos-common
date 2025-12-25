@@ -1,21 +1,23 @@
 {
+  inputs,
+  ...
+}:
+{
   lib,
   config,
-  inputs,
-  withSystem,
   ...
 }:
 with lib;
 let
   cfg = config.nixDir;
-  nixDirLib = import ./lib.nix {
+  nixDirLib = import ./_module/lib.nix {
     inherit lib inputs;
     inherit (inputs) haumea import-tree;
   };
 in
 {
   imports = [
-    (inputs.import-tree ./loaders)
+    (inputs.import-tree ./_module/loaders)
   ];
 
   options.nixDir = {
