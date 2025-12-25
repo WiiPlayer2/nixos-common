@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ inputs, ... }:
 {
   flake.flakeModules = rec {
     default = all;
@@ -9,6 +9,6 @@
     nixOnDroidModules = ./nix-on-droid-modules.nix;
     hosts = ./hosts.nix;
     domain = import ./domain.nix inputs;
-    common = ./common.nix;
+    common = import ./common.nix inputs;
   };
 }

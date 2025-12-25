@@ -1,21 +1,8 @@
-{ lib, inputs, ... }:
-let
-  nixDirLib = import ../nix/flakeModules/nixDir/_module/lib.nix {
-    inherit lib inputs;
-    inherit (inputs) haumea import-tree;
-  };
-
-  loadNixDirModule =
-    name:
-    (nixDirLib.loaders.modules { }).loader {
-      path = ../nix/flakeModules/${name};
-    };
-in
+{ inputs, ... }:
 {
   imports = [
     (import ../modules/flake/flake-imports.nix inputs) # Avoid referencing self due to infinite recursion
-    ../modules/flake/common.nix # Avoid referencing self due to infinite recursion
-    (loadNixDirModule "nixDir")
+    (import ../modules/flake/common.nix inputs) # Avoid referencing self due to infinite recursion
     ../modules/flake/nixDir3 # Avoid referencing self due to infinite recursion
 
     ../apps

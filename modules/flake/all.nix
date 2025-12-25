@@ -1,7 +1,7 @@
 inputs: {
   imports = [
     ./hosts.nix
-    ./common.nix
+    (import ./common.nix inputs)
     (import ./domain.nix inputs)
     (import ./flake-imports.nix inputs)
   ];

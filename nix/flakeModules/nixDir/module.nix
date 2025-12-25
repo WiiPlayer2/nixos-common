@@ -2,22 +2,29 @@
   inputs,
   ...
 }:
+let
+  commonInputs = inputs;
+in
 {
   lib,
   config,
+  inputs,
   ...
 }:
 with lib;
 let
+  flakeInputs = inputs;
+
   cfg = config.nixDir;
   nixDirLib = import ./_module/lib.nix {
-    inherit lib inputs;
-    inherit (inputs) haumea import-tree;
+    inherit lib;
+    inherit (commonInputs) haumea import-tree;
+    inputs = flakeInputs;
   };
 in
 {
   imports = [
-    (inputs.import-tree ./_module/loaders)
+    (commonInputs.import-tree ./_module/loaders)
   ];
 
   options.nixDir = {
