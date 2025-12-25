@@ -24,5 +24,49 @@ let
     nixosConfig.config.system.build.image;
 
   images = genAttrs systems mkImage;
+
+  publishScript =
+    system:
+    let
+      pkgs = inputs.nixpkgs.legacyPackages.${system};
+    in
+    pkgs.writeShellApplication {
+      name = "publish-${name}";
+      runtimeInputs = with pkgs; [
+        podman
+        gawk
+      ];
+      text = ''
+        set -x
+        REGISTRY="$1"
+        NAME="${name}"
+        REPOSITORY="$REGISTRY/$NAME"
+        TAG="$2"
+
+        function publish-arch() {
+          NIX_ARCH="$1"
+          IMAGE_PATH="$2"
+          FULL_NAME="$REPOSITORY:$TAG-$NIX_ARCH"
+          IMAGE_TAG="$(docker load < "$IMAGE_PATH" | awk '{print $NF}')"
+
+          podman tag "$IMAGE_TAG" "$FULL_NAME"
+          podman push "$FULL_NAME"
+        }
+
+        ${concatLines (
+          attrValues (mapAttrs (system: image: "publish-arch \"${system}\" \"${images.${system}}\"") images)
+        )}
+
+        FULL_NAME="$REPOSITORY:$TAG"
+        docker manifest rm "$FULL_NAME" 2> /dev/null || true
+        docker manifest create --amend \
+          "$FULL_NAME" \
+          ${concatLines (map (system: "  \"$FULL_NAME-${system}\" \\") systems)}
+
+        docker manifest push "$FULL_NAME"
+      '';
+    };
 in
-images
+{
+  inherit name images publishScript;
+}
