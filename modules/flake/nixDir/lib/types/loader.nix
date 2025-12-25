@@ -1,13 +1,8 @@
 {
   super,
   lib,
-  inputs,
-  config,
 }:
 with lib;
-let
-  cfg = config.nixDir3;
-in
 types.submodule (
   { config, ... }:
   {

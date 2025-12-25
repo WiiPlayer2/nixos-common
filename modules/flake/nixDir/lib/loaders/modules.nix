@@ -1,8 +1,10 @@
-{ lib, inputs }:
-with lib;
 {
-# extraInputs ? [ ],
+  lib,
+  import-tree,
+  inputs,
 }:
+with lib;
+{ }:
 let
   args = {
     inherit lib inputs;
@@ -28,7 +30,7 @@ in
           treeModule =
             let
               treePath = path;
-              module = pipe inputs.import-tree [
+              module = pipe import-tree [
                 (i: i.filter (x: x != "/module.nix"))
                 (i: i treePath)
               ];

@@ -8,9 +8,10 @@
 with lib;
 let
   cfg = config.nixDir;
-  nixDirLib = cfg.lib;
-
-  first = ls: elemAt ls 0;
+  nixDirLib = import ./lib.nix {
+    inherit lib inputs;
+    inherit (inputs) haumea import-tree;
+  };
 in
 {
   imports = [
@@ -21,13 +22,7 @@ in
     lib = mkOption {
       type = types.raw;
       readOnly = true;
-      default = inputs.haumea.lib.load {
-        src = ./lib;
-        inputs = {
-          inherit config inputs withSystem;
-          lib = extend (_: _: inputs.haumea.lib);
-        };
-      };
+      default = nixDirLib;
     };
 
     root = mkOption {
