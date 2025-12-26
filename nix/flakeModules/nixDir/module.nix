@@ -116,7 +116,7 @@ in
             else
               loadResultDirect;
         in
-        if loadResult != { } then
+        if loadResult != { } && loadResult != null then
           {
             ${loadCfg.target} = loadResult;
           }
