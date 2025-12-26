@@ -18,6 +18,15 @@ in
           sessionCommands = ''
             XDG_CURRENT_DESKTOP="X-NIXOS-SYSTEMD-AWARE"
           '';
+          session = [
+            {
+              name = "xsession";
+              manage = "desktop";
+              start = ''
+                exec $HOME/.xsession
+              '';
+            }
+          ];
           lightdm = {
             enable = true;
             greeters = {
@@ -57,7 +66,8 @@ in
       };
 
       displayManager = {
-        defaultSession = "xfce+i3";
+        # defaultSession = "xfce+i3";
+        defaultSession = "xsession";
       };
 
       cinnamon = {
