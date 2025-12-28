@@ -1,3 +1,7 @@
 {
-  virtualisation.vmVariant = ./configuration.nix;
+  virtualisation = {
+    vmVariant = ./configuration.nix;
+    vmVariantWithBootLoader = ./configuration.nix;
+    vmVariantWithDisko = ./configuration.nix;
+  };
 }
