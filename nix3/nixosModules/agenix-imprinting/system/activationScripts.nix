@@ -30,6 +30,8 @@ mkIf cfg.enable {
           echo "Imprinting failed. To retry ensure the target file does not exist when activating again."
           sleep 10
           _localstatus=1
+        else
+          chmod 400 ${targetArg}
         fi
       fi
     '';
