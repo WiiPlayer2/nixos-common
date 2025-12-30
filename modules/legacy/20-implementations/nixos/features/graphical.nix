@@ -15,9 +15,6 @@ in
       xserver = {
         enable = true;
         displayManager = {
-          sessionCommands = ''
-            XDG_CURRENT_DESKTOP="X-NIXOS-SYSTEMD-AWARE"
-          '';
           session = [
             {
               name = "xsession";
@@ -25,6 +22,10 @@ in
               start = ''
                 exec $HOME/.xsession
               '';
+              desktopNames = [
+                "X-NIXOS-SYSTEMD-AWARE"
+                "X-Cinnamon"
+              ];
             }
           ];
           lightdm = {
