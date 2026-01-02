@@ -10,6 +10,9 @@
     ../modules
     ../overlays
     ../pkgs
+
+    (inputs.import-tree ./_tree)
+    inputs.flake-aspects.flakeModule
   ];
 
   systems = [

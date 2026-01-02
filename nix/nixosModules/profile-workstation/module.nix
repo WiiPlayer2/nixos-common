@@ -9,6 +9,7 @@ with lib;
 {
   imports = [
     inputs.self.nixosModules.security-cmd-polkit
+    inputs.self.modules.nixos.i3wm
   ];
 
   home-manager.sharedModules = [
