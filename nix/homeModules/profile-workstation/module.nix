@@ -20,7 +20,7 @@ with lib;
         nix-btm
         nix-tree
         unstable.nix-playground
-        unstable.omnix
+        # unstable.omnix
         k8s-toolbox
         freelens-appimage
         devtoolbox
