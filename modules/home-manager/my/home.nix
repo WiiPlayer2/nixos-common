@@ -36,6 +36,7 @@ in
       pciutils
       usbutils
       mob
+      d-spy
     ];
   };
 }
