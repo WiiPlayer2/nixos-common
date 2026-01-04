@@ -62,36 +62,46 @@ with lib;
           initExtra = ''
             dbus-update-activation-environment --systemd DISPLAY
           '';
-          windowManager.i3.config.keybindings =
-            # let
-            #   modifier = config.xsession.windowManager.i3.config.modifier;
-            # in
-            mkOptionDefault {
-              # TODO: add notifications
-              "XF86AudioMute" =
-                "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
-              "XF86AudioLowerVolume" =
-                "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
-              "XF86AudioRaiseVolume" =
-                "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
-              "Control+Mod1+L" = "exec ${pkgs.cinnamon-screensaver}/bin/cinnamon-screensaver-command --lock";
+          windowManager.i3 = {
+            config = {
+              keybindings =
+                # let
+                #   modifier = config.xsession.windowManager.i3.config.modifier;
+                # in
+                mkOptionDefault {
+                  # TODO: add notifications
+                  "XF86AudioMute" =
+                    "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+                  "XF86AudioLowerVolume" =
+                    "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
+                  "XF86AudioRaiseVolume" =
+                    "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
+                  "Control+Mod1+L" = "exec ${pkgs.cinnamon-screensaver}/bin/cinnamon-screensaver-command --lock";
+                  "Print" = "exec --no-startup-id ${getExe pkgs.shutter} --full";
+                  "Control+Print" = "exec --no-startup-id ${getExe pkgs.shutter} --select";
+                  "Mod1+Print" = "exec --no-startup-id ${getExe pkgs.shutter} --active";
+                };
+
+              startup = [
+                { command = "${pkgs.cinnamon-screensaver}/bin/cinnamon-screensaver --hold"; }
+                { command = "${getExe xsetConfig}"; }
+                {
+                  command = "${getExe pkgs.xidlehook} --timer 300 ${escapeShellArg (getExe (setIdle "true"))} ${escapeShellArg (getExe (setIdle "false"))}";
+                }
+              ];
             };
+
+            extraConfig = ''
+              for_window [class=".shutter-wrapped"] floating enable, resize set 1280 720, move position center
+            '';
+          };
         };
 
         home.packages = with pkgs; [
           cinnamon-screensaver
           xidlehook
+          shutter
         ];
-
-        xsession.windowManager.i3.config = {
-          startup = [
-            { command = "${pkgs.cinnamon-screensaver}/bin/cinnamon-screensaver --hold"; }
-            { command = "${getExe xsetConfig}"; }
-            {
-              command = "${getExe pkgs.xidlehook} --timer 300 ${escapeShellArg (getExe (setIdle "true"))} ${escapeShellArg (getExe (setIdle "false"))}";
-            }
-          ];
-        };
 
         services.inhibridge.enable = true;
       };
