@@ -60,7 +60,7 @@
 
               ];
               text = ''
-                nix repl --extra-experimental-features 'repl-flake' "$FLAKE_ROOT" --override-input common path:"$FLAKE_ROOT"/flakes/common
+                nix repl --extra-experimental-features 'repl-flake' "$FLAKE_ROOT" --override-input common path:"$FLAKE_ROOT"/flakes/common "$@"
               '';
             })
             (writeShellApplication {
