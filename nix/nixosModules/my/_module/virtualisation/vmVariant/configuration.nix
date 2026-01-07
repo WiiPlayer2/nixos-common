@@ -19,6 +19,7 @@
         "-chardev spicevmc,id=spicechannel0,name=vdagent"
       ];
     };
+    memorySize = 2048;
   };
 
   users.users = {
