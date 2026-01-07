@@ -1523,6 +1523,22 @@
         "url": "https://github.com/NixOS/nixpkgs/archive/fb192fec7cc7a4c26d51779e9bab07ce6fa5597a.tar.gz"
       }
     },
+    "nixpkgs-pinned": {
+      "locked": {
+        "lastModified": 1759428331,
+        "narHash": "sha256-uiwhEB6z8eOo2NG70+OnbIbDe2nplo/Zl4Si0AMrowU=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "1242ee333dd7063e6d57ee1996a2e0504a28de16",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "1242ee333dd7063e6d57ee1996a2e0504a28de16",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1730741070,
@@ -2037,14 +2053,15 @@
       "inputs": {
         "deploy-rs": "deploy-rs_2",
         "nixos-artwork": "nixos-artwork",
-        "nixpkgs": "nixpkgs_7"
+        "nixpkgs": "nixpkgs_7",
+        "nixpkgs-pinned": "nixpkgs-pinned"
       },
       "locked": {
-        "lastModified": 1752340098,
-        "narHash": "sha256-LbGWSiLSI4w2dKdwSot2DypimkrmPJLPjFe0EZFbm4I=",
+        "lastModified": 1767748239,
+        "narHash": "sha256-FDHCeaJQ4Upizqu79BiXb/OW/s3KmDTgE+mJxkVC4q4=",
         "owner": "WiiPlayer2",
         "repo": "switchroot-nixos",
-        "rev": "f6381ff829c0d48f536ea523677aaa6f955aa54a",
+        "rev": "f30a271177ae8c5f6bee01c74cb93811ecbb8b66",
         "type": "github"
       },
       "original": {
