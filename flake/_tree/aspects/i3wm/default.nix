@@ -93,6 +93,7 @@ with lib;
 
             extraConfig = ''
               for_window [class=".shutter-wrapped"] floating enable, resize set 1280 720, move position center
+              for_window [class="Variety" title="Variety Images"] floating enable
             '';
           };
         };
