@@ -27,7 +27,7 @@ in
     xdg.mimeApps = {
       # enable = true; # TODO: this should be managed but not now
       defaultApplications = {
-        "inode/directory" = trace "henlo" "nemo.desktop";
+        "inode/directory" = "nemo.desktop";
       };
     };
   };
