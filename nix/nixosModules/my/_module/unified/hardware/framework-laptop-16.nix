@@ -35,7 +35,8 @@ with lib;
       (writeShellApplication {
         name = "configure-framework-input";
         runtimeInputs = [
-          ungoogled-chromium
+          # ungoogled-chromium
+          chromium
         ];
         text = ''
           chromium https://keyboard.frame.work/
