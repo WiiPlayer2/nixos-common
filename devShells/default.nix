@@ -200,7 +200,7 @@
             })
           ];
         shellHook = ''
-          ${config.agenix-shell.installationScript}
+          ${getExe config.agenix-shell.installationScript}
           ${config.pre-commit.installationScript}
           export FLAKE_ROOT="$(pwd)"
         '';

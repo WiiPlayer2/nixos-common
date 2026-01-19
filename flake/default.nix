@@ -13,7 +13,6 @@
 
     (inputs.import-tree ./_tree)
     inputs.flake-aspects.flakeModule
-    inputs.agenix-shell.flakeModules.default
   ];
 
   systems = [
