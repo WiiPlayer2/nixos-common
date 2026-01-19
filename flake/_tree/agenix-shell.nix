@@ -1,0 +1,3 @@
+{
+  agenix-shell.secrets = { };
+}

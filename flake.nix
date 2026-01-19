@@ -109,6 +109,7 @@
     import-tree.url = "github:vic/import-tree";
     inhibridge.url = "git+https://codeberg.org/Scrumplex/inhibridge";
     flake-aspects.url = "git+https://tangled.org/oeiuwq.com/flake-aspects";
+    agenix-shell.url = "github:aciceri/agenix-shell";
   };
 
   outputs =
