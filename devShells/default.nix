@@ -182,6 +182,15 @@
                 '';
               }
             )
+            (writeShellApplication {
+              name = "pull";
+              text = ''
+                git -C "$FLAKE_ROOT/flakes/common" switch main
+                git -C "$FLAKE_ROOT/flakes/common" pull
+                git -C "$FLAKE_ROOT" switch main
+                git -C "$FLAKE_ROOT" pull
+              '';
+            })
           ];
         shellHook = ''
           ${config.pre-commit.installationScript}
