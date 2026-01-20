@@ -186,16 +186,14 @@
               name = "update";
               text = ''
                 set -x
-                git -C "$FLAKE_ROOT" fetch
                 git -C "$FLAKE_ROOT" switch main
-                git -C "$FLAKE_ROOT" pull
-                git -C "$FLAKE_ROOT/flakes/common" fetch
+                git -C "$FLAKE_ROOT" pull origin main
                 git -C "$FLAKE_ROOT/flakes/common" switch main
-                git -C "$FLAKE_ROOT/flakes/common" pull
+                git -C "$FLAKE_ROOT/flakes/common" pull origin main
                 nix flake update --flake "$FLAKE_ROOT" common --commit-lock-file
                 git -C "$FLAKE_ROOT" add "$FLAKE_ROOT/flakes/common"
                 git -C "$FLAKE_ROOT" commit --amend --no-edit
-                git -C "$FLAKE_ROOT" push
+                git -C "$FLAKE_ROOT" push origin main
               '';
             })
           ];
