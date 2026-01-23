@@ -4,7 +4,11 @@
   inputs,
 }:
 with lib;
-{ }:
+{
+  apply ? (x: x),
+
+  config ? { },
+}:
 let
   args = {
     inherit lib inputs;
@@ -42,5 +46,6 @@ in
         };
       module = if pathIsRegularFile path then fileModule else directoryModule;
     in
-    setDefaultModuleLocation path module;
+    apply (setDefaultModuleLocation path module);
 }
+// config
