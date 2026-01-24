@@ -33,7 +33,6 @@ in
         development.misc = true;
         social = {
           teams.enable = true;
-          # pidgin.enable = true;
           tuba.enable = true;
         };
       };

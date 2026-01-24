@@ -11,13 +11,6 @@ in
 {
   config = mkMerge [
     (mkIf cfg.chatting.telegram.enable {
-      # TODO: tdlib-purple is currently broken
-      # programs.pidgin = {
-      #   enable = true;
-      #   plugins = with pkgs.pidginPackages; [
-      #     tdlib-purple
-      #   ];
-      # };
       home.packages = with pkgs; [
         # tg
         # kotatogram-desktop

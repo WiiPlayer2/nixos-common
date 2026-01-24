@@ -52,9 +52,6 @@ in
       teams = {
         enable = mkEnableOption "Whether Teams is available";
       };
-      pidgin = {
-        enable = mkEnableOption "Whether Pidgin is available";
-      };
       tuba = {
         enable = mkEnableOption "Whether Tuba is available";
       };

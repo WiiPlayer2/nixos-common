@@ -112,7 +112,7 @@ in
             ];
           configurations = filter (
             { value, ... }:
-            value.config.my.specials.distributedBuilds.allowBuilding
+            (value.config.my.specials.distributedBuilds.allowBuilding or false)
             && value.config.my.specials.distributedBuilds.domain == cfg.domain
             && value.config.networking.hostName != config.networking.hostName
           ) (attrsToList flake-inputs.self.nixosConfigurations);
