@@ -84,6 +84,81 @@ in
               sed -i -e 's|install --mode=0644|install -D --mode=0644|' Makefile
             '';
           };
+
+        purple-presage =
+          let
+            pname = "purple-presage";
+            version = "nightly-20260114-c927689";
+            src = final.fetchFromGitHub {
+              owner = "hoehermann";
+              repo = pname;
+              rev = version;
+              fetchSubmodules = true;
+              hash = "sha256-PJC0bGdUT+SiiEcbHZcTBSb9USPOLe0iMQUnSBOc4zQ=";
+            };
+            corrosionSrc = final.fetchFromGitHub {
+              owner = "corrosion-rs";
+              repo = "corrosion";
+              rev = "v0.6.1";
+              hash = "sha256-ppuDNObfKhneD9AlnPAvyCRHKW3BidXKglD1j/LE9CM=";
+            };
+
+            rustLib = final.rustPlatform.buildRustPackage {
+              inherit pname version;
+              src = "${src}/src/rust";
+
+              cargoHash = "sha256-kogZM4IsZXly6OsNGKA0mHOJz2VXDXoTNp1hnlnRcIw=";
+
+              nativeBuildInputs = with final; [
+                protobuf
+              ];
+
+              buildInputs = with final; [
+                openssl
+              ];
+
+              buildType = "dev";
+
+              doCheck = false;
+            };
+          in
+          final.stdenv.mkDerivation {
+            inherit pname version src;
+
+            nativeBuildInputs = with final; [
+              pkg-config
+              cmake
+              git
+              rustc
+              cargo
+            ];
+
+            buildInputs = with final; [
+              pidgin
+              glib
+              qrencode
+            ];
+
+            cmakeFlags = [
+              "-DFETCHCONTENT_SOURCE_DIR_CORROSION=${corrosionSrc}"
+            ];
+
+            postPatch = ''
+              sed -i -e 's|$(MAKE) -C src/rust||' Makefile
+              sed -i -e 's|src/rust/target/debug/libpurple_presage_backend.a|${rustLib}/lib/libpurple_presage_backend.a|' Makefile
+
+              sed -i -e '18,29d' CMakeLists.txt
+              sed -i -e "8i set(PURPLE_PLUGIN_DIR \"$out/lib/purple-2\")" CMakeLists.txt
+              sed -i -e "8i set(PURPLE_DATA_DIR \"$out/share\")" CMakeLists.txt
+              sed -i -e 's|string(JSON PLUGIN_VERSION GET ''${BACKEND_METADATA} packages 0 version)|set(PLUGIN_VERSION "0.0.0")|' CMakeLists.txt
+              sed -i -e 's|target_link_libraries(''${TARGET_NAME} PRIVATE purple_presage_backend)||' CMakeLists.txt
+              sed -i -e 's|target_link_libraries(purple_presage_backend INTERFACE crypto m ''${TARGET_NAME})||' CMakeLists.txt
+            '';
+
+            passthru = {
+              inherit rustLib;
+            };
+          };
       }
     );
   };
