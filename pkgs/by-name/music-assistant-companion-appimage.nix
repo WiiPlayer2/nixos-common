@@ -25,8 +25,8 @@ appimageTools.wrapType2 {
   inherit pname version;
 
   src = fetchurl {
-    url = "https://github.com/music-assistant/desktop-app/releases/download/v${version}/Music.Assistant_${version}_aarch64.AppImage";
-    hash = "sha256-KI0ux7pOSOgN9bZeRMEqlOWPD2wVrjoZDHKgaq3j98w=";
+    url = "https://github.com/music-assistant/desktop-app/releases/download/v${version}/Music.Assistant_${version}_amd64.AppImage";
+    hash = "sha256-4WPS03oQCe+Pl8w2e1yrrnGFg8SfZXYvWVLCnmU1jfQ=";
   };
 
   extraInstallCommands = ''
