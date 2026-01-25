@@ -10,6 +10,7 @@ let
   inherit (pkgs.lib)
     optionals
     lists
+    getExe
     ;
   presetCfg = cfg.domains.presets.windows;
   installIso = pkgs.requireFile {
@@ -41,6 +42,11 @@ let
     #     threads = 1;
     #   };
     # };
+
+    memoryBacking = {
+      source.type = "memfd";
+      access.mode = "shared";
+    };
 
     devices = base.devices // {
       disk =
@@ -94,6 +100,17 @@ let
           (mkDisplay true)
         ]
         ++ (lists.genList (_: mkDisplay false) (displayCount - 1));
+
+      filesystem = [
+        {
+          type = "mount";
+          accessmode = "passthrough";
+          driver.type = "virtiofs";
+          source.dir = "/home";
+          target.dir = "home";
+          binary.path = "${getExe pkgs.virtiofsd}";
+        }
+      ];
     };
   };
 in
