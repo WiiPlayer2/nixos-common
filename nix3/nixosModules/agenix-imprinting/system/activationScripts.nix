@@ -17,7 +17,10 @@ let
   imprintingFileArg = escapeShellArg "${super.imprintingPkg}/imprinting-file";
 in
 mkIf cfg.enable {
-  agenixNewGeneration.deps = [ "agenixImprinting" ];
+  agenixNewGeneration = {
+    deps = [ "agenixImprinting" ];
+    text = mkDefault "";
+  };
 
   agenixImprinting = {
     deps = [ "specialfs" ];
