@@ -12,6 +12,7 @@ in
   options.services._6tunnel = {
     enable = mkEnableOption "";
     package = mkPackageOption pkgs "_6tunnel" { };
+    openFirewall = mkEnableOption "";
 
     servers = mkOption {
       type = types.attrsOf (
@@ -52,6 +53,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    environment.systemPackages = [
+      cfg.package
+    ];
+
     systemd.services =
       let
         mkService =
@@ -87,5 +92,11 @@ in
         );
       in
       services;
+
+    networking.firewall.allowedTCPPorts =
+      let
+        ports = attrValues (mapAttrs (n: v: v.localPort) (filterAttrs (n: v: v.enable) cfg.servers));
+      in
+      mkIf cfg.openFirewall ports;
   };
 }
