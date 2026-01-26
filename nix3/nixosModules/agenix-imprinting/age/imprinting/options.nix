@@ -3,6 +3,8 @@ with lib;
 {
   enable = mkEnableOption "";
 
+  manual = mkEnableOption "";
+
   target = mkOption {
     type = types.path;
   };

@@ -16,7 +16,7 @@ let
   targetArg = escapeShellArg cfg.target;
   imprintingFileArg = escapeShellArg "${super.imprintingPkg}/imprinting-file";
 in
-mkIf cfg.enable {
+mkIf (cfg.enable && !cfg.manual) {
   agenixNewGeneration = {
     deps = [ "agenixImprinting" ];
     text = mkDefault "";
