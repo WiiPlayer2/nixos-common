@@ -159,6 +159,41 @@ in
               inherit rustLib;
             };
           };
+
+        purple-teams =
+          let
+            pname = "purple-teams";
+            version = "daily-2026-01-13";
+            src = final.fetchFromGitHub {
+              owner = "EionRobb";
+              repo = pname;
+              rev = version;
+              hash = "sha256-TKLwYHpihd19pQScc8RvkxOudN5GbxpB916vvgMYpqQ=";
+            };
+          in
+          final.stdenv.mkDerivation {
+            inherit pname version src;
+
+            nativeBuildInputs = with final; [
+              pkg-config
+              # cmake
+              # git
+              # rustc
+              # cargo
+            ];
+
+            buildInputs = with final; [
+              pidgin
+              json-glib
+              # glib
+              # qrencode
+            ];
+
+            postPatch = ''
+              sed -i -e 's|`$(PKG_CONFIG) --variable=plugindir purple`|$(out)/lib/purple-2|' Makefile
+              sed -i -e 's|`$(PKG_CONFIG) --variable=datadir purple`|$(out)/share|' Makefile
+            '';
+          };
       }
     );
   };
