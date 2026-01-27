@@ -102,28 +102,15 @@ in
               rev = "v0.6.1";
               hash = "sha256-ppuDNObfKhneD9AlnPAvyCRHKW3BidXKglD1j/LE9CM=";
             };
-
-            rustLib = final.rustPlatform.buildRustPackage {
-              inherit pname version;
-              src = "${src}/src/rust";
-
-              cargoHash = "sha256-kogZM4IsZXly6OsNGKA0mHOJz2VXDXoTNp1hnlnRcIw=";
-
-              nativeBuildInputs = with final; [
-                protobuf
-              ];
-
-              buildInputs = with final; [
-                openssl
-              ];
-
-              buildType = "dev";
-
-              doCheck = false;
-            };
+            cargoRoot = "src/rust";
           in
           final.stdenv.mkDerivation {
-            inherit pname version src;
+            inherit
+              pname
+              version
+              src
+              cargoRoot
+              ;
 
             nativeBuildInputs = with final; [
               pkg-config
@@ -131,11 +118,14 @@ in
               git
               rustc
               cargo
+              protobuf
+              rustPlatform.cargoSetupHook
             ];
 
             buildInputs = with final; [
               pidgin
               glib
+              openssl
               qrencode
             ];
 
@@ -143,16 +133,20 @@ in
               "-DFETCHCONTENT_SOURCE_DIR_CORROSION=${corrosionSrc}"
             ];
 
-            postPatch = ''
-              sed -i -e 's|$(MAKE) -C src/rust||' Makefile
-              sed -i -e 's|src/rust/target/debug/libpurple_presage_backend.a|${rustLib}/lib/libpurple_presage_backend.a|' Makefile
+            cargoDeps = final.rustPlatform.fetchCargoVendor {
+              inherit
+                pname
+                version
+                src
+                cargoRoot
+                ;
+              hash = "sha256-kogZM4IsZXly6OsNGKA0mHOJz2VXDXoTNp1hnlnRcIw=";
+            };
+            CARGO_NET_OFFLINE = "true";
 
-              sed -i -e '18,29d' CMakeLists.txt
+            postPatch = ''
               sed -i -e "8i set(PURPLE_PLUGIN_DIR \"$out/lib/purple-2\")" CMakeLists.txt
               sed -i -e "8i set(PURPLE_DATA_DIR \"$out/share\")" CMakeLists.txt
-              sed -i -e 's|string(JSON PLUGIN_VERSION GET ''${BACKEND_METADATA} packages 0 version)|set(PLUGIN_VERSION "0.0.0")|' CMakeLists.txt
-              sed -i -e 's|target_link_libraries(''${TARGET_NAME} PRIVATE purple_presage_backend)||' CMakeLists.txt
-              sed -i -e 's|target_link_libraries(purple_presage_backend INTERFACE crypto m ''${TARGET_NAME})||' CMakeLists.txt
             '';
 
             passthru = {
@@ -176,17 +170,11 @@ in
 
             nativeBuildInputs = with final; [
               pkg-config
-              # cmake
-              # git
-              # rustc
-              # cargo
             ];
 
             buildInputs = with final; [
               pidgin
               json-glib
-              # glib
-              # qrencode
             ];
 
             postPatch = ''
