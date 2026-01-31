@@ -1,3 +1,5 @@
+{ lib, ... }:
+with lib;
 {
   flake.overlays.overrides = final: prev: {
     python312 = prev.python312.override {
@@ -38,5 +40,19 @@
         };
       }
     );
+
+    # itch.io fix
+    lutris-unwrapped =
+      assert prev.unstable.lutris-unwrapped.version == "0.5.19";
+      assert prev.lutris-unwrapped.version == "0.5.19";
+      prev.lutris-unwrapped.overrideAttrs {
+        version = "2d0244a";
+        src = final.fetchFromGitHub {
+          owner = "lutris";
+          repo = "lutris";
+          rev = "2d0244aa28fb05aebebf3f0c1ed2198cd23e77b3";
+          hash = "sha256-IKiYlbC6zyGBmv49yTz3/ER6zg5VoQazOzVmqayWEuo=";
+        };
+      };
   };
 }
