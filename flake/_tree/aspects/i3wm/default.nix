@@ -107,7 +107,17 @@ with lib;
           shutter
         ];
 
-        services.inhibridge.enable = true;
+        services = {
+          inhibridge.enable = true;
+          picom = {
+            shadowExclude = [
+              "class_g ?= 'org.nickvision.cavalier'"
+            ];
+            settings.blur-background-exclude = [
+              "class_g ?= 'org.nickvision.cavalier'"
+            ];
+          };
+        };
       };
   };
 }
