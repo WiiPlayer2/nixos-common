@@ -118,6 +118,9 @@ with lib;
             ];
           };
         };
+
+        systemd.user.services.picom.Service.ExecCondition =
+          "${pkgs.runtimeShell} -c \"! ${pkgs.systemd}/bin/systemd-detect-virt --vm\"";
       };
   };
 }
