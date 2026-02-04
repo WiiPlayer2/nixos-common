@@ -5,5 +5,7 @@
     extraPackages = with pkgs; [
       nil
     ];
+
+    languages.language-server.omnisharp.timeout = 60;
   };
 }
