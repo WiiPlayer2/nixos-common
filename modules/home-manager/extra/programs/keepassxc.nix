@@ -36,6 +36,7 @@ in
     };
   };
 
+  # TODO: don't call scripts by name
   config =
     with lib;
     mkIf cfg.enable {
@@ -75,12 +76,13 @@ in
           keepassxc &
           sleep ${toString cfg.startupUnlockDelay}
           keepassxc-unlock
+          keepassxc-watch
         '')
         (writeShellScriptBin "keepassxc-watch" ''
           #!/usr/bin/env bash
           # KeepassXC watch for logout and unlock a database
 
-          dbus-monitor --session "type=signal,interface=org.xfce.ScreenSaver" | 
+          dbus-monitor --session "type=signal,interface=org.cinnamon.ScreenSaver" |
             while read MSG; do
               LOCK_STAT=`echo $MSG | grep boolean | awk '{print $2}'`
               if [[ "$LOCK_STAT" == "false" ]]; then
