@@ -58,6 +58,10 @@ with lib;
           };
       in
       {
+        imports = [
+          ./_home.nix
+        ];
+
         xsession = {
           initExtra = ''
             dbus-update-activation-environment --systemd DISPLAY

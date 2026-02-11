@@ -123,6 +123,17 @@
               '';
             })
             (writeShellApplication {
+              name = "vm-nixos";
+              runtimeInputs = [
+                # nix
+              ];
+              text = ''
+                TARGET="$1"
+                shift
+                nix run "$FLAKE_ROOT"#nixosConfigurations."$TARGET".config.system.build.vm --override-input common path:"$FLAKE_ROOT"/flakes/common "$@"
+              '';
+            })
+            (writeShellApplication {
               name = "build-nix-on-droid";
               runtimeInputs = [
                 nix-output-monitor

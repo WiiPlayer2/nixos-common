@@ -5,6 +5,7 @@
     ./networking.nix
     ./nix.nix
     ./stylix.nix
+    ./xdg.nix
     ./boot
     ./environment
     ./home-manager
