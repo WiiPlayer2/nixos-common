@@ -22,6 +22,10 @@ with lib;
             u2fAuth = true;
           };
         };
+
+        programs = {
+          gamescope.enable = true;
+        };
       };
 
     homeManager =
