@@ -20,6 +20,13 @@ with lib;
               exec ${getExe ludusavi} wrap --infer lutris --gui --force --no-force-cloud-conflict -- ${getExe launcher} "$@"
             ''
           )
+
+          (heroic.override {
+            extraPkgs =
+              pkgs': with pkgs'; [
+                gamemode
+              ];
+          })
         ];
       };
   };
