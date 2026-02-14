@@ -25,7 +25,7 @@ with lib;
       };
 
     homeManager =
-      { pkgs, ... }:
+      { config, pkgs, ... }:
       let
         xsetConfig = pkgs.writeShellApplication {
           name = "xset-config";
@@ -69,9 +69,9 @@ with lib;
           windowManager.i3 = {
             config = {
               keybindings =
-                # let
-                #   modifier = config.xsession.windowManager.i3.config.modifier;
-                # in
+                let
+                  modifier = config.xsession.windowManager.i3.config.modifier;
+                in
                 mkOptionDefault {
                   # TODO: add notifications
                   "XF86AudioMute" =
@@ -84,6 +84,7 @@ with lib;
                   "Print" = "exec --no-startup-id ${getExe pkgs.shutter} --full";
                   "Control+Print" = "exec --no-startup-id ${getExe pkgs.shutter} --select";
                   "Mod1+Print" = "exec --no-startup-id ${getExe pkgs.shutter} --active";
+                  "${modifier}+Shift+P" = "exec --no-startup-id ${getExe pkgs.autorandr} --change";
                 };
 
               startup = [
