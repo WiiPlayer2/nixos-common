@@ -7,7 +7,7 @@
 with lib;
 let
   cfg = config.my.programs.pmbootstrap;
-  pmbootstrapVersion = "3.5.2";
+  pmbootstrapVersion = "3.9.0";
   # TODO: Move to pkgs and override on demand. nixpkgs does contain an up-to-date version
   # pmbootstrapSrc = pkgs.fetchFromGitLab {
   #     owner = "postmarketos";
@@ -19,7 +19,7 @@ let
   pmbootstrapSrc = pkgs.fetchgit {
     url = "https://gitlab.postmarketos.org/postmarketOS/pmbootstrap.git";
     rev = "refs/tags/${pmbootstrapVersion}";
-    hash = "sha256-fkzDVMO0huAuJDJIt0dyNGnRD6Go7XZ/YRv/JMtlbss=";
+    hash = "sha256-eDngGcHNfxphshNyIoRC4NZA4KUBHSJjshsGaNp8Uw0=";
   };
   pmbootstrapCli = pkgs.pmbootstrap.overridePythonAttrs rec {
     version = pmbootstrapVersion;
