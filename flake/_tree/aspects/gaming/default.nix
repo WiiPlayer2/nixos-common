@@ -25,6 +25,7 @@ with lib;
             extraPkgs =
               pkgs': with pkgs'; [
                 gamemode
+                gamescope
               ];
           })
         ];
