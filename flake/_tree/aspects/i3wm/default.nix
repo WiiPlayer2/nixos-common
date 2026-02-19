@@ -88,7 +88,8 @@ with lib;
                   "Print" = "exec --no-startup-id ${getExe pkgs.shutter} --full";
                   "Control+Print" = "exec --no-startup-id ${getExe pkgs.shutter} --select";
                   "Mod1+Print" = "exec --no-startup-id ${getExe pkgs.shutter} --active";
-                  "${modifier}+Shift+P" = "exec --no-startup-id ${getExe pkgs.autorandr} --change";
+                  # If everything works correctly this could just start autorandr.service
+                  "${modifier}+Shift+P" = "exec --no-startup-id ${getExe pkgs.autorandr} --change --default common";
                 };
 
               startup = [
