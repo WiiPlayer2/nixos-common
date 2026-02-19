@@ -49,6 +49,7 @@ in
               let
                 execFirefox = pkgs.writeShellApplication {
                   name = "exec-firefox";
+                  # does not recognize main window but also PWAs
                   text = ''
                     pgrep --exact .firefox-wrappe || ( firefox & disown )
                     i3-msg '[class="firefox"]' focus

@@ -94,6 +94,31 @@ in
               definedAliases = [ "@no" ];
             };
 
+            nuget = {
+              name = "NuGet Gallery";
+              urls = [
+                {
+                  template = "https://www.nuget.org/packages";
+                  params = [
+                    {
+                      name = "q";
+                      value = "{searchTerms}";
+                    }
+                    {
+                      name = "includeComputedFrameworks";
+                      value = "true";
+                    }
+                    {
+                      name = "prerel";
+                      value = "true";
+                    }
+                  ];
+                }
+              ];
+              iconMapObj."16" = "https://www.nuget.org/favicon.ico";
+              definedAliases = [ "@nuget" ];
+            };
+
             bing.metaData.hidden = true;
             google.metaData.alias = "@g"; # builtin engines only support specifying one additional alias
           };
