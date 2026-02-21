@@ -71,7 +71,6 @@ in
           };
           social = {
             misc = true;
-            element.enable = true;
           };
           development.misc = true;
           cad.enable = true;

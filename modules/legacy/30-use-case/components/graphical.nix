@@ -46,9 +46,6 @@ in
     enable = mkEnableOption "Whether or not graphical sessions are available";
     social = {
       misc = mkEnableOption "Whether or not misc social apps are available";
-      element = {
-        enable = mkEnableOption "Whether Element is available";
-      };
       teams = {
         enable = mkEnableOption "Whether Teams is available";
       };
