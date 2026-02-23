@@ -5,9 +5,13 @@ with lib;
     nixos =
       { pkgs, ... }:
       {
-        services.logind.settings.Login = {
-          IdleAction = "lock";
-          IdleActionSec = "5s";
+        services = {
+          logind.settings.Login = {
+            IdleAction = "lock";
+            IdleActionSec = "5s";
+          };
+          gnome.gnome-keyring.enable = mkForce false;
+          dbus.packages = [ pkgs.gcr ];
         };
 
         security = {
@@ -127,6 +131,7 @@ with lib;
               "class_g ?= 'org.nickvision.cavalier'"
             ];
           };
+          gnome-keyring.enable = true;
         };
 
         systemd.user.services.picom.Service.ExecCondition =
