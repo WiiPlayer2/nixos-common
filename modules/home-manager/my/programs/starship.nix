@@ -44,6 +44,12 @@
       direnv.disabled = false;
 
       time.disabled = false;
+
+      git_commit.only_detached = false;
+
+      env_var = {
+        NIXPKGS_ALLOW_UNFREE.format = "with [NIXPKGS_ALLOW_UNFREE]($style) ";
+      };
     };
   };
 }
