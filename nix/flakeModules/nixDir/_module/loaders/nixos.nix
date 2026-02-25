@@ -7,7 +7,7 @@
 with lib;
 with config.nixDir.lib;
 {
-  nixDir.loaders.nixosConfigurations = loaders.modules {
+  nixDir.loaders.nixosConfigurations = presets.modules {
     apply =
       module:
       inputs.nixpkgs.lib.nixosSystem {

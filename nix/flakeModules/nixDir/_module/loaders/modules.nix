@@ -11,7 +11,7 @@ with config.nixDir.lib;
     inputs.flake-parts.flakeModules.flakeModules
   ];
 
-  nixDir.loaders = mapAttrs (_: loaders.modules) {
+  nixDir.loaders = mapAttrs (_: presets.modules) {
     nixosModules = { };
     homeModules = { };
     nixOnDroidModules = { };

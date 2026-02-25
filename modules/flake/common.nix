@@ -8,7 +8,7 @@ let
 
   loadNixDirModule =
     name:
-    (nixDirLib.loaders.modules { }).loader {
+    nixDirLib.loaders.modules {
       path = ../../nix/flakeModules/${name};
     };
 in
