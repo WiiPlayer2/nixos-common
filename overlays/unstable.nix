@@ -16,6 +16,7 @@ with lib;
         "archipelago"
         # "modemmanager"
         # "poptracker" # see overrides
+        "llama-cpp"
       ];
       scopePkgs = [
         "phoc"

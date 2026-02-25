@@ -3,5 +3,6 @@ inputs: {
     inputs.agenix-rekey.flakeModule
     inputs.git-hooks-nix.flakeModule
     inputs.agenix-shell.flakeModules.default
+    inputs.flake-aspects.flakeModule
   ];
 }
