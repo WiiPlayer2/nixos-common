@@ -41,5 +41,8 @@ with lib;
           gmobile
           ;
       };
+      sunshine = unstable.sunshine.override {
+        boost = unstable.boost187;
+      };
     };
 }

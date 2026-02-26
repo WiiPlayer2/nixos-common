@@ -20,7 +20,6 @@ in
         enable = true;
         openFirewall = true;
         capSysAdmin = true;
-        package = pkgs.unstable.sunshine;
       };
     })
   ];
