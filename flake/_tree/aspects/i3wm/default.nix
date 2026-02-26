@@ -79,6 +79,7 @@ with lib;
               keybindings =
                 let
                   modifier = config.xsession.windowManager.i3.config.modifier;
+                  displayMenu = pkgs.callPackage ./_pkg-display-menu.nix { };
                 in
                 mkOptionDefault {
                   # TODO: add notifications
@@ -94,6 +95,7 @@ with lib;
                   "Mod1+Print" = "exec --no-startup-id ${getExe pkgs.shutter} --active";
                   # If everything works correctly this could just start autorandr.service
                   "${modifier}+Shift+P" = "exec --no-startup-id ${getExe pkgs.autorandr} --change --default common";
+                  "${modifier}+P" = "exec --no-startup-id ${getExe displayMenu}";
                 };
 
               startup = [
