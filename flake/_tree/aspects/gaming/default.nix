@@ -28,6 +28,8 @@ with lib;
                 gamescope
               ];
           })
+
+          moonlight-qt
         ];
       };
   };
