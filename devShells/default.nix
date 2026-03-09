@@ -203,6 +203,24 @@
                 git -C "$FLAKE_ROOT/flakes/common" pull origin main
               '';
             })
+            (writeShellApplication {
+              name = "commit";
+              text = ''
+                set -x
+                git -C "$FLAKE_ROOT/flakes/common" commit "$@"
+                git -C "$FLAKE_ROOT" commit "$@"
+                git -C "$FLAKE_ROOT/flakes/common" push
+                git -C "$FLAKE_ROOT" push
+              '';
+            })
+            (writeShellApplication {
+              name = "status";
+              text = ''
+                set -x
+                git -C "$FLAKE_ROOT" status
+                git -C "$FLAKE_ROOT/flakes/common" status
+              '';
+            })
           ];
         shellHook = ''
           ${config.pre-commit.installationScript}

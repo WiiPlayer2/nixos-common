@@ -17,6 +17,7 @@ with lib;
         # "modemmanager"
         # "poptracker" # see overrides
         "llama-cpp"
+        "ayugram-desktop"
       ];
       scopePkgs = [
         "phoc"
