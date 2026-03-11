@@ -18,6 +18,8 @@ with lib;
         # "poptracker" # see overrides
         "llama-cpp"
         "ayugram-desktop"
+        "opencode"
+        "llama-cpp"
       ];
       scopePkgs = [
         "phoc"
