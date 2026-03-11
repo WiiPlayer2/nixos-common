@@ -19,6 +19,10 @@ in
           (require 'cfg/_config')(config, {
             base_color = "#${config.lib.stylix.colors.base00}",
             bg_file = '${config.my.assets.root + /images/wezterm_bg.png}',
+            processes = {
+              ssh = "#${config.lib.stylix.colors.base0C}",
+              sudo = "#${config.lib.stylix.colors.base08}",
+            },
           })
         ''
       ];
