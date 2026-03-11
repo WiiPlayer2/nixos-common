@@ -1,41 +1,45 @@
 local wezterm = require 'wezterm'
 
 local function create_background_cfg(vars, optional_gradient_color)
-  local bg_src = {}
-  if optional_gradient_color ~= nil then
-    bg_src["Gradient"] = {
-      orientation = "Horizontal",
-      colors = {
-        vars.base_color,
-        vars.base_color,
-        vars.base_color,
-        optional_gradient_color,
-      },
-      noise = 0,
-    }
-  else
-    bg_src["Color"] = vars.base_color
-  end
+  local background = {}
 
-  local background = {
-    {
-      source = bg_src,
+  table.insert(background, {
+    source = {
+      Color = vars.base_color,
+    },
+    height = "100%",
+    width = "100%",
+  })
+
+  if optional_gradient_color ~= nil then
+    table.insert(background, {
+      source = {
+        Gradient = {
+          orientation = "Horizontal",
+          colors = {
+            "#00000000",
+            optional_gradient_color,
+          },
+        },
+      },
+      hsb = { brightness = 0.1, },
       height = "100%",
       width = "100%",
+    })
+  end
+
+  table.insert(background, {
+    source = {
+      File = vars.bg_file,
     },
-    {
-      source = {
-        File = vars.bg_file,
-      },
-      opacity = 0.5,
-      horizontal_align = "Right",
-      vertical_align = "Bottom",
-      height = "Contain",
-      width = "Contain",
-      repeat_x = "NoRepeat",
-      repeat_y = "NoRepeat",
-    },
-  }
+    hsb = { brightness = 0.2, },
+    horizontal_align = "Right",
+    vertical_align = "Bottom",
+    height = "Contain",
+    width = "Contain",
+    repeat_x = "NoRepeat",
+    repeat_y = "NoRepeat",
+  })
 
   return background
 end
