@@ -9,7 +9,7 @@ let
   llama-server = lib.getExe' llama-cpp "llama-server";
 
   ttl = 900; # 15min
-  smallerContextSize = 16 * 1024;
+  smallerContextSize = 32 * 1024;
   mkLlamaModel =
     {
       filePath,

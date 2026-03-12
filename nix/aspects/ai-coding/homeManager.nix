@@ -1,4 +1,10 @@
-_: {
+_:
+{ pkgs, ... }:
+{
+  home.packages = with pkgs; [
+    uv
+  ];
+
   programs = {
     mcp = {
       enable = true;
