@@ -16,9 +16,10 @@ let
       noCuda ? false,
       noVulkan ? false,
       contextSize ? 0,
+      aliases ? [ ],
     }:
     {
-      inherit ttl;
+      inherit ttl aliases;
       env = [
         "HOME=/tmp"
       ]
@@ -29,9 +30,9 @@ let
           --port ''${PORT} \
           -m ${escapeShellArg filePath} \
           --no-warmup \
-          --no-webui \
           --parallel 1 \
           --ctx-size ${toString contextSize} \
+          --gpu-layers all \
           --jinja
       '';
     };
@@ -45,6 +46,9 @@ let
         "${name}-min" = mkLlamaModel {
           inherit filePath;
           contextSize = smallerContextSize;
+          aliases = [
+            "${name}"
+          ];
         };
         "${name}-min-vulkan" = mkLlamaModel {
           inherit filePath;
@@ -57,14 +61,14 @@ let
           noVulkan = true;
           contextSize = smallerContextSize;
         };
-        "${name}" = mkLlamaModel {
+        "${name}-max" = mkLlamaModel {
           inherit filePath;
         };
-        "${name}-vulkan" = mkLlamaModel {
+        "${name}-max-vulkan" = mkLlamaModel {
           inherit filePath;
           noCuda = true;
         };
-        "${name}-cpu" = mkLlamaModel {
+        "${name}-max-cpu" = mkLlamaModel {
           inherit filePath;
           noCuda = true;
           noVulkan = true;
@@ -83,7 +87,9 @@ let
       targetPath = "/var/lib/llama-cpp/models/${fileName}";
     in
     ''
-      ${getExe pkgs.wget} -O ${escapeShellArg targetPath} ${escapeShellArg url}
+      if [[ ! -f ${escapeShellArg targetPath} ]]; then
+        ${getExe pkgs.wget} -O ${escapeShellArg targetPath} ${escapeShellArg url}
+      fi
     '';
   modelDownloads = [
     {
@@ -133,10 +139,27 @@ in
       };
     };
 
-    open-webui = {
-      enable = true;
-      port = 8091;
-      environment.WEBUI_AUTH = "False";
-    };
+    # open-webui = {
+    #   enable = true;
+    #   port = 8091;
+    #   environment.WEBUI_AUTH = "False";
+    # };
+
+    # librechat = {
+    #   enable = true;
+    #   settings = {
+    #     endpoints = {
+    #       custom = [
+    #         {
+    #           name = "llama-swap (local)";
+    #           baseURL = "http://localhost:8090/v1";
+    #           models = {
+    #             fetch = true;
+    #           };
+    #         }
+    #       ];
+    #     };
+    #   };
+    # };
   };
 }
