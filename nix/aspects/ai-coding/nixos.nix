@@ -9,7 +9,15 @@ let
   llama-server = lib.getExe' llama-cpp "llama-server";
 
   ttl = 900; # 15min
-  smallerContextSize = 32 * 1024;
+  contextSizes = [
+    4
+    8
+    16
+    32
+    48
+    56
+    64
+  ];
   mkLlamaModel =
     {
       filePath,
@@ -36,46 +44,60 @@ let
           --jinja
       '';
     };
+  applyVariants =
+    variants: attrs:
+    concatMapAttrs (
+      name: value:
+      mapAttrs' (variantName: variantValue: {
+        name = if variantName != "_" then "${name}-${variantName}" else name;
+        value = value // variantValue;
+      }) variants
+    ) attrs;
+  backendVariants = {
+    _ = { };
+    vulkan = {
+      noCuda = true;
+    };
+    cpu = {
+      noCuda = true;
+      noVulkan = true;
+    };
+  };
+  contextVariants =
+    (genAttrs' contextSizes (ctx: {
+      name = "ctx_${toString ctx}k";
+      value = {
+        contextSize = ctx * 1024;
+      };
+    }))
+    // {
+      ctx_max = { };
+    };
   mkLLamaModels =
     {
       name,
       filePath,
     }:
     let
-      variants = {
-        "${name}-min" = mkLlamaModel {
+      baseVariant = {
+        "${name}" = {
           inherit filePath;
-          contextSize = smallerContextSize;
-          aliases = [
-            "${name}"
-          ];
-        };
-        "${name}-min-vulkan" = mkLlamaModel {
-          inherit filePath;
-          noCuda = true;
-          contextSize = smallerContextSize;
-        };
-        "${name}-min-cpu" = mkLlamaModel {
-          inherit filePath;
-          noCuda = true;
-          noVulkan = true;
-          contextSize = smallerContextSize;
-        };
-        "${name}-max" = mkLlamaModel {
-          inherit filePath;
-        };
-        "${name}-max-vulkan" = mkLlamaModel {
-          inherit filePath;
-          noCuda = true;
-        };
-        "${name}-max-cpu" = mkLlamaModel {
-          inherit filePath;
-          noCuda = true;
-          noVulkan = true;
         };
       };
+      variants = pipe baseVariant [
+        (applyVariants contextVariants)
+        (applyVariants backendVariants)
+      ];
+      aliasedVariants = recursiveUpdate variants {
+        "${name}-ctx_48k" = {
+          aliases = [
+            name
+          ];
+        };
+      };
+      models = mapAttrs (_: mkLlamaModel) aliasedVariants;
     in
-    variants;
+    models;
 
   mkModelDownload =
     {
@@ -95,6 +117,18 @@ let
     {
       repo = "unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF";
       fileName = "Qwen3-Coder-30B-A3B-Instruct-UD-IQ1_S.gguf";
+    }
+    {
+      repo = "mistralai/Ministral-3-3B-Instruct-2512-GGUF";
+      fileName = "Ministral-3-3B-Instruct-2512-Q4_K_M.gguf";
+    }
+    {
+      repo = "mistralai/Ministral-3-3B-Reasoning-2512-GGUF";
+      fileName = "Ministral-3-3B-Reasoning-2512-Q4_K_M.gguf";
+    }
+    {
+      repo = "unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF";
+      fileName = "Devstral-Small-2-24B-Instruct-2512-UD-IQ1_S.gguf";
     }
   ];
   modelDownloadScript = pkgs.writeShellApplication {
