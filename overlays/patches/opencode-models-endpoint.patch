@@ -68,7 +68,7 @@ index e69de29..0dc65fd 100644
 +}
 
 diff --git a/packages/opencode/src/provider/provider.ts b/packages/opencode/src/provider/provider.ts
-index b4836ae..76c85c7 100644
+index b4836ae..5ec521e 100644
 --- a/packages/opencode/src/provider/provider.ts
 +++ b/packages/opencode/src/provider/provider.ts
 @@ -10,7 +10,7 @@ import { Hash } from "../util/hash"
@@ -134,7 +134,7 @@ index b4836ae..76c85c7 100644
    const state = Instance.state(async () => {
      using _ = log.time("state")
      const config = await Config.get()
-@@ -1007,6 +1048,27 @@ export namespace Provider {
+@@ -1007,6 +1048,32 @@ export namespace Provider {
        mergeProvider(providerID, partial)
      }
  
@@ -143,7 +143,7 @@ index b4836ae..76c85c7 100644
 +      Object.values(providers).map(async (provider) => {
 +        const detected = await listModels(provider)
 +        if (!detected) return
-+        const detectedSet = new Set(detected)
++        // const detectedSet = new Set(detected)
 +        // for (const modelID of Object.keys(provider.models)) {
 +        //   if (!detectedSet.has(modelID)) delete provider.models[modelID]
 +        // }
@@ -152,7 +152,12 @@ index b4836ae..76c85c7 100644
 +          if(!(modelID in provider.models)) {
 +            provider.models[modelID] = fromModelsDevModel(provider, {
 +              id: modelID,
-+              limit: {},
++              name: modelID,
++              limit: {
++                context: 0,
++                input: 0,
++                output: 0,
++              },
 +            })
 +          }
 +        }

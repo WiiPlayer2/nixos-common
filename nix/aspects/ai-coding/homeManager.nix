@@ -38,6 +38,16 @@ _:
             npm = "@ai-sdk/openai-compatible";
             name = "llama-swap (local)";
             options.baseURL = "http://localhost:8090/v1";
+            models = {
+              qwen3-coder-30b-a3b-instruct-ctx_48k = {
+                name = "Qwen3 Coder 30B (48K CTX)";
+                limit = {
+                  context = 48 * 1024;
+                  output = 0;
+                  input = 0;
+                };
+              };
+            };
           };
         };
       };
