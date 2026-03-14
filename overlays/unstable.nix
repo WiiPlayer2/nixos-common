@@ -18,7 +18,7 @@ with lib;
         # "poptracker" # see overrides
         "llama-cpp"
         "ayugram-desktop"
-        "opencode"
+        # "opencode"
         "llama-cpp"
       ];
       scopePkgs = [
@@ -47,5 +47,15 @@ with lib;
       sunshine = unstable.sunshine.override {
         boost = unstable.boost187;
       };
+
+      opencode = unstable.opencode.overrideAttrs (prevAttrs: {
+        # nativeBuildInputs = [
+        #   unstable.breakpointHook
+        # ];
+        patches = prevAttrs.patches or [ ] ++ [
+          # ref: https://github.com/anomalyco/opencode/pull/13234
+          ./patches/opencode-models-endpoint.patch
+        ];
+      });
     };
 }

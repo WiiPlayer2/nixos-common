@@ -40,7 +40,7 @@ let
           --no-warmup \
           --parallel 1 \
           --ctx-size ${toString contextSize} \
-          --gpu-layers all \
+          --gpu-layers 99 \
           --jinja
       '';
     };
@@ -88,14 +88,7 @@ let
         (applyVariants contextVariants)
         (applyVariants backendVariants)
       ];
-      aliasedVariants = recursiveUpdate variants {
-        "${name}-ctx_48k" = {
-          aliases = [
-            name
-          ];
-        };
-      };
-      models = mapAttrs (_: mkLlamaModel) aliasedVariants;
+      models = mapAttrs (_: mkLlamaModel) variants;
     in
     models;
 
