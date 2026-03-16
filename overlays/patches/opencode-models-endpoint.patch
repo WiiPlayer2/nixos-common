@@ -68,7 +68,7 @@ index e69de29..0dc65fd 100644
 +}
 
 diff --git a/packages/opencode/src/provider/provider.ts b/packages/opencode/src/provider/provider.ts
-index b4836ae..5ec521e 100644
+index 92b001a..405713c 100644
 --- a/packages/opencode/src/provider/provider.ts
 +++ b/packages/opencode/src/provider/provider.ts
 @@ -10,7 +10,7 @@ import { Hash } from "../util/hash"
@@ -80,7 +80,7 @@ index b4836ae..5ec521e 100644
  import { Env } from "../env"
  import { Instance } from "../project/instance"
  import { Flag } from "../flag/flag"
-@@ -771,11 +771,52 @@ export namespace Provider {
+@@ -829,11 +829,52 @@ export namespace Provider {
        source: "custom",
        name: provider.name,
        env: provider.env ?? [],
@@ -134,7 +134,7 @@ index b4836ae..5ec521e 100644
    const state = Instance.state(async () => {
      using _ = log.time("state")
      const config = await Config.get()
-@@ -1007,6 +1048,32 @@ export namespace Provider {
+@@ -1073,6 +1114,32 @@ export namespace Provider {
        mergeProvider(providerID, partial)
      }
  
@@ -164,7 +164,7 @@ index b4836ae..5ec521e 100644
 +      }),
 +    )
 +
-     for (const [providerID, provider] of Object.entries(providers)) {
+     for (const [id, provider] of Object.entries(providers)) {
+       const providerID = ProviderID.make(id)
        if (!isProviderAllowed(providerID)) {
-         delete providers[providerID]
 
