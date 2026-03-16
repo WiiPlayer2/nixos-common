@@ -17,6 +17,8 @@ let
     48
     56
     64
+    72
+    80
   ];
   mkLlamaModel =
     {
