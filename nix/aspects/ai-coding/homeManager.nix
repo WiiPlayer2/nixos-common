@@ -23,6 +23,16 @@ _:
       enable = true;
       enableMcpIntegration = true;
       settings = {
+        plugin = [
+          "octto@latest"
+          # {
+          #   "name" = "ralph-wiggum";
+          #   "git" = "https://github.com/Th0rgal/opencode-ralph-wiggum.git";
+          # }
+          "@plannotator/opencode"
+          "@tarquinen/opencode-dcp@latest"
+          "opencode-pty@latest"
+        ];
         permission = {
           # bash = "ask"; # NOTE: If there is a way to allow certain patterns it would be better
           webfetch = "ask";
