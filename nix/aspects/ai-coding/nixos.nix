@@ -1,4 +1,4 @@
-_:
+{ inputs, ... }:
 { lib, pkgs, ... }:
 with lib;
 let
@@ -19,6 +19,11 @@ let
     64
     72
     80
+    88
+    96
+    104
+    112
+    120
   ];
   mkLlamaModel =
     {
@@ -134,6 +139,10 @@ let
   };
 in
 {
+  imports = [
+    inputs.self.nixosModules.service-llama-swap
+  ];
+
   environment.systemPackages = [
     modelDownloadScript
     llama-cpp
@@ -148,23 +157,39 @@ in
 
         sendLoadingState = true;
 
-        models =
-          (mkLLamaModels {
-            name = "qwen3-coder-30b-a3b-instruct";
-            filePath = "/var/lib/llama-cpp/models/Qwen3-Coder-30B-A3B-Instruct-UD-IQ1_S.gguf";
-          })
-          // (mkLLamaModels {
-            name = "devstral-small-2-24b-instruct";
-            filePath = "/var/lib/llama-cpp/models/Devstral-Small-2-24B-Instruct-2512-UD-IQ1_S.gguf";
-          })
-          // (mkLLamaModels {
-            name = "ministral3-3b-reasoning";
-            filePath = "/var/lib/llama-cpp/models/Ministral-3-3B-Reasoning-2512-Q4_K_M.gguf";
-          })
-          // (mkLLamaModels {
-            name = "ministral3-3b-instruct";
-            filePath = "/var/lib/llama-cpp/models/Ministral-3-3B-Instruct-2512-Q4_K_M.gguf";
-          });
+        # models =
+        #   (mkLLamaModels {
+        #     name = "qwen3-coder-30b-a3b-instruct";
+        #     filePath = "/var/lib/llama-cpp/models/Qwen3-Coder-30B-A3B-Instruct-UD-IQ1_S.gguf";
+        #   })
+        #   // (mkLLamaModels {
+        #     name = "devstral-small-2-24b-instruct";
+        #     filePath = "/var/lib/llama-cpp/models/Devstral-Small-2-24B-Instruct-2512-UD-IQ1_S.gguf";
+        #   })
+        #   // (mkLLamaModels {
+        #     name = "ministral3-3b-reasoning";
+        #     filePath = "/var/lib/llama-cpp/models/Ministral-3-3B-Reasoning-2512-Q4_K_M.gguf";
+        #   })
+        #   // (mkLLamaModels {
+        #     name = "ministral3-3b-instruct";
+        #     filePath = "/var/lib/llama-cpp/models/Ministral-3-3B-Instruct-2512-Q4_K_M.gguf";
+        #   });
+      };
+
+      llama-server-package = llama-cpp;
+      llama-server-models = {
+        ministral3-3b = {
+          filePath = "/var/lib/llama-cpp/models/Ministral-3-3B-Instruct-2512-Q4_K_M.gguf";
+        };
+        ministral3-3b-reasoning = {
+          filePath = "/var/lib/llama-cpp/models/Ministral-3-3B-Instruct-2512-Q4_K_M.gguf";
+        };
+        devstral-small-2-24b = {
+          filePath = "/var/lib/llama-cpp/models/Devstral-Small-2-24B-Instruct-2512-UD-IQ1_S.gguf";
+        };
+        qwen3-coder-30b = {
+          filePath = "/var/lib/llama-cpp/models/Qwen3-Coder-30B-A3B-Instruct-UD-IQ1_S.gguf";
+        };
       };
     };
 

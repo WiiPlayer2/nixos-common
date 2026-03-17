@@ -52,10 +52,10 @@ with lib;
         # nativeBuildInputs = [
         #   unstable.breakpointHook
         # ];
-        patches = prevAttrs.patches or [ ] ++ [
-          # ref: https://github.com/anomalyco/opencode/pull/13234
-          ./patches/opencode-models-endpoint.patch
-        ];
+        # patches = prevAttrs.patches or [ ] ++ [
+        #   # ref: https://github.com/anomalyco/opencode/pull/13234
+        #   ./patches/opencode-models-endpoint.patch
+        # ];
       });
     };
 }
