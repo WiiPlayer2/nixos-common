@@ -57,6 +57,7 @@ _:
                 #   input = 0;
                 # };
               };
+              qwen35-35b.name = "Qwen3.5 35B";
               ministral3-3b.name = "Ministral 3 3B";
               ministral3-3b-reasoning.name = "Ministral 3 3B (Reasoning)";
               devstral-small-2-24b.name = "Devstral Small 2 24B";
