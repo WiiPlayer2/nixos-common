@@ -49,17 +49,11 @@ _:
             name = "llama-swap (local)";
             options.baseURL = "http://localhost:8090/v1";
             models = {
-              qwen3-coder-30b = {
-                name = "Qwen3 Coder 30B";
-                # limit = {
-                #   context = 48 * 1024;
-                #   output = 0;
-                #   input = 0;
-                # };
-              };
-              qwen35-35b.name = "Qwen3.5 35B";
-              ministral3-3b.name = "Ministral 3 3B";
-              ministral3-3b-reasoning.name = "Ministral 3 3B (Reasoning)";
+              qwen3-coder-30b.name = "Qwen3 Coder 30B";
+              qwen35-35b-a3b.name = "Qwen3.5 35B A3B";
+              qwen35-122b-a10b.name = "Qwen3.5 122B A10B";
+              ministral3-3b.name = "Ministral3 3B";
+              ministral3-3b-reasoning.name = "Ministral3 3B (Reasoning)";
               devstral-small-2-24b.name = "Devstral Small 2 24B";
             };
           };

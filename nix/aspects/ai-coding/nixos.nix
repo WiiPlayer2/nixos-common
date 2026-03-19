@@ -31,6 +31,10 @@ let
       fileName = "Qwen3.5-35B-A3B-UD-IQ2_XXS.gguf";
     }
     {
+      repo = "unsloth/Qwen3.5-122B-A10B-GGUF";
+      fileName = "Qwen3.5-122B-A10B-UD-IQ2_XXS.gguf";
+    }
+    {
       repo = "mistralai/Ministral-3-3B-Instruct-2512-GGUF";
       fileName = "Ministral-3-3B-Instruct-2512-Q4_K_M.gguf";
     }
@@ -83,8 +87,11 @@ in
         qwen3-coder-30b = {
           filePath = "/var/lib/llama-cpp/models/Qwen3-Coder-30B-A3B-Instruct-UD-IQ1_S.gguf";
         };
-        qwen35-35b = {
+        qwen35-35b-a3b = {
           filePath = "/var/lib/llama-cpp/models/Qwen3.5-35B-A3B-UD-IQ2_XXS.gguf";
+        };
+        qwen35-122b-a10b = {
+          filePath = "/var/lib/llama-cpp/models/Qwen3.5-122B-A10B-UD-IQ2_XXS.gguf";
         };
       };
     };
