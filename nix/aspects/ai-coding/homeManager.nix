@@ -3,6 +3,7 @@ _:
 {
   home.packages = with pkgs; [
     uv
+    openspec
   ];
 
   programs = {
@@ -16,6 +17,14 @@ _:
         #     "@modelcontextprotocol/server-everything"
         #   ];
         # };
+        openspec = {
+          command = "npx";
+          args = [
+            "-y"
+            "openspec-mcp"
+            "--with-dashboard"
+          ];
+        };
       };
     };
 

@@ -17,6 +17,8 @@
         (import inputs.bizhawk {
           system = prev.stdenv.hostPlatform.system;
         }).emuhawk;
+
+      openspec = inputs.openspec.packages.${prev.stdenv.hostPlatform.system}.default;
     })
   ];
 }

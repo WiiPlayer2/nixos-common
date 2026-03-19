@@ -1974,6 +1974,27 @@
         "type": "github"
       }
     },
+    "openspec": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1771890188,
+        "narHash": "sha256-DIMMOEVQ2FQj48WAF4S1IhxX5ChrFZll51CZ3bZNGHE=",
+        "owner": "Fission-AI",
+        "repo": "OpenSpec",
+        "rev": "6a3a1263fe4d5994716841c46acdd3c3d799c042",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Fission-AI",
+        "ref": "v1.2.0",
+        "repo": "OpenSpec",
+        "type": "github"
+      }
+    },
     "poetry2nix": {
       "inputs": {
         "flake-utils": "flake-utils_4",
@@ -2080,6 +2101,7 @@
         "nixpkgs-xr": "nixpkgs-xr",
         "nueschtos": "nueschtos",
         "nur": "nur",
+        "openspec": "openspec",
         "poetry2nix": "poetry2nix",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
