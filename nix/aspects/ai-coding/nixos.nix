@@ -46,6 +46,10 @@ let
       repo = "unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF";
       fileName = "Devstral-Small-2-24B-Instruct-2512-UD-IQ1_S.gguf";
     }
+    {
+      repo = "unsloth/Qwen3.5-0.8B-GGUF";
+      fileName = "Qwen3.5-0.8B-Q4_K_M.gguf";
+    }
   ];
   modelDownloadScript = pkgs.writeShellApplication {
     name = "download-llm-models";
@@ -92,6 +96,9 @@ in
         };
         qwen35-122b-a10b = {
           filePath = "/var/lib/llama-cpp/models/Qwen3.5-122B-A10B-UD-IQ2_XXS.gguf";
+        };
+        qwen35-1b = {
+          filePath = "/var/lib/llama-cpp/models/Qwen3.5-0.8B-Q4_K_M.gguf";
         };
       };
     };
