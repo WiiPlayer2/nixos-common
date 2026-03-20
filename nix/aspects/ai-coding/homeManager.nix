@@ -70,4 +70,16 @@ _:
       };
     };
   };
+
+  home.file = {
+    ".config/opencode/octto.json".text = ''
+      {
+        "agents": {
+          "bootstrapper": { "model": "llama-swap/qwen35-35b-a3b" },
+          "probe": { "model": "llama-swap/qwen35-35b-a3b" },
+          "octto": { "model": "llama-swap/qwen35-35b-a3b" }
+        }
+      }
+    '';
+  };
 }
