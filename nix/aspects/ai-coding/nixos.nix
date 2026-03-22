@@ -75,6 +75,7 @@ in
       settings = {
         # healthCheckTimeout = 3600; # 1h
         sendLoadingState = true;
+        globalTTL = 15 * 60; # 15min
       };
 
       llama-server-package = llama-cpp;

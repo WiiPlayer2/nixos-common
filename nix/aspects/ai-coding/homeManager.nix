@@ -22,7 +22,7 @@ _:
           args = [
             "-y"
             "openspec-mcp"
-            "--with-dashboard"
+            # "--with-dashboard" # invoke manually with --dashboard in directory
           ];
         };
       };
@@ -42,6 +42,12 @@ _:
           "@tarquinen/opencode-dcp@latest"
           "opencode-pty@latest"
         ];
+        # command = {
+        #   "openspec-mcp-dashboard" = {
+        #     description = "Open the Openspec MCP dashboard. (hacky)";
+        #     subtask = true;
+        #   };
+        # };
         permission = {
           # bash = "ask"; # NOTE: If there is a way to allow certain patterns it would be better
           webfetch = "ask";
