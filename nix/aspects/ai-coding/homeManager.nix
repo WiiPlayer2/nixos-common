@@ -1,6 +1,10 @@
-_:
-{ pkgs, ... }:
+{ inputs, ... }:
+{ config, pkgs, ... }:
 {
+  imports = [
+    inputs.self.homeModules.services-opencode
+  ];
+
   home.packages = with pkgs; [
     uv
     openspec
@@ -77,8 +81,17 @@ _:
     };
   };
 
-  home.file = {
-    ".config/opencode/octto.json".text = ''
+  services = {
+    opencode = {
+      enable = true;
+      restartTriggers = [
+        config.xdg.configFile."opencode/octto.json".source
+      ];
+    };
+  };
+
+  xdg.configFile = {
+    "opencode/octto.json".text = ''
       {
         "agents": {
           "bootstrapper": { "model": "llama-swap/qwen35-35b-a3b" },
