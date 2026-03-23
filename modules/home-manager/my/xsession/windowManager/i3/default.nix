@@ -38,7 +38,7 @@ in
           overrideConfig = {
             modifier = "Mod4";
             gaps = {
-              inner = 30;
+              inner = 15;
               outer = 0;
             };
             workspaceAutoBackAndForth = true;
