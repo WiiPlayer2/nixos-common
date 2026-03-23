@@ -1,5 +1,11 @@
 { inputs, ... }:
-{ config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+with lib;
 {
   imports = [
     inputs.self.homeModules.services-opencode
@@ -22,7 +28,7 @@
         #   ];
         # };
         openspec = {
-          command = "npx";
+          command = getExe' pkgs.nodejs_22 "npx";
           args = [
             "-y"
             "openspec-mcp"
@@ -45,6 +51,7 @@
           "@plannotator/opencode"
           "@tarquinen/opencode-dcp@latest"
           "opencode-pty@latest"
+          # "@howaboua/opencode-chat@latest" # error=libstdc++.so.6: cannot open shared object file
         ];
         # command = {
         #   "openspec-mcp-dashboard" = {

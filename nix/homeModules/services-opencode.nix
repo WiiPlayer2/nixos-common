@@ -1,5 +1,10 @@
 _:
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.services.opencode;
@@ -10,7 +15,7 @@ in
     enable = mkEnableOption "";
     port = mkOption {
       type = types.port;
-      default = 4096;
+      default = 4090;
     };
     restartTriggers = mkOption {
       type = with types; listOf path;
@@ -46,6 +51,15 @@ in
 
         Service = {
           Type = "exec";
+          Environment = "PATH=${
+            makeBinPath (
+              with pkgs;
+              [
+                bashNonInteractive
+                nodejs_22
+              ]
+            )
+          }";
           ExecStart = "${getExe cfgP.package} serve ${
             escapeShellArgs ([
               "--hostname"
