@@ -51,23 +51,19 @@ in
 
         Service = {
           Type = "exec";
-          Environment = "PATH=${
-            makeBinPath (
-              with pkgs;
-              [
-                bashNonInteractive
-                nodejs_22
-              ]
-            )
-          }";
-          ExecStart = "${getExe cfgP.package} serve ${
-            escapeShellArgs ([
-              "--hostname"
-              "0.0.0.0"
-              "--port"
-              (toString cfg.port)
-            ])
-          }";
+          Environment = [
+            "DISPLAY=:0"
+          ];
+          ExecStart = "${pkgs.runtimeShell} -lc ${escapeShellArg (
+            "${getExe cfgP.package} serve ${
+              escapeShellArgs ([
+                "--hostname"
+                "0.0.0.0"
+                "--port"
+                (toString cfg.port)
+              ])
+            }"
+          )}";
           Restart = "always";
           RestartSec = 5;
         };
