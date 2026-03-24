@@ -5,6 +5,19 @@ with lib;
     nixos =
       { pkgs, ... }:
       {
+        hardware.bluetooth = {
+          enable = true;
+          settings = {
+            General = {
+              Experimental = true;
+            };
+          };
+        };
+
+        environment.systemPackages = with pkgs; [
+          bluejay
+        ];
+
         services = {
           logind.settings.Login = {
             IdleAction = "lock";
