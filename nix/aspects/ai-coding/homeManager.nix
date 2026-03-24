@@ -41,6 +41,16 @@ with lib;
     opencode = {
       enable = true;
       enableMcpIntegration = true;
+      # web = {
+      #   enable = true;
+      #   extraArgs = [
+      #     "--port"
+      #     "4090"
+      #     "--print-logs"
+      #     "--log-level"
+      #     "INFO"
+      #   ];
+      # };
       settings = {
         plugin = [
           "octto@latest"
@@ -70,17 +80,14 @@ with lib;
             options.baseURL = "http://localhost:5191/v1";
             models.nollm.name = "noLLM";
           };
-          "llama-swap" = {
+          "local" = {
             npm = "@ai-sdk/openai-compatible";
-            name = "llama-swap (local)";
+            name = "local";
             options.baseURL = "http://localhost:8090/v1";
             models = {
-              qwen3-coder-30b.name = "Qwen3 Coder 30B";
               qwen35-35b-a3b.name = "Qwen3.5 35B A3B";
               qwen35-122b-a10b.name = "Qwen3.5 122B A10B";
-              ministral3-3b.name = "Ministral3 3B";
               ministral3-3b-reasoning.name = "Ministral3 3B (Reasoning)";
-              devstral-small-2-24b.name = "Devstral Small 2 24B";
             };
           };
         };

@@ -33,7 +33,7 @@ in
         };
 
         Socket = {
-          ListenStream = "0.0.0.0:4096";
+          ListenStream = "0.0.0.0:${toString cfg.port}";
         };
 
         Install = {
