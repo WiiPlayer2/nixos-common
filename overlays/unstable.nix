@@ -57,10 +57,10 @@ with lib;
           # ./patches/opencode-models-endpoint.patch
 
           # ref: https://github.com/anomalyco/opencode/pull/15018
-          (final.fetchpatch {
-            url = "https://patch-diff.githubusercontent.com/raw/anomalyco/opencode/pull/15018.patch";
-            hash = "sha256-L3pcvqQrb/AHkOFvyFLrWwea4DQgpjqTQd41kkiYxsk=";
-          })
+          # (final.fetchpatch {
+          #   url = "https://patch-diff.githubusercontent.com/raw/anomalyco/opencode/pull/15018.patch";
+          #   hash = "sha256-L3pcvqQrb/AHkOFvyFLrWwea4DQgpjqTQd41kkiYxsk=";
+          # })
         ];
       });
     };
