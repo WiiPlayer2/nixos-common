@@ -71,7 +71,7 @@ with lib;
         # };
         permission = {
           # bash = "ask"; # NOTE: If there is a way to allow certain patterns it would be better
-          webfetch = "ask";
+          # webfetch = "ask"; # Doesn't work for subagents in Rider
         };
         provider = {
           nollm = {
