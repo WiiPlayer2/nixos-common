@@ -30,7 +30,26 @@ with lib;
           })
 
           moonlight-qt
+          protonup-qt
         ];
+      };
+    nixos =
+      { pkgs, ... }:
+      {
+        environment.systemPackages = with pkgs; [
+          yad
+          xorg.xwininfo
+          wget
+          xdotool
+        ];
+
+        programs.steam = {
+          protontricks.enable = true;
+          localNetworkGameTransfers.openFirewall = true;
+          extraCompatPackages = with pkgs; [
+            steamtinkerlaunch
+          ];
+        };
       };
   };
 }
