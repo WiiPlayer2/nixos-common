@@ -44,7 +44,7 @@ in
         Unit = {
           Description = "opencode web";
           X-Restart-Triggers = [
-            config.xdg.configFile."opencode/config.json".source
+            config.xdg.configFile."opencode/opencode.json".source
           ]
           ++ cfg.restartTriggers;
         };

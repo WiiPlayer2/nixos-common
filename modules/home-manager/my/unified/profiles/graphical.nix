@@ -13,7 +13,7 @@ with lib;
       firefox
       arandr
       sxcs
-      xmagnify
+      # xmagnify # broken since 2025-11-23 without maintainer
       mission-center
 
       camset # webcam config

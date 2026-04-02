@@ -13,7 +13,7 @@ in
     # TODO: Maybe move these tools to my.programs.*
     home.packages = with pkgs; [
       mullvad-vpn
-      mullvad-closest
+      mullvad-compass
     ];
   };
 }
