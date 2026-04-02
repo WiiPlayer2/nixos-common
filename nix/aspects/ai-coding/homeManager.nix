@@ -6,6 +6,14 @@
   ...
 }:
 with lib;
+let
+  plannotatorSrc = pkgs.fetchFromGitHub {
+    owner = "backnotprop";
+    repo = "plannotator";
+    rev = "v0.16.6";
+    hash = "sha256-reTdgjaXZzRG2uE8sMUj7vWpoq8f+secMFK2sGMP/Oo=";
+  };
+in
 {
   imports = [
     inputs.self.homeModules.services-opencode
@@ -51,6 +59,16 @@ with lib;
       #     "INFO"
       #   ];
       # };
+      # skills = {
+      #   plannotator-compound = "${plannotatorSrc}/apps/skills/plannotator-compound";
+      # };
+      # switch to unstable for that
+      commands = {
+        # plannotator-annotate = "${plannotatorSrc}/apps/opencode-plugin/commands/plannotator-annotate.md";
+        # plannotator-archive = "${plannotatorSrc}/apps/opencode-plugin/commands/plannotator-archive.md";
+        # plannotator-last = "${plannotatorSrc}/apps/opencode-plugin/commands/plannotator-last.md";
+        # plannotator-review = "${plannotatorSrc}/apps/opencode-plugin/commands/plannotator-annotate.md";
+      };
       settings = {
         plugin = [
           "octto@latest"
@@ -58,17 +76,17 @@ with lib;
           #   "name" = "ralph-wiggum";
           #   "git" = "https://github.com/Th0rgal/opencode-ralph-wiggum.git";
           # }
-          "@plannotator/opencode"
+          "@plannotator/opencode@latest"
           "@tarquinen/opencode-dcp@latest"
           "opencode-pty@latest"
           # "@howaboua/opencode-chat@latest" # error=libstdc++.so.6: cannot open shared object file
         ];
-        # command = {
-        #   "openspec-mcp-dashboard" = {
-        #     description = "Open the Openspec MCP dashboard. (hacky)";
-        #     subtask = true;
-        #   };
-        # };
+        command = {
+          # "openspec-mcp-dashboard" = {
+          #   description = "Open the Openspec MCP dashboard. (hacky)";
+          #   subtask = true;
+          # };
+        };
         permission = {
           # bash = "ask"; # NOTE: If there is a way to allow certain patterns it would be better
           # webfetch = "ask"; # Doesn't work for subagents in Rider
