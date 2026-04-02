@@ -59,15 +59,16 @@ in
       #     "INFO"
       #   ];
       # };
-      # skills = {
-      #   plannotator-compound = "${plannotatorSrc}/apps/skills/plannotator-compound";
-      # };
-      # switch to unstable for that
+      skills = {
+        plannotator-compound = "${plannotatorSrc}/apps/skills/plannotator-compound";
+      };
+      # TODO: apparently the commands may only be direct paths (e.g. located in the repo)
+      # readFile might also work even though it's technically IOD which is bad mojo
       commands = {
-        # plannotator-annotate = "${plannotatorSrc}/apps/opencode-plugin/commands/plannotator-annotate.md";
-        # plannotator-archive = "${plannotatorSrc}/apps/opencode-plugin/commands/plannotator-archive.md";
-        # plannotator-last = "${plannotatorSrc}/apps/opencode-plugin/commands/plannotator-last.md";
-        # plannotator-review = "${plannotatorSrc}/apps/opencode-plugin/commands/plannotator-annotate.md";
+        plannotator-annotate = builtins.readFile "${plannotatorSrc}/apps/opencode-plugin/commands/plannotator-annotate.md";
+        plannotator-archive = builtins.readFile "${plannotatorSrc}/apps/opencode-plugin/commands/plannotator-archive.md";
+        plannotator-last = builtins.readFile "${plannotatorSrc}/apps/opencode-plugin/commands/plannotator-last.md";
+        plannotator-review = builtins.readFile "${plannotatorSrc}/apps/opencode-plugin/commands/plannotator-annotate.md";
       };
       settings = {
         plugin = [
@@ -81,12 +82,6 @@ in
           "opencode-pty@latest"
           # "@howaboua/opencode-chat@latest" # error=libstdc++.so.6: cannot open shared object file
         ];
-        command = {
-          # "openspec-mcp-dashboard" = {
-          #   description = "Open the Openspec MCP dashboard. (hacky)";
-          #   subtask = true;
-          # };
-        };
         permission = {
           # bash = "ask"; # NOTE: If there is a way to allow certain patterns it would be better
           # webfetch = "ask"; # Doesn't work for subagents in Rider
