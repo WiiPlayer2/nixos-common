@@ -27,19 +27,19 @@ in
     programs.opencode.enable = true;
 
     systemd.user = {
-      sockets.opencode = {
-        Unit = {
-          Description = "Socket for opencode web";
-        };
+      # sockets.opencode = {
+      #   Unit = {
+      #     Description = "Socket for opencode web";
+      #   };
 
-        Socket = {
-          ListenStream = "0.0.0.0:${toString cfg.port}";
-        };
+      #   Socket = {
+      #     ListenStream = "0.0.0.0:${toString cfg.port}";
+      #   };
 
-        Install = {
-          WantedBy = [ "sockets.target" ];
-        };
-      };
+      #   Install = {
+      #     WantedBy = [ "sockets.target" ];
+      #   };
+      # };
       services.opencode = {
         Unit = {
           Description = "opencode web";
@@ -66,6 +66,10 @@ in
           )}";
           Restart = "always";
           RestartSec = 5;
+        };
+
+        Install = {
+          WantedBy = [ "default.target" ];
         };
       };
     };
