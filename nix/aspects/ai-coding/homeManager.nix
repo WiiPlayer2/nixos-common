@@ -70,6 +70,11 @@ in
         plannotator-last = builtins.readFile "${plannotatorSrc}/apps/opencode-plugin/commands/plannotator-last.md";
         plannotator-review = builtins.readFile "${plannotatorSrc}/apps/opencode-plugin/commands/plannotator-annotate.md";
       };
+      rules = ''
+        If openspec is configured in this repository ensure that all adjustions are made via the openspec workflow.
+
+        Always review openspec artifacts with plannotator.
+      '';
       settings = {
         plugin = [
           "octto@latest"
