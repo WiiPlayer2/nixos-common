@@ -5,6 +5,10 @@ with lib;
     nixos =
       { pkgs, ... }:
       {
+        imports = [
+          ./_suspend_lock.nix
+        ];
+
         hardware.bluetooth = {
           enable = true;
           settings = {
