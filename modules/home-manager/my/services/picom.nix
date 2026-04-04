@@ -10,7 +10,7 @@ in
       services.picom = {
         enable = config.xsession.windowManager.i3.enable;
         # package = pkgs.picom-pijulius; # DO NOT ENABLE. Seems kinda broken atm due to inactive workspaces still being rendererd in the background
-        # backend = "glx"; # does not work in virtualized environment
+        backend = mkDefault "glx";
         fade = true;
         shadow = true;
         activeOpacity = 0.95;

@@ -54,5 +54,18 @@ with lib;
     #       hash = "sha256-IKiYlbC6zyGBmv49yTz3/ER6zg5VoQazOzVmqayWEuo=";
     #     };
     #   };
+
+    picom = prev.picom.overrideAttrs (
+      finalAttrs: prevAttrs: {
+        patches = prevAttrs.patches or [ ] ++ [
+
+          # see https://github.com/yshui/picom/issues/1511
+          (final.fetchpatch {
+            url = "https://github.com/yshui/picom/commit/676196359c15bb654696b05700330685db914710.patch";
+            hash = "sha256-YbpGL6FvXdIh3N5zJ1oJJc/YOLLVQL0Jlp0LetpnecA=";
+          })
+        ];
+      }
+    );
   };
 }
