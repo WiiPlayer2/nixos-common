@@ -50,6 +50,10 @@ let
       repo = "unsloth/Qwen3.5-0.8B-GGUF";
       fileName = "Qwen3.5-0.8B-Q4_K_M.gguf";
     }
+    {
+      repo = "unsloth/gemma-4-26B-A4B-it-GGUF";
+      fileName = "gemma-4-26B-A4B-it-UD-IQ2_XXS.gguf";
+    }
   ];
   modelDownloadScript = pkgs.writeShellApplication {
     name = "download-llm-models";
