@@ -4,12 +4,12 @@
 }:
 let
   pname = "amnesia";
-  version = "0.2.0";
+  version = "0.2.1";
   src = fetchFromGitHub {
     owner = "cedws";
     repo = "amnesia";
     rev = "v${version}";
-    hash = "sha256-V2IYWXbd3qtYuqBdDYIBvMHnwOj493Q0nQkGYi4jCdA=";
+    hash = "sha256-vwrQYp6M90VdtDsz9rH/iffMQ2ZZKCc3QaKC62NtY4A=";
   };
 in
 buildGoModule {
