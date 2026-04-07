@@ -106,25 +106,11 @@ in
           qwen35-1b = {
             filePath = "/var/lib/llama-cpp/models/Qwen3.5-0.8B-Q4_K_M.gguf";
           };
+          gemma4-26b-a4b = {
+            filePath = "/var/lib/llama-cpp/models/gemma-4-26B-A4B-it-UD-IQ2_XXS.gguf";
+          };
         };
       };
     };
-
-    # librechat = {
-    #   enable = true;
-    #   settings = {
-    #     endpoints = {
-    #       custom = [
-    #         {
-    #           name = "llama-swap (local)";
-    #           baseURL = "http://localhost:8090/v1";
-    #           models = {
-    #             fetch = true;
-    #           };
-    #         }
-    #       ];
-    #     };
-    #   };
-    # };
   };
 }
