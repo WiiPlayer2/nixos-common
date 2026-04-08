@@ -80,6 +80,7 @@ in
         # healthCheckTimeout = 3600; # 1h
         sendLoadingState = true;
         globalTTL = 15 * 60; # 15min
+        models.gemma4-26b-a4b.aliases = [ "coding" ];
       };
 
       llama-server = {

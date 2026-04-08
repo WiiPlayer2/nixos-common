@@ -91,6 +91,7 @@ in
           # bash = "ask"; # NOTE: If there is a way to allow certain patterns it would be better
           # webfetch = "ask"; # Doesn't work for subagents in Rider
         };
+        model = "local/coding";
         provider = {
           nollm = {
             npm = "@ai-sdk/openai-compatible";
@@ -103,9 +104,11 @@ in
             name = "local";
             options.baseURL = "http://localhost:8090/v1";
             models = {
+              coding.name = "Default Coding Model";
               qwen35-35b-a3b.name = "Qwen3.5 35B A3B";
               qwen35-122b-a10b.name = "Qwen3.5 122B A10B";
               ministral3-3b-reasoning.name = "Ministral3 3B (Reasoning)";
+              gemma4-26b-a4b.name = "Gemma4 26B A4B";
             };
           };
         };
