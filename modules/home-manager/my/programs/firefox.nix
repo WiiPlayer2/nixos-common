@@ -26,6 +26,7 @@ in
           keepassxc-browser
           omnisearch
           i-dont-care-about-cookies
+          multi-account-containers
         ];
         search = {
           default = "ddg";
