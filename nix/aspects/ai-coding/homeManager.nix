@@ -91,6 +91,10 @@ in
           # bash = "ask"; # NOTE: If there is a way to allow certain patterns it would be better
           # webfetch = "ask"; # Doesn't work for subagents in Rider
         };
+        lsp = {
+          nixd.command = [ "${getExe pkgs.nixd}" ];
+          csharp.command = [ "${getExe pkgs.csharp-ls}" ];
+        };
         model = "local/coding";
         provider = {
           nollm = {

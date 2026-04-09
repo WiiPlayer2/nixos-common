@@ -21,6 +21,10 @@ in
       type = with types; listOf path;
       default = [ ];
     };
+    path = mkOption {
+      type = with types; listOf package;
+      default = [ ];
+    };
   };
 
   config = mkIf cfg.enable {
@@ -53,6 +57,7 @@ in
           Type = "exec";
           Environment = [
             "DISPLAY=:0"
+            "PATH=${makeBinPath cfg.path}"
           ];
           ExecStart = "${pkgs.runtimeShell} -lc ${escapeShellArg (
             "${getExe cfgP.package} serve ${
@@ -61,6 +66,7 @@ in
                 "0.0.0.0"
                 "--port"
                 (toString cfg.port)
+                "--print-logs"
               ])
             }"
           )}";
