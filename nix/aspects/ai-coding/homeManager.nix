@@ -108,10 +108,9 @@ in
             name = "local";
             options.baseURL = "http://localhost:8090/v1";
             models = {
-              coding.name = "Default Coding Model";
+              coding.name = "Coding";
               qwen35-35b-a3b.name = "Qwen3.5 35B A3B";
-              qwen35-122b-a10b.name = "Qwen3.5 122B A10B";
-              ministral3-3b-reasoning.name = "Ministral3 3B (Reasoning)";
+              ministral3-3b.name = "Ministral3 3B";
               gemma4-26b-a4b.name = "Gemma4 26B A4B";
             };
           };

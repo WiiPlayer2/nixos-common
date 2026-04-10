@@ -7,7 +7,8 @@ _:
 }:
 with lib;
 let
-  cfg = config.services.llama-swap.llama-server;
+  cfg' = config.services.llama-swap;
+  cfg = cfg'.llama-server;
   modelConfigModule = {
     options = {
       contextSize = mkOption {
@@ -24,6 +25,10 @@ let
 in
 {
   options.services.llama-swap = {
+    user = mkOption {
+      type = with types; nullOr str;
+      default = null;
+    };
     llama-server = {
       package = mkPackageOption pkgs "llama-cpp" { };
       defaults = mkOption {
@@ -46,7 +51,18 @@ in
                 };
 
                 filePath = mkOption {
-                  type = types.path;
+                  type = with types; nullOr path;
+                  default = null;
+                };
+
+                repo = mkOption {
+                  type = with types; nullOr str;
+                  default = null;
+                };
+
+                quant = mkOption {
+                  type = with types; nullOr str;
+                  default = null;
                 };
               };
 
@@ -62,28 +78,34 @@ in
     };
   };
 
-  config = mkIf config.services.llama-swap.enable {
+  config = mkIf cfg'.enable {
     services.llama-swap.settings.models =
       let
         llama-server-models = mapAttrs' (_: v: {
           name = v.id;
           value = {
-            env = [
-              "HOME=/tmp"
-            ];
+            # env = [
+            #   "HOME=/tmp"
+            # ];
             cmd = ''
               ${getExe' cfg.package "llama-server"} \
                 --port ''${PORT} \
                 ${escapeShellArgs (
                   [
-                    "-m"
-                    v.filePath
                     "--no-warmup"
                     "--parallel"
                     "1"
                     "--gpu-layers"
                     "all"
                     "--jinja"
+                  ]
+                  ++ optionals (v.filePath != null) [
+                    "-m"
+                    v.filePath
+                  ]
+                  ++ optionals (v.repo != null) [
+                    "-hf"
+                    (if v.quant == null then v.repo else "${v.repo}:${v.quant}")
                   ]
                   ++ optionals (v.contextSize != null) [
                     "--ctx-size"
@@ -98,5 +120,17 @@ in
         }) cfg.models;
       in
       llama-server-models;
+
+    systemd.services.llama-swap = mkIf (cfg'.user != null) {
+      serviceConfig = {
+        User = cfg'.user;
+        # PrivateMounts = mkForce false;
+        # PrivateTmp = mkForce false;
+        # PrivateUsers = mkForce false;
+        ProtectHome = mkForce false;
+        DynamicUser = mkForce false;
+        # ProtectHostname = mkForce false;
+      };
+    };
   };
 }
