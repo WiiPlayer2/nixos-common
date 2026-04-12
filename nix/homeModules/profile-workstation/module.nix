@@ -30,6 +30,7 @@ with lib;
         nbgv
         caligula
         git-sim
+        mkvtoolnix
 
         (writeShellApplication {
           name = "k8s-toolbox-rename-pvc";
