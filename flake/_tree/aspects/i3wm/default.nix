@@ -127,6 +127,7 @@ with lib;
             extraConfig = ''
               for_window [class=".shutter-wrapped"] floating enable, resize set 1280 720, move position center
               for_window [class="Variety" title="Variety Images"] floating enable, sticky enable
+              for_window [class="Yad"] floating enable, resize set 960 540, move position center
 
               # Maybe split up different sub windows
               for_window [class="Pidgin"] floating enable, sticky enable
