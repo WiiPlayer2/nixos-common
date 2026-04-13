@@ -45,6 +45,9 @@ in
 
       llama-server = {
         package = llama-cpp;
+        defaults = {
+          contextSize = mkDefault 0;
+        };
         models = {
           ministral3-3b = {
             repo = "mistralai/Ministral-3-3B-Reasoning-2512-GGUF";
@@ -56,9 +59,15 @@ in
           qwen35-1b = {
             repo = "unsloth/Qwen3.5-0.8B-GGUF";
           };
+          qwen3-coder-next = {
+            repo = "mradermacher/Qwen3-Coder-Next-REAP-40B-A3B-i1-GGUF";
+            quant = "IQ1_S";
+          };
           gemma4-26b-a4b = {
-            repo = "unsloth/gemma-4-26B-A4B-it-GGUF";
-            quant = "UD-IQ2_XXS";
+            # repo = "unsloth/gemma-4-26B-A4B-it-GGUF";
+            # quant = "UD-IQ2_XXS";
+            repo = "TeichAI/gemma-4-26B-A4B-it-Claude-Opus-Distill-GGUF";
+            quant = "Q3_K_S";
           };
         };
       };

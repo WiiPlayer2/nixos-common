@@ -96,6 +96,24 @@ in
           csharp.command = [ "${getExe pkgs.csharp-ls}" ];
         };
         model = "local/coding";
+        # maybe migrate to programs.opencode.agents
+        agent = {
+          chat = {
+            mode = "primary";
+            prompt = ''
+              # Chat
+
+              You are a helpful chat bot.
+
+              ## Guidelines
+              - Do not use tool calls except webfetch if necessary.
+            '';
+            permission = {
+              "*" = "deny";
+              webfetch = "ask";
+            };
+          };
+        };
         provider = {
           nollm = {
             npm = "@ai-sdk/openai-compatible";
