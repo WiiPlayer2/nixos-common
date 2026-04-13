@@ -14,7 +14,10 @@ in
 
   environment.systemPackages = [
     llama-cpp
-  ];
+  ]
+  ++ (with pkgs; [
+    python312Packages.huggingface-hub
+  ]);
 
   services = {
     llama-swap = {
