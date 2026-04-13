@@ -1,0 +1,22 @@
+[
+  {
+    "pname": "CliWrap",
+    "version": "3.10.1",
+    "hash": "sha256-uH4SXiMkUIPw5RRyKtDTTCSkkr3BhBAPrxnC4O4ES4c="
+  },
+  {
+    "pname": "System.CommandLine",
+    "version": "2.0.5",
+    "hash": "sha256-gavBH1nbVZW50miEpDQ6KKRDfHRlFz6ZLYkh0LOWug4="
+  },
+  {
+    "pname": "System.IO.Hashing",
+    "version": "8.0.0",
+    "hash": "sha256-szOGt0TNBo6dEdC3gf6H+e9YW3Nw0woa6UnCGGGK5cE="
+  },
+  {
+    "pname": "Yarp.ReverseProxy",
+    "version": "2.3.0",
+    "hash": "sha256-/xLvX5xGw/PoFVdaRbdZjGgEO56xAamqsY7TvYwCWiQ="
+  }
+]
