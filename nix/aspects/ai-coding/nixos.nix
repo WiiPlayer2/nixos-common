@@ -72,6 +72,29 @@ in
             repo = "TeichAI/gemma-4-26B-A4B-it-Claude-Opus-Distill-GGUF";
             quant = "Q3_K_S";
           };
+
+          # --- bhts ---
+          qwen35-9b-q2 = {
+            repo = "unsloth/Qwen3.5-9B-GGUF";
+            quant = "UD-IQ2_XXS";
+          };
+          qwen35-9b = {
+            repo = "unsloth/Qwen3.5-9B-GGUF";
+          };
+          gpt-oss-20b-q2 = {
+            repo = "unsloth/gpt-oss-20b-GGUF";
+            quant = "Q2_K";
+          };
+          gpt-oss-20b = {
+            repo = "unsloth/gpt-oss-20b-GGUF";
+          };
+          "apriel-1.5-15b-q1" = {
+            repo = "unsloth/Apriel-1.5-15b-Thinker-GGUF";
+            quant = "UD-IQ1_S";
+          };
+          "apriel-1.5-15b" = {
+            repo = "unsloth/Apriel-1.5-15b-Thinker-GGUF";
+          };
         };
       };
     };
