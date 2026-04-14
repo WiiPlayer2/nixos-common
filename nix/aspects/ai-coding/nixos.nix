@@ -49,7 +49,7 @@ in
       llama-server = {
         package = llama-cpp;
         defaults = {
-          contextSize = mkDefault 0;
+          contextSize = mkDefault (64 * 1024);
         };
         models = {
           ministral3-3b = {
