@@ -20,6 +20,21 @@ let
         type = with types; nullOr int;
         default = null;
       };
+
+      commandPrefix = mkOption {
+        type = with types; nullOr str;
+        default = null;
+      };
+
+      additionalArgs = mkOption {
+        type = with types; listOf str;
+        default = [ ];
+      };
+
+      dynamicPort = mkOption {
+        type = types.bool;
+        default = true;
+      };
     };
   };
 in
@@ -69,6 +84,9 @@ in
               config = {
                 contextSize = mkDefault cfg.defaults.contextSize;
                 ttl = mkDefault cfg.defaults.ttl;
+                commandPrefix = mkDefault cfg.defaults.commandPrefix;
+                additionalArgs = mkDefault cfg.defaults.additionalArgs;
+                dynamicPort = mkDefault cfg.defaults.dynamicPort;
               };
             }
           )
@@ -88,8 +106,10 @@ in
             #   "HOME=/tmp"
             # ];
             cmd = ''
-              ${getExe' cfg.package "llama-server"} \
-                --port ''${PORT} \
+              ${
+                if v.commandPrefix == null then "" else "${v.commandPrefix} "
+              }${getExe' cfg.package "llama-server"} \
+                ${if v.dynamicPort then "--port \${PORT}" else ""} \
                 ${escapeShellArgs (
                   [
                     "--no-warmup"
@@ -111,6 +131,7 @@ in
                     "--ctx-size"
                     (toString v.contextSize)
                   ]
+                  ++ v.additionalArgs
                 )}
             '';
           }
@@ -124,12 +145,10 @@ in
     systemd.services.llama-swap = mkIf (cfg'.user != null) {
       serviceConfig = {
         User = cfg'.user;
-        # PrivateMounts = mkForce false;
-        # PrivateTmp = mkForce false;
-        # PrivateUsers = mkForce false;
-        ProtectHome = mkForce false;
         DynamicUser = mkForce false;
-        # ProtectHostname = mkForce false;
+        ProtectHome = mkForce false;
+
+        MemoryDenyWriteExecute = mkForce false; # for .NET (due to JIT)
       };
     };
   };

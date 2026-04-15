@@ -1,28 +1,50 @@
 using System.CommandLine;
 using CliWrap;
 using Yarp.ReverseProxy.Configuration;
+using Yarp.ReverseProxy.Transforms;
 
+var portOption = new Option<int>("--port")
+{
+    Description = "Port to run the proxy on",
+    DefaultValueFactory = _ => 5000,
+};
 var commandArgument = new Argument<string[]>("command")
 {
     Arity = ArgumentArity.OneOrMore,
 };
 var rootCommand = new RootCommand()
 {
+    portOption,
     commandArgument,
 };
 
 rootCommand.SetAction(async parseResult =>
 {
     var builder = WebApplication.CreateBuilder();
-    
+
+    var port = parseResult.GetRequiredValue(portOption);
     var command = parseResult.GetRequiredValue(commandArgument);
     var downstreamPort = Random.Shared.Next(40000, 40000 + 100);
 
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        options.ListenLocalhost(port);
+    });
     builder.Services.AddReverseProxy()
         .LoadFromMemory([
+            new RouteConfig
+            {
+                RouteId = "downstream-completions",
+                ClusterId = "downstream",
+                Match = new()
+                {
+                    Path = "/v1/chat/completions",
+                },
+            }
+                .WithTransform(transform => transform["ApplyCompletionsFix"] = "true"),
             new()
             {
-                RouteId = "downstream",
+                RouteId = "downstream-catchall",
                 ClusterId = "downstream",
                 Match = new()
                 {
@@ -37,11 +59,12 @@ rootCommand.SetAction(async parseResult =>
                 {
                     ["downstream"] = new()
                     {
-                      Address = $"http://localhost:{downstreamPort}/",
+                        Address = $"http://localhost:{downstreamPort}/",
                     },
                 },
             },
-        ]);
+        ])
+        .AddTransformFactory<CompletionFixTransform>();
     
     var app = builder.Build();
     var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
@@ -60,4 +83,3 @@ rootCommand.SetAction(async parseResult =>
     await app.RunAsync();
 });
 return rootCommand.Parse(args).Invoke();
-
