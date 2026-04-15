@@ -13,6 +13,18 @@ let
     rev = "v0.16.6";
     hash = "sha256-reTdgjaXZzRG2uE8sMUj7vWpoq8f+secMFK2sGMP/Oo=";
   };
+
+  modelsLib = import ./_models_lib.nix { inherit lib; };
+  toModelConfig =
+    id:
+    { model, ... }:
+    {
+      name = id;
+      value = {
+        name = model.name;
+      };
+    };
+  modelConfigs = mapAttrs' toModelConfig modelsLib.modelVariants;
 in
 {
   imports = [
@@ -116,21 +128,17 @@ in
         };
         provider = {
           nollm = {
-            npm = "@ai-sdk/openai-compatible";
             name = "noLLM";
             options.baseURL = "http://localhost:5191/v1";
             models.nollm.name = "noLLM";
           };
           "local" = {
-            npm = "@ai-sdk/openai-compatible";
             name = "local";
             options.baseURL = "http://localhost:8090/v1";
             models = {
               coding.name = "Coding";
-              qwen35-35b-a3b.name = "Qwen3.5 35B A3B";
-              ministral3-3b.name = "Ministral3 3B";
-              gemma4-26b-a4b.name = "Gemma4 26B A4B";
-            };
+            }
+            // modelConfigs;
           };
         };
       };

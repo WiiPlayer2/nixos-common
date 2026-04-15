@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -o
+
+_models_file="$1"
+_models=$(nix eval --json --file "$_models_file" 2> /dev/null)
+_out_file="${_models_file%.*}_hf.json"
+
+_tmp=$(mktemp -d)
+
+for _model_key in $(echo "$_models" | jq -r 'keys | .[]'); do
+  _model_repo=$(echo "$_models" | jq -r ".[\"${_model_key}\"] | .repo")
+  echo "Retrieving info for ${_model_repo}..."
+  hf models info --format json "$_model_repo" | jq "{\"${_model_key}\":.}" > "${_tmp}/${_model_key}.json"
+done
+
+jq -s 'reduce .[] as $x ({}; . * $x)' ${_tmp}/*.json > "$_out_file"
+echo "Wrote $_out_file"
