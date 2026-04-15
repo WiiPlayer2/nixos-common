@@ -60,12 +60,12 @@ in
   ];
 
   systemd.user.services = {
-    whisper-stream = {
-      Service = {
-        ExecStartPre = "${getExe download-models}";
-        ExecStart = "${getExe run-whisper}";
-      };
-      Install.WantedBy = [ "default.target" ];
-    };
+    # whisper-stream = {
+    #   Service = {
+    #     ExecStartPre = "${getExe download-models}";
+    #     ExecStart = "${getExe run-whisper}";
+    #   };
+    #   Install.WantedBy = [ "default.target" ];
+    # };
   };
 }
