@@ -8,16 +8,16 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "commandLineArgs": "-- llama-server --port __PORT__ -hf unsloth/Qwen3.5-0.8B-GGUF"
+      "commandLineArgs": "-- llama-server -hf unsloth/Qwen3.5-0.8B-GGUF"
     },
     "Qwen3.5-35B": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
       },
-      "commandLineArgs": "-- llama-server --port __PORT__ -hf unsloth/Qwen3.5-35B-A3B-GGUF"
+      "commandLineArgs": "-- llama-server -hf unsloth/Qwen3.5-35B-A3B-GGUF:UD-IQ2_XXS"
     }
   }
 }

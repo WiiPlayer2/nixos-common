@@ -1,5 +1,6 @@
 using System.CommandLine;
 using CliWrap;
+using llama_proxy;
 using Yarp.ReverseProxy.Configuration;
 using Yarp.ReverseProxy.Transforms;
 
@@ -75,18 +76,16 @@ rootCommand.SetAction(async parseResult =>
                 return ValueTask.CompletedTask;
             });
         });
+    builder.Services.AddSingleton<CliService>();
     
     var app = builder.Build();
-    var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
-    
-    var commandWithPort = command
-        .Select(x => x.Replace("__PORT__", downstreamPort.ToString()))
-        .ToList();
-    var cli = Cli.Wrap(commandWithPort[0])
-        .WithArguments(commandWithPort.Skip(1))
-        .WithStandardErrorPipe(PipeTarget.ToStream(Console.OpenStandardError()))
-        .WithStandardOutputPipe(PipeTarget.ToStream(Console.OpenStandardOutput()))
-        .ExecuteAsync(lifetime.ApplicationStopping);
+    string[] commandWithPort =
+    [
+        ..command,
+        "--port",
+        downstreamPort.ToString(),
+    ];
+    var cli = app.Services.GetRequiredService<CliService>();
 
     app.MapReverseProxy(reverseProxyBuilder =>
     {
@@ -109,6 +108,13 @@ rootCommand.SetAction(async parseResult =>
         });
     });
 
-    await app.RunAsync();
+    await app.StartAsync();
+    await Task.WhenAll(app.WaitForShutdownAsync(), WaitCli());
+
+    async Task WaitCli()
+    {
+        await cli.Run(commandWithPort[0], commandWithPort.Skip(1).ToArray()).ContinueWith(_ => { });
+        await app.StopAsync();
+    }
 });
 return rootCommand.Parse(args).Invoke();
