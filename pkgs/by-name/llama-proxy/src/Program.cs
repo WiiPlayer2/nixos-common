@@ -33,14 +33,15 @@ rootCommand.SetAction(async parseResult =>
     builder.Services.AddReverseProxy()
         .LoadFromMemory([
             new RouteConfig
-            {
-                RouteId = "downstream-completions",
-                ClusterId = "downstream",
-                Match = new()
                 {
-                    Path = "/v1/chat/completions",
-                },
-            }
+                    RouteId = "downstream-completions",
+                    ClusterId = "downstream",
+                    Match = new()
+                    {
+                        Path = "/v1/chat/completions",
+                    },
+                    TimeoutPolicy = "Disable",
+                }
                 .WithTransform(transform => transform["ApplyCompletionsFix"] = "true"),
             new()
             {
@@ -50,6 +51,7 @@ rootCommand.SetAction(async parseResult =>
                 {
                     Path = "/{**catchall}",
                 },
+                TimeoutPolicy = "Disable",
             },
         ], [
             new()
@@ -64,7 +66,15 @@ rootCommand.SetAction(async parseResult =>
                 },
             },
         ])
-        .AddTransformFactory<CompletionFixTransform>();
+        .AddTransformFactory<CompletionFixTransform>()
+        .AddTransforms(builderContext =>
+        {
+            builderContext.AddResponseTransform(transformContext =>
+            {
+                transformContext.SuppressResponseBody = transformContext.ProxyResponse is null;
+                return ValueTask.CompletedTask;
+            });
+        });
     
     var app = builder.Build();
     var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
@@ -78,7 +88,26 @@ rootCommand.SetAction(async parseResult =>
         .WithStandardOutputPipe(PipeTarget.ToStream(Console.OpenStandardOutput()))
         .ExecuteAsync(lifetime.ApplicationStopping);
 
-    app.MapReverseProxy();
+    app.MapReverseProxy(reverseProxyBuilder =>
+    {
+        reverseProxyBuilder.Use(async (context, next) =>
+        {
+            while (true)
+            {
+                await next();
+        
+                if (context.Response.StatusCode == StatusCodes.Status502BadGateway)
+                {
+                    context.Response.Clear();
+                    await Task.Delay(5000);
+                }
+                else
+                {
+                    break;
+                }
+            }
+        });
+    });
 
     await app.RunAsync();
 });
