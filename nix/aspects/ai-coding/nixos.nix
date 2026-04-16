@@ -58,7 +58,7 @@ in
           swap = false;
           exclusive = false;
           members = [
-            "qwen35-1b"
+            "qwen3.5-0.8b"
           ];
         };
       };
@@ -67,12 +67,12 @@ in
         package = llama-cpp;
         defaults = {
           contextSize = mkDefault (64 * 1024);
-          commandPrefix = "${getExe pkgs.llama-proxy} --port \${PORT} --";
-          dynamicPort = false;
-          additionalArgs = [
-            "--port"
-            "__PORT__"
-          ];
+          # commandPrefix = "${getExe pkgs.llama-proxy} --port \${PORT} --";
+          # dynamicPort = false;
+          # additionalArgs = [
+          #   "--port"
+          #   "__PORT__"
+          # ];
         };
         models = modelConfigs;
       };
