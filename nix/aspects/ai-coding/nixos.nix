@@ -1,5 +1,10 @@
 { inputs, ... }:
-{ lib, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 let
   llama-cpp = pkgs.llama-cpp.override {
@@ -73,5 +78,30 @@ in
         models = modelConfigs;
       };
     };
+  };
+
+  security.sudo.extraRules = [
+    {
+      groups = [ "gamemode" ];
+      commands = [
+        {
+          command = "${getExe' pkgs.systemd "systemctl"} start llama-swap";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "${getExe' pkgs.systemd "systemctl"} stop llama-swap";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "${getExe' pkgs.systemd "systemctl"} restart llama-swap";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
+
+  programs.gamemode = mkIf (config.programs.gamemode ? startCommands) {
+    startCommands = "/run/wrappers/bin/sudo ${getExe' pkgs.systemd "systemctl"} stop llama-swap";
+    endCommands = "/run/wrappers/bin/sudo ${getExe' pkgs.systemd "systemctl"} start llama-swap";
   };
 }

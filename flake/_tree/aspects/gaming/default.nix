@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, inputs, ... }:
 with lib;
 {
   flake.aspects.gaming = {
@@ -36,6 +36,10 @@ with lib;
     nixos =
       { pkgs, ... }:
       {
+        imports = [
+          inputs.self.nixosModules.programs-gamemode
+        ];
+
         environment.systemPackages = with pkgs; [
           yad
           xwininfo
