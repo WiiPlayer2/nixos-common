@@ -26,4 +26,6 @@ buildDotnetModule rec {
       "--src-only"
     ];
   };
+
+  meta.mainProgram = "llama-proxy";
 }

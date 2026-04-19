@@ -4,23 +4,8 @@
   flake-inputs,
   ...
 }:
+with lib;
 let
-  inherit (lib)
-    mkOption
-    mkEnableOption
-    mkMerge
-    mkIf
-    types
-    concatMap
-    attrsToList
-    filter
-    map
-    fold
-    remove
-    length
-    unique
-    ;
-
   cfg = config.my.specials.distributedBuilds;
 in
 {
@@ -75,7 +60,7 @@ in
               systems = _getSystems config system;
               emulatedSystems = _getEmulatedSystems config;
             in
-            fold (cur: acc: remove cur acc) systems emulatedSystems;
+            foldr (cur: acc: remove cur acc) systems emulatedSystems;
 
           mkRemote =
             {

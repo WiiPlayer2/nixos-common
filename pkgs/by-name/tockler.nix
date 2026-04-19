@@ -29,7 +29,7 @@ appimageTools.wrapType2 {
 
   extraPkgs =
     pkgs: with pkgs; [
-      xorg.xwininfo
+      xwininfo
     ];
 
   extraInstallCommands = ''

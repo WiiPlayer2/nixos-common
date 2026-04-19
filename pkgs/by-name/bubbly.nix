@@ -4,7 +4,7 @@
   fetchFromGitHub,
   nix-update-script,
   eww,
-  xorg,
+  xinput,
   dash,
 }:
 let
@@ -27,7 +27,7 @@ stdenv.mkDerivation (final: {
 
   buildInputs = [
     eww
-    xorg.xinput
+    xinput
     dash
   ];
 

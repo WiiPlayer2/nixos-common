@@ -55,7 +55,7 @@ with lib;
         xsetConfig = pkgs.writeShellApplication {
           name = "xset-config";
           runtimeInputs = with pkgs; [
-            xorg.xset
+            xset
           ];
           text = ''
             xset -dpms

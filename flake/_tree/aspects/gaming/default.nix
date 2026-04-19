@@ -38,7 +38,7 @@ with lib;
       {
         environment.systemPackages = with pkgs; [
           yad
-          xorg.xwininfo
+          xwininfo
           wget
           xdotool
         ];
