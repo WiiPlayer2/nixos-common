@@ -87,6 +87,7 @@ in
 
       #   Always review openspec artifacts with plannotator.
       # '';
+      agents = ./_agents;
       settings = {
         plugin = [
           "octto@latest"
@@ -100,7 +101,10 @@ in
           # "@howaboua/opencode-chat@latest" # error=libstdc++.so.6: cannot open shared object file
         ];
         permission = {
-          # bash = "ask"; # NOTE: If there is a way to allow certain patterns it would be better
+          bash = {
+            "*" = "ask";
+            "ls *" = "allow";
+          };
           # webfetch = "ask"; # Doesn't work for subagents in Rider
         };
         lsp = {
@@ -108,24 +112,6 @@ in
           csharp.command = [ "${getExe pkgs.csharp-ls}" ];
         };
         model = "local/coding";
-        # maybe migrate to programs.opencode.agents
-        agent = {
-          chat = {
-            mode = "primary";
-            prompt = ''
-              # Chat
-
-              You are a helpful chat bot.
-
-              ## Guidelines
-              - Do not use tool calls except webfetch if necessary.
-            '';
-            permission = {
-              "*" = "deny";
-              webfetch = "ask";
-            };
-          };
-        };
         provider = {
           nollm = {
             name = "noLLM";
@@ -158,9 +144,9 @@ in
     "opencode/octto.json".text = ''
       {
         "agents": {
-          "bootstrapper": { "model": "llama-swap/qwen35-35b-a3b" },
-          "probe": { "model": "llama-swap/qwen35-35b-a3b" },
-          "octto": { "model": "llama-swap/qwen35-35b-a3b" }
+          "bootstrapper": { "model": "local/coding" },
+          "probe": { "model": "local/coding" },
+          "octto": { "model": "local/coding" }
         }
       }
     '';
