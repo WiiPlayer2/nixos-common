@@ -5,6 +5,11 @@
     "hash": "sha256-uH4SXiMkUIPw5RRyKtDTTCSkkr3BhBAPrxnC4O4ES4c="
   },
   {
+    "pname": "LanguageExt.Core",
+    "version": "5.0.0-beta-77",
+    "hash": "sha256-2KhWvTg+mK5tbKhBf7lJAF383mXKMXJcjhqXv0hDJyQ="
+  },
+  {
     "pname": "System.CommandLine",
     "version": "2.0.5",
     "hash": "sha256-gavBH1nbVZW50miEpDQ6KKRDfHRlFz6ZLYkh0LOWug4="
