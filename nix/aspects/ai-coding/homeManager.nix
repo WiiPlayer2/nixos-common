@@ -90,13 +90,13 @@ in
       agents = ./_agents;
       settings = {
         plugin = [
-          "octto@latest"
+          # "octto@latest" # almost never seems to invoke correctly; plannotator apparently has priority
           # {
           #   "name" = "ralph-wiggum";
           #   "git" = "https://github.com/Th0rgal/opencode-ralph-wiggum.git";
           # }
           "@plannotator/opencode@latest"
-          "@tarquinen/opencode-dcp@latest"
+          # "@tarquinen/opencode-dcp@latest" # no positive effect found
           "opencode-pty@latest"
           # "@howaboua/opencode-chat@latest" # error=libstdc++.so.6: cannot open shared object file
         ];
@@ -104,6 +104,16 @@ in
           bash = {
             "*" = "ask";
             "ls *" = "allow";
+            "find *" = "allow";
+            "head *" = "allow";
+            "tail *" = "allow";
+            "grep *" = "allow";
+            "cat *" = "allow";
+            "wc *" = "allow";
+            "awk *" = "allow";
+            "dotnet test *" = "allow";
+            "dotnet build *" = "allow";
+            "git diff *" = "allow";
           };
           # webfetch = "ask"; # Doesn't work for subagents in Rider
         };
