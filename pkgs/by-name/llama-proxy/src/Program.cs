@@ -2,12 +2,20 @@ using System.CommandLine;
 using CliWrap;
 using llama_proxy;
 using Yarp.ReverseProxy.Configuration;
+using Yarp.ReverseProxy.Health;
 using Yarp.ReverseProxy.Transforms;
+using LanguageExt;
 
-var portOption = new Option<int>("--port")
+var portOption = new System.CommandLine.Option<int>("--port")
 {
     Description = "Port to run the proxy on",
     DefaultValueFactory = _ => 5000,
+};
+var upstreamOption = new System.CommandLine.Option<Uri>("--upstream")
+{
+    Description = "Upstream proxy url",
+    Required = false,
+    CustomParser = x => new Uri(x.Tokens[0].Value),
 };
 var commandArgument = new Argument<string[]>("command")
 {
@@ -15,6 +23,7 @@ var commandArgument = new Argument<string[]>("command")
 };
 var rootCommand = new RootCommand()
 {
+    upstreamOption,
     portOption,
     commandArgument,
 };
@@ -25,48 +34,35 @@ rootCommand.SetAction(async parseResult =>
 
     var port = parseResult.GetRequiredValue(portOption);
     var command = parseResult.GetRequiredValue(commandArgument);
+    var upstreamUrl = parseResult.GetValue(upstreamOption);
     var downstreamPort = Random.Shared.Next(40000, 40000 + 100);
+
+    if(upstreamUrl is not null)
+        try
+        {
+            Console.WriteLine($"Testing upstream ({upstreamUrl})...");
+            using var httpClient = new HttpClient();
+            httpClient.Timeout = 5.Seconds();
+            var response = await httpClient.GetAsync(upstreamUrl);
+            if(!response.IsSuccessStatusCode)
+                upstreamUrl = null;
+            else
+                Console.WriteLine($"Using upstream url ({upstreamUrl})");
+        }
+        catch
+        {
+            upstreamUrl = null;
+        }
 
     builder.WebHost.ConfigureKestrel(options =>
     {
         options.ListenLocalhost(port);
     });
     builder.Services.AddReverseProxy()
-        .LoadFromMemory([
-            new RouteConfig
-                {
-                    RouteId = "downstream-completions",
-                    ClusterId = "downstream",
-                    Match = new()
-                    {
-                        Path = "/v1/chat/completions",
-                    },
-                    TimeoutPolicy = "Disable",
-                }
-                .WithTransform(transform => transform["ApplyCompletionsFix"] = "true"),
-            new()
-            {
-                RouteId = "downstream-catchall",
-                ClusterId = "downstream",
-                Match = new()
-                {
-                    Path = "/{**catchall}",
-                },
-                TimeoutPolicy = "Disable",
-            },
-        ], [
-            new()
-            {
-                ClusterId = "downstream",
-                Destinations = new Dictionary<string, DestinationConfig>()
-                {
-                    ["downstream"] = new()
-                    {
-                        Address = $"http://localhost:{downstreamPort}/",
-                    },
-                },
-            },
-        ])
+        .LoadFromMemory(
+            BuildRouteConfigs().ToList(),
+            BuildClusterConfigs(downstreamPort, upstreamUrl).ToList()
+        )
         .AddTransformFactory<CompletionFixTransform>()
         .AddTransforms(builderContext =>
         {
@@ -108,8 +104,15 @@ rootCommand.SetAction(async parseResult =>
         });
     });
 
-    await app.StartAsync();
-    await Task.WhenAll(app.WaitForShutdownAsync(), WaitCli());
+    if (upstreamUrl is not null)
+    {
+        await app.RunAsync();
+    }
+    else
+    {
+        await app.StartAsync();
+        await Task.WhenAll(app.WaitForShutdownAsync(), WaitCli());
+    }
 
     async Task WaitCli()
     {
@@ -118,3 +121,53 @@ rootCommand.SetAction(async parseResult =>
     }
 });
 return rootCommand.Parse(args).Invoke();
+
+IEnumerable<RouteConfig> BuildRouteConfigs()
+{
+    yield return new RouteConfig
+        {
+            RouteId = "completions",
+            ClusterId = "target",
+            Match = new()
+            {
+                Path = "/v1/chat/completions",
+            },
+            TimeoutPolicy = "Disable",
+        }
+        .WithTransform(transform => transform["ApplyCompletionsFix"] = "true");
+    yield return new()
+    {
+        RouteId = "catchall",
+        ClusterId = "target",
+        Match = new()
+        {
+            Path = "/{**catchall}",
+        },
+        TimeoutPolicy = "Disable",
+    };
+}
+
+IEnumerable<ClusterConfig> BuildClusterConfigs(int downstreamPort, Uri? upstreamUrl)
+{
+    yield return new()
+    {
+        ClusterId = "target",
+        Destinations = BuildDestinationConfigs(),
+    };
+
+    IReadOnlyDictionary<string, DestinationConfig> BuildDestinationConfigs()
+    {
+        var configs = new Dictionary<string, DestinationConfig>();
+        if (upstreamUrl is not null)
+            configs["upstream"] = new()
+            {
+                Address = upstreamUrl.ToString(),
+            };
+        else
+            configs["downstream"] = new()
+            {
+                Address = $"http://localhost:{downstreamPort}/",
+            };
+        return configs;
+    }
+}
