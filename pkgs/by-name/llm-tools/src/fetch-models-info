@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-set -o
+set -o nounset
+set -o errexit
 
 _models_file="$1"
 _models=$(nix eval --json --file "$_models_file" 2> /dev/null)
