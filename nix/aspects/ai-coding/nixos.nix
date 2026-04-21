@@ -71,9 +71,15 @@ in
       llama-server = {
         package = llama-cpp;
         defaults = {
-          contextSize = mkDefault (64 * 1024);
+          # contextSize = mkDefault (64 * 1024);
           commandPrefix = "${getExe pkgs.llama-proxy} --port \${PORT} --";
           dynamicPort = false;
+          additionalArgs = [
+            "--fit"
+            "on"
+            "--fit-target"
+            "512"
+          ];
         };
         models = modelConfigs;
       };
