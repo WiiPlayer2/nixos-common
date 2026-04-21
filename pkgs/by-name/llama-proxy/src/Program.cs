@@ -153,6 +153,10 @@ IEnumerable<ClusterConfig> BuildClusterConfigs(int downstreamPort, Uri? upstream
     {
         ClusterId = "target",
         Destinations = BuildDestinationConfigs(),
+        HttpRequest = new()
+        {
+            ActivityTimeout = 1.Days(), // should be enough :3
+        },
     };
 
     IReadOnlyDictionary<string, DestinationConfig> BuildDestinationConfigs()

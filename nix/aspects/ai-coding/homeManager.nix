@@ -97,7 +97,7 @@ in
           # }
           "@plannotator/opencode@latest"
           # "@tarquinen/opencode-dcp@latest" # no positive effect found
-          "opencode-pty@latest"
+          # "opencode-pty@latest" # not really used and adds unnecessarily to the context. A MCP server might be more useful.
           # "@howaboua/opencode-chat@latest" # error=libstdc++.so.6: cannot open shared object file
         ];
         permission = {
