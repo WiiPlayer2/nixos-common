@@ -12,12 +12,12 @@
 with lib;
 let
   pname = "CrispASR";
-  version = "0.4.12";
+  version = "0.4.14";
   src = fetchFromGitHub {
     owner = "CrispStrobe";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-CEu6edANNNbJ7gwpdjGXWmew+BudX9JcYsZRfWUTrl8=";
+    hash = "sha256-RV7WHOZP8zGAH6WM9GZw3G2BWhskINMNS7DGDQ6LJAk=";
   };
 in
 # whisper-cpp.overrideAttrs {
