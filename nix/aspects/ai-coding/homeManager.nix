@@ -102,6 +102,7 @@ in
             "*" = "ask";
             "ls *" = "allow";
             "find *" = "allow";
+            "read *" = "allow";
             "head *" = "allow";
             "tail *" = "allow";
             "grep *" = "allow";
