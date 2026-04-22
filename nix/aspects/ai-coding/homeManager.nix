@@ -40,13 +40,6 @@ in
     mcp = {
       enable = true;
       servers = {
-        # everything = {
-        #   command = "npx";
-        #   args = [
-        #     "-y"
-        #     "@modelcontextprotocol/server-everything"
-        #   ];
-        # };
         openspec = {
           command = getExe' pkgs.nodejs_22 "npx";
           args = [
@@ -54,6 +47,10 @@ in
             "openspec-mcp"
             # "--with-dashboard" # invoke manually with --dashboard in directory
           ];
+        };
+        nixos = {
+          disabled = true;
+          command = getExe pkgs.mcp-nixos;
         };
       };
     };
