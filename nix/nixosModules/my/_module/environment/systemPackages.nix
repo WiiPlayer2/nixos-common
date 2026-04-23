@@ -15,7 +15,7 @@ let
     }:
     let
       cmd = "${
-        if useSudo then "sudo " else ""
+        if useSudo then "sudo --preserve-env=NIX_CONFIG " else ""
       }nixos-rebuild ${command} --flake /etc/nixos#${hostConfig.name} ${flakeArgs} --log-format internal-json --verbose \"$@\" |& ${getExe pkgs.nix-output-monitor} --json";
     in
     pkgs.writeShellApplication {
