@@ -41,6 +41,7 @@ in
       enable = true;
       servers = {
         openspec = {
+          disabled = true; # I think it works worse than just the openspec files, commands and skills
           command = getExe' pkgs.nodejs_22 "npx";
           args = [
             "-y"
@@ -109,6 +110,7 @@ in
             "cat *" = "allow";
             "wc *" = "allow";
             "awk *" = "allow";
+            "openspec *" = "allow";
             "dotnet test *" = "allow";
             "dotnet build *" = "allow";
             "git diff *" = "allow";
