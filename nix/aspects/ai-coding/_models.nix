@@ -11,15 +11,23 @@
   "qwen3.5-0.8b" = {
     repo = "unsloth/Qwen3.5-0.8B-GGUF";
   };
-  "qwen3.5-35b" = {
-    repo = "unsloth/Qwen3.5-35B-A3B-GGUF";
-    quant = "UD-IQ2_XXS";
-  };
   "qwen3.5-9b" = {
     repo = "unsloth/Qwen3.5-9B-GGUF";
     quants = [
       null
       "UD-IQ2_XXS"
+    ];
+  };
+  "qwen3.5-35b" = {
+    repo = "unsloth/Qwen3.5-35B-A3B-GGUF";
+    quant = "UD-IQ2_XXS";
+  };
+  "qwen3.6-35b" = {
+    repo = "unsloth/Qwen3.6-35B-A3B-GGUF";
+    quants = [
+      "UD-IQ2_XXS"
+      "UD-IQ1_M"
+      "UD-IQ3_S"
     ];
   };
   "qwen3-coder-next" = {
