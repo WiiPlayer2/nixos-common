@@ -17,11 +17,11 @@ let
   modelsLib = import ./_models_lib.nix { inherit lib; };
   toModelConfig =
     id:
-    { model, ... }:
+    { model, name, ... }:
     {
       name = id;
       value = {
-        name = model.name;
+        name = name;
       };
     };
   modelConfigs = mapAttrs' toModelConfig modelsLib.modelVariants;

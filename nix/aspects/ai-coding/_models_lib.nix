@@ -47,15 +47,15 @@ in
         id: model:
         let
           # str? -> {}
-          mkVariant = quant: {
-            name = "${id}${if quant == elemAt model.quants 0 then "" else ":${quant}"}";
+          mkVariant = index: quant: {
+            name = "${id}${if index == 0 then "" else ":${quant}"}";
             value = {
               inherit quant model;
-              name = "${model.name}${if quant == elemAt model.quants 0 then "" else " (${quant})"}";
+              name = "${model.name}${if index == 0 then "" else " [${quant}]"}";
             };
           };
         in
-        map mkVariant model.quants;
+        imap0 mkVariant model.quants;
     in
     listToAttrs (flatten (mapAttrsToList modelVariants' enrichedModels));
 }
