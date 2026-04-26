@@ -48,7 +48,7 @@ in
         sendLoadingState = true;
         includeAliasesInList = true;
         models = {
-          "qwen3.5-35b".aliases = [
+          "qwen3.6-35b".aliases = [
             "coding"
             "rider-core"
           ];
@@ -58,14 +58,15 @@ in
           ];
           # "gemma4-26b".aliases = [ "rider-core" ];
         };
-        groups.persistent = {
-          persistent = true;
-          swap = false;
-          exclusive = false;
-          members = [
-            "qwen3.5-0.8b"
-          ];
-        };
+        # TODO: Migrate to matrix and either use fix context sizes or additional configurations
+        # groups.persistent = {
+        #   persistent = true;
+        #   swap = false;
+        #   exclusive = false;
+        #   members = [
+        #     "qwen3.5-0.8b"
+        #   ];
+        # };
       };
 
       llama-server = {

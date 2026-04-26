@@ -25,8 +25,8 @@
   "qwen3.6-35b" = {
     repo = "unsloth/Qwen3.6-35B-A3B-GGUF";
     quants = [
-      "UD-IQ2_XXS"
       "UD-IQ1_M"
+      "UD-IQ2_XXS"
       "UD-IQ3_S"
     ];
   };
