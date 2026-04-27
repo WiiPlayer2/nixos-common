@@ -1,11 +1,22 @@
 {
   buildFHSEnv,
+  writeShellApplication,
+
+  bun,
 }:
+let
+  pi = writeShellApplication {
+    name = "pi";
+    runtimeInputs = [
+      bun
+    ];
+    text = "bun x --silent @mariozechner/pi-coding-agent \"$@\"";
+  };
+in
 buildFHSEnv {
-  name = "screenpipe-fhs";
+  name = "screenpipe";
   targetPkgs =
     pkgs: with pkgs; [
-      nodejs_25
       libgbm
       kdePackages.wayland
       libxcb
@@ -15,16 +26,8 @@ buildFHSEnv {
       pulseaudio
       ffmpeg
       tesseract
+      pi
+      bun
     ];
-  runScript = "npx -y screenpipe@latest";
+  runScript = "bun x --silent screenpipe@latest";
 }
-
-# writeShellApplication {
-#   name = "screenpipe-fhs";
-#   runtimeInputs = [
-#     nodejs_25
-#   ];
-#   text = [
-
-#   ];
-# }

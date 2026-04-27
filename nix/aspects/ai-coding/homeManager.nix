@@ -53,14 +53,6 @@ in
           disabled = true;
           command = getExe pkgs.mcp-nixos;
         };
-        screenpipe = {
-          disabled = true;
-          command = getExe' pkgs.nodejs_22 "npx";
-          args = [
-            "-y"
-            "screenpipe-mcp"
-          ];
-        };
       };
     };
 

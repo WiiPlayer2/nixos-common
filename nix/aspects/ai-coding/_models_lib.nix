@@ -51,7 +51,7 @@ in
             name = "${id}${if index == 0 then "" else ":${quant}"}";
             value = {
               inherit quant model;
-              name = "${model.name}${if index == 0 then "" else " [${quant}]"}";
+              name = "${model.name}${if quant == null then "" else " [${quant}]"}";
             };
           };
         in
