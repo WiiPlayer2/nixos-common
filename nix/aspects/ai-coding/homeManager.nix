@@ -110,10 +110,17 @@ in
             "cat *" = "allow";
             "wc *" = "allow";
             "awk *" = "allow";
+            "sort *" = "allow";
+            "cd *" = "allow";
+            "rg *" = "allow";
             "openspec *" = "allow";
             "dotnet test *" = "allow";
             "dotnet build *" = "allow";
             "git diff *" = "allow";
+            "git status *" = "allow";
+            "git log *" = "allow";
+            "git grep *" = "allow";
+            "git show *" = "allow";
           };
           # webfetch = "ask"; # Doesn't work for subagents in Rider
         };
