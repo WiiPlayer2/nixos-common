@@ -41,20 +41,6 @@ with lib;
       }
     );
 
-    # itch.io fix
-    # lutris-unwrapped =
-    #   assert prev.unstable.lutris-unwrapped.version == "0.5.19";
-    #   assert prev.lutris-unwrapped.version == "0.5.19";
-    #   prev.lutris-unwrapped.overrideAttrs {
-    #     version = "2d0244a";
-    #     src = final.fetchFromGitHub {
-    #       owner = "lutris";
-    #       repo = "lutris";
-    #       rev = "2d0244aa28fb05aebebf3f0c1ed2198cd23e77b3";
-    #       hash = "sha256-IKiYlbC6zyGBmv49yTz3/ER6zg5VoQazOzVmqayWEuo=";
-    #     };
-    #   };
-
     picom = prev.picom.overrideAttrs (
       finalAttrs: prevAttrs: {
         patches = prevAttrs.patches or [ ] ++ [
@@ -67,5 +53,24 @@ with lib;
         ];
       }
     );
+
+    openldap =
+      let
+        brokenVersion = "2.6.13";
+        currentVersion = prev.openldap.version;
+      in
+      throwIf (currentVersion != brokenVersion)
+        ''
+          openldap is pinned to ${brokenVersion} but nixpkgs now ships ${currentVersion}.
+
+          i686 test-suite workaround might no be required anymore:
+            https://github.com/NixOS/nixpkgs/issues/513245
+            https://github.com/NixOS/nixpkgs/pull/429119
+        ''
+        (
+          prev.openldap.overrideAttrs (_: {
+            doCheck = !prev.stdenv.hostPlatform.isi686;
+          })
+        );
   };
 }
