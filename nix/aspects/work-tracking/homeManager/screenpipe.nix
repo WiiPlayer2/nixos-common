@@ -18,7 +18,7 @@ with lib;
                 nodejs_25
               ];
               text = ''
-                SCREENPIPE_LOCAL_API_KEY=$(screenpipe-fhs auth token)
+                SCREENPIPE_LOCAL_API_KEY=$(screenpipe auth token)
                 export SCREENPIPE_LOCAL_API_KEY
                 npx -y screenpipe-mcp@latest
               '';
