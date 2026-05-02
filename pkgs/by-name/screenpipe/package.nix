@@ -20,15 +20,15 @@
 with lib;
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "screenpipe";
-  version = "2.4.113";
+  version = "2.4.124";
   src = fetchFromGitHub {
     owner = "screenpipe";
     repo = "screenpipe";
     rev = "app-v${finalAttrs.version}";
-    hash = "sha256-/CAwkG3y79IcDxZHgGFdxvc2fNwaYmMX6YH8iZEC9mk=";
+    hash = "sha256-ZAkG+wJQMsLL3UHbMMAJwaCFhhAx0k5MW7qOOHWsKeQ=";
   };
 
-  cargoHash = "sha256-frDN7sJ3hdAVdR69t7BOQRud/OO1k4HqjYjeiazUfVw=";
+  cargoHash = "sha256-nZRNgUt9iLrsPBZjzRew61eZUyWQpyTTo8bKT95fk8E=";
 
   nativeBuildInputs = [
     pkg-config
