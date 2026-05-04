@@ -51,17 +51,7 @@ in
         };
         nixos = {
           disabled = true;
-          # command = getExe pkgs.mcp-nixos;
-          command =
-            let
-              brokenVersion = "2.14.5";
-              currentVersion = pkgs.python3Packages.fastmcp.version;
-            in
-            throwIf (currentVersion != brokenVersion) ''
-              nixos mcp was disabled while fastmcp is at ${brokenVersion} but nixpkgs now ships ${currentVersion}.
-
-              The tests froze at ~49% consistently.
-            '' "not-found";
+          command = getExe pkgs.mcp-nixos;
         };
       };
     };
