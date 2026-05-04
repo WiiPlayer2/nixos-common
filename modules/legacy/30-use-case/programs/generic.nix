@@ -66,7 +66,6 @@ let
     "vlc"
     "wakatime-cli"
     "wine"
-    "wireshark"
     "wlx-overlay-s"
   ];
   mkProgramOption = description: {

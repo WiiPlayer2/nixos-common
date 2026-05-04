@@ -32,7 +32,6 @@ in
         };
         kubernetes = mkSub "Kubernetes";
         web = mkSub "Web";
-        reverseEngineering = mkSub "Reverse engineering";
       };
     };
 
@@ -134,12 +133,6 @@ in
       my.useCase.development.common.enable = true;
       my.programs = {
         nodejs.enable = true;
-      };
-    })
-    (mkIf cfg.reverseEngineering.enable {
-      my.useCase.development.common.enable = true;
-      my.programs = {
-        wireshark.enable = true;
       };
     })
   ];

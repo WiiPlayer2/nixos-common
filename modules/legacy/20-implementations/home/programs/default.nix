@@ -64,7 +64,6 @@
     ./virt-manager.nix
     ./vlc.nix
     ./wakatime-cli.nix
-    ./wireshark.nix
     ./wlx-overlay-s.nix
   ];
 }
