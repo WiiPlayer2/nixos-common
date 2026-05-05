@@ -15,11 +15,17 @@ let
   modelsLib = import ./_models_lib.nix { inherit lib; };
   toModelConfig =
     id:
-    { quant, model, ... }:
+    {
+      quant,
+      model,
+      aliases,
+      ...
+    }:
     {
       name = id;
       value = {
-        repo = model.repo;
+        inherit aliases;
+        inherit (model) repo;
         ${if quant != null then "quant" else null} = quant;
       };
     };
@@ -48,11 +54,11 @@ in
         sendLoadingState = true;
         includeAliasesInList = true;
         models = {
-          "qwen3.6-35b".aliases = [
+          "qwen3.6-35b:UD-IQ1_M".aliases = [
             "coding"
             "rider-core"
           ];
-          "qwen3.5-0.8b".aliases = [
+          "qwen3.5-0.8b:DEFAULT".aliases = [
             "small"
             "rider-instant"
           ];

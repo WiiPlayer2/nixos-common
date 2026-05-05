@@ -79,6 +79,11 @@ in
                   type = with types; nullOr str;
                   default = null;
                 };
+
+                aliases = mkOption {
+                  type = with types; listOf str;
+                  default = [ ];
+                };
               };
 
               config = {

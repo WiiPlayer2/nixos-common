@@ -48,10 +48,11 @@ in
         let
           # str? -> {}
           mkVariant = index: quant: {
-            name = "${id}${if index == 0 then "" else ":${quant}"}";
+            name = "${id}:${if quant == null then "DEFAULT" else quant}";
             value = {
               inherit quant model;
               name = "${model.name}${if quant == null then "" else " [${quant}]"}";
+              aliases = optional (index == 0) id;
             };
           };
         in
