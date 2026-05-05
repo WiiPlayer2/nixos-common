@@ -32,6 +32,8 @@
             nix-eval-jobs
             nix-fast-build
 
+            llm-tools
+
             (writeShellApplication {
               name = "nixos-pkg-diff";
               runtimeInputs = [

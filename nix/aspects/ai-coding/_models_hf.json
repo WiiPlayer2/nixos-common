@@ -6,7 +6,7 @@
     "config": {},
     "created_at": "2026-04-04T14:49:37+00:00",
     "disabled": false,
-    "downloads": 40261,
+    "downloads": 39372,
     "gated": false,
     "gguf": {
       "total": 25233142046,
@@ -99,7 +99,7 @@
     },
     "created_at": "2025-08-05T17:12:17+00:00",
     "disabled": false,
-    "downloads": 228406,
+    "downloads": 295640,
     "gated": false,
     "gguf": {
       "total": 20914757184,
@@ -111,7 +111,7 @@
     },
     "last_modified": "2025-12-19T01:39:27+00:00",
     "library_name": "transformers",
-    "likes": 671,
+    "likes": 675,
     "pipeline_tag": "text-generation",
     "private": false,
     "sha": "d449b42d93e1c2c7bda5312f5c25c8fb91dfa9b4",
@@ -184,7 +184,6 @@
       }
     ],
     "spaces": [
-      "rikunarita/gpt-oss-20b-GGUF-UD-Q4_K_XL",
       "seanpedrickcase/llm_topic_modelling",
       "dbmoradi60/gpt-oss-20b-cpu",
       "Monster/gpt-oss-20b",
@@ -200,7 +199,9 @@
       "Hhhgjvjjvkvkvvk/gpt-ossxd",
       "Hhhgjvjjvkvkvvk/Gemma",
       "Hhhgjvjjvkvkvvk/hhjgjguhh",
-      "rphrp1985/chatbots5"
+      "rphrp1985/chatbots5",
+      "victor/llama-app",
+      "mnordberg/gpt-oss-20b-GGUF-UD-Q4_K_XL"
     ],
     "tags": [
       "transformers",
@@ -244,7 +245,7 @@
     "config": {},
     "created_at": "2025-10-31T08:45:49+00:00",
     "disabled": false,
-    "downloads": 3365,
+    "downloads": 2594,
     "gated": false,
     "gguf": {
       "total": 3429006336,
@@ -256,7 +257,7 @@
     },
     "last_modified": "2026-01-15T11:19:18+00:00",
     "library_name": "vllm",
-    "likes": 33,
+    "likes": 34,
     "private": false,
     "sha": "b432f0a2c144af8a1937b06e2ea7f75ebb4d0b31",
     "siblings": [
@@ -314,7 +315,7 @@
     "config": {},
     "created_at": "2026-03-01T14:38:35+00:00",
     "disabled": false,
-    "downloads": 293652,
+    "downloads": 333511,
     "gated": false,
     "gguf": {
       "total": 752393024,
@@ -325,7 +326,7 @@
     },
     "last_modified": "2026-03-02T14:08:04+00:00",
     "library_name": "transformers",
-    "likes": 143,
+    "likes": 154,
     "pipeline_tag": "image-text-to-text",
     "private": false,
     "sha": "6ab461498e2023f6e3c1baea90a8f0fe38ab64d0",
@@ -433,7 +434,10 @@
       "hsuwill000/qwen-3.5-0.8b-high-performance",
       "OrbitMC/Qwen3.5-0.8B-GGUF-UD-Q5_K_XL",
       "old666/Qwen3.5-0.8B-GGUF-UD-Q5_K_XL",
-      "sagar0123/sagar-writer-brain"
+      "sagar0123/sagar-writer-brain",
+      "sagar0123/sagar-writer-brain-01",
+      "sagar0123/sagar-writer-brain-02",
+      "sagar0123/sagar-writer-brain-03"
     ],
     "tags": [
       "transformers",
@@ -478,7 +482,7 @@
     },
     "created_at": "2026-02-24T14:48:31+00:00",
     "disabled": false,
-    "downloads": 1197920,
+    "downloads": 934614,
     "gated": false,
     "gguf": {
       "total": 34660610688,
@@ -593,7 +597,6 @@
     ],
     "spaces": [
       "GenAISecurityProject/OWASP-AIBOM-Generator",
-      "rikunarita/Qwen3.5-35B-A3B-GGUF-UD-Q3_K_XL",
       "rphrp1985/chatbots1",
       "rphrp1985/chatbot-2",
       "Rashid087/Qwen3.5-35B-A3B-GGUF-UD-Q3_K_XL",
@@ -638,7 +641,7 @@
     "config": {},
     "created_at": "2026-02-28T14:04:29+00:00",
     "disabled": false,
-    "downloads": 924285,
+    "downloads": 1070272,
     "gated": false,
     "gguf": {
       "total": 8953803264,
@@ -649,7 +652,7 @@
     },
     "last_modified": "2026-03-02T14:08:36+00:00",
     "library_name": "transformers",
-    "likes": 547,
+    "likes": 579,
     "pipeline_tag": "image-text-to-text",
     "private": false,
     "sha": "3885219b6810b007914f3a7950a8d1b469d598a5",
@@ -745,7 +748,6 @@
       "rphrp1985/chatbots1",
       "mohdelgaar/MedDecXtract-2.0",
       "rphrp1985/chatbots5",
-      "Abdelrhman2008/AI-local",
       "lmz74108520/Qwen3.5-9B-GGUF"
     ],
     "tags": [
@@ -779,6 +781,162 @@
       }
     ]
   },
+  "qwen3.6-27b": {
+    "id": "unsloth/Qwen3.6-27B-GGUF",
+    "author": "unsloth",
+    "card_data": {},
+    "config": {},
+    "created_at": "2026-04-22T05:43:37+00:00",
+    "disabled": false,
+    "downloads": 1147196,
+    "gated": false,
+    "gguf": {
+      "total": 26895998464,
+      "architecture": "qwen35",
+      "context_length": 262144,
+      "quantize_imatrix_file": "Qwen3.6-27B-GGUF/imatrix_unsloth.gguf",
+      "chat_template": "{%- set image_count = namespace(value=0) %}\n{%- set video_count = namespace(value=0) %}\n{%- macro render_content(content, do_vision_count, is_system_content=false) %}\n    {%- if content is string %}\n        {{- content }}\n    {%- elif content is iterable and content is not mapping %}\n        {%- for item in content %}\n            {%- if 'image' in item or 'image_url' in item or item.type == 'image' %}\n                {%- if is_system_content %}\n                    {{- raise_exception('System message cannot contain images.') }}\n                {%- endif %}\n                {%- if do_vision_count %}\n                    {%- set image_count.value = image_count.value + 1 %}\n                {%- endif %}\n                {%- if add_vision_id %}\n                    {{- 'Picture ' ~ image_count.value ~ ': ' }}\n                {%- endif %}\n                {{- '<|vision_start|><|image_pad|><|vision_end|>' }}\n            {%- elif 'video' in item or item.type == 'video' %}\n                {%- if is_system_content %}\n                    {{- raise_exception('System message cannot contain videos.') }}\n                {%- endif %}\n                {%- if do_vision_count %}\n                    {%- set video_count.value = video_count.value + 1 %}\n                {%- endif %}\n                {%- if add_vision_id %}\n                    {{- 'Video ' ~ video_count.value ~ ': ' }}\n                {%- endif %}\n                {{- '<|vision_start|><|video_pad|><|vision_end|>' }}\n            {%- elif 'text' in item %}\n                {{- item.text }}\n            {%- else %}\n                {{- raise_exception('Unexpected item type in content.') }}\n            {%- endif %}\n        {%- endfor %}\n    {%- elif content is none or content is undefined %}\n        {{- '' }}\n    {%- else %}\n        {{- raise_exception('Unexpected content type.') }}\n    {%- endif %}\n{%- endmacro %}\n{%- if not messages %}\n    {{- raise_exception('No messages provided.') }}\n{%- endif %}\n{%- set num_sys = 0 %}\n{%- set merged_system = '' %}\n{%- if messages[0].role == 'system' or messages[0].role == 'developer' %}\n    {%- set first = render_content(messages[0].content, false, true)|trim %}\n    {%- if messages|length > 1 and (messages[1].role == 'system' or messages[1].role == 'developer') %}\n        {%- set second = render_content(messages[1].content, false, true)|trim %}\n        {%- set merged_system = first + '\\n' + second %}\n        {%- set num_sys = 2 %}\n    {%- else %}\n        {%- set merged_system = first %}\n        {%- set num_sys = 1 %}\n    {%- endif %}\n{%- endif %}\n{%- if tools and tools is iterable and tools is not mapping %}\n    {{- '<|im_start|>system\\n' }}\n    {{- \"# Tools\\n\\nYou have access to the following functions:\\n\\n<tools>\" }}\n    {%- for tool in tools %}\n        {{- \"\\n\" }}\n        {{- tool | tojson }}\n    {%- endfor %}\n    {{- \"\\n</tools>\" }}\n    {{- '\\n\\nIf you choose to call a function ONLY reply in the following format with NO suffix:\\n\\n<tool_call>\\n<function=example_function_name>\\n<parameter=example_parameter_1>\\nvalue_1\\n</parameter>\\n<parameter=example_parameter_2>\\nThis is the value for the second parameter\\nthat can span\\nmultiple lines\\n</parameter>\\n</function>\\n</tool_call>\\n\\n<IMPORTANT>\\nReminder:\\n- Function calls MUST follow the specified format: an inner <function=...></function> block must be nested within <tool_call></tool_call> XML tags\\n- Required parameters MUST be specified\\n- You may provide optional reasoning for your function call in natural language BEFORE the function call, but NOT after\\n- If there is no function call available, answer the question like normal with your current knowledge and do not tell the user about function calls\\n</IMPORTANT>' }}\n    {%- if merged_system %}\n        {{- '\\n\\n' + merged_system }}\n    {%- endif %}\n    {{- '<|im_end|>\\n' }}\n{%- else %}\n    {%- if merged_system %}\n        {{- '<|im_start|>system\\n' + merged_system + '<|im_end|>\\n' }}\n    {%- endif %}\n{%- endif %}\n{%- set ns = namespace(multi_step_tool=true, last_query_index=messages|length - 1) %}\n{%- for message in messages[::-1] %}\n    {%- set index = (messages|length - 1) - loop.index0 %}\n    {%- if ns.multi_step_tool and message.role == \"user\" %}\n        {%- set content = render_content(message.content, false)|trim %}\n        {%- if not(content.startswith('<tool_response>') and content.endswith('</tool_response>')) %}\n            {%- set ns.multi_step_tool = false %}\n            {%- set ns.last_query_index = index %}\n        {%- endif %}\n    {%- endif %}\n{%- endfor %}\n{%- for message in messages %}\n    {%- if loop.index0 >= num_sys and message.role != \"system\" and message.role != \"developer\" %}\n    {%- set content = render_content(message.content, true)|trim %}\n    {%- if message.role == \"user\" %}\n        {{- '<|im_start|>' + message.role + '\\n' + content + '<|im_end|>' + '\\n' }}\n    {%- elif message.role == \"assistant\" %}\n        {%- set reasoning_content = '' %}\n        {%- if message.reasoning_content is string %}\n            {%- set reasoning_content = message.reasoning_content %}\n        {%- else %}\n            {%- if '</think>' in content %}\n                {%- set reasoning_content = content.split('</think>')[0].rstrip('\\n').split('<think>')[-1].lstrip('\\n') %}\n                {%- set content = content.split('</think>')[-1].lstrip('\\n') %}\n            {%- endif %}\n        {%- endif %}\n        {%- set reasoning_content = reasoning_content|trim %}\n        {%- if (preserve_thinking is defined and preserve_thinking is true) or (loop.index0 > ns.last_query_index) %}\n            {{- '<|im_start|>' + message.role + '\\n<think>\\n' + reasoning_content + '\\n</think>\\n\\n' + content }}\n        {%- else %}\n            {{- '<|im_start|>' + message.role + '\\n' + content }}\n        {%- endif %}\n        {%- if message.tool_calls and message.tool_calls is iterable and message.tool_calls is not mapping %}\n            {%- for tool_call in message.tool_calls %}\n                {%- if tool_call.function is defined %}\n                    {%- set tool_call = tool_call.function %}\n                {%- endif %}\n                {%- if loop.first %}\n                    {%- if content|trim %}\n                        {{- '\\n\\n<tool_call>\\n<function=' + tool_call.name + '>\\n' }}\n                    {%- else %}\n                        {{- '<tool_call>\\n<function=' + tool_call.name + '>\\n' }}\n                    {%- endif %}\n                {%- else %}\n                    {{- '\\n<tool_call>\\n<function=' + tool_call.name + '>\\n' }}\n                {%- endif %}\n                {%- if tool_call.arguments is mapping %}\n                    {%- for args_name in tool_call.arguments %}\n                        {%- set args_value = tool_call.arguments[args_name] %}\n                        {{- '<parameter=' + args_name + '>\\n' }}\n                        {%- set args_value = args_value | tojson | safe if args_value is mapping or (args_value is sequence and args_value is not string) else args_value | string %}\n                        {{- args_value }}\n                        {{- '\\n</parameter>\\n' }}\n                    {%- endfor %}\n                {%- endif %}\n                {{- '</function>\\n</tool_call>' }}\n            {%- endfor %}\n        {%- endif %}\n        {{- '<|im_end|>\\n' }}\n    {%- elif message.role == \"tool\" %}\n        {%- if loop.previtem and loop.previtem.role != \"tool\" %}\n            {{- '<|im_start|>user' }}\n        {%- endif %}\n        {{- '\\n<tool_response>\\n' }}\n        {{- content }}\n        {{- '\\n</tool_response>' }}\n        {%- if not loop.last and loop.nextitem.role != \"tool\" %}\n            {{- '<|im_end|>\\n' }}\n        {%- elif loop.last %}\n            {{- '<|im_end|>\\n' }}\n        {%- endif %}\n    {%- endif %}\n    {%- endif %}\n{%- endfor %}\n{%- if add_generation_prompt %}\n    {{- '<|im_start|>assistant\\n' }}\n    {%- if enable_thinking is defined and enable_thinking is false %}\n        {{- '<think>\\n\\n</think>\\n\\n' }}\n    {%- else %}\n        {{- '<think>\\n' }}\n    {%- endif %}\n{%- endif %}\n{#- Unsloth fixes - developer role, tool calling #}",
+      "bos_token": "<|endoftext|>",
+      "eos_token": "<|im_end|>",
+      "totalFileSize": 16071772384
+    },
+    "last_modified": "2026-04-22T16:01:39+00:00",
+    "library_name": "transformers",
+    "likes": 570,
+    "pipeline_tag": "image-text-to-text",
+    "private": false,
+    "sha": "82d411acf4a06cfb8d9b073a5211bf410bfc29bf",
+    "siblings": [
+      {
+        "rfilename": ".gitattributes"
+      },
+      {
+        "rfilename": "BF16/Qwen3.6-27B-BF16-00001-of-00002.gguf"
+      },
+      {
+        "rfilename": "BF16/Qwen3.6-27B-BF16-00002-of-00002.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-IQ4_NL.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-IQ4_XS.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-Q3_K_M.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-Q3_K_S.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-Q4_0.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-Q4_1.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-Q4_K_M.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-Q4_K_S.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-Q5_K_M.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-Q5_K_S.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-Q6_K.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-Q8_0.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-UD-IQ2_M.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-UD-IQ2_XXS.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-UD-IQ3_XXS.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-UD-Q2_K_XL.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-UD-Q3_K_XL.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-UD-Q4_K_XL.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-UD-Q5_K_XL.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-UD-Q6_K_XL.gguf"
+      },
+      {
+        "rfilename": "Qwen3.6-27B-UD-Q8_K_XL.gguf"
+      },
+      {
+        "rfilename": "README.md"
+      },
+      {
+        "rfilename": "imatrix_unsloth.gguf_file"
+      },
+      {
+        "rfilename": "mmproj-BF16.gguf"
+      },
+      {
+        "rfilename": "mmproj-F16.gguf"
+      },
+      {
+        "rfilename": "mmproj-F32.gguf"
+      }
+    ],
+    "spaces": [
+      "KyleHessling1/qwen36-eval",
+      "rikunarita/Qwen3.6-27B-GGUF-UD-Q3_K_XL",
+      "Jackrong/qwen36-eval",
+      "abishek-priyan-369/Incident_commander",
+      "victor/llama-app",
+      "Lucas8864/qwen36-eval"
+    ],
+    "tags": [
+      "transformers",
+      "gguf",
+      "unsloth",
+      "qwen",
+      "qwen3_5",
+      "image-text-to-text",
+      "base_model:Qwen/Qwen3.6-27B",
+      "base_model:quantized:Qwen/Qwen3.6-27B",
+      "license:apache-2.0",
+      "endpoints_compatible",
+      "region:us",
+      "imatrix",
+      "conversational"
+    ],
+    "transformers_info": {
+      "auto_model": "AutoModel"
+    },
+    "used_storage": 531081925312,
+    "widget_data": [
+      {
+        "text": "Hi, what can you help me with?"
+      },
+      {
+        "text": "What is 84 * 3 / 2?"
+      },
+      {
+        "text": "Tell me an interesting fact about the universe!"
+      },
+      {
+        "text": "Explain quantum computing in simple terms."
+      }
+    ]
+  },
   "qwen3.6-35b": {
     "id": "unsloth/Qwen3.6-35B-A3B-GGUF",
     "author": "unsloth",
@@ -786,7 +944,7 @@
     "config": {},
     "created_at": "2026-04-16T04:31:31+00:00",
     "disabled": false,
-    "downloads": 1397244,
+    "downloads": 2243715,
     "gated": false,
     "gguf": {
       "total": 34660610688,
@@ -800,7 +958,7 @@
     },
     "last_modified": "2026-04-20T12:42:25+00:00",
     "library_name": "transformers",
-    "likes": 739,
+    "likes": 914,
     "pipeline_tag": "image-text-to-text",
     "private": false,
     "sha": "a483e9e6cbd595906af30beda3187c2663a1118c",
@@ -900,8 +1058,11 @@
       }
     ],
     "spaces": [
-      "rikunarita/Qwen3.6-35B-A3B-GGUF-UD-Q3_K_XL",
-      "OrbitMC/Qwen3.6-35B-A3B-GGUF"
+      "rikunarita/Qwen3.6-35B-A3B-GGUF-UD-Q5_K_XL",
+      "THEZYZSTUDIO/The_z_ai_agent",
+      "OrbitMC/Qwen3.6-35B-A3B-GGUF",
+      "victor/llama-app",
+      "lordx64/qwen3-6-distill-eval"
     ],
     "tags": [
       "transformers",
@@ -945,7 +1106,7 @@
     "config": {},
     "created_at": "2026-02-10T18:39:37+00:00",
     "disabled": false,
-    "downloads": 4315,
+    "downloads": 3802,
     "gated": false,
     "gguf": {
       "total": 40994519808,

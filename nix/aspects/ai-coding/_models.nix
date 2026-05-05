@@ -30,6 +30,13 @@
       "UD-IQ3_S"
     ];
   };
+  "qwen3.6-27b" = {
+    repo = "unsloth/Qwen3.6-27B-GGUF";
+    quants = [
+      "UD-Q3_K_XL"
+      "UD-IQ2_XXS"
+    ];
+  };
   "qwen3-coder-next" = {
     repo = "mradermacher/Qwen3-Coder-Next-REAP-40B-A3B-i1-GGUF";
     quant = "IQ1_S";
