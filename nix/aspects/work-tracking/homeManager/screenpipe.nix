@@ -39,6 +39,10 @@ with lib;
         "SCREENPIPE_NO_REMINDERS=1"
       ];
       ExecStart = "${getExe pkgs.screenpipe-fhs} record --disable-telemetry";
+      RestartSec = "1s";
+      RestartSteps = 10;
+      RestartMaxDelaySec = "5min";
+      Restart = "always";
     };
     Install = {
       WantedBy = [ "default.target" ];
