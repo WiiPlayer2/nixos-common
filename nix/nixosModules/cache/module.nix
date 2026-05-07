@@ -7,15 +7,12 @@
 }:
 with lib;
 let
-  # TODO: Use daemon to queue push jobs
   post-build-hook = pkgs.writeShellApplication {
-    name = "attic-push";
-    runtimeInputs = with pkgs; [
-      attic-client
-    ];
+    name = "post-build-hook";
     text = ''
-      # shellcheck disable=SC2086
-      attic push default $OUT_PATHS || true
+      for _path in $OUT_PATHS; do
+        ln -vs "$_path" "/var/lib/attic-push/$(basename "$_path")"
+      done
     '';
   };
 in
