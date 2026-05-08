@@ -32,6 +32,14 @@ with lib;
           moonlight-qt
           protonup-qt
         ];
+
+        programs = {
+          mangohud = {
+            settingsPerApplication = {
+              ".moonlight-wrapped".no_display = true;
+            };
+          };
+        };
       };
     nixos =
       { pkgs, ... }:
