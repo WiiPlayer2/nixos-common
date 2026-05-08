@@ -33,9 +33,10 @@ with lib;
 
     timers.attic-push-service = {
       timerConfig = {
-        OnStartupSec = 60;
-        OnUnitInactiveSec = 5 * 60;
+        OnStartupSec = "1min";
+        OnUnitInactiveSec = "5min";
       };
+      wantedBy = [ "timers.target" ];
     };
   };
 }
