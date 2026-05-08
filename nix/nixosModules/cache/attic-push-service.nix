@@ -22,9 +22,12 @@ with lib;
       ];
       script = ''
         for _link in /var/lib/attic-push/*; do
+          if [[ ! -e "$_link" ]]; then
+            break
+          fi
           _path=$(realpath "$_link")
           if [[ "$_path" == /nix/store/* ]] && [[ -e "$_path" ]]; then
-            attic push default "$_path"
+            attic push default "$_path" || echo "Pushing $_path failed."
           fi
           rm "$_link"
         done
