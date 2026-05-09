@@ -2,7 +2,6 @@
 with lib;
 let
   services = [
-    "attic-watch"
     "ftp"
     "gitea"
     "jellyfin-rpc"

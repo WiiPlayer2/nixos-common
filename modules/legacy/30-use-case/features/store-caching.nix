@@ -12,12 +12,5 @@ in
     programs.attic-client = {
       enable = true;
     };
-
-    services.attic-watch = {
-      enable = true;
-    };
-
-    # FIXME: does not work at the moment ("failed with exit code 1")
-    # config.nix.settings.post-build-hook = "attic push default $OUT_PATHS";
   };
 }
