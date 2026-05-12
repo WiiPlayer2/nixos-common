@@ -1,4 +1,5 @@
-_: {
+{ inputs, ... }:
+{
   age = {
     imprinting = {
       enable = true;
@@ -15,4 +16,15 @@ _: {
     "nix-command"
     "flakes"
   ];
+
+  home-manager = {
+    backupFileExtension = "bak";
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.root = { };
+    sharedModules = [
+      # (inputs.import-tree ./_home)
+      ./_home.nix
+    ];
+  };
 }

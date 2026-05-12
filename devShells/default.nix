@@ -33,6 +33,7 @@
             nix-fast-build
 
             llm-tools
+            nixos-config-tools
 
             (writeShellApplication {
               name = "nixos-pkg-diff";

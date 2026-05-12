@@ -1,7 +1,7 @@
 {
   stdenv,
   fetchFromGitHub,
-  xorg,
+  libxcb,
 }:
 
 let
@@ -18,7 +18,7 @@ stdenv.mkDerivation {
   inherit pname version src;
 
   buildInputs = [
-    xorg.libxcb.dev
+    libxcb.dev
   ];
 
   makeFlags = [ "prefix=$(out)" ];
