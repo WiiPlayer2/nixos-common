@@ -1,9 +1,7 @@
 { inputs, ... }:
 {
   imports = [
-    inputs.home-manager.nixosModules.default
-
-    inputs.self.nixosModules.agenix-imprinting
-    inputs.self.nixosModules.core-legacy
+    inputs.self.nixosModules.core-deps
+    inputs.self.nixosModules.core-impl
   ];
 }
