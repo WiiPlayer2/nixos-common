@@ -17,6 +17,10 @@
     "flakes"
   ];
 
+  nixpkgs.overlays = [
+    inputs.self.overlays.default
+  ];
+
   home-manager = {
     backupFileExtension = "bak";
     useGlobalPkgs = true;
