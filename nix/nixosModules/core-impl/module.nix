@@ -37,8 +37,7 @@
     useUserPackages = true;
     users.root = { };
     sharedModules = [
-      # (inputs.import-tree ./_home)
-      ./_home.nix
+      inputs.self.homeModules.core
     ];
   };
 }
