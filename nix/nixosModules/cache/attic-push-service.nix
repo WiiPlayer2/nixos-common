@@ -22,8 +22,8 @@ with lib;
       ];
       script = ''
         for _link in /var/lib/attic-push/*; do
-          if [[ ! -e "$_link" ]]; then
-            break
+          if [[ ! -L "$_link" ]]; then
+            continue
           fi
           _path=$(realpath "$_link")
           if [[ "$_path" == /nix/store/* ]] && [[ -e "$_path" ]]; then
