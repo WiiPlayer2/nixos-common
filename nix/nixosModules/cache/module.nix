@@ -12,7 +12,7 @@ let
     text = ''
       link_path () {
         _path="$1"
-        ln -vs "$_path" "/var/lib/attic-push/$(basename "$_path")" 2>&1
+        ln -vTs "$_path" "/var/lib/attic-push/$(basename "$_path")" 2>&1
       }
 
       link_path_retry () {
