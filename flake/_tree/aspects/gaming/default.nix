@@ -53,6 +53,7 @@ with lib;
           xwininfo
           wget
           xdotool
+          pince
         ];
 
         programs.steam = {
