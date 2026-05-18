@@ -30,7 +30,7 @@ let
       }
 
       for _path in $OUT_PATHS; do
-        link_path_retry "$_path"
+        link_path "$_path" || true
       done
     '';
   };
