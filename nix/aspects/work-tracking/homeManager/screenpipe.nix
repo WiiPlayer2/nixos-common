@@ -8,7 +8,7 @@ with lib;
   programs = {
     mcp.servers = {
       screenpipe = {
-        disabled = true;
+        # disabled = true;
         command =
           let
             script = pkgs.writeShellApplication {
@@ -27,6 +27,8 @@ with lib;
           getExe script;
       };
     };
+
+    opencode.settings.tools."screenpipe*" = false;
 
     zsh.initContent = ''
       export SCREENPIPE_LOCAL_API_KEY=$(${getExe pkgs.screenpipe-fhs} auth token)
