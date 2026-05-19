@@ -54,13 +54,34 @@ with lib;
       };
 
       plugins = {
-        dankKDEConnect.enable = true;
-        ocrScanner.enable = true;
-        bongoCat.enable = true;
-        kaomojiPicker.enable = true;
-        dankDiskUsage.enable = true;
-        nextBootSelector.enable = true;
-        linuxWallpaperEngine.enable = true;
+        dankKDEConnect = {
+          enable = true;
+          settings.enabled = true;
+        };
+        ocrScanner = {
+          enable = true;
+          settings.enabled = true;
+        };
+        bongoCat = {
+          enable = true;
+          settings.enabled = true;
+        };
+        kaomojiPicker = {
+          enable = true;
+          settings.enabled = true;
+        };
+        dankDiskUsage = {
+          enable = true;
+          settings.enabled = true;
+        };
+        nextBootSelector = {
+          enable = true;
+          settings.enabled = true;
+        };
+        linuxWallpaperEngine = {
+          enable = true;
+          settings.enabled = true;
+        };
       };
     };
     wezterm.enable = true; # currently managed outside
