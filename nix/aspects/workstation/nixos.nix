@@ -29,4 +29,12 @@
     power-profiles-daemon.enable = true;
     printing.enable = true;
   };
+  security.pam.services.dms-greeter = {
+    fprintAuth = false;
+    u2f.enable = false;
+  };
+  security.pam.services.greetd = {
+    fprintAuth = false;
+    u2f.enable = false;
+  };
 }

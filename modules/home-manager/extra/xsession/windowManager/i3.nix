@@ -12,23 +12,23 @@ in
   };
 
   config = mkIf cfg.enable {
-    xsession.windowManager.i3.config.startup = [
-      {
-        command = "systemctl --user start i3-session.target";
-        notification = false;
-      }
-    ];
+    # xsession.windowManager.i3.config.startup = [
+    #   {
+    #     command = "systemctl --user start i3-session.target";
+    #     notification = false;
+    #   }
+    # ];
 
-    systemd.user.targets.i3-session = mkIf cfg.enableSystemdTarget {
-      Unit = {
-        Description = "i3 session target";
-        Requires = [
-          "graphical-session.target"
-        ];
-        After = [
-          "graphical-session.target"
-        ];
-      };
-    };
+    # systemd.user.targets.i3-session = mkIf cfg.enableSystemdTarget {
+    #   Unit = {
+    #     Description = "i3 session target";
+    #     Requires = [
+    #       "graphical-session.target"
+    #     ];
+    #     After = [
+    #       "graphical-session.target"
+    #     ];
+    #   };
+    # };
   };
 }

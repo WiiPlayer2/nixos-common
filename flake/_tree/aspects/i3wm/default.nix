@@ -114,13 +114,13 @@ with lib;
                   "${modifier}+P" = "exec --no-startup-id ${getExe displayMenu}";
                 };
 
-              startup = [
-                { command = "${pkgs.cinnamon-screensaver}/bin/cinnamon-screensaver --hold"; }
-                { command = "${getExe xsetConfig}"; }
-                {
-                  command = "${getExe pkgs.xidlehook} --timer 300 ${escapeShellArg (getExe (setIdle "true"))} ${escapeShellArg (getExe (setIdle "false"))}";
-                }
-              ];
+              # startup = [
+              #   { command = "${pkgs.cinnamon-screensaver}/bin/cinnamon-screensaver --hold"; }
+              #   { command = "${getExe xsetConfig}"; }
+              #   {
+              #     command = "${getExe pkgs.xidlehook} --timer 300 ${escapeShellArg (getExe (setIdle "true"))} ${escapeShellArg (getExe (setIdle "false"))}";
+              #   }
+              # ];
             };
 
             extraConfig = ''
