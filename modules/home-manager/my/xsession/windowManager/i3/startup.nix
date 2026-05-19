@@ -4,7 +4,7 @@ let
   mapStartup =
     startup:
     mkIf startup.enable {
-      inherit (startup) command;
+      command = "systemd-run --user --collect ${startup.command}";
       notification = false;
     };
   mappedStartups = map (x: mapStartup x.value) (attrsToList config.my.startup);

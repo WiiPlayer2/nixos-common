@@ -44,14 +44,12 @@ with lib;
             openOnOverview = true;
           }
         ];
+
+        useAutoLocation = true; # TODO: maybe hardcode location
       };
     };
     wezterm.enable = true; # currently managed outside
   };
 
-  wayland.windowManager.sway = {
-    enable = true;
-    # TODO: convert legacy my.startup to systemd services ("instant" exec services might be enough)
-    config.startup = mkForce [ ];
-  };
+  wayland.windowManager.sway.enable = true;
 }
