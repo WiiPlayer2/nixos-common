@@ -1,5 +1,5 @@
 { inputs, ... }:
-{ lib, ... }:
+{ lib, config, ... }:
 with lib;
 {
   imports = [
@@ -31,6 +31,8 @@ with lib;
               "music"
               "clock"
               "weather"
+              "dankPomodoroTimer"
+              "timer"
             ];
             rightWidgets = [
               "systemTray"
@@ -43,7 +45,6 @@ with lib;
               "battery"
               "controlCenterButton"
             ];
-            autoHide = true;
             openOnOverview = true;
             transparency = 0.8;
             widgetTransparency = 0.95;
@@ -51,41 +52,53 @@ with lib;
         ];
 
         useAutoLocation = true; # TODO: maybe hardcode location
+        popupTransparency = mkOverride 90 0.95; # set by stylix
+        notificationHistorySaveLow = false;
+        notificationPopupPosition = 3; # bottom right
+        osdAlwaysShowValue = true;
+        osdMediaPlaybackEnabled = true;
+        osdPowerProfileEnabled = true;
+        showWorkspaceName = true;
       };
 
-      plugins = {
-        dankKDEConnect = {
-          enable = true;
-          settings.enabled = true;
+      plugins =
+        let
+          installAndEnable = {
+            enable = true;
+            settings.enabled = true;
+          };
+        in
+        {
+          dankKDEConnect = installAndEnable;
+          ocrScanner = installAndEnable;
+          bongoCat = installAndEnable;
+          kaomojiPicker = installAndEnable;
+          dankDiskUsage = installAndEnable;
+          nextBootSelector = installAndEnable;
+          linuxWallpaperEngine = installAndEnable;
+          dankStickerSearch = installAndEnable;
+          dankGifSearch = installAndEnable;
+          dankPomodoroTimer = installAndEnable;
+          timer = installAndEnable;
+          usbManager = installAndEnable;
+          calculator = installAndEnable;
+          qrGenerator = installAndEnable;
         };
-        ocrScanner = {
-          enable = true;
-          settings.enabled = true;
-        };
-        bongoCat = {
-          enable = true;
-          settings.enabled = true;
-        };
-        kaomojiPicker = {
-          enable = true;
-          settings.enabled = true;
-        };
-        dankDiskUsage = {
-          enable = true;
-          settings.enabled = true;
-        };
-        nextBootSelector = {
-          enable = true;
-          settings.enabled = true;
-        };
-        linuxWallpaperEngine = {
-          enable = true;
-          settings.enabled = true;
-        };
-      };
     };
     wezterm.enable = true; # currently managed outside
   };
 
-  wayland.windowManager.sway.enable = true;
+  wayland.windowManager.sway = {
+    enable = true;
+    config = {
+      bars = mkForce [ ];
+      keybindings =
+        let
+          modifier = config.wayland.windowManager.sway.config.modifier;
+        in
+        {
+          "${modifier}+Shift+v" = "dms ipc clipboard open";
+        };
+    };
+  };
 }

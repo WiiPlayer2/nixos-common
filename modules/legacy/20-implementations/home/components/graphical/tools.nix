@@ -23,10 +23,6 @@ in
           xwinwrap
         ]);
 
-      services.copyq = {
-        enable = true;
-      };
-
       programs.chromium = {
         enable = true;
       };

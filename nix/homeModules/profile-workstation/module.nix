@@ -88,7 +88,6 @@ with lib;
       nix-web.enable = true;
     };
 
-    my.startup.kdeconnect.command = "${pkgs.kdePackages.kdeconnect-kde}/bin/kdeconnect-indicator";
     my.startup.logseq.command = lib.getExe pkgs.logseq;
   };
 }
