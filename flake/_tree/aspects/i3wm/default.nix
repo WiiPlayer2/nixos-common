@@ -27,7 +27,6 @@ with lib;
             IdleAction = "lock";
             IdleActionSec = "5s";
           };
-          gnome.gnome-keyring.enable = mkForce false;
           dbus.packages = [ pkgs.gcr ];
         };
 
@@ -152,7 +151,7 @@ with lib;
               "class_g ?= 'org.nickvision.cavalier'"
             ];
           };
-          gnome-keyring.enable = true;
+          # gnome-keyring.enable = true;
         };
 
         systemd.user.services.picom.Service.ExecCondition =

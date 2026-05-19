@@ -6,7 +6,7 @@ with lib;
   config = mkIf config.unified.device-type.notebook.enable {
     services = {
       tlp = {
-        enable = true;
+        # enable = true;
         settings = {
           CPU_SCALING_GOVERNOR_ON_AC = "performance";
           CPU_SCALING_GOVERNOR_ON_BAT = "powersave";

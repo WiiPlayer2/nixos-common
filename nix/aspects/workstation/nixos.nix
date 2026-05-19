@@ -29,8 +29,4 @@
     power-profiles-daemon.enable = true;
     printing.enable = true;
   };
-
-  environment.sessionVariables = {
-    # UWSM_WAIT_VARNAMES_TIMEOUT = 60;
-  };
 }
