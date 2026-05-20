@@ -33,6 +33,7 @@ with lib;
           "dankDiskUsage"
           "notificationButton"
           "battery"
+          "privacyIndicator"
           "controlCenterButton"
         ];
         openOnOverview = true;
