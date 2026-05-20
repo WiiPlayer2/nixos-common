@@ -15,6 +15,7 @@ with lib;
           "launcherButton"
           "workspaceSwitcher"
           "focusedWindow"
+          "bongoCat"
         ];
         centerWidgets = [
           "music"

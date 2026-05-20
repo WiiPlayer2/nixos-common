@@ -1,6 +1,10 @@
 { inputs, ... }:
 { pkgs, ... }:
 {
+  imports = [
+    inputs.dms.nixosModules.greeter
+  ];
+
   programs = {
     sway = {
       enable = true;
@@ -17,14 +21,13 @@
     };
 
     dsearch.enable = true;
-  };
-
-  services = {
-    displayManager.dms-greeter = {
+    dank-material-shell.greeter = {
       enable = true;
       compositor.name = "sway";
     };
+  };
 
+  services = {
     accounts-daemon.enable = true;
     power-profiles-daemon.enable = true;
     printing.enable = true;

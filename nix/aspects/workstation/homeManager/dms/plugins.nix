@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   programs.dank-material-shell.plugins =
     let
@@ -7,19 +8,42 @@
       };
     in
     {
-      dankKDEConnect = installAndEnable;
-      ocrScanner = installAndEnable;
       bongoCat = installAndEnable;
-      kaomojiPicker = installAndEnable;
+      calculator = installAndEnable;
       dankDiskUsage = installAndEnable;
-      nextBootSelector = installAndEnable;
-      linuxWallpaperEngine = installAndEnable;
-      dankStickerSearch = installAndEnable;
       dankGifSearch = installAndEnable;
+      dankKDEConnect = installAndEnable;
       dankPomodoroTimer = installAndEnable;
+      dankStickerSearch = installAndEnable;
+      kaomojiPicker = installAndEnable;
+      linuxWallpaperEngine = installAndEnable;
+      nextBootSelector = installAndEnable;
+      ocrScanner = installAndEnable;
+      qrGenerator = installAndEnable;
       timer = installAndEnable;
       usbManager = installAndEnable;
-      calculator = installAndEnable;
-      qrGenerator = installAndEnable;
     };
+
+  home.packages = with pkgs; [
+    # bongoCat
+    libinput
+    evtest
+
+    # ocrScanner
+    (tesseract.override {
+      enableLanguages = [
+        "eng"
+        "deu"
+      ];
+    })
+    wl-clipboard
+    curl
+
+    # qrGenerator
+    qrencode
+
+    # usbManager
+    udisks
+    jq
+  ];
 }
