@@ -31,6 +31,7 @@
     accounts-daemon.enable = true;
     power-profiles-daemon.enable = true;
     printing.enable = true;
+    fprintd.enable = true;
   };
 
   security.pam.services = {

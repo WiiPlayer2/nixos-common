@@ -18,6 +18,7 @@
       kaomojiPicker = installAndEnable;
       linuxWallpaperEngine = installAndEnable;
       nextBootSelector = installAndEnable;
+      nixMonitor = installAndEnable;
       ocrScanner = installAndEnable;
       qrGenerator = installAndEnable;
       timer = installAndEnable;

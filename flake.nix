@@ -114,6 +114,10 @@
       url = "github:AvengeMedia/dms-plugin-registry";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-monitor = {
+      url = "github:antonjah/nix-monitor";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     bizhawk = {
       url = "github:TASEmulators/BizHawk/2.11";
       flake = false;

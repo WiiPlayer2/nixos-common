@@ -27,8 +27,8 @@ with lib;
           "cpuUsage"
           "memUsage"
           "dankDiskUsage"
-          "notificationButton"
           "battery"
+          "notificationButton"
           "privacyIndicator"
           "controlCenterButton"
         ];
@@ -64,6 +64,7 @@ with lib;
           "idleInhibitor"
           "nextBootSelector"
           "usbManager"
+          "nixMonitor"
           "systemTray"
         ];
       }
