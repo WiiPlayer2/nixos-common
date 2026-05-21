@@ -1,3 +1,5 @@
+{ lib, ... }:
+with lib;
 {
-  home.stateVersion = "26.05";
+  home.stateVersion = mkDefault "26.05";
 }
