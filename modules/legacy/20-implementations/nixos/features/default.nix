@@ -4,7 +4,6 @@
     ./cloud-init.nix
     ./docker.nix
     ./fingerprint.nix
-    ./graphical.nix
     ./hypervisor.nix
     ./luks-tpm2.nix
     ./managed-password.nix

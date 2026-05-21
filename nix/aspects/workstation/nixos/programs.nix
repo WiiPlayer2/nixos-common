@@ -1,10 +1,5 @@
-{ inputs, ... }:
 { pkgs, ... }:
 {
-  imports = [
-    inputs.dms.nixosModules.greeter
-  ];
-
   programs = {
     sway = {
       enable = true;
@@ -25,23 +20,14 @@
       enable = true;
       compositor.name = "sway";
     };
+
+    seahorse.enable = true;
   };
 
-  services = {
-    accounts-daemon.enable = true;
-    power-profiles-daemon.enable = true;
-    printing.enable = true;
-    fprintd.enable = true;
-  };
-
-  security.pam.services = {
-    dms-greeter = {
-      fprintAuth = false;
-      u2f.enable = false;
-    };
-    greetd = {
-      fprintAuth = false;
-      u2f.enable = false;
-    };
-  };
+  environment.cinnamon.excludePackages = with pkgs; [
+    gnome-terminal
+    xed-editor
+    gnome-calendar
+    gnome-screenshot
+  ];
 }

@@ -1,5 +1,12 @@
 { inputs, ... }:
 {
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+with lib;
+{
   home-manager.sharedModules = [
     (
       { pkgs, ... }:
@@ -15,4 +22,11 @@
       }
     )
   ];
+
+  environment.systemPackages = mkIf config.services.displayManager.enable (
+    with pkgs;
+    [
+      adwaita-icon-theme
+    ]
+  );
 }
