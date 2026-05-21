@@ -60,21 +60,24 @@ with lib;
 
       openldap =
         let
-          brokenVersion = "2.6.13";
+          brokenVersion = "2.6.12";
           currentVersion = prev.openldap.version;
+
+          patchedPkg = prev.openldap.overrideAttrs (_: {
+            doCheck = !prev.stdenv.hostPlatform.isi686;
+          });
         in
-        throwIf (currentVersion != brokenVersion)
-          ''
-            openldap is pinned to ${brokenVersion} but nixpkgs now ships ${currentVersion}.
+        if versionOlder brokenVersion currentVersion then
+          warn ''
+            openldap is patched from ${brokenVersion} up but nixpkgs now ships ${currentVersion}.
 
             i686 test-suite workaround might no be required anymore:
               https://github.com/NixOS/nixpkgs/issues/513245
               https://github.com/NixOS/nixpkgs/pull/429119
-          ''
-          (
-            prev.openldap.overrideAttrs (_: {
-              doCheck = !prev.stdenv.hostPlatform.isi686;
-            })
-          );
+          '' patchedPkg
+        else if brokenVersion == currentVersion then
+          patchedPkg
+        else
+          prev.openldap;
     };
 }
