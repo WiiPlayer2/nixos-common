@@ -8,6 +8,16 @@
       };
     in
     {
+      # common dependency for some plugins
+      dms-common = {
+        src = pkgs.fetchFromGitHub {
+          owner = "hthienloc";
+          repo = "dms-common";
+          rev = "main";
+          hash = "sha256-IG5us4/ZYtSZpgyfbrXztBT7EFwUFadLaosjeWBaDFU=";
+        };
+      };
+
       bongoCat = installAndEnable;
       calculator = installAndEnable;
       dankDiskUsage = installAndEnable;
