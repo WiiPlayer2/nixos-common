@@ -60,7 +60,7 @@ with lib;
 
       openldap =
         let
-          brokenVersion = "2.6.12";
+          brokenVersion = "2.6.13";
           currentVersion = prev.openldap.version;
 
           patchedPkg = prev.openldap.overrideAttrs (_: {

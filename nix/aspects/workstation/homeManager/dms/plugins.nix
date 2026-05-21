@@ -40,6 +40,9 @@
     libinput
     evtest
 
+    # linuxWallpaperEngine
+    linux-wallpaperengine
+
     # ocrScanner
     (tesseract.override {
       enableLanguages = [
@@ -57,4 +60,9 @@
     udisks
     jq
   ];
+
+  # linuxWallpaperEngine
+  # services.linux-wallpaperengine = {
+  #   enable = true;
+  # };
 }
