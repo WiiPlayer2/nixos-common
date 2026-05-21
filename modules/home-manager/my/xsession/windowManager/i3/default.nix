@@ -57,10 +57,10 @@ in
                 };
               in
               {
-                "${modifier}+Shift+e" = "exec rofi -show power-menu";
+                # "${modifier}+Shift+e" = "exec rofi -show power-menu";
                 "${modifier}+Return" = "exec wezterm";
-                "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl set ${brightnessChange}+";
-                "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl set ${brightnessChange}-";
+                # "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl set ${brightnessChange}+";
+                # "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl set ${brightnessChange}-";
                 "${modifier}+Ctrl+Left" = moveWorkspace "left";
                 "${modifier}+Ctrl+Right" = moveWorkspace "right";
                 "${modifier}+Ctrl+Up" = moveWorkspace "up";
@@ -72,10 +72,10 @@ in
                 #   mkIf (config.services.copyq.enable) "exec ${getExe config.services.copyq.package} menu";
 
                 # https://unix.stackexchange.com/a/439487
-                "XF86AudioPlay" = "exec ${getExe pkgs.playerctl} play-pause";
-                "XF86AudioStop" = "exec ${getExe pkgs.playerctl} stop";
-                "XF86AudioNext" = "exec ${getExe pkgs.playerctl} next";
-                "XF86AudioPrev" = "exec ${getExe pkgs.playerctl} previous";
+                # "XF86AudioPlay" = "exec ${getExe pkgs.playerctl} play-pause";
+                # "XF86AudioStop" = "exec ${getExe pkgs.playerctl} stop";
+                # "XF86AudioNext" = "exec ${getExe pkgs.playerctl} next";
+                # "XF86AudioPrev" = "exec ${getExe pkgs.playerctl} previous";
               }
               // allWorkspaceKeyBindings
             );

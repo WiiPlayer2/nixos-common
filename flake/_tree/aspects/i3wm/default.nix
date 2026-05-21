@@ -99,19 +99,19 @@ with lib;
                 in
                 mkOptionDefault {
                   # TODO: add notifications
-                  "XF86AudioMute" =
-                    "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
-                  "XF86AudioLowerVolume" =
-                    "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
-                  "XF86AudioRaiseVolume" =
-                    "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
-                  "Control+Mod1+L" = "exec ${pkgs.cinnamon-screensaver}/bin/cinnamon-screensaver-command --lock";
+                  # "XF86AudioMute" =
+                  #   "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+                  # "XF86AudioLowerVolume" =
+                  #   "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
+                  # "XF86AudioRaiseVolume" =
+                  #   "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
+                  # "Control+Mod1+L" = "exec ${pkgs.cinnamon-screensaver}/bin/cinnamon-screensaver-command --lock";
                   "Print" = "exec --no-startup-id ${getExe pkgs.shutter} --full";
                   "Control+Print" = "exec --no-startup-id ${getExe pkgs.shutter} --select";
                   "Mod1+Print" = "exec --no-startup-id ${getExe pkgs.shutter} --active";
                   # If everything works correctly this could just start autorandr.service
-                  "${modifier}+Shift+P" = "exec --no-startup-id ${getExe pkgs.autorandr} --change --default common";
-                  "${modifier}+P" = "exec --no-startup-id ${getExe displayMenu}";
+                  # "${modifier}+Shift+P" = "exec --no-startup-id ${getExe pkgs.autorandr} --change --default common";
+                  # "${modifier}+P" = "exec --no-startup-id ${getExe displayMenu}";
                 };
 
               # startup = [
