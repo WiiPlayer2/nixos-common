@@ -103,7 +103,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     openspec = {
-      url = "github:Fission-AI/OpenSpec/v1.2.0";
+      url = "github:Fission-AI/OpenSpec/v1.3.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     dms = {
@@ -116,6 +116,10 @@
     };
     nix-monitor = {
       url = "github:antonjah/nix-monitor";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    erosanix = {
+      url = "github:emmanuelrosa/erosanix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     bizhawk = {

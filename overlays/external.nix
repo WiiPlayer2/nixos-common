@@ -18,7 +18,23 @@
           system = prev.stdenv.hostPlatform.system;
         }).emuhawk;
 
-      openspec = inputs.openspec.packages.${prev.stdenv.hostPlatform.system}.default;
+      # openspec is garbage because there is no overlay and
+      # it uses nodejs_20 which is EOL
+      openspec = inputs.openspec.packages.${prev.stdenv.hostPlatform.system}.default.overrideAttrs (
+        finalAttrs: prevAttrs: {
+          nativeBuildInputs = with final; [
+            nodejs_22
+            npmHooks.npmInstallHook
+            pnpmConfigHook
+            pnpm_9
+          ];
+        }
+      );
+
+      # again no overlay T_T
+      inherit (inputs.erosanix.packages.${prev.stdenv.hostPlatform.system})
+        mkwindowsapp-tools
+        ;
     })
   ];
 }

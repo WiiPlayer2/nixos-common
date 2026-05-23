@@ -64,6 +64,7 @@ buildOverlay {
         inputs.ninelore-monoflake.inputs.nixpkgs.legacyPackages.${prev.stdenv.hostPlatform.system};
       ninelore-monoflake-input = inputs.ninelore-monoflake;
       loadPyproject = inputs.pyproject-nix.lib.project.loadPyproject;
+      erosanixLib = inputs.erosanix.lib.${prev.stdenv.hostPlatform.system};
     })
   ];
   additionalPackages = final: prev: {
