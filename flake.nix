@@ -114,13 +114,13 @@
       url = "github:AvengeMedia/dms-plugin-registry";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-monitor = {
-      url = "github:antonjah/nix-monitor";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nix-monitor.url = "github:antonjah/nix-monitor";
     erosanix = {
       url = "github:emmanuelrosa/erosanix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-compat.url = "github:NixOS/flake-compat";
+      };
     };
     bizhawk = {
       url = "github:TASEmulators/BizHawk/2.11";
