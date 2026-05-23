@@ -2,6 +2,7 @@
   erosanixLib,
   requireFile,
 
+  wine,
   wineWow64Packages,
 }:
 let
@@ -15,10 +16,11 @@ let
 in
 erosanixLib.mkWindowsAppNoCC {
   inherit pname version src;
-  wine = wineWow64Packages.full;
+  inherit wine;
+  # wine = wineWow64Packages.full;
   dontUnpack = true;
-  enableMonoBootPrompt = false;
-  wineArch = "win64";
+  enableMonoBootPrompt = true;
+  wineArch = "win32";
 
   installPhase = ''
     runHook preInstall
@@ -27,13 +29,16 @@ erosanixLib.mkWindowsAppNoCC {
   '';
 
   winAppInstall = ''
-    winetricks --optout win11
-    winetricks --optout dotnet48
+    echo "Installing dependencies..."
+    winetricks --optout win11 dotnet48 vcrun2022 allfonts
+
+    echo "Installing FUJIFILM PC AutoSave..."
     $WINE ${src} /S /v/qn
   '';
 
   winAppRun = ''
-    $WINE "$WINEPREFIX/drive_c/Program Files (x86)/FUJIFILM/FUJIFILM PC AutoSave/Manager.exe" "$ARGS"
+    # $WINE "$WINEPREFIX/drive_c/Program Files (x86)/FUJIFILM/FUJIFILM PC AutoSave/Manager.exe" "$ARGS"
+    $WINE "$WINEPREFIX/drive_c/Program Files/FUJIFILM/FUJIFILM PC AutoSave/Manager.exe" "$ARGS"
   '';
 
   meta.mainProgram = pname;
