@@ -28,7 +28,10 @@
       kaomojiPicker = installAndEnable;
       linuxWallpaperEngine = installAndEnable;
       nextBootSelector = installAndEnable;
-      nixMonitor = installAndEnable;
+      nixMonitor = {
+        enable = true;
+        settings.gcThresholdGB = 150; # TODO: might need to reduce in the future
+      };
       ocrScanner = installAndEnable;
       qrGenerator = installAndEnable;
       timer = installAndEnable;
