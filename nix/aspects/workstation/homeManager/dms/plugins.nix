@@ -22,6 +22,10 @@
       calculator = installAndEnable;
       dankDiskUsage = installAndEnable;
       dankGifSearch = installAndEnable;
+      dankHooks = {
+        enable = true;
+        settings.sessionUnlocked = "keepassxc-unlock";
+      };
       dankKDEConnect = installAndEnable;
       dankPomodoroTimer = installAndEnable;
       dankStickerSearch = installAndEnable;
@@ -32,6 +36,7 @@
         enable = true;
         settings.gcThresholdGB = 150; # TODO: might need to reduce in the future
       };
+      nixPackageRunner = installAndEnable;
       ocrScanner = installAndEnable;
       qrGenerator = installAndEnable;
       timer = installAndEnable;
