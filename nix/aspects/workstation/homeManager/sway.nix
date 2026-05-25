@@ -34,6 +34,16 @@ with lib;
           "${modifier}+P" = "exec wdisplays";
         };
     };
+    extraConfig = ''
+      for_window {
+        [app_id="firefox" title="Picture-in-Picture"] floating enable, sticky enable
+        [app_id="Variety" title="Variety Images"] floating enable, sticky enable
+
+        [app_id="wdisplays"] floating enable
+
+        [app_id="Logseq"] move scratchpad, exec "${pkgs.libnotify}/bin/notify-send \\"Logseq has been moved to the scratchpad.\\""
+      }
+    '';
   };
 
   home.packages = with pkgs; [
