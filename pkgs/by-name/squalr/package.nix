@@ -8,12 +8,12 @@
 }:
 let
   pname = "Squalr";
-  version = "0.3.0";
+  version = "0.4.0";
   src = fetchFromGitHub {
     owner = "Squalr";
     repo = "Squalr";
     rev = "v${version}";
-    hash = "sha256-ujhh4QWcXUduT/dqHbWOIxW6MC7x3R6FgOAYTghyBBc=";
+    hash = "sha256-U9t97Xk661MSKTK/VHtLRpfTFrRRddhNFHl+bBBqvnw=";
   };
 in
 rustPlatform.buildRustPackage {
@@ -49,7 +49,7 @@ rustPlatform.buildRustPackage {
   #   "squalr"
   # ];
 
-  cargoHash = "sha256-te5zf+/byq1pIgDyzlF6atEQAAhtpvJYE5LTtjHuxp0=";
+  cargoHash = "sha256-xkNPU8z1alVEIWLS845RFMunHfSZYAb3biYnphsp8+U=";
 
   # meta.mainProgram = "ledmatrix_widgets";
 }
