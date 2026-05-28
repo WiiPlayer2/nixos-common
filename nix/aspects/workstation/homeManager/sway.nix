@@ -33,6 +33,17 @@ with lib;
           # TODO: change to "dms ipc settings focusOrToggleWith displays" when sway is supported in dms
           "${modifier}+P" = "exec wdisplays";
         };
+      input = {
+        "type:touchpad" = {
+          # tap to click, https://slar.se/configuring-touchpad-in-sway.html
+          tap = "enabled"; # enables click-on-tap
+          tap_button_map = "lrm"; # tap with 1 finger = left click, 2 fingers = right click, 3 fingers = middle click
+          dwt = "enabled"; # disable (touchpad) while typing
+          dwtp = "enabled"; # disable (touchpad) while track pointing
+
+          natural_scroll = "enabled"; # inverted scroll
+        };
+      };
     };
     extraConfig = ''
       for_window {
