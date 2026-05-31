@@ -24,10 +24,15 @@
     seahorse.enable = true;
   };
 
-  environment.cinnamon.excludePackages = with pkgs; [
-    gnome-terminal
-    xed-editor
-    gnome-calendar
-    gnome-screenshot
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      pavucontrol
+    ];
+    cinnamon.excludePackages = with pkgs; [
+      gnome-terminal
+      xed-editor
+      gnome-calendar
+      gnome-screenshot
+    ];
+  };
 }
