@@ -70,6 +70,26 @@ with lib;
       }
     ];
 
+    controlCenterWidgets =
+      let
+        widget = id: width: {
+          inherit id width;
+          enabled = true;
+        };
+      in
+      [
+        (widget "idleInhibitor" 25)
+        (widget "nightMode" 25)
+        (widget "darkMode" 25)
+        (widget "volumeSlider" 50)
+        (widget "brightnessSlider" 50)
+        (widget "wifi" 50)
+        (widget "builtin_vpn" 50)
+        (widget "bluetooth" 100)
+        (widget "audioOutput" 50)
+        (widget "audioInput" 50)
+      ];
+
     useAutoLocation = true; # TODO: maybe hardcode location
     popupTransparency = mkOverride 90 0.95; # set by stylix
     notificationHistorySaveLow = false;
