@@ -30,7 +30,6 @@
       dankPomodoroTimer = installAndEnable;
       dankStickerSearch = installAndEnable;
       kaomojiPicker = installAndEnable;
-      linuxWallpaperEngine = installAndEnable;
       nextBootSelector = installAndEnable;
       nixMonitor = {
         enable = true;
@@ -47,9 +46,6 @@
     # bongoCat
     libinput
     evtest
-
-    # linuxWallpaperEngine
-    linux-wallpaperengine
 
     # ocrScanner
     (tesseract.override {

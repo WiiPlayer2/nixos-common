@@ -8,6 +8,7 @@ with lib;
 {
   wayland.windowManager.sway = {
     enable = true;
+    package = pkgs.swayfx;
     config = {
       bars = mkForce [ ];
       keybindings =
@@ -46,8 +47,21 @@ with lib;
       };
     };
     extraConfig = ''
+      blur enable
+      blur_passes 2
+      blur_radius 2
+
+      shadows enable
+      shadow_blur_radius 20
+
+      smart_corner_radius on
+      corner_radius 10
+
+      default_dim_inactive 1.0
+      dim_inactive_colors.unfocused #000000
+
       for_window {
-        [app_id="firefox" title="Picture-in-Picture"] floating enable, sticky enable
+        [title="Picture-in-Picture"] floating enable, sticky enable
         [app_id="Variety" title="Variety Images"] floating enable, sticky enable
 
         [app_id="wdisplays"] floating enable

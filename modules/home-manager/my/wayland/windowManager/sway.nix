@@ -12,7 +12,6 @@ in
 {
   # TODO: this should not be mapped but properly extracted from i3 config
   wayland.windowManager.sway = {
-    package = pkgs.swayfx;
     config =
       let
         sharedConfig = import ../../shared/i3-sway args {
@@ -39,10 +38,6 @@ in
       in
       mergedConfig;
     checkConfig = false;
-    extraConfig = ''
-      blur enable
-      shadows enable
-    '';
     wrapperFeatures.gtk = true;
   };
 }
