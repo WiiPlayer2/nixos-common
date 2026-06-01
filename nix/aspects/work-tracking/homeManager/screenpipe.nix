@@ -15,7 +15,7 @@ with lib;
               name = "screenpipe-mcp";
               runtimeInputs = with pkgs; [
                 screenpipe-fhs
-                nodejs_25
+                nodejs
               ];
               text = ''
                 SCREENPIPE_LOCAL_API_KEY=$(screenpipe auth token)
