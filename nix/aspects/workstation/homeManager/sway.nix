@@ -48,8 +48,8 @@ with lib;
     };
     extraConfig = ''
       blur enable
-      blur_passes 2
-      blur_radius 2
+      blur_passes 3
+      blur_radius 5
 
       shadows enable
       shadow_blur_radius 20
@@ -67,6 +67,8 @@ with lib;
         [app_id="wdisplays"] floating enable
 
         [app_id="Logseq"] move scratchpad, exec "${pkgs.libnotify}/bin/notify-send \\"Logseq has been moved to the scratchpad.\\""
+
+        [class="Tockler"] no_focus
       }
     '';
   };
@@ -74,4 +76,17 @@ with lib;
   home.packages = with pkgs; [
     wdisplays
   ];
+
+  systemd.user.services.sway-inactive-windows-transparency = {
+    Install.WantedBy = [ "graphical-session.target" ];
+    Unit = {
+      After = [ "graphical-session.target" ];
+      Description = with pkgs.sway-contrib.inactive-windows-transparency.meta; "${name} - ${description}";
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${getExe pkgs.sway-contrib.inactive-windows-transparency} --global-focus --focused 0.95 --opacity 0.7";
+      Restart = "on-failure";
+    };
+  };
 }
