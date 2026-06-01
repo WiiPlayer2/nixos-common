@@ -62,6 +62,7 @@ with lib;
 
       for_window {
         [title="Picture-in-Picture"] floating enable, sticky enable
+        [title="Picture in picture"] floating enable, sticky enable
         [app_id="Variety" title="Variety Images"] floating enable, sticky enable
 
         [app_id="wdisplays"] floating enable
