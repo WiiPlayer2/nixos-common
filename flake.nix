@@ -45,6 +45,7 @@
     };
     stylix = {
       url = "github:nix-community/stylix";
+      # url = "github:nix-community/stylix/pull/2338/head";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     wezterm = {
@@ -125,6 +126,11 @@
     dms-plugin-calendar = {
       url = "github:alcxyz/DankCalendar";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    swayfx-enhanced = {
+      url = "github:CreitinGameplays/swayfx-enhanced";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.scenefx.url = "github:CreitinGameplays/scenefx-enhanced";
     };
     bizhawk = {
       url = "github:TASEmulators/BizHawk/2.11";
