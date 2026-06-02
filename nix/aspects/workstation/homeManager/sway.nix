@@ -19,7 +19,7 @@ with lib;
           "Control+Mod1+L" = "exec loginctl lock-session";
           "${modifier}+Shift+v" = "exec dms ipc clipboard open";
           "${modifier}+Shift+e" = mkOverride 90 "exec dms ipc powermenu open";
-          "${modifier}+Control+d" = "exec dms ipc launcher openWith all";
+          "${modifier}+d" = mkOverride 90 "exec dms ipc launcher openWith all";
           "XF86AudioMute" = "exec dms ipc audio mute";
           "XF86AudioLowerVolume" = "exec dms ipc audio decrement 5";
           "XF86AudioRaiseVolume" = "exec dms ipc audio increment 5";
