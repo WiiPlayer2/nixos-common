@@ -1,0 +1,15 @@
+diff --git a/internal/caldav/client.go b/internal/caldav/client.go
+index 9d97de3..59f72ea 100644
+--- a/internal/caldav/client.go
++++ b/internal/caldav/client.go
+@@ -21,9 +21,6 @@ func NewClient(rawURL, username, password string) (*Client, error) {
+ 	if err != nil {
+ 		return nil, fmt.Errorf("invalid URL: %w", err)
+ 	}
+-	if u.Scheme != "https" {
+-		return nil, fmt.Errorf("HTTPS required, got %q", u.Scheme)
+-	}
+ 	return &Client{
+ 		BaseURL:  u,
+ 		Username: username,
+

@@ -1,4 +1,5 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
+with lib;
 {
   programs.dank-material-shell.plugins =
     let
@@ -20,6 +21,13 @@
 
       bongoCat = installAndEnable;
       calculator = installAndEnable;
+      dankCalendar = {
+        enable = true;
+        settings = {
+          showRsvp = mkDefault false;
+          notifyMinutes = 5;
+        };
+      };
       dankDiskUsage = installAndEnable;
       dankGifSearch = installAndEnable;
       dankHooks = {
@@ -46,6 +54,9 @@
     # bongoCat
     libinput
     evtest
+
+    # dankCalendar
+    dankcalendar
 
     # ocrScanner
     (tesseract.override {

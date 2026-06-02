@@ -122,6 +122,10 @@
         flake-compat.url = "github:NixOS/flake-compat";
       };
     };
+    dms-plugin-calendar = {
+      url = "github:alcxyz/DankCalendar";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     bizhawk = {
       url = "github:TASEmulators/BizHawk/2.11";
       flake = false;
