@@ -75,9 +75,4 @@ with lib;
     udisks
     jq
   ];
-
-  # linuxWallpaperEngine
-  # services.linux-wallpaperengine = {
-  #   enable = true;
-  # };
 }
