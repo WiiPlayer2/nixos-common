@@ -9,7 +9,7 @@ with lib;
     enable = true;
     settings = {
       pauseOnPowerSaver = true;
-      pauseOnBattery = true;
+      # pauseOnBattery = true;
       generateStaticWallpaper = true;
       screenshotDelay = 90;
 

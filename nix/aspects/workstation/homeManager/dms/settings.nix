@@ -107,6 +107,8 @@ with lib;
       # Lock Screen behaviour
       lockBeforeSuspend = true;
       enableFprint = true;
+      enableU2f = true;
+      u2fMode = "or";
 
       # Idle Settings
       acLockTimeout = 900;
