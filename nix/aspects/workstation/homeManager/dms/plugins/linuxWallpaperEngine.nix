@@ -11,7 +11,6 @@ with lib;
       pauseOnPowerSaver = true;
       # pauseOnBattery = true;
       generateStaticWallpaper = true;
-      screenshotDelay = 90;
 
       sceneSettings =
         let
@@ -19,10 +18,11 @@ with lib;
             {
               scaling ? "fill",
               silent ? false,
+              screenshotDelay ? 150,
               ...
             }@attrs:
             {
-              inherit scaling silent;
+              inherit scaling silent screenshotDelay;
             }
             // attrs;
           simpleScenes = [
