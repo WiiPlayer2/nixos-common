@@ -18,12 +18,12 @@
 with lib;
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "screenpipe-app";
-  version = "2.4.302";
+  version = "2.4.308";
   src = fetchFromGitHub {
     owner = "screenpipe";
     repo = "screenpipe";
     rev = "app-v${finalAttrs.version}";
-    hash = "sha256-7owrC7UvVQyiSUR9ppy++QYB5oZafouvrRvysCDTuNM=";
+    hash = "sha256-lDm9Uqe0/E3Yq6IXMwK/cpKH3Y3sfqr4yGxZM3UwnaE=";
   };
 
   cargoHash = "sha256-uCeI03EwiPD4KTkEeVeLwnnf8WiyTMc+4IKSJiqYZGY=";
