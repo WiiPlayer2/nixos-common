@@ -27,6 +27,7 @@
   environment = {
     systemPackages = with pkgs; [
       pavucontrol
+      libnotify
     ];
     cinnamon.excludePackages = with pkgs; [
       gnome-terminal
