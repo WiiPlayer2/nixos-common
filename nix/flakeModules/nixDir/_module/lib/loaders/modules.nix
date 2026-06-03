@@ -6,7 +6,7 @@
 with lib;
 let
   args = {
-    inherit lib inputs;
+    inherit lib inputs import-tree;
   };
 in
 { path, ... }:
