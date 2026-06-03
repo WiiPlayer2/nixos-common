@@ -19,10 +19,16 @@ with lib;
               scaling ? "fill",
               silent ? false,
               screenshotDelay ? 150,
+              noFullscreenPause ? true,
               ...
             }@attrs:
             {
-              inherit scaling silent screenshotDelay;
+              inherit
+                scaling
+                silent
+                screenshotDelay
+                noFullscreenPause
+                ;
             }
             // attrs;
           simpleScenes = [
