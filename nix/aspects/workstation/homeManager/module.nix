@@ -1,4 +1,6 @@
 { inputs, ... }:
+{ lib, ... }:
+with lib;
 {
   imports = [
     inputs.dms.homeModules.dank-material-shell
@@ -10,5 +12,6 @@
 
   programs = {
     wezterm.enable = true; # currently managed outside
+    dank-material-shell.plugins.linuxWallpaperEngine.src = mkForce inputs.dms-wallpaperengine;
   };
 }

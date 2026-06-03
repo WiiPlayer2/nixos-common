@@ -127,6 +127,10 @@
       url = "github:alcxyz/DankCalendar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    dms-wallpaperengine = {
+      url = "github:WiiPlayer2/dms-wallpaperengine?ref=feature/all-monitors";
+      flake = false;
+    };
     swayfx-enhanced = {
       url = "github:CreitinGameplays/swayfx-enhanced";
       inputs.nixpkgs.follows = "nixpkgs";
