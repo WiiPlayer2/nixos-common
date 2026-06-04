@@ -7,12 +7,12 @@ with pkgs;
   };
 
   TPRAP_poptracker = fetchurl {
-    url = "https://github.com/Kizugaya/TPRAP_poptracker/releases/download/v0.10.0/TPRAP_poptracker_v0.10.0.zip";
-    hash = "sha256-JyeJCErIiIOXaSfYyhY3c8Sp5ITQkU4+nUsyO8OVXMY=";
+    url = "https://github.com/Kizugaya/TPRAP_poptracker/releases/download/v0.10.2/TPRAP_poptracker_v0.10.2.zip";
+    hash = "sha256-L0cRhDECB3GYpKQDrkxieVbp16iMbdEIO1E+BK0s8js=";
   };
 
   MetroidPrimeAP_PopTrackerPack = fetchurl {
-    url = "https://github.com/lilDavid/MetroidPrimeAP-PoptrackerPack/releases/download/1.0.1/MetroidPrimeAP_PopTrackerPack.zip";
-    hash = "sha256-49LZQFWJsWeXY2aVEkL/ygCkRzL8V+PTeiBNUADGtuQ=";
+    url = "https://github.com/lilDavid/MetroidPrimeAP-PoptrackerPack/releases/download/1.0.3/MetroidPrime-Archipelago-lilDavid.zip";
+    hash = "sha256-PP+r9QeoZSW9qeMHC1GSi9y/aW+9QpoQ53+oSK8QBLA=";
   };
 }

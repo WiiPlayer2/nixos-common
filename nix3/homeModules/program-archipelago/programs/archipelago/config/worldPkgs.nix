@@ -47,8 +47,8 @@ with pkgs;
   Metroid_Prime =
     let
       src = fetchurl {
-        url = "https://github.com/Electro1512/MetroidAPrime/releases/download/v0.5.0/metroidprime.apworld";
-        hash = "sha256-Xh/rDXNux5SIq4TWyCZLlB7z6o21i5cUBucXxGL83Js=";
+        url = "https://github.com/UltiNaruto/MetroidAPrime/releases/download/v0.5.4-h1/metroidprime.apworld";
+        hash = "sha256-ERN1jEGP4iVXgWvz3d4+nlG1p7JQH10avlPjQjTiGeU=";
       };
       world =
         runCommand "metroid-prime-apworld"
