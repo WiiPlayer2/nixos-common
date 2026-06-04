@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -o nounset
+set -o errexit
+
+_commit="$1"
+_flakeLock="${FLAKE_ROOT-.}/flake.lock"
+
+_currentCommit=$(jq -r '.nodes["nixpkgs-unstable"].locked.rev' "$_flakeLock")
+if [[ "$_currentCommit" == "$_commit" ]]; then
+  echo "nixpkgs-unstable in $_flakeLock is already on commit $_commit"
+  exit 0
+fi
+
+_flakeUrl="github:NixOS/nixpkgs/${_commit}"
+_hash=$(nix flake prefetch --json "$_flakeUrl" | jq -r '.hash')
+_timestamp=$(date +%s)
+
+cat "$_flakeLock" \
+  | jq '{ nodes: .nodes * { "nixpkgs-unstable": { locked: {rev: $COMMIT, narHash: $HASH, lastModified: $TIMESTAMP } } }, root, version }' \
+      --argjson TIMESTAMP "$_timestamp" --arg COMMIT "$_commit" --arg HASH "$_hash" \
+  | sponge "$_flakeLock"
+echo "Updated nixpkgs-unstable in $_flakeLock to commit $_commit with hash $_hash"

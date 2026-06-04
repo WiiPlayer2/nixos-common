@@ -5,11 +5,15 @@
 
   rage,
   openssh,
+  jq,
+  moreutils,
 }:
 let
   path = lib.makeBinPath [
     rage
     openssh
+    jq
+    moreutils
   ];
 in
 stdenv.mkDerivation {
