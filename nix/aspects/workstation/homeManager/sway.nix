@@ -70,8 +70,10 @@ with lib;
         [title="Picture-in-Picture"] floating enable, sticky enable
         [title="Picture in picture"] floating enable, sticky enable
         [app_id="Variety" title="Variety Images"] floating enable, sticky enable
+        [class="Overlayed" title="Overlayed - Main"] floating enable, sticky enable, blur disable, shadows disable
 
-        [app_id="wdisplays"] floating enable
+        [app_id="wdisplays"] floating enable, resize set 30 ppt 30 ppt
+        [class="steam" title="Friends List"] floating enable, resize set 400 800
 
         [app_id="Logseq"] move scratchpad, exec "${pkgs.libnotify}/bin/notify-send \\"Logseq has been moved to the scratchpad.\\""
 
