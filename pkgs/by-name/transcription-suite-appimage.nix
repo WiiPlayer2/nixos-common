@@ -6,7 +6,7 @@
 }:
 let
   pname = "transcription-appimage";
-  version = "1.3.5";
+  version = "1.3.6";
   icon = fetchurl {
     url = "https://github.com/homelab-00/TranscriptionSuite/blob/99ad24d811cba5fee443af07a994745d1cd08d32/docs/assets/logo.png?raw=true";
     hash = "sha256-1OZ87X3q6s3ibyDq30WgUzvhyTLiqUMcrPuu5a4YRe0=";
@@ -49,7 +49,7 @@ appimageTools.wrapType2 {
 
   src = fetchurl {
     url = "https://github.com/homelab-00/TranscriptionSuite/releases/download/v${version}/TranscriptionSuite-${version}.AppImage";
-    hash = "sha256-LAXQjI9GRz1PK3rCoqbJydh0LTXi/TYxGqmHUE7+B7s=";
+    hash = "sha256-2QxpEHL9/jU3QdXekDxahwjnuC6uqPMuwaVscpMLbIk=";
   };
 
   extraInstallCommands = ''
