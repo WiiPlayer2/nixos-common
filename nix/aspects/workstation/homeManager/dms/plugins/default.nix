@@ -21,6 +21,15 @@ with lib;
 
       bongoCat = installAndEnable;
       calculator = installAndEnable;
+      # NOTE: Garbage AI written plugin has non-working settings page.
+      # As soon as a field is updated it will be reset to the default values (kitty, -e)
+      commandRunner = {
+        enable = true;
+        settings = {
+          terminal = "wezterm";
+          execFlag = "start";
+        };
+      };
       dankCalendar = {
         enable = true;
         settings = {
