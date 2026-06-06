@@ -13,7 +13,7 @@
 
 stdenv.mkDerivation rec {
   pname = "heimdall${lib.optionalString enableGUI "-gui"}";
-  version = "2.2.2";
+  version = "699549e3c661e868656147cdad35189469198f4d";
 
   # src = fetchFromGitHub {
   #   owner  = "Benjamin-Dobell";
