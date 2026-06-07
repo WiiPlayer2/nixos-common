@@ -2,6 +2,7 @@
 {
   packages = with pkgs; [
     randovania
+    wwrando-ap
 
     (writeShellApplication {
       name = "fix-dolphin-read-memory-for-archipelago";
