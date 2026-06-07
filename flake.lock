@@ -386,11 +386,11 @@
     "dms-wallpaperengine": {
       "flake": false,
       "locked": {
-        "lastModified": 1780518056,
-        "narHash": "sha256-m7CYDcLvuVfTWnLBuJJaKwqQzkIGMC5zdjrk/vgawZU=",
+        "lastModified": 1780860607,
+        "narHash": "sha256-1dvKwGcbhJlY5X6A5sWKbqEwjUl40sI8JZgELeNM1jY=",
         "owner": "WiiPlayer2",
         "repo": "dms-wallpaperengine",
-        "rev": "608676667d3528f6811e5f6cf90b38c2de04dc07",
+        "rev": "2401e793d965cb402dc40ad31f38da1b1a88db65",
         "type": "github"
       },
       "original": {
