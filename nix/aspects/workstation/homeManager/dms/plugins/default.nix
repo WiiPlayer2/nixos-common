@@ -62,7 +62,12 @@ with lib;
       nixPackageRunner = installAndEnable;
       ocrScanner = installAndEnable;
       qrGenerator = installAndEnable;
-      quickCapture = installAndEnable;
+      quickCapture = {
+        enable = true;
+        settings = {
+          skipConfirm = false;
+        };
+      };
       systemMonitorPlus = {
         enable = true;
         settings = {
