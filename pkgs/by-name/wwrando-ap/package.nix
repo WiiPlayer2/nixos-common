@@ -38,7 +38,7 @@ let
   pkg = symlinkJoin {
     name = "wwrando-ap-2.5.1";
     pname = "wwrando-ap";
-    version = "2.5.1";
+    version = "s8-v2";
     src = tool;
     paths = [
       wrapper
