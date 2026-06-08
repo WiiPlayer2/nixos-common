@@ -23,6 +23,11 @@ with lib;
           "${modifier}+d" = mkOverride 90 "exec dms ipc launcher openWith all";
           "${modifier}+n" = "exec dms ipc plugins reload linuxWallpaperEngine";
 
+          # Screenshots
+          "Print" = mkOverride 90 "exec dms ipc quickCapture screenshot all";
+          "Control+Print" = mkOverride 90 "exec dms ipc quickCapture screenshot region";
+          # "Mod1+Print" = mkOverride 90 "exec --no-startup-id ${getExe pkgs.shutter} --active";
+
           # Audio
           "XF86AudioMute" = "exec dms ipc audio mute";
           "XF86AudioLowerVolume" = "exec dms ipc audio decrement 5";

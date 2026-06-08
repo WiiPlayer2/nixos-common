@@ -112,23 +112,5 @@ in
           patchedPkg
         else
           prev.openldap;
-
-      firefoxpwa-unwrapped = patchPinned {
-        pkg = prev.firefoxpwa-unwrapped;
-        version = "2.18.2";
-        overrideFn =
-          x:
-          x.overrideAttrs (
-            finalAttrs: prevAttrs: {
-              postInstall = prevAttrs.postInstall + ''
-                # Create empty `lib/firefoxpwa` directory so the Firefox wrapper won't fail
-                # trying to disable the update checks. It will try to write to
-                # `$out/lib/firefoxpwa/is-packaged-app`, which doesn't exist by default.
-                mkdir $out/lib/firefoxpwa
-              '';
-            }
-          );
-        nixpkgsPR = 525720;
-      };
     };
 }

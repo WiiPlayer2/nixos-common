@@ -12,9 +12,9 @@ with lib;
             "all"
           ];
           leftWidgets = [
-            "launcherButton"
             "workspaceSwitcher"
             "focusedWindow"
+            "dankTodo"
           ];
           centerWidgets = [
             "music"
@@ -24,8 +24,7 @@ with lib;
           ];
           rightWidgets = [
             "network_speed_monitor"
-            "cpuUsage"
-            "memUsage"
+            "systemMonitorPlus"
             "dankDiskUsage"
             "battery"
             "notificationButton"

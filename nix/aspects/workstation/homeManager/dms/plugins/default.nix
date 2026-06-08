@@ -45,8 +45,15 @@ with lib;
       };
       dankKDEConnect = installAndEnable;
       dankPomodoroTimer = installAndEnable;
+      dankRssWidget = installAndEnable;
       dankStickerSearch = installAndEnable;
+      dankTodo = installAndEnable;
+      discordVoice = installAndEnable;
+      gitmojiLauncher = installAndEnable;
+      homeAssistantMonitor = installAndEnable;
+      emojiLauncher = installAndEnable;
       kaomojiPicker = installAndEnable;
+      musicLyrics = installAndEnable;
       nextBootSelector = installAndEnable;
       nixMonitor = {
         enable = true;
@@ -55,6 +62,16 @@ with lib;
       nixPackageRunner = installAndEnable;
       ocrScanner = installAndEnable;
       qrGenerator = installAndEnable;
+      quickCapture = installAndEnable;
+      systemMonitorPlus = {
+        enable = true;
+        settings = {
+          cpuTempEnabled = true;
+          ramUsageEnabled = true;
+          gpuTempEnabled = true;
+        };
+      };
+      tasks = installAndEnable;
       timer = installAndEnable;
       usbManager = installAndEnable;
     };
