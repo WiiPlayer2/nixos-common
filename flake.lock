@@ -2463,11 +2463,11 @@
         "nixpkgs-pinned": "nixpkgs-pinned"
       },
       "locked": {
-        "lastModified": 1781008088,
-        "narHash": "sha256-mrNNRyLflVOBHzzRrTyki53uWjBVR4+eGWZSalh0eh4=",
+        "lastModified": 1781089702,
+        "narHash": "sha256-EbdTl21C/GKTYmt5SMwQ7tEYPxhvSaEvhtdvv7Djhjo=",
         "owner": "WiiPlayer2",
         "repo": "switchroot-nixos",
-        "rev": "c6341dbe9c78a780a52ccff5d2e763ea5e9b5eee",
+        "rev": "a3d1b69af6d4f8e0437e45e848da47b31cdcdd4f",
         "type": "github"
       },
       "original": {
