@@ -12,21 +12,23 @@ with lib;
             "all"
           ];
           leftWidgets = [
+            "bongoCat"
             "workspaceSwitcher"
-            "focusedWindow"
-            "dankTodo"
+            "musicLyrics"
           ];
           centerWidgets = [
-            "music"
+            {
+              id = "music";
+              enabled = true;
+              mediaSize = 0;
+            }
             "clock"
             "weather"
-            "bongoCat"
           ];
           rightWidgets = [
             "network_speed_monitor"
             "systemMonitorPlus"
             "dankDiskUsage"
-            "battery"
             "notificationButton"
             "privacyIndicator"
             "controlCenterButton"
@@ -52,6 +54,7 @@ with lib;
             "dankPomodoroTimer"
             "timer"
             "dankKDEConnect"
+            "dankTodo"
           ];
           centerWidgets = [
             "clipboard"
@@ -61,8 +64,6 @@ with lib;
             "notepadButton"
           ];
           rightWidgets = [
-            "idleInhibitor"
-            "nextBootSelector"
             "usbManager"
             "nixMonitor"
             "systemTray"
@@ -71,6 +72,11 @@ with lib;
       };
     };
     settings = {
+      # Control Center
+      controlCenterShowBluetoothIcon = false;
+      controlCenterShowAudioIcon = false;
+      controlCenterShowBatteryIcon = true;
+      controlCenterShowPrinterIcon = true;
       controlCenterWidgets =
         let
           widget = id: width: {
@@ -82,11 +88,18 @@ with lib;
           (widget "idleInhibitor" 25)
           (widget "nightMode" 25)
           (widget "darkMode" 25)
+          (widget "battery" 25)
+
           (widget "volumeSlider" 50)
           (widget "brightnessSlider" 50)
-          (widget "wifi" 50)
+
+          (widget "wifi" 25)
           (widget "builtin_vpn" 50)
-          (widget "bluetooth" 100)
+          (widget "bluetooth" 25)
+
+          (widget "builtin_cups" 50)
+          (widget "plugin_nextBootSelector" 50)
+
           (widget "audioOutput" 50)
           (widget "audioInput" 50)
         ];

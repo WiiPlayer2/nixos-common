@@ -76,7 +76,7 @@ with lib;
           gpuTempEnabled = true;
         };
       };
-      tasks = installAndEnable;
+      # tasks = installAndEnable; # configure caldav
       timer = installAndEnable;
       usbManager = installAndEnable;
     };
