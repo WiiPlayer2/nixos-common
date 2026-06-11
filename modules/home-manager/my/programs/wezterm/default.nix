@@ -17,7 +17,11 @@ in
       extraConfig = mkMerge [
         ''
           (require 'cfg/_config')(config, {
-            base_color = "#${config.lib.stylix.colors.base00}",
+            base_color = {
+              red = ${config.lib.stylix.colors.base00-rgb-r},
+              green = ${config.lib.stylix.colors.base00-rgb-g},
+              blue = ${config.lib.stylix.colors.base00-rgb-b},
+            },
             bg_file = '${config.my.assets.root + /images/wezterm_bg.png}',
             processes = {
               ssh = "#${config.lib.stylix.colors.base0C}",

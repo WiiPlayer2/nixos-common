@@ -5,7 +5,7 @@ local function create_background_cfg(vars, optional_gradient_color)
 
   table.insert(background, {
     source = {
-      Color = vars.base_color,
+      Color = string.format("rgba(%d,%d,%d,%d%%)", vars.base_color.red, vars.base_color.green, vars.base_color.blue, 70),
     },
     height = "100%",
     width = "100%",
