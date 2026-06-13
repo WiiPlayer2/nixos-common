@@ -1,0 +1,45 @@
+# TODO needs some fine tuning
+Bizhawk:
+  files:
+    "<xdgData>/emuhawk-monort-2.10.1-local/*/SaveRAM":
+      tags:
+        - save
+        # - config
+      when:
+        - os: linux
+# needs to be at custom games as override
+# Dolphin:
+#   files:
+#     "<xdgData>/dolphin-emu":
+#       tags:
+#         - save
+#       when:
+#         - os: linux
+"Nude Byte":
+  registry:
+    "HKEY_CURRENT_USER\\Software\\Manyakis\\Nude Byte":
+      tags:
+        - config
+        - save
+"Helping the Hotties":
+  files:
+    "<winAppData>/RenPy/HelpingTheHotties-1591000312/sync":
+      tags:
+        - save
+"Honey Select":
+  files:
+    "<base>/UserData":
+      tags:
+        - save
+        - config
+  installDir:
+    HoneySelect: {}
+# UserData is too big
+# "HoneySelect2Libido DX":
+#   files:
+#     "<base>/UserData":
+#       tags:
+#         - save
+#         - config
+#   installDir:
+#     "HoneySelect 2 DX": {}
