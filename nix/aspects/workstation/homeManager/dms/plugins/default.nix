@@ -48,7 +48,7 @@ with lib;
       dankRssWidget = installAndEnable;
       dankStickerSearch = installAndEnable;
       dankTodo = installAndEnable;
-      discordVoice = installAndEnable;
+      dockerManager = installAndEnable;
       gitmojiLauncher = installAndEnable;
       homeAssistantMonitor = installAndEnable;
       emojiLauncher = installAndEnable;

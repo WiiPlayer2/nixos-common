@@ -14,6 +14,7 @@ in
     with pkgs;
     [
       nil
+      nixd
       nixfmt
     ]
   );
@@ -70,6 +71,7 @@ in
           };
         };
         "nix.enableLanguageServer" = true;
+        "nix.serverPath" = "nixd";
         "nix.serverSettings" = {
           "nil" = {
             "formatting" = {

@@ -52,9 +52,10 @@ with lib;
 
           leftWidgets = [
             "dankPomodoroTimer"
-            "timer"
+            # "timer" # it's broken, I could try to patch it so it actually works
             "dankKDEConnect"
             "dankTodo"
+            "dockerManager"
           ];
           centerWidgets = [
             "clipboard"
