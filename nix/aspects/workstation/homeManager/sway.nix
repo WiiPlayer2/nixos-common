@@ -56,6 +56,12 @@ with lib;
           natural_scroll = "enabled"; # inverted scroll
         };
       };
+      seat = {
+        "*" = {
+          # hide_cursor = "when-typing enable";
+          hide_cursor = "5000"; # after 5s
+        };
+      };
     };
     extraConfig = ''
       blur enable

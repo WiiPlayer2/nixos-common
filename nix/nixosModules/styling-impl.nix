@@ -11,14 +11,9 @@ with lib;
     (
       { pkgs, ... }:
       {
-        home.pointerCursor = {
-          enable = true;
-          gtk.enable = true;
-          x11.enable = true;
-
-          package = pkgs.catppuccin-cursors.mochaDark;
-          name = "catppuccin-mocha-dark-cursors";
-        };
+        # home.pointerCursor = {
+        #   enable = true;
+        # };
       }
     )
   ];
@@ -29,4 +24,13 @@ with lib;
       adwaita-icon-theme
     ]
   );
+
+  stylix = {
+    # use xcursor-viewer to inspect cursor theme
+    cursor = {
+      name = "catppuccin-mocha-dark-cursors";
+      package = pkgs.catppuccin-cursors.mochaDark;
+      size = 46;
+    };
+  };
 }

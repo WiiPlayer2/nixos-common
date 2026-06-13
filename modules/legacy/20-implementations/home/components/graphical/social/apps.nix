@@ -13,7 +13,6 @@ in
     mkIf cfg.misc {
       home.packages = with pkgs; [
         signal-desktop
-        discord
         rocketchat-desktop
         # overlayed # TODO fix connection
         overlayed-appimage
@@ -21,7 +20,6 @@ in
 
       my.startup = {
         signal-desktop.command = "signal-desktop --use-tray-icon --start-in-tray --password-store=\"gnome-libsecret\"";
-        discord.command = "${getExe pkgs.discord} --start-minimized";
         rocketchat-desktop.command = "rocketchat-desktop";
       };
     };
