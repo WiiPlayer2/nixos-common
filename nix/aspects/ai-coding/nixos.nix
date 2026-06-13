@@ -62,7 +62,6 @@ in
             "small"
             "rider-instant"
           ];
-          # "gemma4-26b".aliases = [ "rider-core" ];
         };
         # TODO: Migrate to matrix and either use fix context sizes or additional configurations
         # groups.persistent = {
