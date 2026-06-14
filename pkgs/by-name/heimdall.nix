@@ -13,7 +13,7 @@
 
 stdenv.mkDerivation rec {
   pname = "heimdall${lib.optionalString enableGUI "-gui"}";
-  version = "699549e3c661e868656147cdad35189469198f4d";
+  version = "2.2.2";
 
   # src = fetchFromGitHub {
   #   owner  = "Benjamin-Dobell";
@@ -62,6 +62,8 @@ stdenv.mkDerivation rec {
       # install -m644 ../Linux/README   $out/share/doc/heimdall/README.linux
       # install -m644 ../OSX/README.txt $out/share/doc/heimdall/README.osx
     '';
+
+  passthru.skipUpdate = true;
 
   meta = with lib; {
     broken = stdenv.isDarwin;
