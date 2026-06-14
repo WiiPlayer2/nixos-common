@@ -107,12 +107,18 @@ with lib;
 
       useAutoLocation = true; # TODO: maybe hardcode location
       popupTransparency = mkOverride 90 0.95; # set by stylix
-      notificationHistorySaveLow = false;
-      notificationPopupPosition = 3; # bottom right
       osdAlwaysShowValue = true;
       osdMediaPlaybackEnabled = true;
       osdPowerProfileEnabled = true;
       showWorkspaceName = true;
+
+      # Notifications
+      # Notification Popups
+      notificationPopupPosition = 3; # bottom right
+      notificationOverlayEnabled = true;
+
+      # History Settings
+      notificationHistorySaveLow = false;
 
       # Lock Screen layout
       lockScreenNotificationMode = 1; # Count only
