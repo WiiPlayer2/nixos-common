@@ -8,7 +8,7 @@ let
       jq
     ];
     text = ''
-      exec ${./_timer-input.sh}
+      exec ${./_timer-input.sh} false
     '';
   };
 in

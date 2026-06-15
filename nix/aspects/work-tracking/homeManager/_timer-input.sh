@@ -3,9 +3,14 @@
 BASE_DIR="${XDG_DATA_HOME}/work-tracking"
 _lastLink="${BASE_DIR}/.last"
 
+debug="${1-true}"
 flag=0
 work=""
 category=""
+
+if [[ "$debug" == "true" ]]; then
+  echo "===[ DEBUG ]==="
+fi
 
 if [[ -e "$_lastLink" ]]; then
   work=$(jq -r '.description' "$_lastLink")
@@ -47,12 +52,22 @@ if [ "$flag" == "0" ]; then
   exit 1
 fi
 
-_timestamp=$(date '+%Y-%m-%d/%H-%M')
-_targetFile="${BASE_DIR}/$_timestamp"
+_timestamp=$(date '+%s')
+_humanTimestamp=$(date --date="@$_timestamp" -Iseconds)
+_targetFile="${BASE_DIR}/$(date --date="@$_timestamp" '+%Y-%m-%d/%H-%M')"
 mkdir -p $(dirname "$_targetFile")
-jq -n '{timestamp:$timestamp, description:$description, category:$category}' \
+_outData=$(jq -n '{timestamp:$timestamp, humanTimestamp:$humanTimestamp, description:$description, category:$category}' \
   --arg timestamp "$_timestamp" \
+  --arg humanTimestamp "$_humanTimestamp" \
   --arg description "$work" \
   --arg category "$category" \
-  | tee "$_targetFile"
-ln -Tsf "$_targetFile" "$_lastLink"
+)
+
+if [[ "$debug" != "true" ]]; then
+  echo "$_outData" | tee "$_targetFile"
+  ln -Tsf "$_targetFile" "$_lastLink"
+else
+  echo "$_outData"
+  echo "Target file: $_targetFile"
+  echo "Last link:   $_lastLink"
+fi
