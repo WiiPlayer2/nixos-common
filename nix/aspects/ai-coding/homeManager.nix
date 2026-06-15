@@ -59,16 +59,16 @@ in
     opencode = {
       enable = true;
       enableMcpIntegration = true;
-      # web = {
-      #   enable = true;
-      #   extraArgs = [
-      #     "--port"
-      #     "4090"
-      #     "--print-logs"
-      #     "--log-level"
-      #     "INFO"
-      #   ];
-      # };
+      web = {
+        enable = true;
+        extraArgs = [
+          "--port"
+          "4090"
+          "--print-logs"
+          "--log-level"
+          "INFO"
+        ];
+      };
       skills = {
         plannotator-compound = "${plannotatorSrc}/apps/skills/plannotator-compound";
       };
@@ -148,14 +148,14 @@ in
     };
   };
 
-  services = {
-    opencode = {
-      enable = true;
-      restartTriggers = [
-        config.xdg.configFile."opencode/octto.json".source
-      ];
-    };
-  };
+  # services = {
+  #   opencode = {
+  #     enable = true;
+  #     restartTriggers = [
+  #       config.xdg.configFile."opencode/octto.json".source
+  #     ];
+  #   };
+  # };
 
   xdg.configFile = {
     "opencode/octto.json".text = ''
