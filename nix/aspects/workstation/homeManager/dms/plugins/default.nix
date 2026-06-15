@@ -102,6 +102,9 @@ with lib;
     # qrGenerator
     qrencode
 
+    # quickCapture
+    # TODO: dms-floaty, wl-clipboard, imagemagick, img2pdf
+
     # usbManager
     udisks
     jq

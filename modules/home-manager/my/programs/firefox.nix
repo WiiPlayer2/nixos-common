@@ -7,6 +7,20 @@
 with lib;
 let
   cfg = config.programs.firefox;
+  mkSearch =
+    {
+      name,
+      template,
+      iconUrl,
+      iconSize,
+      alias,
+    }:
+    {
+      inherit name;
+      url = [ { inherit template; } ];
+      iconMapObj.${toString iconSize} = iconUrl;
+      definedAliases = [ alias ];
+    };
 in
 {
   config = mkIf cfg.enable {
@@ -16,7 +30,11 @@ in
       ];
       profiles.default-release = {
         settings = {
+          # To allow e.g. Archipelago client websites to connect to insecure servers (e.g. mine)
           "network.websocket.allowInsecureFromHTTPS" = true;
+
+          # Install addons without user confirmation
+          # https://devdoc.net/web/developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Alternative_methods_of_installing_add-ons/Installing_add-ons_in_an_enterprise_environment.html
           "extensions.autoDisableScopes" = 0;
         };
         # https://nur.nix-community.org/repos/rycee/
@@ -32,92 +50,44 @@ in
           default = "ddg";
           force = true;
           engines = {
-            nix-packages = {
+            nix-packages = mkSearch {
               name = "Nix Packages";
-              urls = [
-                {
-                  template = "https://search.nixos.org/packages";
-                  params = [
-                    {
-                      name = "type";
-                      value = "packages";
-                    }
-                    {
-                      name = "query";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }
-              ];
-
-              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-              definedAliases = [ "@np" ];
+              template = "https://search.nixos.org/packages?channel=unstable&query={searchTerms}";
+              iconUrl = "https://search.nixos.org/favicon-96x96.png";
+              iconSize = 96;
+              alias = "@np";
             };
 
-            nixos-wiki = {
+            nixos-wiki = mkSearch {
               name = "NixOS Wiki";
-              urls = [ { template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; } ];
-              iconMapObj."16" = "https://wiki.nixos.org/favicon.ico";
-              definedAliases = [ "@nw" ];
+              template = "https://wiki.nixos.org/w/index.php?search={searchTerms}";
+              iconUrl = "https://wiki.nixos.org/favicon.ico";
+              iconSize = 16;
+              alias = "@nw";
             };
 
-            nueschtos = {
+            nueschtos = mkSearch {
               name = "NüschtOS";
-              urls = [
-                {
-                  template = "https://search.nüschtos.de";
-                  params = [
-                    {
-                      name = "query";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }
-              ];
-              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-              definedAliases = [ "@nm" ];
+              template = "https://search.nüschtos.de?query={searchTerms}";
+              iconUrl = "https://search.nüschtos.de/favicon.ico";
+              iconSize = 48;
+              alias = "@nm";
             };
 
-            noogle = {
+            noogle = mkSearch {
               name = "Noogle";
-              urls = [
-                {
-                  template = "https://noogle.dev/q";
-                  params = [
-                    {
-                      name = "term";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }
-              ];
-              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-              definedAliases = [ "@no" ];
+              template = "https://noogle.dev/q?term={searchTerms}";
+              iconUrl = "https://noogle.dev/favicon.png";
+              iconSize = 16;
+              alias = "@no";
             };
 
-            nuget = {
+            nuget = mkSearch {
               name = "NuGet Gallery";
-              urls = [
-                {
-                  template = "https://www.nuget.org/packages";
-                  params = [
-                    {
-                      name = "q";
-                      value = "{searchTerms}";
-                    }
-                    {
-                      name = "includeComputedFrameworks";
-                      value = "true";
-                    }
-                    {
-                      name = "prerel";
-                      value = "true";
-                    }
-                  ];
-                }
-              ];
-              iconMapObj."16" = "https://www.nuget.org/favicon.ico";
-              definedAliases = [ "@nuget" ];
+              template = "https://www.nuget.org/packages?includeComputedFrameworks=true&prerel=true&q={searchTerms}";
+              iconUrl = "https://www.nuget.org/favicon.ico";
+              iconSize = 48;
+              alias = "@nuget";
             };
 
             bing.metaData.hidden = true;
