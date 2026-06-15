@@ -1,7 +1,16 @@
 #!/usr/bin/env bash
 
+BASE_DIR="${XDG_DATA_HOME}/work-tracking"
+_lastLink="${BASE_DIR}/.last"
+
 flag=0
 work=""
+category=""
+
+if [[ -e "$_lastLink" ]]; then
+  work=$(jq -r '.description' "$_lastLink")
+  category=$(jq -r '.category' "$_lastLink")
+fi
 
 while IFS=$'=' read key value; do
   case $key in
@@ -11,17 +20,25 @@ while IFS=$'=' read key value; do
     txtWork)
       work="$value"
       ;;
+    lstCategory)
+      category="$value"
+      ;;
   esac
 done < <(
 dialogbox <<EOF
-add frame horizontal
-add stretch
-add textbox "&Current work:" txtWork ""
-add stretch
+add dropdownlist "Category:" lstCategory
+add item "" current
+end dropdownlist
+set lstCategory stylesheet "QComboBox { min-width: 15em; }"
+
+add textbox "&Description:" txtWork "$work"
+set txtWork stylesheet "QLineEdit { min-width: 15em; }"
+
 add pushbutton O&k okay apply exit
-end frame
+
+set "" title "Work Tracking"
 set okay default
-set txt1 focus
+set txtWork focus
 EOF
 )
 
@@ -30,8 +47,12 @@ if [ "$flag" == "0" ]; then
   exit 1
 fi
 
-echo "$work"
 _timestamp=$(date '+%Y-%m-%d/%H-%M')
-_targetFile="${XDG_DATA_HOME}/work-tracking/$_timestamp"
+_targetFile="${BASE_DIR}/$_timestamp"
 mkdir -p $(dirname "$_targetFile")
-echo "$work" > "$_targetFile"
+jq -n '{timestamp:$timestamp, description:$description, category:$category}' \
+  --arg timestamp "$_timestamp" \
+  --arg description "$work" \
+  --arg category "$category" \
+  | tee "$_targetFile"
+ln -Tsf "$_targetFile" "$_lastLink"

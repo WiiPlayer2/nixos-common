@@ -5,6 +5,7 @@ let
     name = "work-tracking-input";
     runtimeInputs = with pkgs; [
       dialogbox
+      jq
     ];
     text = ''
       exec ${./_timer-input.sh}
