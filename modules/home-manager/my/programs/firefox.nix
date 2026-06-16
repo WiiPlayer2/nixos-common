@@ -25,6 +25,9 @@ in
 {
   config = mkIf cfg.enable {
     programs.firefox = {
+      # TODO: for reasons unknown this is my current path, should be migrated on all affected systems
+      configPath = ".mozilla/firefox";
+
       nativeMessagingHosts = with pkgs; [
         firefoxpwa
       ];
@@ -46,6 +49,8 @@ in
           i-dont-care-about-cookies
           multi-account-containers
         ];
+
+        # TODO: this currently does not work correctly. needs more investigation of profile's search.json.mozlz4 file using mozlz4a tool
         search = {
           default = "ddg";
           force = true;
@@ -55,7 +60,7 @@ in
               template = "https://search.nixos.org/packages?channel=unstable&query={searchTerms}";
               iconUrl = "https://search.nixos.org/favicon-96x96.png";
               iconSize = 96;
-              alias = "@np";
+              alias = "@np-official";
             };
 
             nixos-wiki = mkSearch {
@@ -66,9 +71,17 @@ in
               alias = "@nw";
             };
 
-            nueschtos = mkSearch {
-              name = "NüschtOS";
-              template = "https://search.nüschtos.de?query={searchTerms}";
+            nueschtos-packages = mkSearch {
+              name = "NüschtOS (Packages)";
+              template = "https://search.nüschtos.de/packages?query={searchTerms}";
+              iconUrl = "https://search.nüschtos.de/favicon.ico";
+              iconSize = 48;
+              alias = "@np";
+            };
+
+            nueschtos-options = mkSearch {
+              name = "NüschtOS (Options)";
+              template = "https://search.nüschtos.de/options?query={searchTerms}";
               iconUrl = "https://search.nüschtos.de/favicon.ico";
               iconSize = 48;
               alias = "@nm";
