@@ -8,7 +8,7 @@ with lib;
     inputs.nix-monitor.homeManagerModules.default
 
     inputs.self.homeModules.programs-dank-material-shell
-    inputs.self.homeModules.cfg-librewolf
+    # inputs.self.homeModules.cfg-librewolf
   ];
 
   programs = {
