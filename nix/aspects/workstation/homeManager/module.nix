@@ -15,4 +15,8 @@ with lib;
     wezterm.enable = true; # currently managed outside
     dank-material-shell.plugins.linuxWallpaperEngine.src = mkForce inputs.dms-wallpaperengine;
   };
+
+  services = {
+    kanshi.enable = true; # managed per host
+  };
 }
