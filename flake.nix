@@ -22,8 +22,9 @@
     flatpaks.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
     sops-nix.url = "github:Mic92/sops-nix";
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v1.0.0";
-      # inputs.nixpkgs.follows = "nixpkgs"; # don't follow for now
+      # url = "github:nix-community/lanzaboote/v1.0.0";
+      url = "github:nix-community/lanzaboote/0403b4b7e8b2612657f0053a4c315e6c43eee9e6"; # Until a patch is released
+      # inputs.nixpkgs.follows = "nixpkgs"; # I should probably never follow due to stability etc.
     };
     NixVirt = {
       url = "github:AshleyYakeley/NixVirt";
