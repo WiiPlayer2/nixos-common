@@ -6,7 +6,6 @@
     ./external.nix
     ./legacy.nix
     ./overrides.nix
-    ./unstable.nix
     ./packages
   ];
 }

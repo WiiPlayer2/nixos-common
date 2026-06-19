@@ -34,6 +34,7 @@ in
   home.packages = with pkgs; [
     uv
     openspec
+    opencode-desktop
   ];
 
   programs = {
