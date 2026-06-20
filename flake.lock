@@ -370,11 +370,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1781664460,
-        "narHash": "sha256-Hh718V7xrgQqm7So+dqLFaYjr697fgAVgw4ROE6L0XM=",
+        "lastModified": 1781922826,
+        "narHash": "sha256-0ZYx2LmBj9fvF3Y8gIlYhGaIvKOh5CQb9TwSXd4wINw=",
         "owner": "AvengeMedia",
         "repo": "dms-plugin-registry",
-        "rev": "39deef884b6a960ad042e910f8c97363b5324102",
+        "rev": "46504c36544b88000a23c41b2cfe9e10dc7fde3c",
         "type": "github"
       },
       "original": {
@@ -1237,11 +1237,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1781840361,
-        "narHash": "sha256-jRDHaOg9QscnWUTi1FhRYVr+s4YyMdv7+gVgzjcSLak=",
+        "lastModified": 1781906751,
+        "narHash": "sha256-6Ld1PqmptFtFKblE+SynhRgyBApUWcmrISetWqWHeeo=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "266211649f4729ce7d52d6249f063c2c78aa8906",
+        "rev": "37f21dfa5d27e71b75bacd9418b156f9265e312e",
         "type": "github"
       },
       "original": {
@@ -1850,11 +1850,11 @@
         "treefmt-nix": "treefmt-nix_4"
       },
       "locked": {
-        "lastModified": 1781754985,
-        "narHash": "sha256-5lOZqsXQ33R6/LGzcoRQc1Cn90nZwMMJu8rrk11M94Q=",
+        "lastModified": 1781926693,
+        "narHash": "sha256-NMeLXusZJ55+4BTfDLE1BUPGnJ8KZZKP0s5pUMB6njU=",
         "owner": "nix-community",
         "repo": "nixpkgs-xr",
-        "rev": "764568f104fa089f7f3deb20d4aeb745ce88c6dd",
+        "rev": "726b89b580cfdf062d09597c4eca368936ead241",
         "type": "github"
       },
       "original": {
@@ -2057,11 +2057,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1781841588,
-        "narHash": "sha256-tjQMU7ZjsH0FcA+Z3VYEdj5ECfihlAM10j8iqKum+PI=",
+        "lastModified": 1781927927,
+        "narHash": "sha256-JPeTVO++v2Ez7o3RgW2gUhemRh2/FABC1GrLW7Gjeog=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "d4a2a56769113443a762559d1df3901e3323aeda",
+        "rev": "185de0920f462bf9258d8ac859e2ace3e0129777",
         "type": "github"
       },
       "original": {
@@ -2432,11 +2432,11 @@
         "systems": "systems_11"
       },
       "locked": {
-        "lastModified": 1781823341,
-        "narHash": "sha256-qSc5KgGfaAd6xYVuDpjxB2/PUFm1PVSiXXyfTRg4rvE=",
+        "lastModified": 1781906101,
+        "narHash": "sha256-CYavFtu3T7oUskuJ5N6ClTSMRGBR2EYsH3r2vPhyFyI=",
         "owner": "CreitinGameplays",
         "repo": "swayfx-enhanced",
-        "rev": "8b46021d3ab7f5d9a9ec12754bbdd4d2430ea0c8",
+        "rev": "ed8b58d123d2b75f652e19057ef6abc3c30f9e60",
         "type": "github"
       },
       "original": {
@@ -2877,11 +2877,11 @@
       },
       "locked": {
         "dir": "nix",
-        "lastModified": 1781730711,
-        "narHash": "sha256-lYGtpvvybPwKyw0ADNO56cicvMCYcN2a6kuKk7+qRsg=",
+        "lastModified": 1781909109,
+        "narHash": "sha256-tMRyap23bL+78HkGDzuz2dJ5Kg4FNgK26X769//HxrY=",
         "owner": "wez",
         "repo": "wezterm",
-        "rev": "65c1c1f17e26c3f07949081928c9f649679ef212",
+        "rev": "c4b1d89fd3cf4b44fdab03df6ac7df925a690060",
         "type": "github"
       },
       "original": {
