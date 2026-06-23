@@ -82,6 +82,7 @@ with lib;
         [title="Picture in picture"] floating enable, sticky enable
         [app_id="Variety" title="Variety Images"] floating enable, sticky enable
         [class="Overlayed" title="Overlayed - Main"] floating enable, sticky enable, blur disable, shadows disable
+        [app_id="org.keepassxc.KeePassXC"] floating enable, sticky enable
         [app_id="teams-for-linux" floating] sticky enable, resize set 320 240, move position 5 ppt 5 ppt
 
         [app_id="wdisplays"] floating enable, resize set 50 ppt 50 ppt
