@@ -91,6 +91,8 @@ with lib;
         [app_id="Logseq"] move scratchpad, exec "${pkgs.libnotify}/bin/notify-send \\"Logseq has been moved to the scratchpad.\\""
 
         [class="Tockler"] no_focus
+
+        [app_id="org.wezfurlong.wezterm"] blur_radius 10
       }
     '';
   };
