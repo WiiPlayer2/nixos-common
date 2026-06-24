@@ -20,7 +20,7 @@
 with lib;
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "screenpipe";
-  version = "2.5.62";
+  version = "app-v2.5.62";
   src = fetchFromGitHub {
     owner = "screenpipe";
     repo = "screenpipe";
