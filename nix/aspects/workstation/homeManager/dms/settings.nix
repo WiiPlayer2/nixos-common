@@ -130,10 +130,11 @@ with lib;
       u2fMode = "or";
 
       # Idle Settings
+      acProfileName = "1"; # Balanced
       acLockTimeout = 900;
       acMonitorTimeout = 1200;
       acSuspendTimeout = 1800;
-      batteryProfileName = "0";
+      batteryProfileName = "0"; # Power Saver
       batteryLockTimeout = 300;
       batteryMonitorTimeout = 300;
       batterySuspendTimeout = 600;
