@@ -54,6 +54,7 @@ with lib;
           dwtp = "enabled"; # disable (touchpad) while track pointing
 
           natural_scroll = "enabled"; # inverted scroll
+          drag_lock = "disable"; # dragging stops when lifting a finger when disabled, otherwise with another tap
         };
       };
       seat = {
