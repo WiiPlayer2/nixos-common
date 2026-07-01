@@ -1,17 +1,20 @@
 final: prev:
+with prev.lib;
 let
-  linuxPackages = import ./linuxPackages;
+  linuxPackagesExtension = import ./linuxPackages;
+  versions = [
+    null
+    "7_0"
+    "latest"
+  ];
 in
-{
-  linuxKernel = prev.linuxKernel // {
-    packages =
-      let
-        lpkgs = prev.linuxKernel.packages;
-      in
-      lpkgs
-      // {
-        linux_6_16 = lpkgs.linux_6_16.extend linuxPackages;
-      };
-  };
-  linuxPackages_latest = prev.linuxPackages_latest.extend linuxPackages;
-}
+genAttrs' versions (
+  version:
+  let
+    name = if version == null then "linuxPackages" else "linuxPackages_${version}";
+  in
+  {
+    inherit name;
+    value = prev.${name}.extend linuxPackagesExtension;
+  }
+)

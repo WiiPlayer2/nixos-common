@@ -95,10 +95,11 @@ with lib;
 
         [app_id="org.wezfurlong.wezterm"] blur_radius 10
 
+        # TODO: Fix workspaces in general
         # Workspaces
-        [app_id="fluffychat"] move workspace number 10
-        [class="discord"] move workspace number 10
-        [app_id="thunderbird"] move workspace number 10
+        # [app_id="fluffychat"] move workspace number 10
+        # [class="discord"] move workspace number 10
+        # [app_id="thunderbird"] move workspace number 10
       }
     '';
   };
