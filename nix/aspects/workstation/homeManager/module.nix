@@ -19,4 +19,7 @@ with lib;
   services = {
     kanshi.enable = true; # managed per host
   };
+
+  # No because of too many shared configs as of now
+  # xsession.windowManager.i3.enable = warn "Forcing i3 to be disabled, but should be cleaned up properly" (mkForce false);
 }

@@ -5,6 +5,24 @@
   ...
 }:
 with lib;
+let
+  ensureWorkspaceScript =
+    with pkgs;
+    writeShellScript "ensure-workspace" ''
+      MARK="$1"
+      NAME="$2"
+
+      _wsNum=$(swaymsg -t get_workspaces | ${getExe jq} --arg WS "$NAME" '.[] | select(.name | endswith(": " + $WS)) | .num')
+      if [[ -z "$_wsNum" ]]; then
+        _wsNum=$(swaymsg -t get_tree | ${getExe jq} --arg MARK "$MARK" 'first(recurse(.nodes[]) | select(.type == "workspace") | select(recurse | select(.marks? | index($MARK))) | .num)')
+        swaymsg "rename workspace $_wsNum to \"$_wsNum: $NAME\""
+        # dms restart # for now
+      fi
+    '';
+  workspaceCmd =
+    mark: name:
+    "mark --add ${mark}, exec ${ensureWorkspaceScript} ${mark} ${escapeShellArg name}, move window to mark ${mark}";
+in
 {
   wayland.windowManager.sway = {
     enable = true;
@@ -95,11 +113,10 @@ with lib;
 
         [app_id="org.wezfurlong.wezterm"] blur_radius 10
 
-        # TODO: Fix workspaces in general
         # Workspaces
-        # [app_id="fluffychat"] move workspace number 10
-        # [class="discord"] move workspace number 10
-        # [app_id="thunderbird"] move workspace number 10
+        [app_id="fluffychat"] ${workspaceCmd "ws_comm" "Comm"}
+        [class="discord"] ${workspaceCmd "ws_comm" "Comm"}
+        [app_id="thunderbird"] ${workspaceCmd "ws_comm" "Comm"}
       }
     '';
   };
