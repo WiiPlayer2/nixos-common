@@ -28,6 +28,7 @@ with lib;
 
     moonlight-qt
     protonup-qt
+    win-8bitdo-ultimate-v2
   ];
 
   programs = {
