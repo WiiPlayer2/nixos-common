@@ -1,6 +1,6 @@
 [
   {
-    # name = "Web";
+    name = "Web";
     # assigns = [
     #   { class = "^firefox$"; }
     # ];
@@ -14,7 +14,7 @@
   { }
   { }
   {
-    # name = "Comm";
+    name = "Comm";
     # assigns = [
     #   { class = "^teams-for-linux$"; }
     #   { class = "^signal$"; }

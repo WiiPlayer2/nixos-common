@@ -81,6 +81,37 @@ in
           hide_cursor = "5000"; # after 5s
         };
       };
+      assigns = {
+        "1: Web" = [
+          { app_id = "firefox"; }
+        ];
+        "10: Comm" = [
+          { app_id = "fluffychat"; }
+          { class = "discord"; }
+          { app_id = "thunderbird"; }
+          { app_id = "teams-for-linux"; }
+          { class = "davmail-DavGateway"; }
+          { app_id = "OneDriveGUI"; }
+        ];
+      };
+      floating.criteria = [
+        { title = "Picture-in-Picture"; }
+        { title = "Picture in picture"; }
+        {
+          app_id = "Variety";
+          title = "Variety Images";
+        }
+        {
+          class = "Overlayed";
+          title = "Overlayed - Main";
+        }
+        { app_id = "org.keepassxc.KeePassXC"; }
+        { app_id = "wdisplays"; }
+        {
+          class = "steam";
+          title = "Friends List";
+        }
+      ];
     };
     extraConfig = ''
       blur enable
@@ -97,26 +128,21 @@ in
       dim_inactive_colors.unfocused #000000
 
       for_window {
-        [title="Picture-in-Picture"] floating enable, sticky enable
-        [title="Picture in picture"] floating enable, sticky enable
-        [app_id="Variety" title="Variety Images"] floating enable, sticky enable
-        [class="Overlayed" title="Overlayed - Main"] floating enable, sticky enable, blur disable, shadows disable
-        [app_id="org.keepassxc.KeePassXC"] floating enable, sticky enable
+        [title="Picture-in-Picture"] sticky enable
+        [title="Picture in picture"] sticky enable
+        [app_id="Variety" title="Variety Images"] sticky enable
+        [class="Overlayed" title="Overlayed - Main"] sticky enable, blur disable, shadows disable
+        [app_id="org.keepassxc.KeePassXC"] sticky enable
         [app_id="teams-for-linux" floating] sticky enable, resize set 320 240, move position 5 ppt 5 ppt
 
-        [app_id="wdisplays"] floating enable, resize set 50 ppt 50 ppt
-        [class="steam" title="Friends List"] floating enable, resize set 400 800
+        [app_id="wdisplays"] resize set 50 ppt 50 ppt
+        [class="steam" title="Friends List"] resize set 400 800
 
         [app_id="Logseq"] move scratchpad, exec "${pkgs.libnotify}/bin/notify-send \\"Logseq has been moved to the scratchpad.\\""
 
         [class="Tockler"] no_focus
 
         [app_id="org.wezfurlong.wezterm"] blur_radius 10
-
-        # Workspaces
-        [app_id="fluffychat"] ${workspaceCmd "ws_comm" "Comm"}
-        [class="discord"] ${workspaceCmd "ws_comm" "Comm"}
-        [app_id="thunderbird"] ${workspaceCmd "ws_comm" "Comm"}
       }
     '';
   };

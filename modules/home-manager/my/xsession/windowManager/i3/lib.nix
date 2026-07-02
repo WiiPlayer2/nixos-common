@@ -8,7 +8,7 @@ rec {
   workspaceIdentifier =
     workspace: number:
     if builtins.hasAttr "name" workspace then
-      "\"${toString number}: ${workspace.name}\""
+      "number \"${toString number}: ${workspace.name}\""
     else
       "number ${toString number}";
   workspaceKeyBindings =
