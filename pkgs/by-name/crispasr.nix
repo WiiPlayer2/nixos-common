@@ -12,7 +12,7 @@
 with lib;
 let
   pname = "CrispASR";
-  version = "0.8.6";
+  version = "dots-tts-v1-e2e-audio";
   src = fetchFromGitHub {
     owner = "CrispStrobe";
     repo = pname;
