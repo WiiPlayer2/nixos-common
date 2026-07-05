@@ -112,29 +112,5 @@ in
           patchedPkg
         else
           prev.openldap;
-
-      logseq = patchPinned {
-        pkg = prev.logseq;
-        version = "0.10.15";
-        overrideFn =
-          x:
-          x.overrideAttrs (
-            finalAttrs: prevAttrs: {
-              patches = prevAttrs.patches ++ [
-                (final.fetchpatch {
-                  url = "https://raw.githubusercontent.com/TomaSajt/nixpkgs/6308382b893ab84c7736904420b19c00802698cc/pkgs/by-name/lo/logseq/bump-yauzl.patch";
-                  hash = "sha256-KcEHv3TewD0AcTb5B5gLUOmfCmks6Yxbj1FnrEKRZrk=";
-                })
-              ];
-              yarnOfflineCacheStaticResources = final.fetchYarnDeps {
-                name = "logseq-${finalAttrs.version}-yarn-deps-static-resources";
-                inherit (finalAttrs) src patches;
-                postPatch = "cd ./static";
-                hash = "sha256-TFisR5GwcKmuddGhe0i6rAmr2wDWzed/mXnxVGARYK0=";
-              };
-            }
-          );
-        nixpkgsPR = 536292;
-      };
     };
 }
