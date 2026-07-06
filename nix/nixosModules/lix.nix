@@ -1,3 +1,4 @@
+{ ... }:
 { pkgs, ... }:
 let
   lixPackageSet = pkgs: pkgs.lixPackageSets.latest;

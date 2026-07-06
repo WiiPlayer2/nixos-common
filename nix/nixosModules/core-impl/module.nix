@@ -1,5 +1,9 @@
 { inputs, ... }:
 {
+  imports = [
+    inputs.self.nixosModules.lix
+  ];
+
   age = {
     imprinting = {
       enable = true;

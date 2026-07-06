@@ -93,7 +93,7 @@
                   fi
                 done
 
-                deploy --skip-checks .#"$TARGET" "''${_deployRsArgs[@]}" -- --override-input common path:"$FLAKE_ROOT"/flakes/common --log-format internal-json --verbose "''${_nixArgs[@]}" |& nom --json
+                deploy --skip-checks .#"$TARGET" "''${_deployRsArgs[@]}" -- --override-input common path:"$FLAKE_ROOT"/flakes/common --log-format internal-json --verbose --fallback "''${_nixArgs[@]}" |& nom --json
               '';
             })
             (writeShellApplication {
