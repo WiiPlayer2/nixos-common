@@ -137,7 +137,6 @@ in
 
         [app_id="wdisplays"] resize set 50 ppt 50 ppt
         [class="steam" title="Friends List"] resize set 400 800
-        [app_id="org.quickshell" floating] resize set 20ppt 15ppt # Kinda stupid, doesn't force dialog windows to update its size the same way a mouse resize does
 
         [app_id="Logseq"] move scratchpad, exec "${pkgs.libnotify}/bin/notify-send \\"Logseq has been moved to the scratchpad.\\""
 
