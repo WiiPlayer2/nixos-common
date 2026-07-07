@@ -112,5 +112,29 @@ in
           patchedPkg
         else
           prev.openldap;
+
+      # WIP
+      # davmail = patchPinned {
+      #   pkg = prev.davmail;
+      #   version = "6.8.0";
+      #   overrideFn = x: x.overrideAttrs {
+      #     version = "6.8.1";
+      #     src = final.fetchFromGitHub {
+      #       owner = "mguessan";
+      #       repo = "davmail";
+      #       tag = "6.8.1";
+      #       hash = "sha256-kIDAMVenUzc7tIC49yzc1MzqNa9B7nNlX1bzwpG8Vp0=";
+      #     };
+      #     patchFlags = [ "-p1" "-l" ];
+      #     prePatch = ''
+      #       ${getExe' final.dos2unix "dos2unix"} src/java/davmail/ui/browser/DesktopBrowser.java
+      #     '';
+      #     patches = [
+      #       ./patches/davmail-browser.patch
+      #     ];
+      #   };
+
+      #   extraInfo = "Updated version to 6.8.1";
+      # };
     };
 }

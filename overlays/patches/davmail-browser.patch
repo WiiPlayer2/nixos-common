@@ -1,0 +1,75 @@
+diff --git a/src/java/davmail/ui/browser/DesktopBrowser.java b/src/java/davmail/ui/browser/DesktopBrowser.java
+index fd7d200..4db92e0 100644
+--- a/src/java/davmail/ui/browser/DesktopBrowser.java
++++ b/src/java/davmail/ui/browser/DesktopBrowser.java
+@@ -41,44 +41,7 @@ public final class DesktopBrowser {
+      */
+     public static void browse(URI location) {
+         try {
+-            // trigger ClassNotFoundException
+-            ClassLoader classloader = AboutFrame.class.getClassLoader();
+-            classloader.loadClass("java.awt.Desktop");
+-
+-            // Open link in default browser
+-            AwtDesktopBrowser.browse(location);
+-        } catch (ClassNotFoundException e) {
+-            DavGatewayTray.debug(new BundleMessage("LOG_JAVA6_DESKTOP_UNAVAILABLE"));
+-            // failover for MacOSX
+-            if (System.getProperty("os.name").toLowerCase().startsWith("mac os x")) {
+-                try {
+-                    OSXDesktopBrowser.browse(location);
+-                } catch (Exception e2) {
+-                    DavGatewayTray.error(new BundleMessage("LOG_UNABLE_TO_OPEN_LINK"), e2);
+-                }
+-            } else {
+-                // failover : try SWT
+-                try {
+-                    // trigger ClassNotFoundException
+-                    ClassLoader classloader = AboutFrame.class.getClassLoader();
+-                    classloader.loadClass("org.eclipse.swt.program.Program");
+-                    SwtDesktopBrowser.browse(location);
+-                } catch (ClassNotFoundException e2) {
+-                    DavGatewayTray.error(new BundleMessage("LOG_OPEN_LINK_NOT_SUPPORTED"));
+-                } catch (Exception e2) {
+-                    DavGatewayTray.error(new BundleMessage("LOG_UNABLE_TO_OPEN_LINK"), e2);
+-                }
+-            }
+-        } catch (java.lang.UnsupportedOperationException e) {
+-            if (Settings.isUnix()) {
+-                try {
+-                    XdgDesktopBrowser.browse(location);
+-                } catch (Exception e2) {
+-                    DavGatewayTray.error(new BundleMessage("LOG_UNABLE_TO_OPEN_LINK"), e2);
+-                }
+-            } else {
+-                DavGatewayTray.error(new BundleMessage("LOG_UNABLE_TO_OPEN_LINK"), e);
+-            }
++            XdgDesktopBrowser.browse(location);
+         } catch (Exception e) {
+             DavGatewayTray.error(new BundleMessage("LOG_UNABLE_TO_OPEN_LINK"), e);
+         }
+
+diff --git a/src/java/davmail/ui/tray/DavGatewayTray.java b/src/java/davmail/ui/tray/DavGatewayTray.java
+index c776ed7..d5f59f2 100644
+--- a/src/java/davmail/ui/tray/DavGatewayTray.java
++++ b/src/java/davmail/ui/tray/DavGatewayTray.java
+@@ -257,18 +257,6 @@ public final class DavGatewayTray {
+                             "https://extensions.gnome.org/extension/1503/tray-icons/ " +
+                             "to restore normal systray or run DavMail in server mode");
+                 }
+-                // first try to load SWT before with Java AWT
+-                boolean isSWTAvailable = Settings.isSWTAvailable();
+-                if (isSWTAvailable) {
+-                    try {
+-                        // SWT available, create tray
+-                        davGatewayTray = new SwtGatewayTray();
+-                        davGatewayTray.init();
+-                    } catch (Throwable e) {
+-                        DavGatewayTray.info(new BundleMessage("LOG_SWT_NOT_AVAILABLE"));
+-                        davGatewayTray = null;
+-                    }
+-                }
+                 // try java6 tray support, except on Linux
+                 if (davGatewayTray == null /*&& !isLinux()*/) {
+                     try {
+
