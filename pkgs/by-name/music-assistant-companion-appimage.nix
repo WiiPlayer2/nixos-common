@@ -5,7 +5,7 @@
 }:
 let
   pname = "music-assistant-companion-appimage";
-  version = "0.4.9";
+  version = "0.5.1";
   icon = fetchurl {
     url = "https://github.com/music-assistant/desktop-companion/blob/d005a1be801e569c1c854fc923e89f58727d901f/app-icon.png?raw=true";
     hash = "sha256-fC0gm54cmla5ut3sqcK58Jp4bpR80eglvj1jtyfvvL4=";
@@ -26,7 +26,7 @@ appimageTools.wrapType2 {
 
   src = fetchurl {
     url = "https://github.com/music-assistant/desktop-app/releases/download/${version}/Music.Assistant_${version}_amd64.AppImage";
-    hash = "sha256-p0QAa5jJ3SqaKx5uDb7+AS+3zc9sj3rIqMmBAsJYdI8=";
+    hash = "sha256-+z9zVdq4p2XrX9juXCDRIdvWDP1LYQoFncHG6lu3cJk=";
   };
 
   extraInstallCommands = ''
