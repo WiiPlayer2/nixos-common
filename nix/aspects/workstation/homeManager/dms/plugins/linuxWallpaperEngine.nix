@@ -6,7 +6,7 @@ with lib;
   ];
 
   programs.dank-material-shell.plugins.linuxWallpaperEngine = {
-    enable = true;
+    enable = false; # for now, might be cause of GPU crashes
     settings = {
       pauseOnPowerSaver = true;
       # pauseOnBattery = true;
