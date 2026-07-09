@@ -12,12 +12,12 @@
 with lib;
 let
   pname = "CrispASR";
-  version = "dots-tts-v1-e2e-audio";
+  version = "0.8.9";
   src = fetchFromGitHub {
     owner = "CrispStrobe";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-4g6yZ5Kp2fbkvep0ouLI9gl6ZVT/nuPNguPCtu8xAeE=";
+    hash = "sha256-RMC68sWAIFe02/8ZzbnLXWlCPlRuk9Qdx7ks8+dpAOw=";
   };
 in
 # whisper-cpp.overrideAttrs {
