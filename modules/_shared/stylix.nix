@@ -1,4 +1,10 @@
-{ config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+with lib;
 {
   stylix = {
     enable = true;
@@ -13,8 +19,8 @@
       };
       monospace = {
         # TODO: this should be FiraCode but for some reason the font does not work correctly everywhere
-        package = nerd-fonts.fira-mono;
-        name = "FiraMono Nerd Font";
+        package = mkDefault nerd-fonts.fira-mono;
+        name = mkDefault "FiraMono Nerd Font";
       };
       # sizes = {
       #   desktop = 12; # = 10;

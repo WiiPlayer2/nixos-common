@@ -32,5 +32,12 @@ with lib;
       package = pkgs.catppuccin-cursors.mochaDark;
       size = 46;
     };
+
+    fonts = with pkgs; {
+      monospace = {
+        package = nerd-fonts.fira-code;
+        name = "FiraCode Nerd Font";
+      };
+    };
   };
 }
