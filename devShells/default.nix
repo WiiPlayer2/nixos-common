@@ -137,6 +137,19 @@
               '';
             })
             (writeShellApplication {
+              name = "pull-nixos";
+              text = ''
+                TARGET="$1"
+                shift
+                _sshTarget="root@$TARGET"
+                echo "Retrieving current system path on $TARGET..."
+                _path=$(ssh "$_sshTarget" realpath /run/current-system)
+                echo "Path: $_path"
+                echo ""
+                nix copy --from "ssh://$_sshTarget" "$_path" --no-check-sigs "$@"
+              '';
+            })
+            (writeShellApplication {
               name = "build-nix-on-droid";
               runtimeInputs = [
                 nix-output-monitor
