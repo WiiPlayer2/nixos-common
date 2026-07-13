@@ -25,13 +25,25 @@ let
             nixpkgsPRInfo
             extraInfo
           ];
-          infoText = concatStrings (map (x: "\n\n${x}" nonNullInfo));
+          infoText = concatStrings (map (x: "\n\n${x}") nonNullInfo);
         in
         infoText;
     in
     throwIf (pkg.version != version) ''
       ${pkg.pname} is patched on version ${version} but nixpkgs now ships ${pkg.version}.${infoText}
     '' (overrideFn pkg);
+
+  pythonOverlay = pfinal: pprev: {
+    cloup = pprev.cloup.overrideAttrs (
+      finalAttrs: prevAttrs: {
+        postPatch = prevAttrs.postPatch + ''
+          exit 1
+          substituteInPlace setup.py \
+            --replace-fail "setuptools_scm<10" setuptools_scm
+        '';
+      }
+    );
+  };
 in
 {
   flake.overlays.overrides =
@@ -60,6 +72,11 @@ in
           # });
         };
       };
+
+      # python3 = prev.python3.override {
+      #   packageOverrides = pythonOverlay;
+      # };
+      # python314Packages = prev.python314Packages.overrideScope pythonOverlay;
 
       poptracker = prev.unstable.poptracker.overrideAttrs (
         finalAttrs: prevAttrs: {
@@ -136,5 +153,24 @@ in
 
       #   extraInfo = "Updated version to 6.8.1";
       # };
+
+      git-sim = patchPinned {
+        pkg = prev.git-sim;
+        version = "0.3.5";
+        overrideFn =
+          x:
+          x.override {
+            packageOverrides = pfinal: pprev: {
+              cloup = pprev.cloup.overrideAttrs (
+                finalAttrs: prevAttrs: {
+                  postPatch = ''
+                    substituteInPlace setup.py \
+                      --replace-fail "setuptools_scm<10" setuptools_scm
+                  '';
+                }
+              );
+            };
+          };
+      };
     };
 }
