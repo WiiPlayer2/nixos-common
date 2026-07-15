@@ -144,6 +144,8 @@ in
 
         [app_id="org.wezfurlong.wezterm"] blur_radius 10
       }
+
+      exec_always kanshictl reload
     '';
   };
 
