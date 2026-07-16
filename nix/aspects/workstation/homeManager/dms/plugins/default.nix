@@ -51,6 +51,7 @@ with lib;
       dockerManager = installAndEnable;
       gitmojiLauncher = installAndEnable;
       homeAssistantMonitor = installAndEnable;
+      intervalCommand = installAndEnable;
       emojiLauncher = installAndEnable;
       kaomojiPicker = installAndEnable;
       musicLyrics = installAndEnable;
