@@ -22,6 +22,18 @@ let
   workspaceCmd =
     mark: name:
     "mark --add ${mark}, exec ${ensureWorkspaceScript} ${mark} ${escapeShellArg name}, move window to mark ${mark}";
+
+  zoomScript = pkgs.writeShellApplication {
+    name = "zoom";
+    runtimeInputs = with pkgs; [
+      jq
+      woomer
+    ];
+    text = ''
+      _monitor=$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')
+      woomer --monitor "$_monitor"
+    '';
+  };
 in
 {
   wayland.windowManager.sway = {
@@ -62,6 +74,11 @@ in
           "XF86MonBrightnessUp" = "exec dms ipc brightness increment 5 \"\"";
           # TODO: change to "dms ipc settings focusOrToggleWith displays" when sway is supported in dms
           "${modifier}+P" = "exec wdisplays";
+
+          # Utils
+          "${modifier}+z" = "exec ${getExe zoomScript}";
+          "${modifier}+v" = mkOverride 90 "exec ${getExe config.services.voxtype.package} record toggle";
+          # "--release ${modifier}+v" = "exec ${getExe config.services.voxtype.package} record stop";
         };
       input = {
         "type:touchpad" = {
