@@ -5,15 +5,15 @@
 }:
 let
   pname = "mail-mcp";
-  version = "0.4.8";
+  version = "0.4.9";
   src = fetchFromGitHub {
     owner = "tecnologicachile";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-AeMs2VoOyR78ec0T1q+0g/TdnNOh9RRN6Pyx8km075s=";
+    hash = "sha256-w5m3694/jutpmthGHSw3JdhEScT3+s+J9gcVhoMfKNg=";
   };
 in
 rustPlatform.buildRustPackage {
   inherit pname version src;
-  cargoHash = "sha256-RDiIbrFYrHim/daWX/7ajiYjfYdysb3Av7rkIMb0yo8=";
+  cargoHash = "sha256-rlP22bDp1UkVgTT8rkdHikVfF5P+Wy0KncHzGAdXkR4=";
 }
