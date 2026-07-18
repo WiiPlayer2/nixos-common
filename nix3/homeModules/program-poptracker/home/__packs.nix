@@ -41,4 +41,9 @@ with pkgs;
     url = "https://github.com/guigui0246/albw-ap-poptracker/releases/download/1.5.2/albw-ap-poptracker-v1.5.2.zip";
     hash = "sha256-zrxglNSFBhCHVgf6Aqqz6K7UJgn3Ym/d2l0PJi6w5mY=";
   };
+
+  samus_returns_pack = fetchurl {
+    url = "https://github.com/LuigiXRules/Metroid-Samus-Returns-Poptracker-Pack/releases/download/0.4.0/samus_returns_pack.zip";
+    hash = "sha256-JKEuxFmZ7fTqzTjOo39XJTL0m4igBbjXfxQuJl8rtok=";
+  };
 }
