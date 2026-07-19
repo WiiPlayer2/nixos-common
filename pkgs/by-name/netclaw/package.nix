@@ -7,12 +7,12 @@
 }:
 let
   pname = "netclaw";
-  version = "0.24.4";
+  version = "0.25.0";
   src = fetchFromGitHub {
     owner = "netclaw-dev";
     repo = "netclaw";
     rev = version;
-    hash = "sha256-04PcrgjqYtlTlXFWilcuyJQ7l6aJw4CoUG8XL5u4vDY=";
+    hash = "sha256-KL0P+WEjDmK6XJnmrmvA38uo40NGsGdkx8xeKnORAvE=";
   };
 in
 buildDotnetModule {
