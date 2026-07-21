@@ -11,9 +11,9 @@ with lib;
     (
       { pkgs, ... }:
       {
-        # home.pointerCursor = {
-        #   enable = true;
-        # };
+        home.pointerCursor = {
+          enable = true;
+        };
       }
     )
   ];
