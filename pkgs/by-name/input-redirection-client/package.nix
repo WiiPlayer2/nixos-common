@@ -12,7 +12,7 @@
 with libsForQt5;
 stdenv.mkDerivation {
   pname = "input-redirection-client";
-  version = "0.1";
+  version = "2.1";
   src = fetchFromGitHub {
     owner = "TuxSH";
     repo = "InputRedirectionClient-Qt";
