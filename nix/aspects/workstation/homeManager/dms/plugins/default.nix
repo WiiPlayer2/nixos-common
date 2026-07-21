@@ -65,6 +65,14 @@ with lib;
       qrGenerator = installAndEnable;
       quickCapture = {
         enable = true;
+        src = mkForce (
+          pkgs.fetchFromGitHub {
+            owner = "hthienloc";
+            repo = "dms-quick-capture";
+            rev = "v3.6.1";
+            hash = "sha256-TotTTTbIJn+eHgr+X5dGgfmQKuDqGbew6PvP6KXkE3Y=";
+          }
+        );
         settings = {
           skipConfirm = false;
         };
