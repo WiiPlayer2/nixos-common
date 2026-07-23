@@ -7,5 +7,6 @@
     ./legacy.nix
     ./overrides.nix
     ./packages
+    ./backports.nix
   ];
 }

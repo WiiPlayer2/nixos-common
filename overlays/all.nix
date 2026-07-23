@@ -3,6 +3,7 @@
   flake.overlays =
     let
       overlay = lib.fixedPoints.composeManyExtensions [
+        self.overlays.backports
         self.overlays.legacy
         self.overlays.bubblewrapped
         self.overlays.packages
