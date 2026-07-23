@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, inputs, ... }:
 with lib;
 let
   patchPinned =
@@ -171,6 +171,20 @@ in
               );
             };
           };
+      };
+
+      freecad = patchPinned {
+        pkg = prev.vtk;
+        version = "9.5.2";
+        overrideFn =
+          _: inputs.nixpkgs-unstable-small.legacyPackages.${prev.stdenv.hostPlatform.system}.freecad;
+      };
+
+      bottles = patchPinned {
+        pkg = prev.bottles;
+        version = "64.1";
+        overrideFn =
+          _: inputs.nixpkgs-unstable-small.legacyPackages.${prev.stdenv.hostPlatform.system}.bottles;
       };
     };
 }
