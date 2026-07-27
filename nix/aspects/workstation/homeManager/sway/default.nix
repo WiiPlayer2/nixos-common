@@ -50,7 +50,7 @@ in
           "${modifier}+Shift+v" = "exec dms ipc clipboard open";
           "${modifier}+Shift+e" = mkOverride 90 "exec dms ipc powermenu open";
           "${modifier}+Shift+r" = mkOverride 90 "reload, exec dms restart, exec kanshictl reload";
-          "${modifier}+d" = mkOverride 90 "exec dms ipc launcher openWith all";
+          "${modifier}+d" = mkOverride 90 "exec dms ipc spotlight-bar openWith all";
           "${modifier}+n" = "exec dms ipc plugins reload linuxWallpaperEngine";
 
           # Screenshots
@@ -183,4 +183,18 @@ in
       Restart = "on-failure";
     };
   };
+
+  # xdg.portal = {
+  #   enable = true;
+  #   extraPortals = with pkgs; [
+  #     xdg-desktop-portal-gtk
+  #     xdg-desktop-portal-wlr
+  #   ];
+  #   config.sway = {
+  #     default = "gtk";
+  #     "org.freedesktop.impl.portal.Inhibit" = "none";
+  #     "org.freedesktop.impl.portal.ScreenCast" = "wlr";
+  #     "org.freedesktop.impl.portal.Screenshot" = "wlr";
+  #   };
+  # };
 }
