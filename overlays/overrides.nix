@@ -30,7 +30,7 @@ let
         infoText;
     in
     throwIf (pkg.version != version) ''
-      ${pkg.pname} is patched on version ${version} but nixpkgs now ships ${pkg.version}.${infoText}
+      ${pkg.pname} is patched on version ${version} but nixpkgs now ships ${pkg.version}.${infoLines}
     '' (overrideFn pkg);
 
   pythonOverlay = pfinal: pprev: {
