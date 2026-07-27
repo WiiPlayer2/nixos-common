@@ -172,5 +172,23 @@ in
             };
           };
       };
+
+      jetbrains = prev.jetbrains // {
+        rider = patchPinned {
+          pkg = prev.jetbrains.rider;
+          version = "2026.2";
+          /*
+            /nix/store/wy1dwqdbrkhw3hj4ll7a9av7v7w6wqxf-rider-2026.2/rider/lib/ReSharperHost/linux-x64/Rider.Backend --runtimeconfig /nix/store/wy1dwqdbrkhw3hj4ll7a9av7v7w6wqxf-rider-2026.2/rider/lib/ReSharperHost/Rider.Backend.netcore.runtimeconfig.json --Port=38669 --enablecpp
+            /nix/store/wy1dwqdbrkhw3hj4ll7a9av7v7w6wqxf-rider-2026.2/rider/lib/ReSharperHost/linux-x64/Rider.Backend: error while loading shared libraries: libstdc++.so.6: cannot open shared object file: No such file or directory
+          */
+          overrideFn =
+            x:
+            x.overrideAttrs (attrs: {
+              preFixup = (attrs.preFixup or "") + ''
+                patchelf --replace-needed libstdc++.so.6 libstdc++.so $out/rider/lib/ReSharperHost/linux-x64/Rider.Backend
+              '';
+            });
+        };
+      };
     };
 }
