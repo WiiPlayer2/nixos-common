@@ -185,10 +185,24 @@ in
             x:
             x.overrideAttrs (attrs: {
               preFixup = (attrs.preFixup or "") + ''
+                patchelf --replace-needed libstdc++.so.6 libstdc++.so $out/rider/lib/ReSharperHost/linux-x64/JetBrains.Debugger.Worker
                 patchelf --replace-needed libstdc++.so.6 libstdc++.so $out/rider/lib/ReSharperHost/linux-x64/Rider.Backend
               '';
             });
         };
+      };
+
+      xdg-desktop-portal-wlr = patchPinned {
+        pkg = prev.xdg-desktop-portal-wlr;
+        version = "0.8.3";
+        overrideFn =
+          x:
+          x.overrideAttrs (attrs: {
+            version = "0.8.2";
+            src = attrs.src.overrideAttrs {
+              hash = "sha256-HITf/hgiASWvn/z49mzS8IS1vuyXwdk1JiAOOHRSQMo=";
+            };
+          });
       };
     };
 }

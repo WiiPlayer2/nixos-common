@@ -15,6 +15,6 @@ in
         teams-for-linux
       ];
 
-      my.startup.teams.command = "teams-for-linux --minimized --optInTeamsV2";
+      my.startup.teams.command = "teams-for-linux --minimized";
     };
 }
