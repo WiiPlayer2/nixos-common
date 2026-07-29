@@ -4,6 +4,7 @@ let
   backports = [
     (port "nixpkgs-unstable-small" "freecad" "1.1.1")
     (port "nixpkgs-unstable-small" "bottles" "64.1")
+    (port "nixpkgs-unstable-small" "lact" "0.9.1")
   ];
 
   port =

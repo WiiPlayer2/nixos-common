@@ -1,4 +1,8 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
+with lib;
+let
+  greeterSwayidle = null;
+in
 {
   programs = {
     sway = {
@@ -18,7 +22,13 @@
     dsearch.enable = true;
     dank-material-shell.greeter = {
       enable = true;
-      compositor.name = "sway";
+      compositor = {
+        name = "sway";
+        # Turn off display after 15 minutes
+        customConfig = ''
+          exec ${getExe pkgs.swayidle} -d -w timeout 900 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+        '';
+      };
     };
 
     seahorse.enable = true;
