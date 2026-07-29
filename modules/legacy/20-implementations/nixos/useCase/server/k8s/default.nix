@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.my.useCase.server.k8s;
@@ -41,7 +46,7 @@ in
     };
 
     system.activationScripts.k3s-symlinks.text = ''
-      ln -fs ${config.services.openiscsi.package}/bin/iscsiadm /usr/bin/iscsiadm
+      ln -fs ${getExe' config.services.openiscsi.package "iscsiadm"} /usr/bin/
     '';
 
     systemd.tmpfiles.settings = {
