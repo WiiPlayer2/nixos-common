@@ -155,7 +155,7 @@ in
         [app_id="Variety" title="Variety Images"] sticky enable
         [class="Overlayed" title="Overlayed - Main"] sticky enable, blur disable, shadows disable
         [app_id="org.keepassxc.KeePassXC"] sticky enable
-        [app_id="teams-for-linux" floating] sticky enable, resize set 320 240, move position 5 ppt 5 ppt
+        # [app_id="teams-for-linux" floating] sticky enable, resize set 320 240, move position 5 ppt 5 ppt # WIP
         [app_id="one.alynx.showmethekey" title="Floating Window - Show Me The Key"] floating enable, sticky enable
 
         [app_id="wdisplays"] resize set 50 ppt 50 ppt
