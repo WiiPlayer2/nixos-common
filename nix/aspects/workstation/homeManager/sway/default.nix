@@ -128,6 +128,10 @@ in
           class = "steam";
           title = "Friends List";
         }
+        # winapps
+        {
+          instance = "RAIL";
+        }
       ];
     };
     extraConfig = ''
