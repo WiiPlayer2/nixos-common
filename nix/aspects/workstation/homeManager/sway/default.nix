@@ -52,6 +52,7 @@ in
           "${modifier}+Shift+r" = mkOverride 90 "reload, exec dms restart, exec kanshictl reload";
           "${modifier}+d" = mkOverride 90 "exec dms ipc spotlight-bar openWith all";
           "${modifier}+n" = "exec dms ipc plugins reload linuxWallpaperEngine";
+          "${modifier}+s" = mkOverride 90 "floating enable, sticky toggle";
 
           # Screenshots
           "Print" = mkOverride 90 "exec dms ipc quickCapture screenshot all";
