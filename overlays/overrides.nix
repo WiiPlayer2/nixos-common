@@ -192,18 +192,5 @@ in
             });
         };
       };
-
-      xdg-desktop-portal-wlr = patchPinned {
-        pkg = prev.xdg-desktop-portal-wlr;
-        version = "0.8.3";
-        overrideFn =
-          x:
-          x.overrideAttrs (attrs: {
-            version = "0.8.2";
-            src = attrs.src.overrideAttrs {
-              hash = "sha256-HITf/hgiASWvn/z49mzS8IS1vuyXwdk1JiAOOHRSQMo=";
-            };
-          });
-      };
     };
 }

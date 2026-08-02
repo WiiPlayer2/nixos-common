@@ -133,6 +133,12 @@ in
         {
           instance = "RAIL";
         }
+        {
+          app_id = "org.gnome.Calculator";
+        }
+        {
+          app_id = "me.iepure.devtoolbox";
+        }
       ];
     };
     extraConfig = ''
