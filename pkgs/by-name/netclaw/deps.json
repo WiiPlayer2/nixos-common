@@ -391,8 +391,8 @@
   },
   {
     "pname": "Grpc.Tools",
-    "version": "2.82.0",
-    "hash": "sha256-5yYsikQ12205O5Gd5LoUELbO0xhm35joNFb5Accygz4="
+    "version": "2.83.0",
+    "hash": "sha256-yvakvrmuQYZSUN4KxDN5odP4XL3h+1qg/Jhzjq5HyuU="
   },
   {
     "pname": "HtmlAgilityPack",
@@ -1316,8 +1316,8 @@
   },
   {
     "pname": "OllamaSharp",
-    "version": "5.4.27",
-    "hash": "sha256-MfIqtu1ZRSKs8XtdrDSiHVIElQLnQap5nq0B6FjqMPE="
+    "version": "5.4.30",
+    "hash": "sha256-E+8tdjfeALMn+HydwzrtNd/k8gz14IxJUC6lDDtn5CY="
   },
   {
     "pname": "OpenAI",
