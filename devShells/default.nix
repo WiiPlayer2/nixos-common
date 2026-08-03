@@ -93,7 +93,9 @@
                   fi
                 done
 
-                deploy --skip-checks .#"$TARGET" "''${_deployRsArgs[@]}" -- --override-input common path:"$FLAKE_ROOT"/flakes/common --log-format internal-json --verbose --fallback "''${_nixArgs[@]}" |& nom --json
+                # copying path is not really shown, also the build is kinda not shown
+                # deploy --skip-checks .#"$TARGET" "''${_deployRsArgs[@]}" -- --override-input common path:"$FLAKE_ROOT"/flakes/common --log-format internal-json --verbose --fallback "''${_nixArgs[@]}" |& nom --json
+                deploy --skip-checks .#"$TARGET" "''${_deployRsArgs[@]}" -- --override-input common path:"$FLAKE_ROOT"/flakes/common --print-build-logs --fallback "''${_nixArgs[@]}"
               '';
             })
             (writeShellApplication {
