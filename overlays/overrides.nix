@@ -184,11 +184,7 @@ in
           overrideFn =
             x:
             x.overrideAttrs (attrs: {
-              preFixup = (attrs.preFixup or "") + ''
-                patchelf --replace-needed libstdc++.so.6 libstdc++.so $out/rider/lib/ReSharperHost/linux-x64/JetBrains.ProcessEnumerator.Worker
-                patchelf --replace-needed libstdc++.so.6 libstdc++.so $out/rider/lib/ReSharperHost/linux-x64/JetBrains.Debugger.Worker
-                patchelf --replace-needed libstdc++.so.6 libstdc++.so $out/rider/lib/ReSharperHost/linux-x64/Rider.Backend
-              '';
+              appendRunpaths = (attrs.appendRunpaths or [ ]) ++ [ "${final.stdenv.cc.cc.lib}/lib" ];
             });
         };
       };

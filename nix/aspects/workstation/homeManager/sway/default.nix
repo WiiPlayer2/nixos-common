@@ -55,8 +55,8 @@ in
           "${modifier}+s" = mkOverride 90 "floating enable, sticky toggle";
 
           # Screenshots
-          "Print" = mkOverride 90 "exec dms ipc quickCapture screenshot all";
-          "Control+Print" = mkOverride 90 "exec dms ipc quickCapture screenshot region";
+          "Print" = mkOverride 90 "exec dms ipc quickCapture screenshot all edit";
+          "Control+Print" = mkOverride 90 "exec dms ipc quickCapture screenshot region edit";
           # "Mod1+Print" = mkOverride 90 "exec --no-startup-id ${getExe pkgs.shutter} --active";
 
           # Audio
