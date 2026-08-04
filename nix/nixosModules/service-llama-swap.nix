@@ -123,6 +123,10 @@ in
                     "--gpu-layers"
                     "all"
                     "--jinja"
+                    "--cache-type-k"
+                    "q4_0"
+                    "--cache-type-v"
+                    "q4_0"
                   ]
                   ++ optionals (v.filePath != null) [
                     "-m"
