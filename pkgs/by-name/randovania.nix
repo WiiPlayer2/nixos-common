@@ -16,10 +16,10 @@
 }:
 let
   pname = "randovania";
-  version = "10.9.0";
+  version = "10.10.0";
   src = fetchzip {
     url = "https://github.com/randovania/randovania/releases/download/v${version}/randovania-${version}-linux.tar.gz";
-    hash = "sha256-0QriKkh8SJgNn1PWFcQgEH51wcjUADf72taU22eehCg=";
+    hash = "sha256-Y+lqa17f2kTVrgbj4fydoYC3hVKDobksEf7tb5sdnqI=";
   };
 in
 stdenv.mkDerivation {
