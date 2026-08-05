@@ -1,5 +1,7 @@
-// based on https://github.com/goniz/opencode-local-provider/tree/main
+// loosely based on https://github.com/goniz/opencode-local-provider/tree/main
 import { z } from "zod"
+
+const BASE_URL = "http://localhost:5000/v1"
 
 const ModelsResponseSchema = z.object({
   data: z
@@ -12,8 +14,8 @@ const ModelsResponseSchema = z.object({
     .optional(),
 })
 
-async function probeModels() {
-  const res = await fetch("http://localhost:5000/v1/models", {
+async function probeModels(baseUrl: string) {
+  const res = await fetch(baseUrl + "/models", {
     signal: AbortSignal.timeout(1000),
   })
   if (!res.ok) throw new Error(`generic provider probe failed: ${res.status}`)
@@ -37,16 +39,18 @@ export const GenericProviderPlugin = async (ctx) => {
   return {
     config: async (cfg) => {
       cfg.provider ??= {}
+      // TODO: find providers by existing configuration e.g. npm package or extra config key
       const provider = cfg.provider["generic"] ?? {}
       // TODO: use configured upstream url(s)
       cfg.provider["generic"] = {
         ...provider,
         name: provider.name ?? "Generic Provider",
         npm: provider.npm ?? "@ai-sdk/openai-compatible",
-        models: await probeModels(ctx),
         options: {
-          baseURL: "http://localhost:5000/v1"
-        }
+          ...(provider.options ?? {}),
+          baseURL: BASE_URL,
+        },
+        models: await probeModels(BASE_URL),
       }
     },
   }
