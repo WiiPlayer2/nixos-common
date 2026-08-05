@@ -10,7 +10,9 @@ with lib;
     enable = true;
     polarity = "dark";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-    image = config.my.assets.files.wallpaper.landscape."6a826504a7a871124e8184fcc519bd83.sfw.jpg";
+    image =
+      mkDefault
+        config.my.assets.files.wallpaper.landscape."6a826504a7a871124e8184fcc519bd83.sfw.jpg";
     fonts = with pkgs; rec {
       sansSerif = serif;
       serif = {
