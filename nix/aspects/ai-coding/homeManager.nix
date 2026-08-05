@@ -168,5 +168,19 @@ in
         }
       }
     '';
+    "opencode/plugins" = {
+      source = ./_plugins;
+      recursive = true;
+      force = true;
+      onChange = ''
+        find ~/.config/opencode/plugins -type d -exec chmod +w {} \;
+        for linkname in $(find ~/.config/opencode/plugins -type l); do
+          _realpath="$(realpath "$linkname")"
+          rm -vf "$linkname"
+          cp -vrf "$_realpath" "$linkname"
+        done
+        find ~/.config/opencode/plugins -type d -exec chmod +w {} \;
+      '';
+    };
   };
 }
