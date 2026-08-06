@@ -72,6 +72,15 @@ in
         #     "qwen3.5-0.8b"
         #   ];
         # };
+        matrix = {
+          vars = {
+            "08b" = "qwen3.5-0.8b:DEFAULT";
+            "9b" = "qwen3.5-9b:DEFAULT";
+          };
+          sets = {
+            standard = "08b & 9b";
+          };
+        };
       };
 
       llama-server = {
