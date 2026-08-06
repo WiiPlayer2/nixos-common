@@ -10,6 +10,7 @@
       audio.feedback = {
         enabled = true;
       };
+      meeting.enabled = true;
       whisper = {
         model = "base";
         language = [
