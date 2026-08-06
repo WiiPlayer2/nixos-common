@@ -12,7 +12,7 @@
 with lib;
 let
   pname = "CrispASR";
-  version = "0.8.25";
+  version = "ios-xcframework-20260727";
   src = fetchFromGitHub {
     owner = "CrispStrobe";
     repo = pname;
