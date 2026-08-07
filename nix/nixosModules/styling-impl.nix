@@ -28,6 +28,9 @@ with lib;
   stylix = {
     enable = true;
 
+    polarity = "dark";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+
     /*
       https://danbooru.donmai.us/posts/6751881?q=izayoi_sakuya+width%3A%3E%3D1920+height%3A%3E%3D1080+blood
       https://danbooru.donmai.us/posts/6040751?q=izayoi_sakuya+width%3A%3E%3D1920+height%3A%3E%3D1080+blood

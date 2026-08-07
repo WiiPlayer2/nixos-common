@@ -45,4 +45,6 @@
       inputs.self.homeModules.core
     ];
   };
+
+  networking.networkmanager.enable = true;
 }
