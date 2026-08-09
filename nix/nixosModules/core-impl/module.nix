@@ -1,4 +1,8 @@
 { inputs, ... }:
+{ lib, pkgs, ... }:
+let
+  inherit (lib) getExe';
+in
 {
   imports = [
     inputs.self.nixosModules.lix
@@ -37,7 +41,8 @@
   ];
 
   home-manager = {
-    backupFileExtension = "bak";
+    # backupFileExtension = "bak";
+    backupCommand = getExe' pkgs.trash-cli "trash-put"; # Put into trash
     useGlobalPkgs = true;
     useUserPackages = true;
     users.root = { };
@@ -47,4 +52,13 @@
   };
 
   networking.networkmanager.enable = true;
+
+  virtualisation.vmVariant = inputs.self.nixosModules.virtualisation-qemu-vm;
+
+  programs.zsh.enable = true;
+
+  users = {
+    defaultUserShell = pkgs.zsh;
+    # users.root.useDefaultShell = true;
+  };
 }

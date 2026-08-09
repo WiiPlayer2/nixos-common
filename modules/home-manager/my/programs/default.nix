@@ -5,19 +5,13 @@
     ./direnv.nix
     ./_enable.nix
     ./firefox.nix
-    ./fzf.nix
     ./git.nix
-    ./helix.nix
     ./keepassxc.nix
     ./mangohud.nix
     ./nix-index.nix
-    ./ripgrep.nix
     ./rofi.nix
     ./ssh.nix
-    ./starship.nix
     ./vscode.nix
-    ./zoxide.nix
-    ./zsh.nix
     ./i3status-rust
     ./wezterm
   ];

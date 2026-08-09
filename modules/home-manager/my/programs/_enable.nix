@@ -2,8 +2,6 @@
 with lib;
 let
   programs = [
-    "bat"
-    "ripgrep-all"
     "direnv"
   ];
 in
