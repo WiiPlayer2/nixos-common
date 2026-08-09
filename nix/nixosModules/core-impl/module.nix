@@ -57,8 +57,5 @@ in
 
   programs.zsh.enable = true;
 
-  users = {
-    defaultUserShell = pkgs.zsh;
-    # users.root.useDefaultShell = true;
-  };
+  users.defaultUserShell = pkgs.zsh;
 }
