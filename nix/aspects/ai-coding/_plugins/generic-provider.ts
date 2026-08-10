@@ -42,15 +42,17 @@ export const GenericProviderPlugin = async (ctx) => {
       // TODO: find providers by existing configuration e.g. npm package or extra config key
       const provider = cfg.provider["generic"] ?? {}
       // TODO: use configured upstream url(s)
+      const providerOptions = provider.options ?? {}
+      const baseUrl = providerOptions.baseURL ?? BASE_URL
       cfg.provider["generic"] = {
         ...provider,
         name: provider.name ?? "Generic Provider",
         npm: provider.npm ?? "@ai-sdk/openai-compatible",
         options: {
-          ...(provider.options ?? {}),
-          baseURL: BASE_URL,
+          ...providerOptions,
+          baseURL: baseUrl,
         },
-        models: await probeModels(BASE_URL),
+        models: await probeModels(baseUrl),
       }
     },
   }
