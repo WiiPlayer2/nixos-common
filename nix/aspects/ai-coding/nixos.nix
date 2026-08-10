@@ -63,19 +63,10 @@ in
             "rider-instant"
           ];
         };
-        # TODO: Migrate to matrix and either use fix context sizes or additional configurations
-        # groups.persistent = {
-        #   persistent = true;
-        #   swap = false;
-        #   exclusive = false;
-        #   members = [
-        #     "qwen3.5-0.8b"
-        #   ];
-        # };
         matrix = {
           vars = {
-            "08b" = "qwen3.5-0.8b:DEFAULT";
-            "9b" = "qwen3.5-9b:DEFAULT";
+            "08b" = "qwen3.5-0.8b:DEFAULT"; # ~2GB
+            "9b" = "qwen3.5-9b:DEFAULT"; # ~8GB
           };
           sets = {
             standard = "08b & 9b";
