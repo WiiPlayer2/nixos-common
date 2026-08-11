@@ -3,7 +3,6 @@
   imports = [
     ./envision.nix
     ./gamemode.nix
-    ./godot.nix
     ./lutris.nix
     ./steam.nix
   ];
