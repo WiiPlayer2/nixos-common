@@ -8,7 +8,8 @@ const ModelsResponseSchema = z.object({
     .array(
       z.object({
         id: z.string(),
-        // owned_by: z.string().optional(),
+        owned_by: z.string().optional(),
+        name: z.string().optional(),
       }),
     )
     .optional(),
@@ -22,9 +23,20 @@ async function probeModels(baseUrl: string) {
   const body = ModelsResponseSchema.parse(await res.json())
   if (!body.data) throw new Error("generic provider probe failed: no data field")
 
-  return Object.fromEntries(body.data.map((item) => [item.id, {
-    name: item.id,
-  }]))
+  return Object.fromEntries(body.data.map((item) => {
+    const model = {
+      name: item.name ?? item.id,
+    }
+
+    if (item.context_length) {
+      model["limit"] = {
+        context: item.context_length,
+        output: item.context_length,
+      }
+    }
+
+    return [item.id, model]
+  }))
 }
 
 export const GenericProviderPlugin = async (ctx) => {
