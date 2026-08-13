@@ -17,6 +17,8 @@ with lib;
   programs.steam = {
     protontricks.enable = true;
     localNetworkGameTransfers.openFirewall = true;
+    remotePlay.openFirewall = true;
+    extest.enable = true;
     extraCompatPackages = with pkgs; [
       steamtinkerlaunch
     ];
