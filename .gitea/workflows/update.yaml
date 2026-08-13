@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   schedule:
     # UTC
-    - cron: '0 4 * * *'
+    - cron: '0 3 * * *'
 
 jobs:
   update_inputs:
