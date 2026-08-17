@@ -16,10 +16,6 @@ in
     notification = false;
   }
   # {
-  #   command = "nitrogen --restore";
-  #   notification = false;
-  # }
-  # {
   #   command = "systemctl --user restart picom";
   #   # notification = false;
   #   always = true;

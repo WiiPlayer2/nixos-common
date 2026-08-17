@@ -19,7 +19,6 @@ in
       # i3status-rust
       i3lock
       i3blocks
-      nitrogen
       brightnessctl
       nerd-fonts.symbols-only
       speedtest-cli

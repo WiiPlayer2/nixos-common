@@ -154,25 +154,6 @@ in
       #   extraInfo = "Updated version to 6.8.1";
       # };
 
-      git-sim = patchPinned {
-        pkg = prev.git-sim;
-        version = "0.3.5";
-        overrideFn =
-          x:
-          x.override {
-            packageOverrides = pfinal: pprev: {
-              cloup = pprev.cloup.overrideAttrs (
-                finalAttrs: prevAttrs: {
-                  postPatch = ''
-                    substituteInPlace setup.py \
-                      --replace-fail "setuptools_scm<10" setuptools_scm
-                  '';
-                }
-              );
-            };
-          };
-      };
-
       jetbrains = prev.jetbrains // {
         rider = patchPinned {
           pkg = prev.jetbrains.rider;
@@ -188,6 +169,24 @@ in
               appendRunpaths = (attrs.appendRunpaths or [ ]) ++ [ "${final.stdenv.cc.cc.lib}/lib" ];
             });
         };
+      };
+
+      cyanrip = patchPinned {
+        pkg = prev.cyanrip;
+        version = "0.9.3.1";
+        overrideFn =
+          x:
+          x.overrideAttrs (attrs: {
+            patches = (attrs.patches or [ ]) ++ [
+              (final.fetchpatch {
+                url = "https://github.com/cyanreg/cyanrip/commit/7dbbe1122248e91510351900af84a6f7c0464271.patch";
+                hash = "sha256-qiDXNQFINI4QvAQ4+De7OXHnScQT3gSiPtheq+1rTkg=";
+              })
+            ];
+          });
+        extraInfo = ''
+          See https://github.com/cyanreg/cyanrip/issues/142
+        '';
       };
     };
 }

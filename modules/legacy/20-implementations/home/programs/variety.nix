@@ -40,11 +40,6 @@ in
             # echo "ORIGINAL_WP:  $ORIGINAL_WP"
             # echo "MODE:         $MODE"
 
-            # DISPLAY_MAX=$(($(xrandr --listactivemonitors | wc -l)-2))
-            # for i in $(seq 0 $DISPLAY_MAX); do
-            #   nitrogen --set-zoom-fill --save --head=$i "$WP" 2> /dev/null
-            # done
-
             feh --bg-fill "$WP" 2> /dev/null
 
             # XFCE / Lock Screen
