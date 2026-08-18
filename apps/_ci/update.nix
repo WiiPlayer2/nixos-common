@@ -25,7 +25,7 @@
                 fi
 
                 PRE_UPDATE_HASH=$(sha256sum flake.lock)
-                nix flake update $NIX_FLAKE_UPDATE_ARGS
+                nix flake update --fallback $NIX_FLAKE_UPDATE_ARGS
                 POST_UPDATE_HASH=$(sha256sum flake.lock)
 
                 git submodule update --recursive --remote
