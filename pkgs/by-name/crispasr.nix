@@ -12,12 +12,12 @@
 with lib;
 let
   pname = "CrispASR";
-  version = "ios-xcframework-20260727";
+  version = "0.8.29";
   src = fetchFromGitHub {
     owner = "CrispStrobe";
     repo = pname;
     rev = "v${version}";
-    hash = "sha256-mXJCUaTrY3oUm1Wz1Xyqz+qK5YFcJDUXYG+9S5ZU+NI=";
+    hash = "sha256-K2N2HCjED+ZSYXf7StYfthiYSzGvEjyszB6BZY4QlgQ=";
   };
 in
 # whisper-cpp.overrideAttrs {
