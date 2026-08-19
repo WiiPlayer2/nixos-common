@@ -2,7 +2,6 @@
 with lib;
 let
   backports = [
-    (port "nixpkgs-unstable-small" "lact" "0.9.1")
   ];
 
   port =
