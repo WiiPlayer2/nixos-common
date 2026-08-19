@@ -18,15 +18,15 @@
 with lib;
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "screenpipe-app";
-  version = "2.6.21";
+  version = "2.6.59";
   src = fetchFromGitHub {
     owner = "screenpipe";
     repo = "screenpipe";
     rev = "app-v${finalAttrs.version}";
-    hash = "sha256-VKb1I4uFMfGYmS1qgp6gg8jaWp0epG7HN023T3ogImc=";
+    hash = "sha256-RVJrsLv4k1r43rpxmlltTLrI3NEnA3h3LUtJdkdX5vY=";
   };
 
-  cargoHash = "sha256-BfYo0QL17of4jbJ6d2nNfywlqUdgN+FSJ6T46SIcGg8=";
+  cargoHash = "sha256-9hT6JxTBVlDJe76acnsZHrQXka4SpwSSAFD8EvO9KGE=";
   cargoRoot = "apps/screenpipe-app-tauri/src-tauri";
 
   # npmDeps = fetchNpmDeps {
@@ -86,7 +86,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
     # NOTE: Required else we get errors that our fixed-output derivation references store paths
     dontFixup = true;
 
-    outputHash = "sha256-BfYo0QL17of4jbJ6d2nNfywlqUdgN+FSJ6T46SIcGg8=";
+    outputHash = "sha256-9hT6JxTBVlDJe76acnsZHrQXka4SpwSSAFD8EvO9KGE=";
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
   };
