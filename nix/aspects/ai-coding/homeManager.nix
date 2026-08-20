@@ -115,6 +115,7 @@ in
             "sort *" = "allow";
             "cd *" = "allow";
             "rg *" = "allow";
+            "echo *" = "allow";
             "openspec *" = "allow";
             "dotnet test *" = "allow";
             "dotnet build *" = "allow";
