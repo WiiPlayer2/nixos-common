@@ -145,7 +145,7 @@
       flake = false;
     };
     bizhawk = {
-      url = "github:TASEmulators/BizHawk/2.11";
+      url = "github:TASEmulators/BizHawk/2.11.1"; # Archipelago in nixpkgs only supports up to 2.10
       flake = false;
     };
     import-tree.url = "github:vic/import-tree";

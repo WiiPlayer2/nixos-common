@@ -16,6 +16,7 @@
       bizhawk =
         (import inputs.bizhawk {
           system = prev.stdenv.hostPlatform.system;
+          pkgs = final;
         }).emuhawk;
 
       # again no overlay T_T
