@@ -50,8 +50,8 @@ in
       port = 8090;
       settings = {
         healthCheckTimeout = 5 * 60; # 5min
-        globalTTL = 15 * 60; # 15min
-        sendLoadingState = true;
+        globalTTL = 60 * 60; # 15min
+        sendLoadingState = false;
         includeAliasesInList = true;
         models = {
           "qwen3.6-35b:UD-IQ1_M".aliases = [
@@ -92,6 +92,11 @@ in
         models = modelConfigs;
       };
     };
+  };
+
+  systemd.services.llama-swap = {
+    restartIfChanged = false;
+    stopIfChanged = false;
   };
 
   security.sudo.extraRules = [

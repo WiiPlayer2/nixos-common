@@ -133,6 +133,7 @@ in
         };
         model = "local/coding";
         provider = {
+          generic.options.baseURL = mkDefault "http://localhost:8090/v1";
           nollm = {
             name = "noLLM";
             options.baseURL = "http://localhost:5191/v1";
