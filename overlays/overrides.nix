@@ -188,5 +188,14 @@ in
           See https://github.com/cyanreg/cyanrip/issues/142
         '';
       };
+
+      swayfx = patchPinned {
+        pkg = prev.swayfx;
+        version = "0.6";
+        overrideFn = _: final.sway;
+        extraInfo = ''
+          SwayFX had an issue rendering inactive windows as just black.
+        '';
+      };
     };
 }
