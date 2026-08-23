@@ -38,7 +38,6 @@ in
 
   environment.systemPackages = [
     llama-cpp
-    pkgs.llama-proxy
   ]
   ++ (with pkgs; [
     python312Packages.huggingface-hub
@@ -77,8 +76,6 @@ in
       llama-server = {
         package = llama-cpp;
         defaults = {
-          # contextSize = mkDefault (64 * 1024);
-          # commandPrefix = "${getExe pkgs.llama-proxy} --port \${PORT} --";
           dynamicPort = false;
           additionalArgs = [
             "--fit"
