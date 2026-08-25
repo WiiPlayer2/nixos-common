@@ -5,8 +5,19 @@
 }:
 
 let
-  upstreamPackages = ninelore-monoflake-pkgs.linuxPackagesFor linux_cros_latest;
-  crossCompiledPackages = ninelore-monoflake-pkgs.linuxPackagesFor linux_cros_latest.cross-compiled;
+  overrideKernel =
+    kernel:
+    kernel.overrideAttrs (attrs: {
+      passthru = (attrs.passthru or { }) // {
+        features = (attrs.passthru.features or { }) // {
+          efiBootStub = true;
+        };
+      };
+    });
+  upstreamPackages = ninelore-monoflake-pkgs.linuxPackagesFor (overrideKernel linux_cros_latest);
+  crossCompiledPackages = ninelore-monoflake-pkgs.linuxPackagesFor (
+    overrideKernel linux_cros_latest.cross-compiled
+  );
 in
 upstreamPackages
 // {
