@@ -19,6 +19,13 @@ with lib;
             green = ${config.lib.stylix.colors.base00-rgb-g},
             blue = ${config.lib.stylix.colors.base00-rgb-b},
           },
+          -- https://danbooru.donmai.us/posts/11582519
+          bg_file = '${
+            pkgs.fetchurl {
+              url = "https://cdn.donmai.us/original/0a/c9/__izayoi_sakuya_touhou_drawn_by_baba_baba_seimaijo__0ac9eb4dbf0e6d182a862c57c19332b3.png?download=1";
+              hash = "sha256-NeobjV3s1EivmSkMaQ+KJSAm/bido+r7TYE8bjMrNKc=";
+            }
+          }',
           processes = {
             ssh = "#${config.lib.stylix.colors.base0C}",
             sudo = "#${config.lib.stylix.colors.base08}",
