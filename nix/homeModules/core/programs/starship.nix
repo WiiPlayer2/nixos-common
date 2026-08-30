@@ -4,9 +4,11 @@
     enableZshIntegration = true;
     enableBashIntegration = true;
     settings = {
+      format = "[${builtins.fromJSON ''"\udb86\udc87"''}](bold red) $all";
+
       character = {
         success_symbol = "[>](bold green)";
-        error_symbol = "[✗](bold red)";
+        error_symbol = "[>](bold red)";
       };
 
       shell = {

@@ -32,7 +32,7 @@
             nix-eval-jobs
             nix-fast-build
 
-            llm-tools
+            # llm-tools
             nixos-config-tools
 
             (writeShellApplication {
