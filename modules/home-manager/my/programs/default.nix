@@ -13,6 +13,5 @@
     ./ssh.nix
     ./vscode.nix
     ./i3status-rust
-    ./wezterm
   ];
 }

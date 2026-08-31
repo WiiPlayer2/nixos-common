@@ -10,6 +10,7 @@ with lib;
   imports = [
     inputs.inhibridge.homeModules.default
     inputs.self.modules.homeManager.i3wm
+    inputs.self.homeModules.cfg-wezterm
   ];
 
   config = {

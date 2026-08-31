@@ -1,7 +1,6 @@
 {
   imports = [
     ./i3
-    ./wezterm
     ./fonts.nix
     ./autorandr.nix
     ./social
