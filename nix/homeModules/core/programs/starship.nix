@@ -4,20 +4,12 @@
     enableZshIntegration = true;
     enableBashIntegration = true;
     settings = {
-      format = "[${builtins.fromJSON ''"\udb86\udc87"''}](bold red) $all";
-
-      character = {
-        success_symbol = "[>](bold green)";
-        error_symbol = "[>](bold red)";
-      };
-
       shell = {
         disabled = false;
         bash_indicator = builtins.fromJSON ''"\uebca" '';
         pwsh_indicator = builtins.fromJSON ''"\uebc7" '';
         zsh_indicator = builtins.fromJSON ''"\uf0e7" '';
         unknown_indicator = "?";
-        style = "bright-cyan italic";
       };
 
       shlvl = {

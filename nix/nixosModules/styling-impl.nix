@@ -8,14 +8,7 @@
 with lib;
 {
   home-manager.sharedModules = [
-    (
-      { pkgs, ... }:
-      {
-        home.pointerCursor = {
-          enable = true;
-        };
-      }
-    )
+    inputs.self.homeModules.styling
   ];
 
   environment.systemPackages = mkIf config.services.displayManager.enable (
