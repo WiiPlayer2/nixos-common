@@ -157,7 +157,7 @@ in
       corner_radius 10
 
       default_dim_inactive 1.0
-      dim_inactive_colors.unfocused #000000
+      dim_inactive_colors.unfocused #00000080
 
       for_window {
         [title="Picture-in-Picture"] sticky enable
