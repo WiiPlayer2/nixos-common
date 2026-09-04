@@ -12,6 +12,10 @@ let
   pillEndSymbol = "";
   pillSeparatorSymbol = "";
 
+  osUserColor = "red";
+  langColor = "green";
+  envColor = "cyan";
+
   mkPillStart = bg: "[${pillStartSymbol}](fg:${bg})";
   mkPillEnd = bg: "[${pillEndSymbol}](fg:${bg})";
   mkPillTransition = bg: "[${pillSeparatorSymbol}](fg:prev_bg bg:${bg})";
@@ -25,11 +29,11 @@ let
       };
     in
     [
-      (mkPill "$os$username" "red")
+      (mkPill "$os$username$hostname" osUserColor)
       (mkPill "$directory" "orange")
       (mkPill "$git_branch$git_status$git_commit" "yellow")
-      (mkPill "$dotnet$c$rust$golang$nodejs$bun$php$java$kotlin$haskell$python" "green")
-      (mkPill "$all" "cyan")
+      (mkPill "$dotnet$c$rust$golang$nodejs$bun$php$java$kotlin$haskell$python" langColor)
+      (mkPill "$all" envColor)
       (mkPill "$time" "bright-white")
       (mkPill "$shell" "purple")
     ];
@@ -54,11 +58,29 @@ let
 
     in
     format;
+
+  osUserStyle = "fg:black bg:${osUserColor}";
+  langStyle = "bg:${langColor}";
+  envStyle = "bg:${envColor}";
+  mkSimpleStyle = format: style: {
+    inherit style;
+    format = "[ ${format} ]($style)";
+  };
 in
 {
   programs.starship.settings = mkIf config.programs.starship.enable {
     format = "($cmd_duration$status$line_break)${formattedPills}$line_break$character ";
 
+    # Previous Command
+    cmd_duration = {
+      disabled = false;
+      show_milliseconds = true;
+      format = " in $duration ";
+      style = "bg:bright-white";
+      min_time_to_notify = 45000;
+    };
+
+    # OS + User
     os = {
       disabled = false;
       style = "bg:red fg:black";
@@ -92,6 +114,9 @@ in
       style_root = "bg:red fg:black";
       format = "[ $user]($style)";
     };
+    hostname = mkSimpleStyle "$ssh_symbol$hostname" osUserStyle;
+
+    # Directory
     directory = {
       style = "bg:orange fg:black";
       format = "[ $path ]($style)";
@@ -105,6 +130,8 @@ in
         Developer = "󰲋 ";
       };
     };
+
+    # Git
     git_branch = {
       symbol = "";
       style = "bg:yellow";
@@ -118,64 +145,68 @@ in
       style = "bg:yellow";
       format = "[[(\\($hash$tag\\) )](fg:black bg:yellow)]($style)";
     };
+
+    # Languages
     nodejs = {
       symbol = "";
-      style = "bg:green";
+      style = langStyle;
       format = "[[ $symbol( $version) ](fg:black bg:green)]($style)";
     };
     bun = {
       symbol = "";
-      style = "bg:green";
+      style = langStyle;
       format = "[[ $symbol( $version) ](fg:black bg:green)]($style)";
     };
     c = {
       symbol = " ";
-      style = "bg:green";
+      style = langStyle;
       format = "[[ $symbol( $version) ](fg:black bg:green)]($style)";
     };
     rust = {
       symbol = "";
-      style = "bg:green";
+      style = langStyle;
       format = "[[ $symbol( $version) ](fg:black bg:green)]($style)";
     };
     golang = {
       symbol = "";
-      style = "bg:green";
+      style = langStyle;
       format = "[[ $symbol( $version) ](fg:black bg:green)]($style)";
     };
     php = {
       symbol = "";
-      style = "bg:green";
+      style = langStyle;
       format = "[[ $symbol( $version) ](fg:black bg:green)]($style)";
     };
     java = {
       symbol = " ";
-      style = "bg:green";
+      style = langStyle;
       format = "[[ $symbol( $version) ](fg:black bg:green)]($style)";
     };
     kotlin = {
       symbol = "";
-      style = "bg:green";
+      style = langStyle;
       format = "[[ $symbol( $version) ](fg:black bg:green)]($style)";
     };
     haskell = {
       symbol = "";
-      style = "bg:green";
+      style = langStyle;
       format = "[[ $symbol( $version) ](fg:black bg:green)]($style)";
     };
     python = {
       symbol = "";
-      style = "bg:green";
+      style = langStyle;
       format = "[[ $symbol( $version)(\\(#$virtualenv\\)) ](fg:black bg:green)]($style)";
     };
     dotnet = {
       symbol = " ";
-      style = "bg:green";
+      style = langStyle;
       format = "[[ $symbol($version )(🎯 $tfm ) ](fg:black bg:cyan)]($style)";
     };
+
+    # Environments
     docker_context = {
       symbol = "";
-      style = "bg:cyan";
+      style = envStyle;
       format = "[[ $symbol( $context) ](fg:black bg:cyan)]($style)";
     };
     conda = {
@@ -183,20 +214,6 @@ in
       style = "fg:black bg:cyan";
       format = "[$symbol$environment ]($style)";
       ignore_base = false;
-    };
-    time = {
-      disabled = false;
-      time_format = "%R";
-      style = "bg:bright-white";
-      format = "[[  $time ](fg:black bg:bright-white)]($style)";
-    };
-    # line_break = {
-    #   disabled = true;
-    # };
-    nix_shell = {
-      symbol = " ";
-      style = "fg:black bg:cyan";
-      format = "[ $symbol$name ]($style)";
     };
     direnv = {
       symbol = "  ";
@@ -207,6 +224,32 @@ in
       style = "fg:black bg:cyan";
       format = "[ $symbol\\($loaded$allowed\\) ]($style)";
     };
+    nix_shell = {
+      symbol = " ";
+      style = "fg:black bg:cyan";
+      format = "[ $symbol$name ]($style)";
+    };
+    shlvl = {
+      style = "fg:black bg:cyan";
+      format = "[ $symbol$shlvl ]($style)";
+    };
+    kubernetes = mkSimpleStyle "$symbol$context( \($namespace\))" envStyle;
+    helm = mkSimpleStyle "$symbol($version)" envStyle;
+
+    # Time
+    time = {
+      disabled = false;
+      time_format = "%R";
+      style = "bg:bright-white";
+      format = "[[  $time ](fg:black bg:bright-white)]($style)";
+    };
+
+    # Shell
+    shell = {
+      style = "fg:black bg:purple";
+      format = "[ $indicator ]($style)";
+    };
+
     character = {
       disabled = false;
       success_symbol = "[󱢇](bold fg:green)";
@@ -215,22 +258,6 @@ in
       vimcmd_replace_one_symbol = "[❮](bold fg:bright-white)";
       vimcmd_replace_symbol = "[❮](bold fg:bright-white)";
       vimcmd_visual_symbol = "[❮](bold fg:yellow)";
-    };
-    shell = {
-      style = "fg:black bg:purple";
-      format = "[ $indicator ]($style)";
-    };
-    shlvl = {
-      style = "fg:black bg:cyan";
-      format = "[ $symbol$shlvl ]($style)";
-    };
-    cmd_duration = {
-      disabled = false;
-      show_milliseconds = true;
-      format = " in $duration ";
-      style = "bg:bright-white";
-      # show_notifications = true;
-      min_time_to_notify = 45000;
     };
   };
 }

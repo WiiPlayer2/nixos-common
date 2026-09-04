@@ -158,6 +158,7 @@ in
 
       default_dim_inactive 1.0
       dim_inactive_colors.unfocused #00000080
+      dim_inactive_colors.urgent #ff000080
 
       for_window {
         [title="Picture-in-Picture"] sticky enable
