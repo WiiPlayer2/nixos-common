@@ -24,7 +24,7 @@ let
       steam-run-free
     ];
     text = ''
-      steam-run "${tool}/The Wind Waker Archipelago Randomizer"
+      steam-run "${tool}/The Wind Waker Archipelago Randomizer" "$@"
     '';
   };
   desktopItem = makeDesktopItem {

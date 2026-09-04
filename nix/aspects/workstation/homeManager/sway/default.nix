@@ -161,8 +161,8 @@ in
       dim_inactive_colors.urgent #ff000080
 
       for_window {
-        [title="Picture-in-Picture"] sticky enable
-        [title="Picture in picture"] sticky enable
+        [title="Picture-in-Picture"] sticky enable, dim_inactive 0.0
+        [title="Picture in picture"] sticky enable, dim_inactive 0.0
         [app_id="Variety" title="Variety Images"] sticky enable
         [class="Overlayed" title="Overlayed - Main"] sticky enable, blur disable, shadows disable
         [app_id="org.keepassxc.KeePassXC"] sticky enable
