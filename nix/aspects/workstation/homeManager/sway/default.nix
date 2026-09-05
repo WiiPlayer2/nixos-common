@@ -106,6 +106,7 @@ in
         "10: Comm" = [
           { app_id = "fluffychat"; }
           { class = "discord"; }
+          { app_id = "discord"; }
           { app_id = "thunderbird"; }
           { app_id = "teams-for-linux"; }
           { class = "davmail-DavGateway"; }
