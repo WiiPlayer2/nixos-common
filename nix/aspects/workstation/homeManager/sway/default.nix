@@ -111,6 +111,7 @@ in
           { app_id = "teams-for-linux"; }
           { class = "davmail-DavGateway"; }
           { app_id = "OneDriveGUI"; }
+          { app_id = "zulip"; }
         ];
       };
       floating.criteria = [
