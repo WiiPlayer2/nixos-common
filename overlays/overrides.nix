@@ -188,5 +188,19 @@ in
           See https://github.com/cyanreg/cyanrip/issues/142
         '';
       };
+
+      llama-cpp = patchPinned {
+        pkg = prev.llama-cpp;
+        version = "10408";
+        overrideFn =
+          x:
+          x.overrideAttrs (attrs: {
+            version = "10831";
+            src = attrs.src.override {
+              tag = "v10831";
+              hash = "sha256-n540xQnFJOwpyRUXtHrv4/kHU3hguVJQUvanx2ZChR4=";
+            };
+          });
+      };
     };
 }
