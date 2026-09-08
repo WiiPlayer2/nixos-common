@@ -191,14 +191,14 @@ in
 
       llama-cpp = patchPinned {
         pkg = prev.llama-cpp;
-        version = "10408";
+        version = "0.3.0";
         overrideFn =
           x:
           x.overrideAttrs (attrs: {
-            version = "10831";
+            version = "0.4.0";
             src = attrs.src.override {
-              tag = "v10831";
-              hash = "sha256-n540xQnFJOwpyRUXtHrv4/kHU3hguVJQUvanx2ZChR4=";
+              tag = "v0.4.0";
+              hash = "sha256-WImZjO3U9EXZUNP/FMpxo8PaTjQW8X2SBTfGwwFlZIM=";
             };
           });
       };
