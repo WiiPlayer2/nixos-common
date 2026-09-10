@@ -145,6 +145,10 @@ in
           app_id = "teams-for-linux";
           title = "Teams for Linux - Screen is being shared";
         }
+        {
+          app_id = "superproductivity";
+          title = "Super Productivity Task Widget";
+        }
       ];
     };
     extraConfig = ''
@@ -171,6 +175,7 @@ in
         # [app_id="teams-for-linux" floating] sticky enable, resize set 320 240, move position 5 ppt 5 ppt # WIP
         [app_id="teams-for-linux" title="Teams for Linux - Screen is being shared"] sticky enable, resize set 320 240, move position 5 ppt 5 ppt, border pixel
         [app_id="one.alynx.showmethekey" title="Floating Window - Show Me The Key"] floating enable, sticky enable
+        [app_id="superproductivity" title="Super Productivity Task Widget"] sticky enable
 
         [app_id="wdisplays"] resize set 50 ppt 50 ppt
         [class="steam" title="Friends List"] resize set 400 800
