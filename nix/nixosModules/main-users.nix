@@ -26,7 +26,9 @@ in
     };
 
     userModule = mkOption {
-      type = options.users.users.type.nestedTypes.elemType;
+      # TODO: check if there is a way to use the submodule type without fucking everything up
+      # type = options.users.users.type.nestedTypes.elemType;
+      type = types.attrs;
       default = { };
     };
   };
