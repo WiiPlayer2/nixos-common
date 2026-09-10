@@ -12,7 +12,7 @@ with lib;
     inputs.self.modules.nixos.i3wm
   ];
 
-  home-manager.sharedModules = [
+  darklink.mainUsers.homeModules = [
     inputs.self.homeModules.profile-workstation
   ];
 

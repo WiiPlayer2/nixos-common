@@ -101,30 +101,31 @@ in
           # "@prevalentware/opencode-goal-plugin" # I think it behaves weirdly even when not directly used with /goal
         ];
         permission = {
-          bash = {
-            "*" = "ask";
-            "ls *" = "allow";
-            "find *" = "allow";
-            "read *" = "allow";
-            "head *" = "allow";
-            "tail *" = "allow";
-            "grep *" = "allow";
-            "cat *" = "allow";
-            "wc *" = "allow";
-            "awk *" = "allow";
-            "sort *" = "allow";
-            "cd *" = "allow";
-            "rg *" = "allow";
-            "echo *" = "allow";
-            "openspec *" = "allow";
-            "dotnet test *" = "allow";
-            "dotnet build *" = "allow";
-            "git diff *" = "allow";
-            "git status *" = "allow";
-            "git log *" = "allow";
-            "git grep *" = "allow";
-            "git show *" = "allow";
-          };
+          # Just allow bash for now; will move to container based execution in the future
+          # bash = {
+          #   "*" = "ask";
+          #   "ls *" = "allow";
+          #   "find *" = "allow";
+          #   "read *" = "allow";
+          #   "head *" = "allow";
+          #   "tail *" = "allow";
+          #   "grep *" = "allow";
+          #   "cat *" = "allow";
+          #   "wc *" = "allow";
+          #   "awk *" = "allow";
+          #   "sort *" = "allow";
+          #   "cd *" = "allow";
+          #   "rg *" = "allow";
+          #   "echo *" = "allow";
+          #   "openspec *" = "allow";
+          #   "dotnet test *" = "allow";
+          #   "dotnet build *" = "allow";
+          #   "git diff *" = "allow";
+          #   "git status *" = "allow";
+          #   "git log *" = "allow";
+          #   "git grep *" = "allow";
+          #   "git show *" = "allow";
+          # };
           # webfetch = "ask"; # Doesn't work for subagents in Rider
         };
         lsp = {

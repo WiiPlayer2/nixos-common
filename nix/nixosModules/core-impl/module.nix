@@ -6,6 +6,7 @@ in
 {
   imports = [
     inputs.self.nixosModules.lix
+    inputs.self.nixosModules.main-users
   ];
 
   age = {
