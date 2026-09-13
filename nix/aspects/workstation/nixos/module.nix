@@ -2,7 +2,7 @@
 { pkgs, ... }:
 {
   imports = [
-    inputs.dms.nixosModules.greeter
+    inputs.dank-greeter.nixosModules.default
 
     inputs.self.nixosModules.profile-interactive
   ];

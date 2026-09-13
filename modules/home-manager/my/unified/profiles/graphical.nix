@@ -10,7 +10,6 @@ with lib;
 
   config = mkIf config.unified.profiles.graphical.enable {
     home.packages = with pkgs; [
-      firefox
       arandr
       sxcs
       # xmagnify # broken since 2025-11-23 without maintainer

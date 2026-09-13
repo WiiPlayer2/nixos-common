@@ -25,7 +25,6 @@ in
 
         vim
         nano
-        code-server
 
         git
         openssh

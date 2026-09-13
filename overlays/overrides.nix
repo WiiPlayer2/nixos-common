@@ -189,18 +189,14 @@ in
         '';
       };
 
-      llama-cpp = patchPinned {
-        pkg = prev.llama-cpp;
-        version = "0.3.0";
+      libcap_ng = patchPinned {
+        pkg = prev.libcap_ng;
+        version = "0.9.5";
         overrideFn =
           x:
-          x.overrideAttrs (attrs: {
-            version = "0.4.0";
-            src = attrs.src.override {
-              tag = "v0.4.0";
-              hash = "sha256-WImZjO3U9EXZUNP/FMpxo8PaTjQW8X2SBTfGwwFlZIM=";
-            };
-          });
+          x.overrideAttrs {
+            doCheck = !final.stdenv.hostPlatform.isStatic;
+          };
       };
     };
 }

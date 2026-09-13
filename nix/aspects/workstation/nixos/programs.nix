@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 let
   greeterSwayidle = null;
@@ -20,8 +25,9 @@ in
     };
 
     dsearch.enable = true;
-    dank-material-shell.greeter = {
+    dms-greeter = {
       enable = true;
+      configHome = config.users.users.${builtins.elemAt config.darklink.mainUsers.users 0}.home;
       compositor = {
         name = "sway";
         # Turn off display after 15 minutes

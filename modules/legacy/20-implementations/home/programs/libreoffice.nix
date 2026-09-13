@@ -11,7 +11,7 @@ in
 {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      libreoffice-qt6-fresh
+      libreoffice-qt-stable
     ];
   };
 }

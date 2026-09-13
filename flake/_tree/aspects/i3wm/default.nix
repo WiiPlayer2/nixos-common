@@ -27,7 +27,7 @@ with lib;
             IdleAction = "lock";
             IdleActionSec = "5s";
           };
-          dbus.packages = [ pkgs.gcr ];
+          # dbus.packages = [ pkgs.gcr ];
         };
 
         security = {
