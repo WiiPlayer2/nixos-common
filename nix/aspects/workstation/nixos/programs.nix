@@ -32,6 +32,9 @@ in
         name = "sway";
         # Turn off display after 15 minutes
         customConfig = ''
+          input "*" {
+            xkb_layout de
+          }
           exec ${getExe pkgs.swayidle} -d -w timeout 900 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
         '';
       };
