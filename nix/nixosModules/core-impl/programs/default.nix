@@ -5,4 +5,8 @@
     pciutils
     (pkgs.callPackage ./_scripts/nix-cleanup.nix { })
   ];
+
+  programs = {
+    pay-respects.enable = true;
+  };
 }
