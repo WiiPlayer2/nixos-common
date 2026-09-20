@@ -62,7 +62,7 @@ with lib;
       };
       nixPackageRunner = installAndEnable;
       ocrScanner = installAndEnable;
-      qrGenerator = installAndEnable;
+      # qrGenerator = installAndEnable; # apparently removed from registry
       quickCapture = {
         enable = true;
         src = mkForce (

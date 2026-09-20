@@ -60,7 +60,7 @@ with lib;
           centerWidgets = [
             "clipboard"
             "ocrScanner"
-            "qrGenerator"
+            # "qrGenerator"
             "colorPicker"
             "notepadButton"
           ];

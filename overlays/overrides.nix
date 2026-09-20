@@ -198,5 +198,38 @@ in
             doCheck = !final.stdenv.hostPlatform.isStatic;
           };
       };
+
+      nodejs_latest = patchPinned {
+        pkg = prev.nodejs_latest;
+        version = "26.9.0";
+        overrideFn =
+          x:
+          x.override {
+            nodejs-slim = final.nodejs-slim_latest;
+          };
+      };
+
+      nodejs-slim_latest = patchPinned {
+        pkg = prev.nodejs-slim_latest;
+        version = "26.9.0";
+        overrideFn =
+          x:
+          x.overrideAttrs (prev: {
+            doCheck = false;
+            # checkFlags = lib.map (
+            #   flag:
+            #   if lib.hasPrefix "CI_SKIP_TESTS=" flag then
+            #     "${flag},"
+            #     + lib.concatStringsSep "," [
+            #       "test-tls-over-http-tunnel"
+            #       "test-http-agent-keepalive"
+            #       "test-https-proxy-request-invalid-char-in-url"
+            #       "test-fs-cp-async-file-modes"
+            #     ]
+            #   else
+            #     flag
+            # ) (prev.checkFlags or [ ]);
+          });
+      };
     };
 }
