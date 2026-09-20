@@ -95,6 +95,7 @@
       url = "github:NuschtOS/search";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # /nix/store/0kl3m2cizxz8prszhn6w0v6jz9i6p4k9-source
     ninelore-monoflake = {
       url = "github:ninelore/flake";
     };
