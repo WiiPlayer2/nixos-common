@@ -144,6 +144,9 @@
       url = "github:winapps-org/winapps";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # opencode.url = "github:anomalyco/opencode/v1.18.27";
+    # opencode.url = "github:anomalyco/opencode/v1.18.31";
+    opencode.url = "github:anomalyco/opencode/dev";
 
     dms-wallpaperengine = {
       url = "github:WiiPlayer2/dms-wallpaperengine?ref=feature/all-monitors";
