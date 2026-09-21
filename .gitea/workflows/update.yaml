@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: cachix/install-nix-action@v31
-      - uses: ryanccn/attic-action@v0.5.1
+      - uses: ryanccn/attic-action@v0.5.2
         with:
           endpoint: ${{ secrets.ATTIC_ENDPOINT }}
           cache: ${{ secrets.ATTIC_CACHE }}
