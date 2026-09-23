@@ -37,6 +37,8 @@ in
           }
           exec ${getExe pkgs.swayidle} -d -w timeout 900 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
         '';
+
+        # name = "niri";
       };
     };
 
