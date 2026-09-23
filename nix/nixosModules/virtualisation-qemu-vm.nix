@@ -12,7 +12,7 @@ in
       options = [
         "-device virtio-vga-gl"
         # "-display sdl,gl=on,show-cursor=off"
-        "-display spice-app,gl=on,show-cursor=off"
+        "-display spice-app,gl=on,show-cursor=on"
 
         # Wire up pipewire audio
         "-audiodev pipewire,id=audio0"
