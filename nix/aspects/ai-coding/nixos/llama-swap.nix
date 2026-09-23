@@ -1,18 +1,22 @@
-{ inputs, ... }:
 {
   lib,
   config,
   pkgs,
   ...
 }:
-with lib;
 let
+  inherit (lib)
+    mapAttrs'
+    getExe'
+    mkIf
+    ;
+
   llama-cpp = pkgs.llama-cpp.override {
     vulkanSupport = true;
     rocmSupport = false; # explicitly disabled, because unstable
   };
 
-  modelsLib = import ./_models_lib.nix { inherit lib; };
+  modelsLib = import ../_models_lib.nix { inherit lib; };
   toModelConfig =
     id:
     {
@@ -32,10 +36,6 @@ let
   modelConfigs = mapAttrs' toModelConfig modelsLib.modelVariants;
 in
 {
-  imports = [
-    inputs.self.nixosModules.service-llama-swap
-  ];
-
   environment.systemPackages = [
     llama-cpp
   ]
