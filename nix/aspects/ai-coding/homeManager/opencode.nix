@@ -105,22 +105,7 @@ in
         csharp.command = [ "${getExe pkgs.csharp-ls}" ];
       };
       model = "local/coding";
-      provider = {
-        generic.options.baseURL = mkDefault "http://localhost:8090/v1";
-        nollm = {
-          name = "noLLM";
-          options.baseURL = "http://localhost:5191/v1";
-          models.nollm.name = "noLLM";
-        };
-        "local" = {
-          name = "local";
-          options.baseURL = "http://localhost:8090/v1";
-          models = {
-            coding.name = "Coding";
-          }
-          // modelConfigs;
-        };
-      };
+      provider.generic.options.baseURL = mkDefault "http://localhost:8090/v1";
     };
   };
 
