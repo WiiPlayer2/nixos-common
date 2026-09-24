@@ -220,6 +220,33 @@ in
             clip-to-geometry = true;
           };
         }
+        {
+          window-rule = {
+            match._props.is-floating = true;
+            baba-is-float = true;
+          };
+        }
+        {
+          window-rule = {
+            match._props.app-id = ''^org\.wezfurlong\.wezterm$'';
+            default-column-width = { };
+          };
+        }
+        {
+          window-rule = {
+            match._props = {
+              app-id = "firefox$";
+              title = "^Picture-in-Picture$";
+            };
+            open-floating = true;
+          };
+        }
+        {
+          window-rule = {
+            match._props.app-id = ''^org\.keepassxc\.KeePassXC$'';
+            block-out-from = "screen-capture";
+          };
+        }
       ];
     };
   };
