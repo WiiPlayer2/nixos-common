@@ -8,12 +8,12 @@ in
     checkConfig = false; # Needed because of the DMS includes below
     extraConfig = ''
       // DMS
-      include "dms/alttab.kdl"
-      include "dms/binds.kdl"
-      include "dms/colors.kdl"
-      include "dms/cursor.kdl"
-      include "dms/layout.kdl"
-      include "dms/outputs.kdl"
+      // include "dms/alttab.kdl"
+      // include "dms/binds.kdl"
+      // include "dms/colors.kdl"
+      // include "dms/cursor.kdl"
+      // include "dms/layout.kdl"
+      // include "dms/outputs.kdl"
       include "dms/windowrules.kdl"
       include "dms/wpblur.kdl"
     '';
@@ -204,7 +204,11 @@ in
         # Applications
         "${modifier}+Return".spawn = [ "wezterm" ];
 
-        # Windows
+        # Windows & Workspaces
+        "${modifier}+Control+Left".move-workspace-to-monitor-left = { };
+        "${modifier}+Control+Right".move-workspace-to-monitor-right = { };
+        "${modifier}+Control+Up".move-workspace-to-monitor-up = { };
+        "${modifier}+Control+Down".move-workspace-to-monitor-down = { };
         # "${modifier}+Shift+Q"
       };
 

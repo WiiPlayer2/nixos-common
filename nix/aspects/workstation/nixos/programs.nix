@@ -14,10 +14,17 @@ with lib;
     niri.enable = true;
     uwsm = {
       enable = true;
-      waylandCompositors.sway = {
-        prettyName = "Sway";
-        comment = "Sway compositor managed by UWSM";
-        binPath = "/run/current-system/sw/bin/sway";
+      waylandCompositors = {
+        sway = {
+          prettyName = "Sway";
+          comment = "Sway compositor managed by UWSM";
+          binPath = "/run/current-system/sw/bin/sway";
+        };
+        niri = {
+          prettyName = "niri";
+          comment = "niri managed by UWSM";
+          binPath = "/run/current-system/sw/bin/niri-session";
+        };
       };
     };
 
