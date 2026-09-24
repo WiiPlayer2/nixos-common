@@ -112,6 +112,13 @@ with lib;
       osdPowerProfileEnabled = true;
       showWorkspaceName = true;
 
+      # Workspaces
+      showWorkspaceApps = true;
+      workspaceActiveAppHighlightEnabled = true;
+      workspaceUnfocusedMonitorBorderEnabled = true;
+      workspaceUnfocusedMonitorColorMode = "none";
+      workspaceUnfocusedMonitorSeparateAppearance = true;
+
       # Notifications
       # Notification Popups
       notificationPopupPosition = 3; # bottom right
