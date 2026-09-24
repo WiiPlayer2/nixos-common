@@ -34,7 +34,7 @@ in
         };
 
         focus-follows-mouse._props = {
-          max-scroll-amount = "10%";
+          max-scroll-amount = "25%";
         };
         workspace-auto-back-and-forth = { };
       };
