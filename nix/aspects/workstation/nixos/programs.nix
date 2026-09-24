@@ -5,16 +5,13 @@
   ...
 }:
 with lib;
-let
-  greeterSwayidle = null;
-in
 {
   programs = {
     sway = {
       enable = true;
       package = pkgs.swayfx;
     };
-    # niri.enable = true;
+    niri.enable = true;
     uwsm = {
       enable = true;
       waylandCompositors.sway = {
@@ -29,16 +26,16 @@ in
       enable = true;
       configHome = config.users.users.${builtins.elemAt config.darklink.mainUsers.users 0}.home;
       compositor = {
-        name = "sway";
-        # Turn off display after 15 minutes
-        customConfig = ''
-          input "*" {
-            xkb_layout de
-          }
-          exec ${getExe pkgs.swayidle} -d -w timeout 900 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
-        '';
+        # name = "sway";
+        # # Turn off display after 15 minutes
+        # customConfig = ''
+        #   input "*" {
+        #     xkb_layout de
+        #   }
+        #   exec ${getExe pkgs.swayidle} -d -w timeout 900 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+        # '';
 
-        # name = "niri";
+        name = "niri";
       };
     };
 

@@ -4,11 +4,9 @@ let
   restartCommand = "${getExe config.programs.dank-material-shell.package} restart";
 in
 {
-  programs = {
-    dank-material-shell = {
-      enable = true;
-      systemd.enable = true;
-    };
+  programs.dank-material-shell = {
+    enable = true;
+    systemd.enable = true;
   };
 
   xdg.configFile = {
