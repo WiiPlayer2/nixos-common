@@ -22,6 +22,13 @@ in
         disabled = true;
         command = getExe pkgs.mcp-nixos;
       };
+      dotnet-types-explorer = {
+        command = getExe pkgs.dotnet-metadata-mcp-server;
+        args = [
+          "--homeEnvVariable"
+          "$HOME"
+        ];
+      };
     };
   };
 }

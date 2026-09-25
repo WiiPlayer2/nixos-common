@@ -26,6 +26,9 @@ in
       "nix-command"
       "flakes"
       "pipe-operator"
+
+      # Lix
+      "flake-self-attrs"
     ];
 
     # specific to Lix

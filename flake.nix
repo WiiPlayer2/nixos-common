@@ -160,6 +160,10 @@
     inhibridge.url = "git+https://codeberg.org/Scrumplex/inhibridge";
     flake-aspects.url = "git+https://tangled.org/oeiuwq.com/flake-aspects";
     agenix-shell.url = "github:aciceri/agenix-shell";
+    delulu-router = {
+      url = "git+ssh://git@git.web.home.dark-link.info:2222/delulu-tools/DeluluRouter.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

@@ -104,8 +104,8 @@ in
         nixd.command = [ "${getExe pkgs.nixd}" ];
         csharp.command = [ "${getExe pkgs.csharp-ls}" ];
       };
-      model = "local/coding";
-      provider.generic.options.baseURL = mkDefault "http://localhost:8090/v1";
+      model = mkDefault "generic/auto/coding";
+      provider.generic.options.baseURL = mkDefault "http://localhost:5000/v1";
     };
   };
 
