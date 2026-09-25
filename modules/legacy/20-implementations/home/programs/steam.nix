@@ -15,6 +15,10 @@ in
       steam
     ];
 
-    my.startup.steam.command = "steam -silent";
+    # my.startup.steam.command = "steam -silent";
+
+    xdg.autostart.entries = [
+      "${pkgs.steam}/share/applications/steam.desktop"
+    ];
   };
 }

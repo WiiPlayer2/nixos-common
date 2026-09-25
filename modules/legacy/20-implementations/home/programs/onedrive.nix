@@ -15,6 +15,10 @@ in
       onedrivegui
     ];
 
-    my.startup.onedrive.command = "${pkgs.onedrivegui}/bin/onedrivegui";
+    # my.startup.onedrive.command = "${pkgs.onedrivegui}/bin/onedrivegui";
+
+    xdg.autostart.entries = [
+      "${pkgs.onedrive}/share/applications/OneDriveGUI.desktop"
+    ];
   };
 }

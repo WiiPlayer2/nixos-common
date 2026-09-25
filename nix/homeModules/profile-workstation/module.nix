@@ -89,6 +89,10 @@ with lib;
       nix-web.enable = true;
     };
 
-    my.startup.logseq.command = lib.getExe pkgs.logseq;
+    # my.startup.logseq.command = lib.getExe pkgs.logseq;
+
+    xdg.autostart.entries = [
+      "${pkgs.logseq}/share/applications/Logseq.desktop"
+    ];
   };
 }

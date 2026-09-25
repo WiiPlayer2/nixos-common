@@ -26,9 +26,14 @@ with lib;
 
     my.startup = {
       # Wait 5 seconds for system theme to be correctly set
-      keepassxc.command = "sleep 5 && keepassxc-startup && keepassxc-watch";
-      maestral.command = "${pkgs.maestral-gui}/bin/maestral_qt";
+      # keepassxc.command = "sleep 5 && keepassxc-startup && keepassxc-watch";
+      # maestral.command = "${pkgs.maestral-gui}/bin/maestral_qt";
       # whatsie.command = "${lib.getExe pkgs.whatsie}";
     };
+
+    xdg.autostart.entries = [
+      "${pkgs.keepassxc}/share/applications/org.keepassxc.KeePassXC.desktop"
+      "${pkgs.maestral-gui}/share/applications/maestral.desktop"
+    ];
   };
 }

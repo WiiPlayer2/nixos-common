@@ -15,13 +15,17 @@ in
   config = mkIf cfg.enable {
     programs.thunderbird = {
       enable = true;
-      package = pkgs.unstable.thunderbird;
+      package = pkgs.thunderbird;
       profiles."${profileName}" = {
         isDefault = true;
       };
     };
 
-    my.startup.thunderbird.command = "thunderbird";
+    # my.startup.thunderbird.command = "thunderbird";
+
+    xdg.autostart.entries = [
+      "${config.programs.thunderbird.package}/share/applications/thunderbird.desktop"
+    ];
 
     # TODO: add warning if an account is configured
     # Doesn't really work as the account is not shown in thunderbird and if one is added it's gone after a restart

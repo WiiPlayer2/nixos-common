@@ -19,7 +19,10 @@ in
         # materialgram
         ayugram-desktop
       ];
-      my.startup.ayugram-desktop.command = "ayugram-desktop -startintray";
+      # my.startup.ayugram-desktop.command = "ayugram-desktop -startintray";
+      xdg.autostart.entries = [
+        "${pkgs.ayugram-desktop}/share/applications/com.ayugram.desktop.desktop"
+      ];
     })
   ];
 }
