@@ -28,10 +28,24 @@ let
           infoText = concatStrings (map (x: "\n\n${x}") nonNullInfo);
         in
         infoText;
+
+      versionComparison = compareVersions pkg.version version;
+      isOlderThanPinned = versionComparison == -1;
+      isPinned = versionComparison == 0;
+      isNewerThanPinned = versionComparison == 1;
     in
-    throwIf (pkg.version != version) ''
-      ${pkg.pname} is patched on version ${version} but nixpkgs now ships ${pkg.version}.${infoLines}
-    '' (overrideFn pkg);
+    if isOlderThanPinned then
+      warn ''
+        ${pkg.name} will be patched on version ${version} but nixpkgs currently ships ${pkgs.version}.
+      '' pkg
+    else if isPinned then
+      warn ''
+        ${pkg.name} is patched on version ${version}.${infoLines}
+      '' (overrideFn pkg)
+    else
+      throw ''
+        ${pkg.pname} was patched on version ${version} but nixpkgs now ships ${pkg.version}.${infoLines}
+      '';
 
   pythonOverlay = pfinal: pprev: {
     cloup = pprev.cloup.overrideAttrs (
@@ -52,32 +66,6 @@ in
       # TODO: this is just a "temporary" workaround while the overlay is imported via the legacy hosts flake module and the newer core nixos module
       __common_is_applied = true;
 
-      python312 = prev.python312.override {
-        packageOverrides = pfinal: pprev: {
-          # Used for wyoming-satellite; should probably be fixed better
-          # pysilero-vad = pprev.pysilero-vad.overrideAttrs (prevPkg: {
-          #   # version = "2.1.1";
-          #   # src = prev.fetchFromGitHub {
-          #   #   owner = "rhasspy";
-          #   #   repo = "pysilero-vad";
-          #   #   tag = "v2.1.1";
-          #   #   hash = "sha256-zxvYvPnL99yIVHrzbRbKmTazzlefOS+s2TAWLweRSYE=";
-          #   # };
-          #   # doCheck = false;
-          #   dontUsePytestCheck = true;
-          #   pythonImportsCheck = [ ];
-          #   meta = prevPkg.meta // {
-          #     broken = false;
-          #   };
-          # });
-        };
-      };
-
-      # python3 = prev.python3.override {
-      #   packageOverrides = pythonOverlay;
-      # };
-      # python314Packages = prev.python314Packages.overrideScope pythonOverlay;
-
       poptracker = prev.unstable.poptracker.overrideAttrs (
         finalAttrs: prevAttrs: {
           installPhase =
@@ -96,80 +84,22 @@ in
         }
       );
 
-      picom = prev.picom.overrideAttrs (
-        finalAttrs: prevAttrs: {
-          patches = prevAttrs.patches or [ ] ++ [
-            # see https://github.com/yshui/picom/issues/1511
-            (final.fetchpatch {
-              url = "https://github.com/yshui/picom/commit/676196359c15bb654696b05700330685db914710.patch";
-              hash = "sha256-YbpGL6FvXdIh3N5zJ1oJJc/YOLLVQL0Jlp0LetpnecA=";
-            })
-          ];
-        }
-      );
-
-      openldap =
-        let
-          brokenVersion = "2.6.13";
-          currentVersion = prev.openldap.version;
-
-          patchedPkg = prev.openldap.overrideAttrs (_: {
-            doCheck = !prev.stdenv.hostPlatform.isi686;
-          });
-        in
-        if versionOlder brokenVersion currentVersion then
-          warn ''
-            openldap is patched from ${brokenVersion} up but nixpkgs now ships ${currentVersion}.
-
-            i686 test-suite workaround might no be required anymore:
-              https://github.com/NixOS/nixpkgs/issues/513245
-              https://github.com/NixOS/nixpkgs/pull/429119
-          '' patchedPkg
-        else if brokenVersion == currentVersion then
-          patchedPkg
-        else
-          prev.openldap;
-
-      # WIP
-      # davmail = patchPinned {
-      #   pkg = prev.davmail;
-      #   version = "6.8.0";
-      #   overrideFn = x: x.overrideAttrs {
-      #     version = "6.8.1";
-      #     src = final.fetchFromGitHub {
-      #       owner = "mguessan";
-      #       repo = "davmail";
-      #       tag = "6.8.1";
-      #       hash = "sha256-kIDAMVenUzc7tIC49yzc1MzqNa9B7nNlX1bzwpG8Vp0=";
-      #     };
-      #     patchFlags = [ "-p1" "-l" ];
-      #     prePatch = ''
-      #       ${getExe' final.dos2unix "dos2unix"} src/java/davmail/ui/browser/DesktopBrowser.java
-      #     '';
-      #     patches = [
-      #       ./patches/davmail-browser.patch
-      #     ];
+      # jetbrains = prev.jetbrains // {
+      #   rider = patchPinned {
+      #     pkg = prev.jetbrains.rider;
+      #     version = "2026.2.0.1";
+      #     nixpkgsPR = 546636;
+      #     /*
+      #       /nix/store/wy1dwqdbrkhw3hj4ll7a9av7v7w6wqxf-rider-2026.2/rider/lib/ReSharperHost/linux-x64/Rider.Backend --runtimeconfig /nix/store/wy1dwqdbrkhw3hj4ll7a9av7v7w6wqxf-rider-2026.2/rider/lib/ReSharperHost/Rider.Backend.netcore.runtimeconfig.json --Port=38669 --enablecpp
+      #       /nix/store/wy1dwqdbrkhw3hj4ll7a9av7v7w6wqxf-rider-2026.2/rider/lib/ReSharperHost/linux-x64/Rider.Backend: error while loading shared libraries: libstdc++.so.6: cannot open shared object file: No such file or directory
+      #     */
+      #     overrideFn =
+      #       x:
+      #       x.overrideAttrs (attrs: {
+      #         appendRunpaths = (attrs.appendRunpaths or [ ]) ++ [ "${final.stdenv.cc.cc.lib}/lib" ];
+      #       });
       #   };
-
-      #   extraInfo = "Updated version to 6.8.1";
       # };
-
-      jetbrains = prev.jetbrains // {
-        rider = patchPinned {
-          pkg = prev.jetbrains.rider;
-          version = "2026.2.0.1";
-          nixpkgsPR = 546636;
-          /*
-            /nix/store/wy1dwqdbrkhw3hj4ll7a9av7v7w6wqxf-rider-2026.2/rider/lib/ReSharperHost/linux-x64/Rider.Backend --runtimeconfig /nix/store/wy1dwqdbrkhw3hj4ll7a9av7v7w6wqxf-rider-2026.2/rider/lib/ReSharperHost/Rider.Backend.netcore.runtimeconfig.json --Port=38669 --enablecpp
-            /nix/store/wy1dwqdbrkhw3hj4ll7a9av7v7w6wqxf-rider-2026.2/rider/lib/ReSharperHost/linux-x64/Rider.Backend: error while loading shared libraries: libstdc++.so.6: cannot open shared object file: No such file or directory
-          */
-          overrideFn =
-            x:
-            x.overrideAttrs (attrs: {
-              appendRunpaths = (attrs.appendRunpaths or [ ]) ++ [ "${final.stdenv.cc.cc.lib}/lib" ];
-            });
-        };
-      };
 
       cyanrip = patchPinned {
         pkg = prev.cyanrip;
@@ -189,16 +119,6 @@ in
         '';
       };
 
-      libcap_ng = patchPinned {
-        pkg = prev.libcap_ng;
-        version = "0.9.5";
-        overrideFn =
-          x:
-          x.overrideAttrs {
-            doCheck = !final.stdenv.hostPlatform.isStatic;
-          };
-      };
-
       nodejs_latest = patchPinned {
         pkg = prev.nodejs_latest;
         version = "26.9.0";
@@ -207,6 +127,9 @@ in
           x.override {
             nodejs-slim = final.nodejs-slim_latest;
           };
+        extraInfo = ''
+          needed for llama-cpp
+        '';
       };
 
       nodejs-slim_latest = patchPinned {
@@ -230,6 +153,9 @@ in
             #     flag
             # ) (prev.checkFlags or [ ]);
           });
+        extraInfo = ''
+          needed for llama-cpp
+        '';
       };
     };
 }
