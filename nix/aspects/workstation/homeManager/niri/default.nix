@@ -209,7 +209,14 @@ in
         "${modifier}+Control+Right".move-workspace-to-monitor-right = { };
         "${modifier}+Control+Up".move-workspace-to-monitor-up = { };
         "${modifier}+Control+Down".move-workspace-to-monitor-down = { };
-        # "${modifier}+Shift+Q"
+
+        "${modifier}+Shift+Left".move-column-left-or-to-monitor-left = { };
+        "${modifier}+Shift+Right".move-column-right-or-to-monitor-right = { };
+        "${modifier}+Shift+Up".move-window-up-or-to-workspace-up = { };
+        "${modifier}+Shift+Down".move-window-down-or-to-workspace-down = { };
+
+        "${modifier}+Up".focus-window-or-workspace-up = { };
+        "${modifier}+Down".focus-window-or-workspace-down = { };
       };
 
       _children = [
@@ -245,6 +252,21 @@ in
           window-rule = {
             match._props.app-id = ''^org\.keepassxc\.KeePassXC$'';
             block-out-from = "screen-capture";
+          };
+        }
+        {
+          window-rule = {
+            match._props = {
+              app-id = "steam";
+              title = ''^notificationtoasts_\d+_desktop$'';
+            };
+            default-floating-position._props = {
+              x = 10;
+              y = 10;
+              relative-to = "bottom-right";
+            };
+            # next niri release (> v26.04)
+            # on-xdg-activate = "ignore";
           };
         }
       ];
