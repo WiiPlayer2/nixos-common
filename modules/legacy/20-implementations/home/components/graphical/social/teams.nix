@@ -15,6 +15,10 @@ in
         teams-for-linux
       ];
 
-      my.startup.teams.command = "teams-for-linux --minimized";
+      # my.startup.teams.command = "teams-for-linux --minimized";
+
+      xdg.autostart.entries = [
+        "${pkgs.teams-for-linux}/share/applications/teams-for-linux.desktop"
+      ];
     };
 }
