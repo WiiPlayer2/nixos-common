@@ -5,8 +5,8 @@ let
       # https://github.com/DietrichGebert/ponytail
       owner = "DietrichGebert";
       repo = "ponytail";
-      rev = "main";
-      hash = "sha256-Y7d4s7uqjH6IbEXhqAiQ+yaxr6iiGcv2X64LuMtG1T8=";
+      rev = "v4.10.0";
+      hash = "sha256-PES5XrSYx0VBXWVHEDRykGy0SAmJfV/luzy8Gfg0aAQ=";
     }
   }/skills/ponytail/SKILL.md";
 in
