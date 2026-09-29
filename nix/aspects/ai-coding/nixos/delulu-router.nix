@@ -47,7 +47,7 @@ in
                 Root.Steps = [
                   {
                     MapModels.Map = {
-                      title.Target = "qwen3.5-0.8b:DEFAULT";
+                      title.Target = "qwen3.5-0.8b";
                       coding.Target = "qwen3.8-27b_q2";
                     };
                   }
