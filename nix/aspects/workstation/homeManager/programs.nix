@@ -3,6 +3,8 @@
   home.packages = with pkgs; [
     showmethekey
     super-productivity
+    aria2
+    ariang
   ];
 
   xdg.autostart.entries = [

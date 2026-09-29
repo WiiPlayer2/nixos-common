@@ -34,6 +34,7 @@ in
       "firefox.desktop" = [
         "x-scheme-handler/http"
         "x-scheme-handler/https"
+        "x-scheme-handler/file"
       ];
       "signal.desktop" = [
         "x-scheme-handler/sgnl"

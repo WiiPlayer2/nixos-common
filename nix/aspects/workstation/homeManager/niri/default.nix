@@ -220,19 +220,33 @@ in
       };
 
       _children = [
+        # Default
         {
           window-rule = {
             background-effect.blur = true;
             geometry-corner-radius = 10;
             clip-to-geometry = true;
+            opacity = 0.95;
           };
         }
+
+        # Inactive windows
+        {
+          window-rule = {
+            match._props.is-active = false;
+            opacity = 0.7;
+          };
+        }
+
+        # Floating windows
         {
           window-rule = {
             match._props.is-floating = true;
             baba-is-float = true;
           };
         }
+
+        # Specific applications
         {
           window-rule = {
             match._props.app-id = ''^org\.wezfurlong\.wezterm$'';
