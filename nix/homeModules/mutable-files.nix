@@ -34,6 +34,7 @@ in
               else
                 cp "$HM_SOURCE_FILE" "$HM_DEST_FILE"
               fi
+              chmod +w "$HM_DEST_FILE"
             '';
           };
         }
