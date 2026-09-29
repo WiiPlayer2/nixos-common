@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     showmethekey
     super-productivity
+    junie-cli
   ];
 
   xdg.autostart.entries = [
