@@ -43,6 +43,10 @@ with lib;
         # '';
 
         name = "niri";
+        # Note: power-on-monitors might not be necessary
+        customConfig = ''
+          spawn-sh-at-startup "${getExe pkgs.swayidle} -d -w timeout 900 'niri msg action power-off-monitors' resume 'power-on-monitors'"
+        '';
       };
     };
 
