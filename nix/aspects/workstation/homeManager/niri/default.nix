@@ -215,6 +215,8 @@ in
         "${modifier}+Shift+Up".move-window-up-or-to-workspace-up = { };
         "${modifier}+Shift+Down".move-window-down-or-to-workspace-down = { };
 
+        "${modifier}+Left".focus-column-or-monitor-left = { };
+        "${modifier}+Right".focus-column-or-monitor-right = { };
         "${modifier}+Up".focus-window-or-workspace-up = { };
         "${modifier}+Down".focus-window-or-workspace-down = { };
       };
