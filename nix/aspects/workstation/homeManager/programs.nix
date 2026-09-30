@@ -5,6 +5,7 @@
     super-productivity
     aria2
     ariang
+    jdk21
   ];
 
   xdg.autostart.entries = [

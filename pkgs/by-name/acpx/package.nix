@@ -1,0 +1,6 @@
+{
+  makeNpxShim,
+}:
+makeNpxShim {
+  pname = "acpx";
+}

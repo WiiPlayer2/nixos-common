@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+_pkgName="$1"
+_flake="${FLAKE_ROOT-.}"
+
+if [[ ! "$_pkgName" =~ ^[[:alnum:]-]+$ ]]; then
+  echo "\"$_pkgName\" is not an acceptable package name."
+  exit 1
+fi
+
+if [ -d "$_flake/flakes/common" ]; then
+  _flake="$_flake/flakes/common"
+fi
+
+_pkgs="$_flake/pkgs/by-name"
+
+if [ ! -d "$_pkgs" ]; then
+  echo "$_pkgs does not exist."
+  exit 1
+fi
+
+_pkg="$_pkgs/$_pkgName"
+
+if [ -e "$_pkg" ] || [ -e "$_pkg.nix" ]; then
+  echo "$_pkg already exists."
+  exit 1
+fi
+
+_pkgFile="$_pkg/package.nix"
+
+mkdir -p "$_pkg"
+cat << EOF > "$_pkgFile"
+{
+  fetchGitHub,
+  stdenv,
+}:
+stdenv.mkDerivation (finalAttrs: {
+  pname = "$_pkgName";
+  version = "xxx";
+  src = fetchGitHub {
+    owner = "xxx";
+    repo = finalAttrs.pname;
+    version = "v\${finalAttrs.version}";
+    hash = "";
+  };
+})
+EOF
+git -C "$_flake" add "$_pkgFile"
+${EDITOR-hx} "$_pkgFile"
