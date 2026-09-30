@@ -57,8 +57,9 @@ in
         };
 
         struts = {
-          left = 15;
-          right = 15;
+          # more for left/right to better see the neighboring window
+          left = 15 * 2;
+          right = 15 * 2;
           top = 15;
           bottom = 15;
         };
