@@ -26,22 +26,22 @@ in
             { Ref.Name = "local"; }
           ];
           auto.Group.Providers = [
-            {
-              Pipeline = {
-                Root.Steps = [
-                  {
-                    MapModels.Map = {
-                      title.Target = "claude-sonnet-4-6";
-                      coding.Target = "claude-opus-4-6";
-                    };
-                  }
-                  {
-                    ModelTemplate.Name = "{{Id}} @ Junie";
-                  }
-                ];
-                Provider.Ref.Name = "junie";
-              };
-            }
+            # {
+            #   Pipeline = {
+            #     Root.Steps = [
+            #       {
+            #         MapModels.Map = {
+            #           title.Target = "claude-sonnet-4-6";
+            #           coding.Target = "claude-opus-4-6";
+            #         };
+            #       }
+            #       {
+            #         ModelTemplate.Name = "{{Id}} @ Junie";
+            #       }
+            #     ];
+            #     Provider.Ref.Name = "junie";
+            #   };
+            # }
             {
               Pipeline = {
                 Root.Steps = [
@@ -60,29 +60,29 @@ in
       };
       Root.Mux.Providers = {
         auto.Ref.Name = "auto";
-        auto-ponytail.InjectSkill = {
-          FilePath = skill-ponytail;
-          Provider.Pipeline = {
-            Root.Steps = [
-              {
-                ModelTemplate.Name = "{{#Name}}{{.}} (Ponytail){{/Name}}";
-              }
-            ];
-            Provider.Ref.Name = "auto";
-          };
-        };
-        local-group.Ref.Name = "local-group";
-        local-group-ponytail.InjectSkill = {
-          FilePath = skill-ponytail;
-          Provider.Pipeline = {
-            Root.Steps = [
-              {
-                ModelTemplate.Name = "{{#Name}}{{.}} (Ponytail){{/Name}}";
-              }
-            ];
-            Provider.Ref.Name = "local-group";
-          };
-        };
+        # auto-ponytail.InjectSkill = {
+        #   FilePath = skill-ponytail;
+        #   Provider.Pipeline = {
+        #     Root.Steps = [
+        #       {
+        #         ModelTemplate.Name = "{{#Name}}{{.}} (Ponytail){{/Name}}";
+        #       }
+        #     ];
+        #     Provider.Ref.Name = "auto";
+        #   };
+        # };
+        # local-group.Ref.Name = "local-group";
+        # local-group-ponytail.InjectSkill = {
+        #   FilePath = skill-ponytail;
+        #   Provider.Pipeline = {
+        #     Root.Steps = [
+        #       {
+        #         ModelTemplate.Name = "{{#Name}}{{.}} (Ponytail){{/Name}}";
+        #       }
+        #     ];
+        #     Provider.Ref.Name = "local-group";
+        #   };
+        # };
       };
     };
   };

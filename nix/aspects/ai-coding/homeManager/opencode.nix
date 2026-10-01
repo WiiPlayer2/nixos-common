@@ -71,6 +71,7 @@ in
         # "opencode-pty@latest" # not really used and adds unnecessarily to the context. A MCP server might be more useful.
         # "@howaboua/opencode-chat@latest" # error=libstdc++.so.6: cannot open shared object file
         # "@prevalentware/opencode-goal-plugin" # I think it behaves weirdly even when not directly used with /goal
+        "@dietrichgebert/ponytail"
       ];
       permission = {
         # Just allow bash for now; will move to container based execution in the future
