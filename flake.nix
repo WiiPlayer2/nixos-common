@@ -161,7 +161,7 @@
     flake-aspects.url = "git+https://tangled.org/oeiuwq.com/flake-aspects";
     agenix-shell.url = "github:aciceri/agenix-shell";
     delulu-router = {
-      url = "git+ssh://git@git.web.home.dark-link.info:2222/delulu-tools/DeluluRouter.git";
+      url = "git+https://git.web.home.dark-link.info/delulu-tools/DeluluRouter.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
