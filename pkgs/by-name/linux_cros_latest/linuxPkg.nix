@@ -1,6 +1,5 @@
 # from https://github.com/ninelore/flake/blob/main/pkgs/linux_cros_latest/default.nix
 {
-  ninelore-monoflake-input,
   linuxManualConfig,
   linux_latest,
   system,
@@ -23,12 +22,14 @@ linuxManualConfig rec {
   version = ver + "-cros";
   inherit (linux_latest) src;
 
-  configfile = ninelore-monoflake-input + "/pkgs/linux_cros_latest/config.aarch64";
+  # configfile = ninelore-monoflake-input + "/pkgs/linux_cros_latest/config.aarch64";
+  configfile = ./config.aarch64;
   allowImportFromDerivation = builtins.elem system extraMeta.platforms;
 
   kernelPatches = map (patch: {
     name = patch;
-    patch = ninelore-monoflake-input + "/pkgs/_linuxPatches/${patch}.patch";
+    # patch = ninelore-monoflake-input + "/pkgs/_linuxPatches/${patch}.patch";
+    patch = ./patches + "/${patch}.patch";
   }) patchList;
 
   extraMeta = {

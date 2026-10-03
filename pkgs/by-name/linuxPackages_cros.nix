@@ -1,12 +1,15 @@
 {
-  ninelore-monoflake,
-  ninelore-monoflake-pkgs,
+  # ninelore-monoflake,
+  # ninelore-monoflake-pkgs,
   linux_cros_latest,
+  linuxPackagesFor,
 }:
 
 let
-  upstreamPackages = ninelore-monoflake-pkgs.linuxPackagesFor linux_cros_latest;
-  crossCompiledPackages = ninelore-monoflake-pkgs.linuxPackagesFor linux_cros_latest.cross-compiled;
+  # _linuxPackagesFor = ninelore-monoflake-pkgs.linuxPackagesFor;
+  _linuxPackagesFor = linuxPackagesFor;
+  upstreamPackages = _linuxPackagesFor linux_cros_latest;
+  crossCompiledPackages = _linuxPackagesFor linux_cros_latest.cross-compiled;
 in
 upstreamPackages
 // {

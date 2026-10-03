@@ -59,10 +59,10 @@ buildOverlay {
   additionalInput = lib.fixedPoints.composeManyExtensions [
     inputs.poetry2nix.overlays.default
     (_: prev: {
-      ninelore-monoflake = inputs.ninelore-monoflake.legacyPackages.${prev.stdenv.hostPlatform.system};
-      ninelore-monoflake-pkgs =
-        inputs.ninelore-monoflake.inputs.nixpkgs.legacyPackages.${prev.stdenv.hostPlatform.system};
-      ninelore-monoflake-input = inputs.ninelore-monoflake;
+      # ninelore-monoflake = inputs.ninelore-monoflake.legacyPackages.${prev.stdenv.hostPlatform.system};
+      # ninelore-monoflake-pkgs =
+      #   inputs.ninelore-monoflake.inputs.nixpkgs.legacyPackages.${prev.stdenv.hostPlatform.system};
+      # ninelore-monoflake-input = inputs.ninelore-monoflake;
       loadPyproject = inputs.pyproject-nix.lib.project.loadPyproject;
       erosanixLib =
         inputs.erosanix.lib.${prev.stdenv.hostPlatform.system} or {

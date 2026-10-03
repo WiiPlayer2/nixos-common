@@ -1,7 +1,5 @@
 {
   pkgs,
-  ninelore-monoflake,
-  ninelore-monoflake-input,
   hostPlatform,
   ...
 }@args:
@@ -10,7 +8,7 @@ let
   upstreamKernel = mkKernel pkgs;
   crossCompiledKernel =
     let
-      pkgsCross = import ninelore-monoflake-input.inputs.nixpkgs {
+      pkgsCross = import pkgs.path {
         localSystem = "x86_64-linux";
         crossSystem = hostPlatform.system;
       };
