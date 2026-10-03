@@ -43,6 +43,7 @@ let
       context,
       slots ? 2,
       extraArgs ? [ ],
+      gpuLayers ? "auto",
     }:
     {
       inherit name;
@@ -53,7 +54,7 @@ let
             "--parallel"
             (toString slots)
             "--gpu-layers"
-            "auto"
+            (toString gpuLayers)
             "--jinja"
             "--cache-type-k"
             "q4_0"
@@ -65,6 +66,10 @@ let
             (toString (context * slots))
             "--port"
             "\${PORT}"
+            "--threads"
+            "-1"
+            # "--log-verbosity"
+            # "3"
           ]
           ++ extraArgs
         )
@@ -81,7 +86,10 @@ let
     };
 
   mkQwen3_5_08b =
-    quant: nameSuffix:
+    {
+      quant,
+      nameSuffix ? "",
+    }:
     mkLlama {
       model = "unsloth/Qwen3.5-0.8B-GGUF:${quant}";
       name = "Qwen3.5 0.8B${nameSuffix}";
@@ -106,11 +114,17 @@ let
     };
 
   mkQwen3_6_35b_a3b =
-    quant: nameSuffix:
+    {
+      quant,
+      nameSuffix ? "",
+      ctxDivisor ? 1,
+      context ? 262144 / ctxDivisor,
+      gpuLayers ? "auto",
+    }:
     mkLlama {
+      inherit context gpuLayers;
       model = "unsloth/Qwen3.6-35B-A3B-GGUF:${quant}";
       name = "Qwen3.6 35B A3B${nameSuffix}";
-      context = 262144;
       slots = 1;
       extraArgs = [
         "--temperature"
@@ -131,11 +145,17 @@ let
     };
 
   mkQwen3_8_27b =
-    quant: nameSuffix:
+    {
+      quant,
+      nameSuffix ? "",
+      ctxDivisor ? 1,
+      context ? 262144 / ctxDivisor,
+      gpuLayers ? "auto",
+    }:
     mkLlama {
+      inherit context gpuLayers;
       model = "unsloth/Qwen3.8-27B-GGUF:${quant}";
       name = "Qwen3.8 27B${nameSuffix}";
-      context = 262144;
       slots = 1;
       extraArgs = [
         "--chat-template-kwargs"
@@ -161,11 +181,17 @@ let
     };
 
   mkQwen3_8_flash =
-    quant: nameSuffix:
+    {
+      quant,
+      nameSuffix ? "",
+      ctxDivisor ? 8,
+      context ? 262144 / ctxDivisor,
+      gpuLayers ? "auto",
+    }:
     mkLlama {
+      inherit context gpuLayers;
       model = "unsloth/Qwen3.8-Flash-Next-GGUF:${quant}";
       name = "Qwen3.8 Flash${nameSuffix}";
-      context = 262144 / 8;
       slots = 1;
       extraArgs = [
         "--chat-template-kwargs"
@@ -208,12 +234,19 @@ in
         sendLoadingState = false;
         includeAliasesInList = true;
         models = {
-          "qwen3.5-0.8b" = mkQwen3_5_08b "UD-Q4_K_XL" "";
-          # "qwen3.6-35b-a3b" = mkQwen3_6_35b_a3b "UD-Q4_K_XL" "";
-          "qwen3.6-35b-a3b_q2" = mkQwen3_6_35b_a3b "UD-Q2_K_XL" " (Q2)";
-          # "qwen3.8-27b" = mkQwen3_8_27b "UD-Q4_K_XL" "";
-          "qwen3.8-27b_q2" = mkQwen3_8_27b "UD-IQ2_S" " (Q2)";
-          "qwen3.8-flash_q2" = mkQwen3_8_flash "UD-Q2_K_XL" " (Q2)";
+          "qwen3.5-0.8b" = mkQwen3_5_08b { quant = "UD-Q4_K_XL"; };
+          "qwen3.6-35b-a3b_q2" = mkQwen3_6_35b_a3b {
+            quant = "UD-Q2_K_XL";
+            nameSuffix = " (Q2)";
+          };
+          "qwen3.8-27b_q2" = mkQwen3_8_27b {
+            quant = "UD-IQ2_S";
+            nameSuffix = " (Q2)";
+          };
+          "qwen3.8-flash_q2" = mkQwen3_8_flash {
+            quant = "UD-Q2_K_XL";
+            nameSuffix = " (Q2, 1/8)";
+          };
         };
       };
 
