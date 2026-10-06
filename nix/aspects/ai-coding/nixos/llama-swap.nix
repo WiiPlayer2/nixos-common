@@ -6,10 +6,17 @@
 }:
 let
   inherit (lib)
-    mapAttrs'
     getExe'
     mkIf
     escapeShellArgs
+    mkPackageOption
+    mkOption
+    mkOptionDefault
+    mkDefault
+    types
+    evalModules
+    filterAttrs
+    mapAttrsToList
     ;
 
   llama-cpp = pkgs.llama-cpp.override {
@@ -17,63 +24,91 @@ let
     rocmSupport = false; # explicitly disabled, because unstable
   };
 
-  modelsLib = import ../_models_lib.nix { inherit lib; };
-  toModelConfig =
-    id:
+  llamaModule =
+    { config, ... }:
     {
-      quant,
-      model,
-      aliases,
-      ...
-    }:
-    {
-      name = id;
-      value = {
-        inherit aliases;
-        inherit (model) repo;
-        ${if quant != null then "quant" else null} = quant;
+      options = {
+        package = mkPackageOption pkgs "llama-cpp" { };
+        args = mkOption {
+          type = with types; attrsOf (nullOr anything); # Should probably be more precise
+        };
+        command = mkOption {
+          type = types.str;
+          internal = true;
+          readOnly = true;
+        };
+      };
+
+      config = {
+        args = {
+          no-warmup = mkOptionDefault { };
+          parallel = mkOptionDefault 1;
+          # gpu-layers = mkOptionDefault "auto"; # default
+          jinja = mkOptionDefault { };
+          cache-type-k = mkOptionDefault "q4_0";
+          cache-type-v = mkOptionDefault "q4_0";
+          # hf-repo
+          # ctx-size
+          port = mkOptionDefault "\${PORT}";
+          threads = mkOptionDefault (-1);
+        };
+        command =
+          let
+            mapArg =
+              name: value:
+              let
+                optionName = "--${name}";
+              in
+              if value == { } then
+                [ optionName ]
+              else if builtins.isList value then
+                [
+                  optionName
+                  (builtins.concatStringsSep "," (map toString value))
+                ]
+              else
+                [
+                  optionName
+                  (toString value)
+                ];
+            mappedArgs = builtins.concatLists (
+              mapAttrsToList mapArg (filterAttrs (_: v: v != null) config.args)
+            );
+            command = "${getExe' config.package "llama-server"} ${escapeShellArgs mappedArgs}";
+          in
+          command;
       };
     };
-  modelConfigs = mapAttrs' toModelConfig modelsLib.modelVariants;
 
-  mkLlama =
+  mkLlamaCmd =
+    module:
+    let
+      config = evalModules {
+        modules = [
+          llamaModule
+          module
+        ];
+      };
+    in
+    config.config.command;
+
+  mkLlamaSwapModel =
     {
+      name,
       model,
-      name ? model,
       context,
-      slots ? 2,
-      extraArgs ? [ ],
-      gpuLayers ? "auto",
+      llamaModule ? { },
     }:
     {
       inherit name;
-      cmd = "${getExe' llama-cpp "llama-server"} ${
-        escapeShellArgs (
-          [
-            "--no-warmup"
-            "--parallel"
-            (toString slots)
-            "--gpu-layers"
-            (toString gpuLayers)
-            "--jinja"
-            "--cache-type-k"
-            "q4_0"
-            "--cache-type-v"
-            "q4_0"
-            "-hf"
-            model
-            "--ctx-size"
-            (toString (context * slots))
-            "--port"
-            "\${PORT}"
-            "--threads"
-            "-1"
-            # "--log-verbosity"
-            # "3"
-          ]
-          ++ extraArgs
-        )
-      }";
+      cmd = mkLlamaCmd {
+        imports = [ llamaModule ];
+
+        args = {
+          hf-repo = mkDefault model;
+          ctx-size = mkDefault context;
+        };
+      };
       capabilities = {
         inherit context;
         "in" = [
@@ -85,135 +120,104 @@ let
       };
     };
 
+  qwen3_5_llama = {
+    args = {
+      temperature = 0.6;
+      top-p = 0.95;
+      top-k = 20;
+      min-p = 0.0;
+      presence-penalty = 0.0;
+      repeat-penalty = 1.0;
+      image-min-tokens = 1024;
+    };
+  };
+
   mkQwen3_5_08b =
     {
       quant,
       nameSuffix ? "",
+      llamaModule ? { },
     }:
-    mkLlama {
-      model = "unsloth/Qwen3.5-0.8B-GGUF:${quant}";
+    mkLlamaSwapModel {
       name = "Qwen3.5 0.8B${nameSuffix}";
+      model = "unsloth/Qwen3.5-0.8B-GGUF:${quant}";
       context = 262144;
-      slots = 4;
-      extraArgs = [
-        "--temperature"
-        "0.6"
-        "--top-p"
-        "0.95"
-        "--top-k"
-        "20"
-        "--min-p"
-        "0.0"
-        "--presence-penalty"
-        "0.0"
-        "--repeat-penalty"
-        "1.0"
-        "--image-min-tokens"
-        "1024"
-      ];
+      llamaModule = {
+        imports = [
+          qwen3_5_llama
+          llamaModule
+        ];
+      };
     };
 
   mkQwen3_6_35b_a3b =
     {
       quant,
       nameSuffix ? "",
-      ctxDivisor ? 1,
-      context ? 262144 / ctxDivisor,
-      gpuLayers ? "auto",
+      llamaModule ? { },
     }:
-    mkLlama {
-      inherit context gpuLayers;
-      model = "unsloth/Qwen3.6-35B-A3B-GGUF:${quant}";
+    mkLlamaSwapModel {
       name = "Qwen3.6 35B A3B${nameSuffix}";
-      slots = 1;
-      extraArgs = [
-        "--temperature"
-        "0.6"
-        "--top-p"
-        "0.95"
-        "--top-k"
-        "20"
-        "--min-p"
-        "0.0"
-        "--presence-penalty"
-        "0.0"
-        "--repeat-penalty"
-        "1.0"
-        "--image-min-tokens"
-        "1024"
-      ];
+      model = "unsloth/Qwen3.6-35B-A3B-GGUF:${quant}";
+      context = 262144;
+      llamaModule = {
+        imports = [
+          qwen3_5_llama
+          llamaModule
+        ];
+      };
     };
+
+  qwen3_8_llama = {
+    args = {
+      temperature = 1.0;
+      top-p = 0.95;
+      top-k = 20;
+      min-p = 0.0;
+      presence-penalty = 1.0;
+      repeat-penalty = 1.0;
+      image-min-tokens = 1024;
+      chat-template-kwargs = builtins.toJSON {
+        reasoning_effort = "low";
+      };
+      reasoning-preserve = { };
+    };
+  };
 
   mkQwen3_8_27b =
     {
       quant,
       nameSuffix ? "",
-      ctxDivisor ? 1,
-      context ? 262144 / ctxDivisor,
-      gpuLayers ? "auto",
+      llamaModule ? { },
     }:
-    mkLlama {
-      inherit context gpuLayers;
-      model = "unsloth/Qwen3.8-27B-GGUF:${quant}";
+    mkLlamaSwapModel {
       name = "Qwen3.8 27B${nameSuffix}";
-      slots = 1;
-      extraArgs = [
-        "--chat-template-kwargs"
-        (builtins.toJSON {
-          reasoning_effort = "low";
-        })
-        "--temperature"
-        "1.0"
-        "--top-p"
-        "0.95"
-        "--top-k"
-        "20"
-        "--min-p"
-        "0.0"
-        "--presence-penalty"
-        "1.0"
-        "--repeat-penalty"
-        "1.0"
-        "--reasoning-preserve"
-        "--image-min-tokens"
-        "1024"
-      ];
+      model = "unsloth/Qwen3.8-27B-GGUF:${quant}";
+      context = 262144;
+      llamaModule = {
+        imports = [
+          qwen3_8_llama
+          llamaModule
+        ];
+      };
     };
 
   mkQwen3_8_flash =
     {
       quant,
       nameSuffix ? "",
-      ctxDivisor ? 8,
-      context ? 262144 / ctxDivisor,
-      gpuLayers ? "auto",
+      llamaModule ? { },
     }:
-    mkLlama {
-      inherit context gpuLayers;
-      model = "unsloth/Qwen3.8-Flash-Next-GGUF:${quant}";
+    mkLlamaSwapModel {
       name = "Qwen3.8 Flash${nameSuffix}";
-      slots = 1;
-      extraArgs = [
-        "--chat-template-kwargs"
-        (builtins.toJSON {
-          reasoning_effort = "low";
-        })
-        "--temperature"
-        "1.0"
-        "--top-p"
-        "0.95"
-        "--top-k"
-        "20"
-        "--min-p"
-        "0.0"
-        "--presence-penalty"
-        "0.0"
-        "--repeat-penalty"
-        "1.0"
-        "--reasoning-preserve"
-        "--image-min-tokens"
-        "1024"
-      ];
+      model = "unsloth/Qwen3.8-Flash-Next-GGUF:${quant}";
+      context = 262144;
+      llamaModule = {
+        imports = [
+          qwen3_8_llama
+          llamaModule
+        ];
+      };
     };
 in
 {
@@ -239,13 +243,36 @@ in
             quant = "UD-Q2_K_XL";
             nameSuffix = " (Q2)";
           };
+          "qwen3.6-35b-a3b_q2_fit-2gb" = mkQwen3_6_35b_a3b {
+            quant = "UD-Q2_K_XL";
+            nameSuffix = " (Q2, fit 2GiB)";
+            llamaModule.args.fit-target = 2 * 1024; # MiB
+          };
           "qwen3.8-27b_q2" = mkQwen3_8_27b {
             quant = "UD-IQ2_S";
             nameSuffix = " (Q2)";
           };
+          "qwen3.8-27b_q2_fit-2gb" = mkQwen3_8_27b {
+            quant = "UD-IQ2_S";
+            nameSuffix = " (Q2, fit 2GiB)";
+            llamaModule.args.fit-target = 2 * 1024; # MiB
+          };
+          "swift-1.5-qwen3.8-27b_q2" = mkQwen3_8_27b {
+            quant = "IQ2_S-mtp";
+            nameSuffix = " (Swift 1.5, Q2)";
+            llamaModule.args.hf-repo = "ukisai/Swift-1.5-Qwen3.8-27B-GSQ-RCO-GGUF:IQ2_S-mtp";
+          };
+          "swift-1.5-qwen3.8-27b_q2_fit-2gb" = mkQwen3_8_27b {
+            quant = "IQ2_S-mtp";
+            nameSuffix = " (Swift 1.5, Q2, fit 2GiB)";
+            llamaModule.args = {
+              hf-repo = "ukisai/Swift-1.5-Qwen3.8-27B-GSQ-RCO-GGUF:IQ2_S-mtp";
+              fit-target = 2 * 1024; # MiB
+            };
+          };
           "qwen3.8-flash_q2" = mkQwen3_8_flash {
             quant = "UD-Q2_K_XL";
-            nameSuffix = " (Q2, 1/8)";
+            nameSuffix = " (Q2)";
           };
         };
       };
