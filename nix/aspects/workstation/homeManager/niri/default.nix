@@ -267,6 +267,14 @@ in
         }
         {
           window-rule = {
+            match._props = {
+              app-id = "firefox$";
+            };
+            open-maximized = true;
+          };
+        }
+        {
+          window-rule = {
             match._props.app-id = ''^org\.keepassxc\.KeePassXC$'';
             block-out-from = "screen-capture";
           };
@@ -284,6 +292,7 @@ in
             };
             # next niri release (> v26.04)
             # on-xdg-activate = "ignore";
+            open-focused = false;
           };
         }
       ];

@@ -84,23 +84,6 @@ in
         }
       );
 
-      # jetbrains = prev.jetbrains // {
-      #   rider = patchPinned {
-      #     pkg = prev.jetbrains.rider;
-      #     version = "2026.2.0.1";
-      #     nixpkgsPR = 546636;
-      #     /*
-      #       /nix/store/wy1dwqdbrkhw3hj4ll7a9av7v7w6wqxf-rider-2026.2/rider/lib/ReSharperHost/linux-x64/Rider.Backend --runtimeconfig /nix/store/wy1dwqdbrkhw3hj4ll7a9av7v7w6wqxf-rider-2026.2/rider/lib/ReSharperHost/Rider.Backend.netcore.runtimeconfig.json --Port=38669 --enablecpp
-      #       /nix/store/wy1dwqdbrkhw3hj4ll7a9av7v7w6wqxf-rider-2026.2/rider/lib/ReSharperHost/linux-x64/Rider.Backend: error while loading shared libraries: libstdc++.so.6: cannot open shared object file: No such file or directory
-      #     */
-      #     overrideFn =
-      #       x:
-      #       x.overrideAttrs (attrs: {
-      #         appendRunpaths = (attrs.appendRunpaths or [ ]) ++ [ "${final.stdenv.cc.cc.lib}/lib" ];
-      #       });
-      #   };
-      # };
-
       cyanrip = patchPinned {
         pkg = prev.cyanrip;
         version = "0.9.3.1";
@@ -118,44 +101,5 @@ in
           See https://github.com/cyanreg/cyanrip/issues/142
         '';
       };
-
-      # nodejs_latest = patchPinned {
-      #   pkg = prev.nodejs_latest;
-      #   version = "26.9.0";
-      #   overrideFn =
-      #     x:
-      #     x.override {
-      #       nodejs-slim = final.nodejs-slim_latest;
-      #     };
-      #   extraInfo = ''
-      #     needed for llama-cpp
-      #   '';
-      # };
-
-      # nodejs-slim_latest = patchPinned {
-      #   pkg = prev.nodejs-slim_latest;
-      #   version = "26.9.0";
-      #   overrideFn =
-      #     x:
-      #     x.overrideAttrs (prev: {
-      #       doCheck = false;
-      #       # checkFlags = lib.map (
-      #       #   flag:
-      #       #   if lib.hasPrefix "CI_SKIP_TESTS=" flag then
-      #       #     "${flag},"
-      #       #     + lib.concatStringsSep "," [
-      #       #       "test-tls-over-http-tunnel"
-      #       #       "test-http-agent-keepalive"
-      #       #       "test-https-proxy-request-invalid-char-in-url"
-      #       #       "test-fs-cp-async-file-modes"
-      #       #     ]
-      #       #   else
-      #       #     flag
-      #       # ) (prev.checkFlags or [ ]);
-      #     });
-      #   extraInfo = ''
-      #     needed for llama-cpp
-      #   '';
-      # };
     };
 }

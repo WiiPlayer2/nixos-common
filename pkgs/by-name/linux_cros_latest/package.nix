@@ -1,6 +1,6 @@
 {
   pkgs,
-  hostPlatform,
+  stdenv,
   ...
 }@args:
 let
@@ -10,7 +10,7 @@ let
     let
       pkgsCross = import pkgs.path {
         localSystem = "x86_64-linux";
-        crossSystem = hostPlatform.system;
+        crossSystem = stdenv.hostPlatform.system;
       };
       crossPkg = mkKernel pkgsCross;
     in

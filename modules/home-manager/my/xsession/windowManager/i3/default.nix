@@ -22,7 +22,6 @@ in
       brightnessctl
       nerd-fonts.symbols-only
       speedtest-cli
-      rofi-power-menu
       jq
     ];
 
@@ -56,7 +55,6 @@ in
                 };
               in
               {
-                # "${modifier}+Shift+e" = "exec rofi -show power-menu";
                 "${modifier}+Return" = "exec wezterm";
                 # "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl set ${brightnessChange}+";
                 # "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl set ${brightnessChange}-";
@@ -64,7 +62,6 @@ in
                 "${modifier}+Ctrl+Right" = moveWorkspace "right";
                 "${modifier}+Ctrl+Up" = moveWorkspace "up";
                 "${modifier}+Ctrl+Down" = moveWorkspace "down";
-                "${modifier}+d" = "exec rofi -show combi";
                 "${modifier}+Ctrl+E" = "exec xdg-open \"$HOME\"";
                 "${modifier}+Ctrl+F" = "exec ${getExe execFirefox}";
                 # "${modifier}+Shift+v" =

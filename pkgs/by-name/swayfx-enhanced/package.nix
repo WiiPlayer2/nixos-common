@@ -1,6 +1,6 @@
 {
   inputs,
-  hostPlatform,
+  stdenv,
 
   sway,
 
@@ -15,7 +15,7 @@
 }:
 let
   swayfx-enhanced-unwrapped =
-    inputs.swayfx-enhanced.packages.${hostPlatform.system}.swayfx-unwrapped-git;
+    inputs.swayfx-enhanced.packages.${stdenv.hostPlatform.system}.swayfx-unwrapped-git;
 in
 sway.override {
   inherit

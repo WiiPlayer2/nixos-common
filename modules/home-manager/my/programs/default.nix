@@ -9,7 +9,6 @@
     ./keepassxc.nix
     ./mangohud.nix
     ./nix-index.nix
-    ./rofi.nix
     ./ssh.nix
     ./vscode.nix
     ./i3status-rust
