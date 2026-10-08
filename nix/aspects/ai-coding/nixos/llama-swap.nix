@@ -150,6 +150,24 @@ let
       };
     };
 
+  mkQwen3_5_9b =
+    {
+      quant,
+      nameSuffix ? "",
+      llamaModule ? { },
+    }:
+    mkLlamaSwapModel {
+      name = "Qwen3.5 9B MTP${nameSuffix}";
+      model = "unsloth/Qwen3.5-9B-MTP-GGUF:${quant}";
+      context = 262144;
+      llamaModule = {
+        imports = [
+          qwen3_5_llama
+          llamaModule
+        ];
+      };
+    };
+
   mkQwen3_6_35b_a3b =
     {
       quant,
@@ -239,6 +257,13 @@ in
         includeAliasesInList = true;
         models = {
           "qwen3.5-0.8b" = mkQwen3_5_08b { quant = "UD-Q4_K_XL"; };
+          "qwen3.5-9b" = mkQwen3_5_9b {
+            quant = "UD-Q4_K_XL";
+            llamaModule.args = {
+              spec-type = "draft-mtp";
+              spec-draft-n-max = 6;
+            };
+          };
           "qwen3.6-35b-a3b_q2" = mkQwen3_6_35b_a3b {
             quant = "UD-Q2_K_XL";
             nameSuffix = " (Q2)";

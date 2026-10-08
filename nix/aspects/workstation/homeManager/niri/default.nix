@@ -245,7 +245,8 @@ in
         {
           window-rule = {
             match._props.is-floating = true;
-            baba-is-float = true;
+            # Due to not being able to be configured, it's too annoying to click on buttons
+            # baba-is-float = true;
           };
         }
 
@@ -293,6 +294,15 @@ in
             # next niri release (> v26.04)
             # on-xdg-activate = "ignore";
             open-focused = false;
+          };
+        }
+        {
+          window-rule = {
+            match._props = {
+              app-id = "superproductivity";
+              title = "Super Productivity Task Widget";
+            };
+            open-floating = true;
           };
         }
       ];
