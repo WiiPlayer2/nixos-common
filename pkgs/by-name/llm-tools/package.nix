@@ -5,7 +5,7 @@
 
   nix,
   jq,
-  python312,
+  python3,
 }:
 stdenv.mkDerivation {
   pname = "llm-tools";
@@ -26,7 +26,7 @@ stdenv.mkDerivation {
           lib.makeBinPath [
             nix
             jq
-            python312.pkgs.huggingface-hub
+            python3.pkgs.huggingface-hub
           ]
         }
     done

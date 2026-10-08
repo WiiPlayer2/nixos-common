@@ -243,7 +243,7 @@ in
     llama-cpp
   ]
   ++ (with pkgs; [
-    python312Packages.huggingface-hub
+    python3Packages.huggingface-hub
   ]);
 
   services = {

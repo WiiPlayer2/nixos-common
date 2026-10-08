@@ -7,7 +7,7 @@
 with lib;
 let
   this-whisper-cpp = pkgs.whisper-cpp-vulkan;
-  this-hf = pkgs.python312Packages.huggingface-hub;
+  this-hf = pkgs.python3Packages.huggingface-hub;
 
   model-path = "/tmp";
   main-model = "large-v3-turbo-q5_0";
