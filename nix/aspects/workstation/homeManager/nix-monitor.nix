@@ -16,5 +16,12 @@
       "-c"
       "pkexec nix-cleanup"
     ];
+
+    # It hogs the disk and the disk usage monitor can refresh on demand if needed
+    storeSizeCommand = [
+      "bash"
+      "-c"
+      "echo N/A"
+    ];
   };
 }
