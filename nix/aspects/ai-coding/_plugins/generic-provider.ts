@@ -10,20 +10,42 @@ const ModelsResponseSchema = z.object({
         id: z.string(),
         owned_by: z.string().optional(),
         name: z.string().optional(),
-        context_length: z.number().optional(),
+        context_length: z.nullish(z.number()),
       }),
     )
     .optional(),
 })
 
 async function probeModels(ctx, baseUrl: string) {
+  await ctx.client.app.log({
+    body: {
+      service: "generic-provider",
+      level: "debug",
+      message: `probing models...`,
+    },
+  })
   const res = await fetch(baseUrl + "/models", {
-    signal: AbortSignal.timeout(1000),
+    signal: AbortSignal.timeout(5000),
   })
   if (!res.ok) throw new Error(`generic provider probe failed: ${res.status}`)
+
+  await ctx.client.app.log({
+    body: {
+      service: "generic-provider",
+      level: "debug",
+      message: `parsing models...`,
+    },
+  })
   const body = ModelsResponseSchema.parse(await res.json())
   if (!body.data) throw new Error("generic provider probe failed: no data field")
 
+  await ctx.client.app.log({
+    body: {
+      service: "generic-provider",
+      level: "debug",
+      message: `mapping models...`,
+    },
+  })
   return Object.fromEntries(await Promise.all(body.data.map(async (item) => {
     const model = {
       name: item.name ?? item.id,
