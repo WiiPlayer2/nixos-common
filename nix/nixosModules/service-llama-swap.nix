@@ -9,34 +9,76 @@ with lib;
 let
   cfg' = config.services.llama-swap;
   cfg = cfg'.llama-server;
-  modelConfigModule = {
-    options = {
-      contextSize = mkOption {
-        type = with types; nullOr int;
-        default = null;
+
+  modelModule =
+    { config, ... }:
+    {
+      options = {
+        name = mkOption {
+          type = types.nullOr types.str;
+          default = null;
+        };
+
+        contextSize = mkOption {
+          type = types.nullOr types.int;
+          default = null;
+        };
+
+        package = (mkPackageOption pkgs "llama-cpp" { }) // {
+          default = cfg.package;
+        };
+
+        args = mkOption {
+          type = with types; attrsOf (nullOr anything); # Should probably be more precise
+        };
+
+        command = mkOption {
+          type = types.str;
+          internal = true;
+          readOnly = true;
+        };
       };
 
-      ttl = mkOption {
-        type = with types; nullOr int;
-        default = null;
-      };
-
-      commandPrefix = mkOption {
-        type = with types; nullOr str;
-        default = null;
-      };
-
-      additionalArgs = mkOption {
-        type = with types; listOf str;
-        default = [ ];
-      };
-
-      dynamicPort = mkOption {
-        type = types.bool;
-        default = true;
+      config = {
+        args = {
+          no-warmup = mkOptionDefault { };
+          parallel = mkOptionDefault 1;
+          # gpu-layers = mkOptionDefault "auto"; # default
+          jinja = mkOptionDefault { };
+          cache-type-k = mkOptionDefault "q4_0";
+          cache-type-v = mkOptionDefault "q4_0";
+          # hf-repo
+          ctx-size = mkOptionDefault config.contextSize;
+          port = mkOptionDefault "\${PORT}";
+          threads = mkOptionDefault (-1);
+        };
+        command =
+          let
+            mapArg =
+              name: value:
+              let
+                optionName = "--${name}";
+              in
+              if value == { } then
+                [ optionName ]
+              else if builtins.isList value then
+                [
+                  optionName
+                  (builtins.concatStringsSep "," (map toString value))
+                ]
+              else
+                [
+                  optionName
+                  (toString value)
+                ];
+            mappedArgs = builtins.concatLists (
+              mapAttrsToList mapArg (filterAttrs (_: v: v != null) config.args)
+            );
+            command = "${getExe' config.package "llama-server"} ${escapeShellArgs mappedArgs}";
+          in
+          command;
       };
     };
-  };
 in
 {
   options.services.llama-swap = {
@@ -46,56 +88,8 @@ in
     };
     llama-server = {
       package = mkPackageOption pkgs "llama-cpp" { };
-      defaults = mkOption {
-        type = types.submodule modelConfigModule;
-        default = { };
-      };
       models = mkOption {
-        type = types.attrsOf (
-          types.submodule (
-            { config, ... }:
-            {
-              imports = [
-                modelConfigModule
-              ];
-
-              options = {
-                id = mkOption {
-                  type = types.str;
-                  default = config._module.args.name;
-                };
-
-                filePath = mkOption {
-                  type = with types; nullOr path;
-                  default = null;
-                };
-
-                repo = mkOption {
-                  type = with types; nullOr str;
-                  default = null;
-                };
-
-                quant = mkOption {
-                  type = with types; nullOr str;
-                  default = null;
-                };
-
-                aliases = mkOption {
-                  type = with types; listOf str;
-                  default = [ ];
-                };
-              };
-
-              config = {
-                contextSize = mkDefault cfg.defaults.contextSize;
-                ttl = mkDefault cfg.defaults.ttl;
-                commandPrefix = mkDefault cfg.defaults.commandPrefix;
-                additionalArgs = mkDefault cfg.defaults.additionalArgs;
-                dynamicPort = mkDefault cfg.defaults.dynamicPort;
-              };
-            }
-          )
-        );
+        type = types.attrsOf (types.submodule modelModule);
         default = { };
       };
     };
@@ -104,52 +98,22 @@ in
   config = mkIf cfg'.enable {
     services.llama-swap.settings.models =
       let
-        llama-server-models = mapAttrs' (_: v: {
-          name = v.id;
-          value = {
-            # env = [
-            #   "HOME=/tmp"
-            # ];
-            cmd = ''
-              ${
-                if v.commandPrefix == null then "" else "${v.commandPrefix} "
-              }${getExe' cfg.package "llama-server"} \
-                ${if v.dynamicPort then "--port \${PORT}" else ""} \
-                ${escapeShellArgs (
-                  [
-                    "--no-warmup"
-                    "--parallel"
-                    "1"
-                    "--gpu-layers"
-                    "all"
-                    "--jinja"
-                    "--cache-type-k"
-                    "q4_0"
-                    "--cache-type-v"
-                    "q4_0"
-                  ]
-                  ++ optionals (v.filePath != null) [
-                    "-m"
-                    v.filePath
-                  ]
-                  ++ optionals (v.repo != null) [
-                    "-hf"
-                    (if v.quant == null then v.repo else "${v.repo}:${v.quant}")
-                  ]
-                  ++ optionals (v.contextSize != null) [
-                    "--ctx-size"
-                    (toString v.contextSize)
-                  ]
-                  ++ v.additionalArgs
-                )}
-            '';
-          }
-          // optionalAttrs (v.ttl != null) {
-            inherit (v) ttl;
+        mapModel =
+          name: modelCfg:
+          (optionalAttrs (modelCfg.name != null) { inherit (modelCfg) name; })
+          // {
+            cmd = modelCfg.command;
+            capabilities =
+              (optionalAttrs (modelCfg.contextSize != null) { context = modelCfg.contextSize; })
+              // {
+                "in" = [ "text" ];
+                out = [ "text" ];
+                tools = true;
+              };
           };
-        }) cfg.models;
+        models = mapAttrs mapModel cfg.models;
       in
-      llama-server-models;
+      models;
 
     systemd.services.llama-swap = mkIf (cfg'.user != null) {
       serviceConfig = {
