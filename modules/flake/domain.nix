@@ -74,9 +74,9 @@ inputs: args: {
 
       agenix-rekey = {
         nixosConfigurations = args.inputs.self.nixosConfigurations;
-        homeConfigurations = mapAttrs' (
-          n: v: nameValuePair "phone-${n}-user" { config = v.config.home-manager.config; }
-        ) args.inputs.self.nixOnDroidConfigurations;
+        # homeConfigurations = mapAttrs' (
+        #   n: v: nameValuePair "phone-${n}-user" { config = v.config.home-manager.config; }
+        # ) args.inputs.self.nixOnDroidConfigurations;
       };
       pre-commit.settings.hooks = {
         update-common = {
