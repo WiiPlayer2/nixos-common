@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   # https://wiki.nixos.org/wiki/CCache
   sampleCCacheWrapperOverlay = pkgs.writeText "ccache-overlay.nix" ''
@@ -36,7 +41,7 @@ let
   };
 in
 {
-  programs.ccache.enable = true;
+  programs.ccache.enable = lib.warn "Disabled ccache due to nix-ccache security issues" false;
   nix.settings.extra-sandbox-paths = [ config.programs.ccache.cacheDir ];
   environment.systemPackages = [
     emitCCacheWrapperOverlay

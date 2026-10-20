@@ -11,7 +11,7 @@ in
 {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      cavalier
+      cavasik
     ];
     programs.cava = {
       enable = true;
