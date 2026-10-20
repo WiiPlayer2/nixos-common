@@ -5,6 +5,7 @@ let
 in
 {
   imports = [
+    inputs.decentranix.nixosModules.default
     inputs.self.nixosModules.lix
     inputs.self.nixosModules.main-users
   ];

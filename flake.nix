@@ -164,6 +164,11 @@
       url = "git+https://git.web.home.dark-link.info/delulu-tools/DeluluRouter.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    decentranix = {
+      url = "git+https://git.web.home.dark-link.info/software-projects/DecentraNix.git?ref=prototype2";
+      # url = "path:/home/waldemar/source/DecentraNix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
