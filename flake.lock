@@ -273,11 +273,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792484660,
-        "narHash": "sha256-3iOxAcpo++wCQHkzr8US0CxGrQEVU7qY7jLScURE0F0=",
+        "lastModified": 1792487233,
+        "narHash": "sha256-dCN6iwPZ3qBLKLiscQYiqL1OCs5NMnvQ3pxetc6D2I4=",
         "ref": "prototype2",
-        "rev": "46dc33c63c31e3a3368cbdceb70d9368d7537d9d",
-        "revCount": 43,
+        "rev": "1fedf5c9474cafbb001c05b42e782d4843ccebac",
+        "revCount": 44,
         "type": "git",
         "url": "https://git.web.home.dark-link.info/software-projects/DecentraNix.git"
       },
