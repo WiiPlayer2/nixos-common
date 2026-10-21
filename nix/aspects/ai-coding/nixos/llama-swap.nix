@@ -150,24 +150,6 @@ let
       };
     };
 
-  mkQwen3_5_9b =
-    {
-      quant,
-      nameSuffix ? "",
-      llamaModule ? { },
-    }:
-    mkLlamaSwapModel {
-      name = "Qwen3.5 9B MTP${nameSuffix}";
-      model = "unsloth/Qwen3.5-9B-MTP-GGUF:${quant}";
-      context = 262144;
-      llamaModule = {
-        imports = [
-          qwen3_5_llama
-          llamaModule
-        ];
-      };
-    };
-
   mkQwen3_6_35b_a3b =
     {
       quant,
@@ -201,24 +183,6 @@ let
       reasoning-preserve = { };
     };
   };
-
-  mkQwen3_8_27b =
-    {
-      quant,
-      nameSuffix ? "",
-      llamaModule ? { },
-    }:
-    mkLlamaSwapModel {
-      name = "Qwen3.8 27B${nameSuffix}";
-      model = "unsloth/Qwen3.8-27B-GGUF:${quant}";
-      context = 262144;
-      llamaModule = {
-        imports = [
-          qwen3_8_llama
-          llamaModule
-        ];
-      };
-    };
 
   mkQwen3_8_flash =
     {
@@ -274,6 +238,22 @@ let
       reasoning-preserve = { };
     };
   };
+
+  model_qwen3_5_9b = {
+    args = {
+      hf-repo = "unsloth/Qwen3.5-9B-MTP-GGUF:UD-Q2_K_XL";
+      temperature = 0.6;
+      top-p = 0.95;
+      top-k = 20;
+      min-p = 0.0;
+      presence-penalty = 0.0;
+      repeat-penalty = 1.0;
+      image-max-tokens = 0;
+
+      spec-type = "draft-mtp";
+      spec-draft-n-max = 6;
+    };
+  };
 in
 {
   environment.systemPackages = [
@@ -294,19 +274,8 @@ in
         includeAliasesInList = true;
         models = {
           "qwen3.5-0.8b" = mkQwen3_5_08b { quant = "UD-Q4_K_XL"; };
-          "qwen3.5-9b" = mkQwen3_5_9b {
-            quant = "UD-Q4_K_XL";
-            llamaModule.args = {
-              spec-type = "draft-mtp";
-              spec-draft-n-max = 6;
-            };
-          };
           "qwen3.6-35b-a3b_q2" = mkQwen3_6_35b_a3b {
             quant = "UD-Q2_K_XL";
-            nameSuffix = " (Q2)";
-          };
-          "qwen3.8-27b_q2" = mkQwen3_8_27b {
-            quant = "UD-IQ2_S";
             nameSuffix = " (Q2)";
           };
           "qwen3.8-flash_q2" = mkQwen3_8_flash {
@@ -317,6 +286,13 @@ in
       };
 
       llama-server.models = {
+        "qwen3.5-9b_64k" = { ... }: {
+          imports = [
+            model_qwen3_5_9b
+          ];
+          name = "Qwen3.5 9B";
+          contextSize = 64000;
+        };
         "qwen3.8-27b_64k" = { ... }: {
           imports = [
             model_qwen3_8_27b
@@ -331,19 +307,33 @@ in
           name = "Qwen3.8 27B (128k)";
           contextSize = 128000;
         };
+        "qwen3.8-27b" = { ... }: {
+          imports = [
+            model_qwen3_8_27b
+          ];
+          name = "Qwen3.8 27B";
+          contextSize = 262144;
+        };
         "swift-1.5-qwen3.8-27b_64k" = { ... }: {
           imports = [
             model_swift_1_5
           ];
-          name = "Swift 1.5 Qwen3.8-27B · GSQ-RCO (64k)";
+          name = "Swift 1.5 Qwen3.8 27B (64k)";
           contextSize = 64000;
         };
         "swift-1.5-qwen3.8-27b_128k" = { ... }: {
           imports = [
             model_swift_1_5
           ];
-          name = "Swift 1.5 Qwen3.8-27B · GSQ-RCO (128k)";
+          name = "Swift 1.5 Qwen3.8 27B (128k)";
           contextSize = 128000;
+        };
+        "swift-1.5-qwen3.8-27b" = { ... }: {
+          imports = [
+            model_swift_1_5
+          ];
+          name = "Swift 1.5 Qwen3.8 27B";
+          contextSize = 262144;
         };
       };
     };
