@@ -305,6 +305,30 @@ in
             open-floating = true;
           };
         }
+        {
+          window-rule = {
+            match._props = {
+              app-id = "hermes";
+              title = "Hermes HUD";
+            };
+            open-floating = true;
+            open-focused = false;
+            draw-border-with-background = false;
+            default-floating-position._props = {
+              x = 0;
+              y = 0;
+              relative-to = "top";
+            };
+            focus-ring.off = { };
+            border.off = { };
+            shadow.off = { };
+            background-effect = {
+              xray = false;
+              blur = false;
+            };
+            opacity = 0.95;
+          };
+        }
       ];
     };
   };
