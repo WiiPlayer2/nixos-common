@@ -77,29 +77,41 @@ in
           "loginctl"
           "lock-session"
         ];
-        "${modifier}+Shift+V".spawn = [
-          "dms"
-          "ipc"
-          "clipboard"
-          "open"
-        ];
-        "${modifier}+Shift+E".spawn = [
-          "dms"
-          "ipc"
-          "powermenu"
-          "open"
-        ];
-        "${modifier}+Shift+R".spawn = [
-          "dms"
-          "restart"
-        ]; # sway: reload, exec dms restart, exec kanshictl reload
-        "${modifier}+D".spawn = [
-          "dms"
-          "ipc"
-          "spotlight-bar"
-          "openWith"
-          "all"
-        ];
+        "${modifier}+Shift+V" = {
+          _props.hotkey-overlay-title = "Open Clipboard History";
+          spawn = [
+            "dms"
+            "ipc"
+            "clipboard"
+            "open"
+          ];
+        };
+        "${modifier}+Shift+E" = {
+          _props.hotkey-overlay-title = "Open Power Menu";
+          spawn = [
+            "dms"
+            "ipc"
+            "powermenu"
+            "open"
+          ];
+        };
+        "${modifier}+Shift+R" = {
+          _props.hotkey-overlay-title = "Restart DMS";
+          spawn = [
+            "dms"
+            "restart"
+          ];
+        }; # sway: reload, exec dms restart, exec kanshictl reload
+        "${modifier}+D" = {
+          _props.hotkey-overlay-title = "Open Spotlight";
+          spawn = [
+            "dms"
+            "ipc"
+            "spotlight-bar"
+            "openWith"
+            "all"
+          ];
+        };
 
         # Screenshots
         "Print".spawn = [
@@ -120,26 +132,35 @@ in
         ];
 
         # Audio
-        "XF86AudioMute".spawn = [
-          "dms"
-          "ipc"
-          "audio"
-          "mute"
-        ];
-        "XF86AudioLowerVolume".spawn = [
-          "dms"
-          "ipc"
-          "audio"
-          "decrement"
-          "5"
-        ];
-        "XF86AudioRaiseVolume".spawn = [
-          "dms"
-          "ipc"
-          "audio"
-          "increment"
-          "5"
-        ];
+        "XF86AudioMute" = {
+          _props.allow-when-locked = true;
+          spawn = [
+            "dms"
+            "ipc"
+            "audio"
+            "mute"
+          ];
+        };
+        "XF86AudioLowerVolume" = {
+          _props.allow-when-locked = true;
+          spawn = [
+            "dms"
+            "ipc"
+            "audio"
+            "decrement"
+            "5"
+          ];
+        };
+        "XF86AudioRaiseVolume" = {
+          _props.allow-when-locked = true;
+          spawn = [
+            "dms"
+            "ipc"
+            "audio"
+            "increment"
+            "5"
+          ];
+        };
         "Control+XF86AudioLowerVolume".spawn = [
           "dms"
           "ipc"
@@ -180,32 +201,44 @@ in
         ];
 
         # Display
-        "XF86MonBrightnessDown".spawn = [
-          "dms"
-          "ipc"
-          "brightness"
-          "decrement"
-          "5"
-          ""
-        ];
-        "XF86MonBrightnessUp".spawn = [
-          "dms"
-          "ipc"
-          "brightness"
-          "increment"
-          "5"
-          ""
-        ];
-        "${modifier}+P".spawn = [
-          "dms"
-          "ipc"
-          "settings"
-          "focusOrToggleWith"
-          "displays"
-        ];
+        "XF86MonBrightnessDown" = {
+          _props.hotkey-overlay-title = "Decrease Brightness";
+          spawn = [
+            "dms"
+            "ipc"
+            "brightness"
+            "decrement"
+            "5"
+            ""
+          ];
+        };
+        "XF86MonBrightnessUp" = {
+          _props.hotkey-overlay-title = "Increase Brightness";
+          spawn = [
+            "dms"
+            "ipc"
+            "brightness"
+            "increment"
+            "5"
+            ""
+          ];
+        };
+        "${modifier}+P" = {
+          _props.hotkey-overlay-title = "Open Displays";
+          spawn = [
+            "dms"
+            "ipc"
+            "settings"
+            "focusOrToggleWith"
+            "displays"
+          ];
+        };
 
         # Applications
-        "${modifier}+Return".spawn = [ "wezterm" ];
+        "${modifier}+Return" = {
+          _props.hotkey-overlay-title = "Open a Terminal";
+          spawn = [ "wezterm" ];
+        };
 
         # Windows & Workspaces
         "${modifier}+Control+Left".move-workspace-to-monitor-left = { };
