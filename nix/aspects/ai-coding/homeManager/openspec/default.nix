@@ -16,5 +16,7 @@
         "verify"
       ];
     };
+
+    schemas.spec-driven.source = ./schemas/spec-driven;
   };
 }

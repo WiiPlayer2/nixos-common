@@ -33,6 +33,19 @@ in
       type = types.path;
       default = settingsFile;
     };
+
+    schemas = mkOption {
+      type = types.lazyAttrsOf (
+        types.submodule ({
+          options = {
+            source = mkOption {
+              type = types.path;
+            };
+          };
+        })
+      );
+      default = { };
+    };
   };
 
   config = mkIf cfg.enable {
@@ -40,7 +53,18 @@ in
       cfg.package
     ];
 
-    xdg.configFile."openspec/config.json".source = cfg.settingsFile;
+    xdg = {
+      configFile."openspec/config.json".source = cfg.settingsFile;
+      dataFile =
+        let
+          mkSchemaFile = name: schemaCfg: {
+            name = "openspec/schemas/${name}";
+            value.source = schemaCfg.source;
+          };
+          schemaFiles = lib.mapAttrs' mkSchemaFile cfg.schemas;
+        in
+        schemaFiles;
+    };
 
     # TODO: official default values
     programs.openspec.settings = {
