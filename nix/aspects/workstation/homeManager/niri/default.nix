@@ -186,6 +186,7 @@ in
           "brightness"
           "decrement"
           "5"
+          ""
         ];
         "XF86MonBrightnessUp".spawn = [
           "dms"
@@ -193,6 +194,7 @@ in
           "brightness"
           "increment"
           "5"
+          ""
         ];
         "${modifier}+P".spawn = [
           "dms"
@@ -211,13 +213,19 @@ in
         "${modifier}+Control+Up".move-workspace-to-monitor-up = { };
         "${modifier}+Control+Down".move-workspace-to-monitor-down = { };
 
-        "${modifier}+Shift+Left".move-column-left-or-to-monitor-left = { };
-        "${modifier}+Shift+Right".move-column-right-or-to-monitor-right = { };
-        "${modifier}+Shift+Up".move-window-up-or-to-workspace-up = { };
-        "${modifier}+Shift+Down".move-window-down-or-to-workspace-down = { };
+        # "${modifier}+Shift+Left".move-column-left-or-to-monitor-left = { };
+        # "${modifier}+Shift+Right".move-column-right-or-to-monitor-right = { };
+        # "${modifier}+Shift+Up".move-window-up-or-to-workspace-up = { };
+        # "${modifier}+Shift+Down".move-window-down-or-to-workspace-down = { };
+        "${modifier}+Shift+Left".move-column-left = { };
+        "${modifier}+Shift+Right".move-column-right = { };
+        "${modifier}+Shift+Up".move-window-up = { };
+        "${modifier}+Shift+Down".move-window-down = { };
 
-        "${modifier}+Left".focus-column-or-monitor-left = { };
-        "${modifier}+Right".focus-column-or-monitor-right = { };
+        # "${modifier}+Left".focus-column-or-monitor-left = { };
+        # "${modifier}+Right".focus-column-or-monitor-right = { };
+        "${modifier}+Left".focus-column-left-or-last = { };
+        "${modifier}+Right".focus-column-right-or-first = { };
         "${modifier}+Up".focus-window-or-workspace-up = { };
         "${modifier}+Down".focus-window-or-workspace-down = { };
       };
