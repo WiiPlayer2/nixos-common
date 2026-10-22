@@ -3,6 +3,5 @@
   imports = [
     ./distrobox.nix
     ./generic.nix
-    ./taskwarrior.nix
   ];
 }

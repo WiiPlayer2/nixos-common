@@ -12,14 +12,15 @@ in
   programs.dank-material-shell = {
     enable = true;
     systemd.enable = true;
+    enableCalendarEvents = false;
   };
 
   xdg.configFile = {
-    "DankMaterialShell/settings.json".onChange = restartCommand;
-    "DankMaterialShell/plugin_settings.json".onChange = restartCommand;
+    "dms/settings.json".onChange = restartCommand;
+    "dms/plugin_settings.json".onChange = restartCommand;
   };
 
-  home.file."${config.xdg.stateHome}/DankMaterialShell/session.json".mergeWith = ''
+  home.file."${config.xdg.stateHome}/dms/session.json".mergeWith = ''
     ${getExe pkgs.jq} '
     def merge_val(f):
         def merge_arr(f):

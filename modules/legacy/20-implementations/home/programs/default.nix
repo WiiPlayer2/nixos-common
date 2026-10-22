@@ -6,7 +6,6 @@
     ./aseprite.nix
     ./atlauncher.nix
     ./attic-client.nix
-    ./audacity.nix
     ./blender.nix
     ./bottles.nix
     ./bubbly.nix
@@ -56,7 +55,6 @@
     ./slides.nix
     ./steam.nix
     ./strawberry.nix
-    ./taskwarrior.nix
     ./thunderbird.nix
     ./tsrc.nix
     ./tuba.nix

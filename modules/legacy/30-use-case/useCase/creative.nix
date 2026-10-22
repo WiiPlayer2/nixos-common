@@ -43,7 +43,6 @@ in
     })
     (mkIf cfg.sound.enable {
       my.programs = {
-        audacity.enable = true;
         lmms.enable = true;
       };
     })

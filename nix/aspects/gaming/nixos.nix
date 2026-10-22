@@ -11,7 +11,7 @@ with lib;
     xwininfo
     wget
     xdotool
-    pince
+    # pince # currently broken and out-of-date
   ];
 
   programs.steam = {

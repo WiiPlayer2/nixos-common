@@ -29,7 +29,7 @@ with lib;
         woke
         nbgv
         caligula
-        git-sim
+        # git-sim
         mkvtoolnix
         git-ignore
 

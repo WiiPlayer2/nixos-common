@@ -43,10 +43,6 @@ in
     };
     my.programs = {
       nemo.enable = true;
-      taskwarrior = {
-        enable = true;
-        dataLocation = "$HOME/Dropbox/Sync/taskwarrior";
-      };
       kubecolor.enable = true;
       cava.enable = true;
       rider.enable = true;

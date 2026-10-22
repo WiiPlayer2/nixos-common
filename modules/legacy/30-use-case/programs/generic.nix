@@ -7,7 +7,6 @@ let
     "aseprite"
     "atlauncher"
     "attic-client"
-    "audacity"
     "blender"
     "bottles"
     "bubbly"

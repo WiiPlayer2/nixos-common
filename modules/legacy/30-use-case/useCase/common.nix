@@ -85,10 +85,6 @@ in
       };
       my.programs = {
         nemo.enable = true;
-        taskwarrior = {
-          enable = true;
-          dataLocation = "$HOME/Dropbox/Sync/taskwarrior";
-        };
         firefox.enable = true;
       };
       my.services = {
