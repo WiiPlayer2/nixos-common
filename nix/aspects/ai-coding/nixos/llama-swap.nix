@@ -8,15 +8,6 @@ let
   inherit (lib)
     getExe'
     mkIf
-    escapeShellArgs
-    mkPackageOption
-    mkOption
-    mkOptionDefault
-    mkDefault
-    types
-    evalModules
-    filterAttrs
-    mapAttrsToList
     ;
 
   llama-cpp = pkgs.llama-cpp.override {
@@ -24,151 +15,7 @@ let
     rocmSupport = false; # explicitly disabled, because unstable
   };
 
-  llamaModule =
-    { config, ... }:
-    {
-      options = {
-        package = mkPackageOption pkgs "llama-cpp" { };
-        args = mkOption {
-          type = with types; attrsOf (nullOr anything); # Should probably be more precise
-        };
-        command = mkOption {
-          type = types.str;
-          internal = true;
-          readOnly = true;
-        };
-      };
-
-      config = {
-        args = {
-          no-warmup = mkOptionDefault { };
-          parallel = mkOptionDefault 1;
-          # gpu-layers = mkOptionDefault "auto"; # default
-          jinja = mkOptionDefault { };
-          cache-type-k = mkOptionDefault "q4_0";
-          cache-type-v = mkOptionDefault "q4_0";
-          # hf-repo
-          # ctx-size
-          port = mkOptionDefault "\${PORT}";
-          threads = mkOptionDefault (-1);
-        };
-        command =
-          let
-            mapArg =
-              name: value:
-              let
-                optionName = "--${name}";
-              in
-              if value == { } then
-                [ optionName ]
-              else if builtins.isList value then
-                [
-                  optionName
-                  (builtins.concatStringsSep "," (map toString value))
-                ]
-              else
-                [
-                  optionName
-                  (toString value)
-                ];
-            mappedArgs = builtins.concatLists (
-              mapAttrsToList mapArg (filterAttrs (_: v: v != null) config.args)
-            );
-            command = "${getExe' config.package "llama-server"} ${escapeShellArgs mappedArgs}";
-          in
-          command;
-      };
-    };
-
-  mkLlamaCmd =
-    module:
-    let
-      config = evalModules {
-        modules = [
-          llamaModule
-          module
-        ];
-      };
-    in
-    config.config.command;
-
-  mkLlamaSwapModel =
-    {
-      name,
-      model,
-      context,
-      llamaModule ? { },
-    }:
-    {
-      inherit name;
-      cmd = mkLlamaCmd {
-        imports = [ llamaModule ];
-
-        args = {
-          hf-repo = mkDefault model;
-          ctx-size = mkDefault context;
-        };
-      };
-      capabilities = {
-        inherit context;
-        "in" = [
-          "text"
-          "image"
-        ];
-        out = [ "text" ];
-        tools = true;
-      };
-    };
-
-  qwen3_5_llama = {
-    args = {
-      temperature = 0.6;
-      top-p = 0.95;
-      top-k = 20;
-      min-p = 0.0;
-      presence-penalty = 0.0;
-      repeat-penalty = 1.0;
-      image-min-tokens = 1024;
-    };
-  };
-
-  mkQwen3_5_08b =
-    {
-      quant,
-      nameSuffix ? "",
-      llamaModule ? { },
-    }:
-    mkLlamaSwapModel {
-      name = "Qwen3.5 0.8B${nameSuffix}";
-      model = "unsloth/Qwen3.5-0.8B-GGUF:${quant}";
-      context = 262144;
-      llamaModule = {
-        imports = [
-          qwen3_5_llama
-          llamaModule
-        ];
-      };
-    };
-
-  mkQwen3_6_35b_a3b =
-    {
-      quant,
-      nameSuffix ? "",
-      llamaModule ? { },
-    }:
-    mkLlamaSwapModel {
-      name = "Qwen3.6 35B A3B${nameSuffix}";
-      model = "unsloth/Qwen3.6-35B-A3B-GGUF:${quant}";
-      context = 262144;
-      llamaModule = {
-        imports = [
-          qwen3_5_llama
-          llamaModule
-        ];
-      };
-    };
-
-  qwen3_8_llama = {
+  model_qwen3_8 = {
     args = {
       temperature = 1.0;
       top-p = 0.95;
@@ -176,31 +23,13 @@ let
       min-p = 0.0;
       presence-penalty = 1.0;
       repeat-penalty = 1.0;
-      image-min-tokens = 1024;
       chat-template-kwargs = builtins.toJSON {
         reasoning_effort = "low";
       };
+      image-max-tokens = 0;
       reasoning-preserve = { };
     };
   };
-
-  mkQwen3_8_flash =
-    {
-      quant,
-      nameSuffix ? "",
-      llamaModule ? { },
-    }:
-    mkLlamaSwapModel {
-      name = "Qwen3.8 Flash${nameSuffix}";
-      model = "unsloth/Qwen3.8-Flash-Next-GGUF:${quant}";
-      context = 262144;
-      llamaModule = {
-        imports = [
-          qwen3_8_llama
-          llamaModule
-        ];
-      };
-    };
 
   model_swift_1_5 = {
     args = {
@@ -223,25 +52,25 @@ let
   };
 
   model_qwen3_8_27b = {
+    imports = [
+      model_qwen3_8
+    ];
     args = {
       hf-repo = "unsloth/Qwen3.8-27B-GGUF:UD-IQ2_S";
-      temperature = 1.0;
-      top-p = 0.95;
-      top-k = 20;
-      min-p = 0.0;
-      presence-penalty = 1.0;
-      repeat-penalty = 1.0;
-      chat-template-kwargs = builtins.toJSON {
-        reasoning_effort = "low";
-      };
-      image-max-tokens = 0;
-      reasoning-preserve = { };
     };
   };
 
-  model_qwen3_5_9b = {
+  model_qwen3_8_flash_next = {
+    imports = [
+      model_qwen3_8
+    ];
     args = {
-      hf-repo = "unsloth/Qwen3.5-9B-MTP-GGUF:UD-Q2_K_XL";
+      hf-repo = "unsloth/Qwen3.8-Flash-Next-GGUF:UD-Q2_K_XL";
+    };
+  };
+
+  model_qwen3_5 = {
+    args = {
       temperature = 0.6;
       top-p = 0.95;
       top-k = 20;
@@ -249,9 +78,36 @@ let
       presence-penalty = 0.0;
       repeat-penalty = 1.0;
       image-max-tokens = 0;
+    };
+  };
+
+  model_qwen3_5_9b = {
+    imports = [
+      model_qwen3_5
+    ];
+    args = {
+      hf-repo = "unsloth/Qwen3.5-9B-MTP-GGUF:UD-Q2_K_XL";
 
       spec-type = "draft-mtp";
       spec-draft-n-max = 6;
+    };
+  };
+
+  model_qwen3_5_08b = {
+    imports = [
+      model_qwen3_5
+    ];
+    args = {
+      hf-repo = "unsloth/Qwen3.5-0.8B-GGUF:UD-Q4_K_XL";
+    };
+  };
+
+  model_qwen3_6_35b_a3b = {
+    imports = [
+      model_qwen3_5
+    ];
+    args = {
+      hf-repo = "unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q2_K_XL";
     };
   };
 in
@@ -272,26 +128,43 @@ in
         globalTTL = 60 * 60; # 15min
         sendLoadingState = false;
         includeAliasesInList = true;
-        models = {
-          "qwen3.5-0.8b" = mkQwen3_5_08b { quant = "UD-Q4_K_XL"; };
-          "qwen3.6-35b-a3b_q2" = mkQwen3_6_35b_a3b {
-            quant = "UD-Q2_K_XL";
-            nameSuffix = " (Q2)";
-          };
-          "qwen3.8-flash_q2" = mkQwen3_8_flash {
-            quant = "UD-Q2_K_XL";
-            nameSuffix = " (Q2)";
-          };
-        };
       };
 
       llama-server.models = {
+        "qwen3.5-0.8b" = { ... }: {
+          imports = [
+            model_qwen3_5_08b
+          ];
+          name = "Qwen3.5 0.8B";
+          contextSize = 262144;
+        };
         "qwen3.5-9b_64k" = { ... }: {
           imports = [
             model_qwen3_5_9b
           ];
           name = "Qwen3.5 9B";
           contextSize = 64000;
+        };
+        "qwen3.6-35b-a3b_64k" = { ... }: {
+          imports = [
+            model_qwen3_6_35b_a3b
+          ];
+          name = "Qwen3.6 35B A3B (64k)";
+          contextSize = 64000;
+        };
+        "qwen3.6-35b-a3b_128k" = { ... }: {
+          imports = [
+            model_qwen3_6_35b_a3b
+          ];
+          name = "Qwen3.6 35B A3B (128k)";
+          contextSize = 128000;
+        };
+        "qwen3.6-35b-a3b" = { ... }: {
+          imports = [
+            model_qwen3_6_35b_a3b
+          ];
+          name = "Qwen3.6 35B A3B";
+          contextSize = 262144;
         };
         "qwen3.8-27b_64k" = { ... }: {
           imports = [
@@ -334,6 +207,13 @@ in
           ];
           name = "Swift 1.5 Qwen3.8 27B";
           contextSize = 262144;
+        };
+        "qwen3.8-flash_64k" = { ... }: {
+          imports = [
+            model_qwen3_8_flash_next
+          ];
+          name = "Qwen3.8 Flash (64k)";
+          contextSize = 64000;
         };
       };
     };

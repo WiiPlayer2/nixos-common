@@ -28,6 +28,7 @@ with lib;
           rightWidgets = [
             "network_speed_monitor"
             "systemMonitorPlus"
+            "amdGpuMonitor"
             "dankDiskUsage"
             "notificationButton"
             "privacyIndicator"

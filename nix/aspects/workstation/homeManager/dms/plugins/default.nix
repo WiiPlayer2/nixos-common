@@ -19,6 +19,7 @@ with lib;
         };
       };
 
+      amdGpuMonitor = installAndEnable;
       bongoCat = installAndEnable;
       calculator = installAndEnable;
       # NOTE: Garbage AI written plugin has non-working settings page.
@@ -91,6 +92,9 @@ with lib;
     };
 
   home.packages = with pkgs; [
+    # amdGpuMonitor
+    amdgpu_top
+
     # bongoCat
     libinput
     evtest
