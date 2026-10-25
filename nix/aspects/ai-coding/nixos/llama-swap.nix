@@ -1,3 +1,5 @@
+# NOTE: I'm using values for my 8GB VRAM setup due to it being shared across multiple NixOS configs
+# Other setups override what's needed.
 {
   lib,
   config,
@@ -8,6 +10,7 @@ let
   inherit (lib)
     getExe'
     mkIf
+    mkDefault
     ;
 
   llama-cpp = pkgs.llama-cpp.override {
@@ -33,7 +36,7 @@ let
 
   model_swift_1_5 = {
     args = {
-      hf-repo = "ukisai/Swift-1.5-Qwen3.8-27B-GSQ-RCO-GGUF:IQ2_S-mtp";
+      hf-repo = mkDefault "ukisai/Swift-1.5-Qwen3.8-27B-GSQ-RCO-GGUF:IQ2_XS-mtp";
       flash-attn = "on";
       temperature = 1.0;
       top-p = 0.95;
@@ -56,7 +59,7 @@ let
       model_qwen3_8
     ];
     args = {
-      hf-repo = "unsloth/Qwen3.8-27B-GGUF:UD-IQ2_S";
+      hf-repo = mkDefault "unsloth/Qwen3.8-27B-GGUF:UD-IQ1_S";
     };
   };
 
@@ -65,7 +68,7 @@ let
       model_qwen3_8
     ];
     args = {
-      hf-repo = "unsloth/Qwen3.8-Flash-Next-GGUF:UD-Q2_K_XL";
+      hf-repo = mkDefault "unsloth/Qwen3.8-Flash-Next-GGUF:UD-Q2_K_XL";
     };
   };
 
@@ -107,7 +110,7 @@ let
       model_qwen3_5
     ];
     args = {
-      hf-repo = "unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q2_K_XL";
+      hf-repo = mkDefault "unsloth/Qwen3.6-35B-A3B-MTP-GGUF:UD-IQ1_M";
     };
   };
 in
