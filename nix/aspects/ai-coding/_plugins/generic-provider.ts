@@ -1,5 +1,6 @@
 // loosely based on https://github.com/goniz/opencode-local-provider/tree/main
 import { z } from "zod"
+import { Plugin } from "@opencode/plugin";
 
 const BASE_URL = "http://localhost:5000/v1"
 
@@ -16,95 +17,81 @@ const ModelsResponseSchema = z.object({
     .optional(),
 })
 
-async function probeModels(ctx, baseUrl: string) {
-  await ctx.client.app.log({
-    body: {
-      service: "generic-provider",
-      level: "debug",
-      message: `probing models...`,
-    },
-  })
+async function probeModels(baseUrl: string) {
+  console.log(`probing models...`)
   const res = await fetch(baseUrl + "/models", {
     signal: AbortSignal.timeout(5000),
   })
   if (!res.ok) throw new Error(`generic provider probe failed: ${res.status}`)
 
-  await ctx.client.app.log({
-    body: {
-      service: "generic-provider",
-      level: "debug",
-      message: `parsing models...`,
-    },
-  })
+  console.log(`parsing models...`)
   const body = ModelsResponseSchema.parse(await res.json())
   if (!body.data) throw new Error("generic provider probe failed: no data field")
 
-  await ctx.client.app.log({
-    body: {
-      service: "generic-provider",
-      level: "debug",
-      message: `mapping models...`,
-    },
-  })
-  return Object.fromEntries(await Promise.all(body.data.map(async (item) => {
+  console.log(`mapping models...`)
+  return Array.from(await Promise.all(body.data.map(async (item) => {
     const model = {
+      enabled: true,
+      id: item.id,
+      modelID: item.id,
       name: item.name ?? item.id,
+
+      // TODO
+      time: {
+        released: 1,
+        number: 1,
+      },
+      capabilities: {
+        tools: true,
+        input: [ "text" ],
+        output: [ "text" ],
+      },
+      variants: [],
+      cost: [],
+      status: "active",
     }
 
-    await ctx.client.app.log({
-      body: {
-        service: "generic-provider",
-        level: "debug",
-        message: `${JSON.stringify(item)}`,
-      },
-    })
+    console.log(`${JSON.stringify(item)}`)
 
     if (item.context_length) {
       model["limit"] = {
         context: item.context_length,
         output: item.context_length,
       }
+    } else {
+      model["limit"] = {
+        context: 64000,
+        output: 64000,
+      }
     }
 
-    return [item.id, model]
+    return model
   })))
 }
 
-export const GenericProviderPlugin = async (ctx) => {
-  await ctx.client.app.log({
-    body: {
-      service: "generic-provider",
-      level: "info",
-      message: "Generic provider plugin loaded.",
-    },
-  })
+export default Plugin.define({
+  id: "generic-provider",
+  async setup(ctx) {
+    console.log("Generic provider plugin loaded.")
 
-  return {
-    config: async (cfg) => {
-      cfg.provider ??= {}
-      // TODO: find providers by existing configuration e.g. npm package or extra config key
-      const provider = cfg.provider["generic"] ?? {}
-      // TODO: use configured upstream url(s)
-      const providerOptions = provider.options ?? {}
-      const baseUrl = providerOptions.baseURL ?? BASE_URL
-      cfg.provider["generic"] = {
-        ...provider,
-        name: provider.name ?? "Generic Provider",
-        npm: provider.npm ?? "@ai-sdk/openai-compatible",
-        options: {
+    const models = await probeModels(BASE_URL)
+
+    await ctx.provider.transform((editor) => {
+      editor.update("generic", async (provider) => {
+        const providerOptions = provider.options ?? {}
+        const baseUrl = BASE_URL
+
+        provider.name = "Generic Provider"
+        provider.package = "@opencode/ai/providers/openai-compatible"
+        provider.options = {
           ...providerOptions,
           baseURL: baseUrl,
-        },
-        models: await probeModels(ctx, baseUrl),
-      }
-
-      await ctx.client.app.log({
-        body: {
-          service: "generic-provider",
-          level: "debug",
-          message: `Generic provider configuration loaded: ${JSON.stringify(cfg.provider["generic"])}`,
-        },
+        }
       })
-    },
-  }
-}
+
+      editor.models.set("generic", models)
+
+      console.log(`Generic provider configuration loaded: ${JSON.stringify(editor.get("generic"))}`)
+    })
+  },
+});
