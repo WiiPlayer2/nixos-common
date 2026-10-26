@@ -25,52 +25,56 @@ in
             { Ref.Name = "kiryu"; }
             { Ref.Name = "local"; }
           ];
-          auto.Group.Providers = [
-            # {
-            #   Pipeline = {
-            #     Root.Steps = [
-            #       {
-            #         MapModels.Map = {
-            #           title.Target = "claude-sonnet-4-6";
-            #           coding.Target = "claude-opus-4-6";
-            #         };
-            #       }
-            #       {
-            #         ModelTemplate.Name = "{{Id}} @ Junie";
-            #       }
-            #     ];
-            #     Provider.Ref.Name = "junie";
-            #   };
-            # }
-            {
-              Pipeline = {
-                Root.Steps = [
-                  {
-                    MapModels.Map = {
-                      title.Target = "qwen3.5-0.8b";
-                      coding.Target = "qwen3.8-27b_q2";
-                    };
-                  }
-                ];
-                Provider.Ref.Name = "local-group";
-              };
-            }
-          ];
+          # auto.Group.Providers = [
+          #   # {
+          #   #   Pipeline = {
+          #   #     Root.Steps = [
+          #   #       {
+          #   #         MapModels.Map = {
+          #   #           title.Target = "claude-sonnet-4-6";
+          #   #           coding.Target = "claude-opus-4-6";
+          #   #         };
+          #   #       }
+          #   #       {
+          #   #         ModelTemplate.Name = "{{Id}} @ Junie";
+          #   #       }
+          #   #     ];
+          #   #     Provider.Ref.Name = "junie";
+          #   #   };
+          #   # }
+          #   {
+          #     Pipeline = {
+          #       Root.Steps = [
+          #         {
+          #           MapModels.Map = {
+          #             title.Target = "qwen3.5-0.8b";
+          #             coding.Target = "qwen3.8-27b_q2";
+          #           };
+          #         }
+          #       ];
+          #       Provider.Ref.Name = "local-group";
+          #     };
+          #   }
+          # ];
         };
       };
       Root.Mux.Providers = {
-        auto.Ref.Name = "auto";
-        # auto-ponytail.InjectSkill = {
-        #   FilePath = skill-ponytail;
-        #   Provider.Pipeline = {
-        #     Root.Steps = [
-        #       {
-        #         ModelTemplate.Name = "{{#Name}}{{.}} (Ponytail){{/Name}}";
-        #       }
-        #     ];
-        #     Provider.Ref.Name = "auto";
-        #   };
-        # };
+        # auto.Ref.Name = "auto";
+        auto.Mux.Providers = {
+          assistant.Pipeline = {
+            Root.Steps = [
+              { ModelTemplate.Name = "Assistant: {{#Name}}{{.}}{{/Name}}{{^Name}}{{Id}}{{/Name}}"; }
+            ];
+            Provider.Group.Providers = [
+              {
+                Ref = {
+                  Name = "local";
+                  Route = "qwen3.5-9b_64k";
+                };
+              }
+            ];
+          };
+        };
         # local-group.Ref.Name = "local-group";
         # local-group-ponytail.InjectSkill = {
         #   FilePath = skill-ponytail;
