@@ -295,11 +295,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1792696576,
-        "narHash": "sha256-KH4VuPiye8JHyutPHB5rwZ2fu+TYm0x4FjAaNgxfJcs=",
+        "lastModified": 1793023824,
+        "narHash": "sha256-PbMaB32uzLhYYkdJkCRcDHoIJsqpYtCFpEI4A+J5WQ8=",
         "ref": "refs/heads/main",
-        "rev": "540414254236e20ff7c01ebdd482d98f7fff41c5",
-        "revCount": 95,
+        "rev": "d00f7e1dc847dfe2c409f33b6e659ea788646f2a",
+        "revCount": 102,
         "submodules": true,
         "type": "git",
         "url": "https://git.web.home.dark-link.info/delulu-tools/DeluluRouter.git"
