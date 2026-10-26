@@ -27,6 +27,7 @@ in
 {
   home.packages = with pkgs; [
     opencode-desktop
+    plannotator
   ];
 
   programs.opencode = {
@@ -60,7 +61,7 @@ in
     # '';
     agents = ../_agents;
     settings = {
-      plugin = [
+      plugins = [
         # "octto@latest" # almost never seems to invoke correctly; plannotator apparently has priority
         # {
         #   "name" = "ralph-wiggum";
