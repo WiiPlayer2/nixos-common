@@ -95,12 +95,17 @@ export default Plugin.define({
       console.log(`Generic provider configuration loaded: ${JSON.stringify(editor.get("generic"))}`)
     })
 
+    const firstRefresh = async () => {
+      timer = setInterval(() => void refresh().catch(console.error), 300_000) // 5 min
+      await refresh()
+    }
+
     const refresh = async () => {
       source.models = await probeModels(BASE_URL)
       await ctx.provider.reload()
     }
 
-    const timer = setTimeout(() => void refresh().catch(console.error), 0)
+    let timer = setTimeout(() => void firstRefresh().catch(console.error), 0)
     return () => clearTimeout(timer)
   },
 });

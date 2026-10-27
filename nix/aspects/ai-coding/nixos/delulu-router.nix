@@ -74,19 +74,21 @@ in
               }
             ];
           };
+          coding.Pipeline = {
+            Root.Steps = [
+              { ModelTemplate.Name = "Coding: {{#Name}}{{.}}{{/Name}}{{^Name}}{{Id}}{{/Name}}"; }
+            ];
+            Provider.Group.Providers = [
+              {
+                Ref = {
+                  Name = "local";
+                  Route = "qwen3.6-35b-a3b_64k";
+                };
+              }
+            ];
+          };
         };
-        # local-group.Ref.Name = "local-group";
-        # local-group-ponytail.InjectSkill = {
-        #   FilePath = skill-ponytail;
-        #   Provider.Pipeline = {
-        #     Root.Steps = [
-        #       {
-        #         ModelTemplate.Name = "{{#Name}}{{.}} (Ponytail){{/Name}}";
-        #       }
-        #     ];
-        #     Provider.Ref.Name = "local-group";
-        #   };
-        # };
+        local-group.Ref.Name = "local-group";
       };
     };
   };
