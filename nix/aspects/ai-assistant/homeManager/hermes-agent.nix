@@ -1,4 +1,14 @@
+{ lib, pkgs, ... }:
+let
+  inherit (lib)
+    getExe
+    ;
+in
 {
+  home.packages = with pkgs; [
+    simplex-chat
+  ];
+
   programs.hermes-agent = {
     enable = true;
     desktop.enable = true;
@@ -8,6 +18,10 @@
     enable = true;
     gateway.enable = true;
     backend.mode = "dashboard";
+
+    environment = {
+      SIMPLEX_WS_URL = "ws://127.0.0.1:5225";
+    };
 
     settings = {
       model = {
@@ -37,5 +51,10 @@
         "xurl"
       ];
     };
+  };
+
+  systemd.user.services.simplex-chat = {
+    Install.WantedBy = [ "default.target" ];
+    Service.ExecStart = "${getExe pkgs.simplex-chat} -p 5225";
   };
 }
