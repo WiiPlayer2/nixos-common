@@ -1,13 +1,31 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   inherit (lib)
     getExe
+    mkAfter
+    hm
     ;
 in
 {
-  home.packages = with pkgs; [
-    simplex-chat
-  ];
+  home = {
+    packages = with pkgs; [
+      simplex-chat
+    ];
+
+    activation.hermesAgentSetupMutable =
+      hm.dag.entryAfter
+        [
+          "hermesAgentSetup"
+        ]
+        ''
+          $DRY_RUN_CMD rm ${config.services.hermes-agent.hermesHome}/.managed
+        '';
+  };
 
   programs.hermes-agent = {
     enable = true;
@@ -24,6 +42,8 @@ in
     };
 
     settings = {
+      terminal.cwd = null;
+
       model = {
         default = "auto/assistant";
         base_url = "http://localhost:5000/v1";
@@ -53,8 +73,13 @@ in
     };
   };
 
-  systemd.user.services.simplex-chat = {
-    Install.WantedBy = [ "default.target" ];
-    Service.ExecStart = "${getExe pkgs.simplex-chat} -p 5225";
+  systemd.user.services = {
+    simplex-chat = {
+      Install.WantedBy = [ "default.target" ];
+      Service.ExecStart = "${getExe pkgs.simplex-chat} -p 5225";
+    };
+
+    hermes-agent.Service.Environment = mkAfter [ "HERMES_MANAGED=" ];
+    hermes-backend.Service.Environment = mkAfter [ "HERMES_MANAGED=" ];
   };
 }
