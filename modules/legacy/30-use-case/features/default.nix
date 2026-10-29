@@ -5,7 +5,6 @@
     ./docker.nix
     ./fingerprint.nix
     ./graphical.nix
-    ./luks.nix
     ./managed-password.nix
     ./metrics-exporter.nix
     ./secureboot.nix

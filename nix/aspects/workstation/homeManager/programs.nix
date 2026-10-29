@@ -6,6 +6,7 @@
     aria2
     ariang
     jdk21
+    paperweight-appimage
   ];
 
   xdg.autostart.entries = [

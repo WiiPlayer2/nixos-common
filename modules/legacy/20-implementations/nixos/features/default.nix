@@ -5,7 +5,6 @@
     ./docker.nix
     ./fingerprint.nix
     ./hypervisor.nix
-    ./luks-tpm2.nix
     ./managed-password.nix
     ./metrics-exporter.nix
     ./wakeonlan.nix
