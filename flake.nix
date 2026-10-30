@@ -144,9 +144,7 @@
       url = "github:winapps-org/winapps";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # opencode.url = "github:anomalyco/opencode/v1.18.27";
-    # opencode.url = "github:anomalyco/opencode/v1.18.31";
-    opencode.url = "github:anomalyco/opencode/dev";
+    opencode.url = "github:anomalyco/opencode/v2.2.3";
     hermes-agent = {
       url = "github:NousResearch/hermes-agent/v0.22.2";
       inputs.nixpkgs.follows = "nixpkgs";
