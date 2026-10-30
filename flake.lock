@@ -272,11 +272,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792947312,
-        "narHash": "sha256-nFci1/6F6WumvD7LfrnMRcUN7rFsifoBS3MzHbjTLaY=",
+        "lastModified": 1793366234,
+        "narHash": "sha256-5d+hTz8lErErCJtyHYJO858PmWtd3zSY3LgCR7HeYYI=",
         "ref": "prototype2",
-        "rev": "5099b6b16d91a4a97161f52456f7af8422edc403",
-        "revCount": 47,
+        "rev": "8da959052a671ba8804d780cf9838a65053344f8",
+        "revCount": 48,
         "type": "git",
         "url": "https://git.web.home.dark-link.info/software-projects/DecentraNix.git"
       },
@@ -295,11 +295,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1793356506,
-        "narHash": "sha256-mru45KlueYTy50FF4ACaIxX0L5Il0GAanuR/KFKiguA=",
+        "lastModified": 1793367926,
+        "narHash": "sha256-UNvhiGAWZTQM7eBGBJ1L8nxv3QBR3w9LB4IAHSuPfyw=",
         "ref": "refs/heads/main",
-        "rev": "91d5cd2c509712a398b07578d2710e4445dc3438",
-        "revCount": 112,
+        "rev": "ff01c929878f72e73778a4ce874d44e011bd416d",
+        "revCount": 114,
         "submodules": true,
         "type": "git",
         "url": "https://git.web.home.dark-link.info/delulu-tools/DeluluRouter.git"
