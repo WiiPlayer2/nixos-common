@@ -1,0 +1,13 @@
+--- a/packages/desktop/script/build.ts	2026-10-30 14:29:52.534812894 +0100
++++ b/packages/desktop/script/build.ts	2026-10-30 14:29:52.540810415 +0100
+@@ -10,7 +10,9 @@
+ // beta the beta CLI, and prod fails.
+ const dir = path.resolve(import.meta.dir, "..")
+ 
+-const cli = path.resolve(dir, "../cli/dist")
++const cli = process.env.OPENCODE_CLI_DIST
++  ? path.resolve(process.env.OPENCODE_CLI_DIST)
++  : path.resolve(dir, "../cli/dist")
+ 
+ const channel = resolveChannel()
+ 
