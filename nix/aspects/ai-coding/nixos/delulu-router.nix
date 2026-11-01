@@ -1,3 +1,28 @@
+let
+  mkPrefixedProvider =
+    {
+      namePrefix,
+      provider,
+    }:
+    {
+      Pipeline = {
+        Root.Steps = [
+          { ModelTemplate.Name = "${namePrefix}: {{#Name}}{{.}}{{/Name}}{{^Name}}{{Id}}{{/Name}}"; }
+        ];
+        Provider = provider;
+      };
+    };
+
+  mkAutoProvider =
+    {
+      namePrefix,
+      providers,
+    }:
+    mkPrefixedProvider {
+      inherit namePrefix;
+      provider.Group.Providers = providers;
+    };
+in
 {
   services.delulu-router = {
     enable = true;
@@ -12,37 +37,65 @@
             { Ref.Name = "kiryu"; }
             { Ref.Name = "local"; }
           ];
+
+          auto-local = {
+            Mux.Providers = {
+              assistant = mkAutoProvider {
+                namePrefix = "Local Assistant";
+                providers = [
+                  {
+                    Ref = {
+                      Name = "local";
+                      Route = "qwen3.5-9b_64k";
+                    };
+                  }
+                ];
+              };
+
+              coding = mkAutoProvider {
+                namePrefix = "Local Coding";
+                providers = [
+                  {
+                    Ref = {
+                      Name = "local";
+                      Route = "qwen3.6-35b-a3b_64k";
+                    };
+                  }
+                ];
+              };
+            };
+          };
         };
       };
       Root.Mux.Providers = {
         auto.Mux.Providers = {
-          assistant.Pipeline = {
-            Root.Steps = [
-              { ModelTemplate.Name = "Assistant: {{#Name}}{{.}}{{/Name}}{{^Name}}{{Id}}{{/Name}}"; }
-            ];
-            Provider.Group.Providers = [
+          local.Ref.Name = "auto-local";
+
+          assistant = mkAutoProvider {
+            namePrefix = "Assistant";
+            providers = [
               {
                 Ref = {
-                  Name = "local";
-                  Route = "qwen3.5-9b_64k";
+                  Name = "auto-local";
+                  Route = "assistant";
                 };
               }
             ];
           };
-          coding.Pipeline = {
-            Root.Steps = [
-              { ModelTemplate.Name = "Coding: {{#Name}}{{.}}{{/Name}}{{^Name}}{{Id}}{{/Name}}"; }
-            ];
-            Provider.Group.Providers = [
+
+          coding = mkAutoProvider {
+            namePrefix = "Coding";
+            providers = [
               {
                 Ref = {
-                  Name = "local";
-                  Route = "qwen3.6-35b-a3b_64k";
+                  Name = "auto-local";
+                  Route = "coding";
                 };
               }
             ];
           };
         };
+
         local-group.Ref.Name = "local-group";
       };
     };

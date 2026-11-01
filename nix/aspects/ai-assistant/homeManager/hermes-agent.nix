@@ -45,8 +45,18 @@ in
       terminal.cwd = null;
 
       model = {
-        default = "auto/assistant";
         base_url = "http://localhost:5000/v1";
+        default = "auto/assistant";
+        provider = "local";
+        api_mode = "chat_completions";
+      };
+
+      providers.local = {
+        name = "Local";
+        base_url = "http://localhost:5000/v1";
+        model = "auto/assistant";
+        discover_models = true;
+        api_mode = "chat_completions";
       };
 
       skills.disabled = [
