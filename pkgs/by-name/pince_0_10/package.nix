@@ -152,23 +152,28 @@ python3Packages.buildPythonApplication (finalAttrs: {
   ];
 
   installPhase = ''
-        runHook preInstall
+    runHook preInstall
 
-        mkdir -p $out/lib/pince/
-        cp -r GUI i18n libpince media tr AUTHORS COPYING COPYING.CC-BY PINCE.py THANKS $out/lib/pince/
+    mkdir -p $out/lib/pince/
+    cp -r GUI i18n libpince media tr AUTHORS COPYING COPYING.CC-BY PINCE.py THANKS $out/lib/pince/
 
-        mkdir -p $out/bin
-        cat > $out/bin/pince << EOF
+    mkdir -p $out/bin
+    cat > $out/bin/pince << EOF
     #!${stdenv.shell}
     if [ "\$(id -u)" -eq 0 ]; then
       exec $out/lib/pince/PINCE.py "\$@"
-    else
+    elif which pkexec; then
+      exec pkexec env DISPLAY=\$DISPLAY WAYLAND_DISPLAY=\$WAYLAND_DISPLAY XDG_SESSION_TYPE=\$XDG_SESSION_TYPE XDG_RUNTIME_DIR=\$XDG_RUNTIME_DIR $out/lib/pince/PINCE.py "\$@"
+    elif which sudo; then
       exec sudo -E $out/lib/pince/PINCE.py "\$@"
+    else
+      echo "Must be run as root."
+      exit 1
     fi
     EOF
-        chmod +x $out/bin/pince
+    chmod +x $out/bin/pince
 
-        runHook postInstall
+    runHook postInstall
   '';
 
   postFixup = ''

@@ -340,6 +340,22 @@ in
         {
           window-rule = {
             match._props = {
+              app-id = "steam";
+              title = ''^Friends\ List$'';
+            };
+            open-floating = true;
+            default-floating-position._props = {
+              x = 10;
+              y = 10;
+              relative-to = "bottom-right";
+            };
+            default-column-width.fixed = 400;
+            default-window-height.fixed = 800;
+          };
+        }
+        {
+          window-rule = {
+            match._props = {
               app-id = "superproductivity";
               title = "Super Productivity Task Widget";
             };
