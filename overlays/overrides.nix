@@ -101,5 +101,14 @@ in
           See https://github.com/cyanreg/cyanrip/issues/142
         '';
       };
+
+      pince = patchPinned {
+        pkg = prev.pince;
+        version = " 0.4.5";
+        overrideFn = _: final.pince_0_10;
+        extraInfo = ''
+          The version in nixpkgs is very old and doesn't work correctly.
+        '';
+      };
     };
 }

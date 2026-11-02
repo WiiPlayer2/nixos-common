@@ -152,15 +152,23 @@ python3Packages.buildPythonApplication (finalAttrs: {
   ];
 
   installPhase = ''
-    runHook preInstall
+        runHook preInstall
 
-    mkdir -p $out/lib/pince/
-    cp -r GUI i18n libpince media tr AUTHORS COPYING COPYING.CC-BY PINCE.py THANKS $out/lib/pince/
+        mkdir -p $out/lib/pince/
+        cp -r GUI i18n libpince media tr AUTHORS COPYING COPYING.CC-BY PINCE.py THANKS $out/lib/pince/
 
-    mkdir -p $out/bin
-    ln -s $out/lib/pince/PINCE.py $out/bin/pince
+        mkdir -p $out/bin
+        cat > $out/bin/pince << EOF
+    #!${stdenv.shell}
+    if [ "\$(id -u)" -eq 0 ]; then
+      exec $out/lib/pince/PINCE.py "\$@"
+    else
+      exec sudo -E $out/lib/pince/PINCE.py "\$@"
+    fi
+    EOF
+        chmod +x $out/bin/pince
 
-    runHook postInstall
+        runHook postInstall
   '';
 
   postFixup = ''

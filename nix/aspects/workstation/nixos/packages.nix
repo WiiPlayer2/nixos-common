@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    # pince # currently broken and out-of-date
+    pince
     appimage-run
   ];
 
