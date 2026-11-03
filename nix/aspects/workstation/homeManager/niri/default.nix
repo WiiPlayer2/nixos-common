@@ -339,10 +339,18 @@ in
         }
         {
           window-rule = {
+            match._props.app-id = "steam";
+            exclude._props.title = ''^notificationtoasts_\d+_desktop$'';
+            open-on-workspace = "games";
+          };
+        }
+        {
+          window-rule = {
             match._props = {
               app-id = "steam";
               title = ''^Friends\ List$'';
             };
+            open-on-workspace = "games";
             open-floating = true;
             default-floating-position._props = {
               x = 10;
@@ -384,6 +392,36 @@ in
               blur = false;
             };
             opacity = 0.95;
+          };
+        }
+        {
+          window-rule = {
+            match._props.app-id = "rocket-chat";
+            open-on-workspace = "comms";
+          };
+        }
+        {
+          window-rule = {
+            match._props.app-id = "discord";
+            open-on-workspace = "comms";
+          };
+        }
+        {
+          window-rule = {
+            match._props.app-id = "com.ayugram.desktop";
+            open-on-workspace = "comms";
+          };
+        }
+        {
+          window-rule = {
+            match._props.app-id = "fluffychat";
+            open-on-workspace = "comms";
+          };
+        }
+        {
+          window-rule = {
+            match._props.app-id = "thunderbird";
+            open-on-workspace = "comms";
           };
         }
       ];
