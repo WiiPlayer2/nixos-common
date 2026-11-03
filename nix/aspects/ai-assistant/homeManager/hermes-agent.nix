@@ -1,31 +1,23 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 let
   inherit (lib)
-    getExe
     mkAfter
     hm
     ;
 in
 {
-  home = {
-    packages = with pkgs; [
-      simplex-chat
-    ];
-
-    activation.hermesAgentSetupMutable =
-      hm.dag.entryAfter
-        [
-          "hermesAgentSetup"
-        ]
-        ''
-          $DRY_RUN_CMD rm ${config.services.hermes-agent.hermesHome}/.managed
-        '';
-  };
+  home.activation.hermesAgentSetupMutable =
+    hm.dag.entryAfter
+      [
+        "hermesAgentSetup"
+      ]
+      ''
+        $DRY_RUN_CMD rm ${config.services.hermes-agent.hermesHome}/.managed
+      '';
 
   programs.hermes-agent = {
     enable = true;
@@ -36,10 +28,6 @@ in
     enable = true;
     gateway.enable = true;
     backend.mode = "dashboard";
-
-    environment = {
-      SIMPLEX_WS_URL = "ws://127.0.0.1:5225";
-    };
 
     settings = {
       terminal.cwd = null;
@@ -84,11 +72,6 @@ in
   };
 
   systemd.user.services = {
-    simplex-chat = {
-      Install.WantedBy = [ "default.target" ];
-      Service.ExecStart = "${getExe pkgs.simplex-chat} -p 5225";
-    };
-
     hermes-agent.Service.Environment = mkAfter [ "HERMES_MANAGED=" ];
     hermes-backend.Service.Environment = mkAfter [ "HERMES_MANAGED=" ];
   };
