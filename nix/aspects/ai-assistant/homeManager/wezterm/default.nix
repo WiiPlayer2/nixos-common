@@ -1,3 +1,4 @@
+{ lib, ... }:
 {
-  programs.wezterm.extraConfig = builtins.readFile ./hermes-agent-domain.lua;
+  programs.wezterm.extraConfig = lib.mkAfter (builtins.readFile ./hermes-agent-domain.lua);
 }
