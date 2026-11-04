@@ -1,0 +1,145 @@
+diff --git a/src/components/Settings.tsx b/src/components/Settings.tsx
+index 7c8bf64..a749687 100644
+--- a/src/components/Settings.tsx
++++ b/src/components/Settings.tsx
+@@ -13,12 +13,16 @@ import { readConfig, writeConfig } from '../lib/config'
+ import { BranchIcon } from './icons'
+ 
+ const DEFAULT_MODEL = 'anthropic/claude-sonnet-4.5'
++const DEFAULT_ENDPOINT_URL = 'https://openrouter.ai/api/v1/chat/completions'
++const DEFAULT_NAMING_MODEL = 'anthropic/claude-haiku-4.5'
+ 
+ export function Settings() {
+   const showAI = useBrainstormStore((s) => s.settingsAIOpen)
+   const setShowAI = useBrainstormStore((s) => s.setSettingsAIOpen)
+   const [apiKey, setApiKey] = useState('')
+   const [model, setModel] = useState(DEFAULT_MODEL)
++  const [namingModel, setNamingModel] = useState(DEFAULT_NAMING_MODEL)
++  const [endpointUrl, setEndpointUrl] = useState(DEFAULT_ENDPOINT_URL)
+   const [branchCount, setBranchCount] = useState(DEFAULT_BRANCH_COUNT)
+   const [systemPrompt, setSystemPrompt] = useState<string>(DEFAULT_SYSTEM_PROMPT)
+ 
+@@ -26,6 +30,8 @@ export function Settings() {
+     const c = readConfig()
+     setApiKey(c.apiKey || '')
+     setModel(c.model || DEFAULT_MODEL)
++    setNamingModel(c.namingModel || DEFAULT_NAMING_MODEL)
++    setEndpointUrl(c.endpointUrl || DEFAULT_ENDPOINT_URL)
+     const n = Number(c.branchCount)
+     setBranchCount(Number.isFinite(n) && n > 0 ? n : DEFAULT_BRANCH_COUNT)
+     setSystemPrompt(
+@@ -36,7 +42,7 @@ export function Settings() {
+   }, [])
+ 
+   function saveConfig() {
+-    writeConfig({ apiKey, model, branchCount, systemPrompt })
++    writeConfig({ apiKey, model, namingModel, endpointUrl, branchCount, systemPrompt })
+     setShowAI(false)
+   }
+ 
+@@ -168,6 +174,24 @@ export function Settings() {
+             className="text-ui bg-surface-soft rounded-lg px-3 py-2 w-full outline-none text-ink placeholder:text-ink/40"
+           />
+ 
++          <label className="text-body text-ink/60 mt-1">Endpoint URL</label>
++          <input
++            type="text"
++            value={endpointUrl}
++            onChange={(e) => setEndpointUrl(e.target.value)}
++            placeholder="https://openrouter.ai/api/v1/chat/completions"
++            className="text-ui bg-surface-soft rounded-lg px-3 py-2 w-full outline-none text-ink placeholder:text-ink/40"
++          />
++
++          <label className="text-body text-ink/60 mt-1">Naming model</label>
++          <input
++            type="text"
++            value={namingModel}
++            onChange={(e) => setNamingModel(e.target.value)}
++            placeholder="anthropic/claude-haiku-4.5"
++            className="text-ui bg-surface-soft rounded-lg px-3 py-2 w-full outline-none text-ink placeholder:text-ink/40"
++          />
++
+           <label className="text-body text-ink/60 mt-1">System prompt</label>
+           <div className="flex gap-1.5 flex-wrap">
+             {(Object.keys(SYSTEM_PROMPT_PRESETS) as PresetKey[]).map((key) => (
+diff --git a/src/lib/ai.ts b/src/lib/ai.ts
+index 36434eb..569be32 100644
+--- a/src/lib/ai.ts
++++ b/src/lib/ai.ts
+@@ -1,9 +1,9 @@
+ import { DEFAULT_BRANCH_COUNT, DEFAULT_SYSTEM_PROMPT } from './prompts'
+ import { AiError } from './errors'
+ 
+-const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
+ const RETRY_WALL_CLOCK_MS = 20_000
+-const NAMING_MODEL = 'anthropic/claude-haiku-4.5'
++const DEFAULT_ENDPOINT_URL = 'https://openrouter.ai/api/v1/chat/completions'
++const DEFAULT_NAMING_MODEL = 'anthropic/claude-haiku-4.5'
+ const DEBUG = import.meta.env.VITE_HENRO_DEBUG === 'true'
+ 
+ function getConfig() {
+@@ -21,6 +21,14 @@ function getConfig() {
+       : DEFAULT_SYSTEM_PROMPT
+   const envKey = import.meta.env.VITE_OPENROUTER_API_KEY as string | undefined
+   return {
++    endpointUrl:
++      typeof parsed.endpointUrl === 'string' && parsed.endpointUrl.trim()
++        ? parsed.endpointUrl.trim().replace(/\/$/, '')
++        : DEFAULT_ENDPOINT_URL,
++    namingModel:
++      typeof parsed.namingModel === 'string' && parsed.namingModel.trim()
++        ? parsed.namingModel.trim()
++        : DEFAULT_NAMING_MODEL,
+     apiKey: (parsed.apiKey as string) || envKey || '',
+     model: (parsed.model as string) || 'anthropic/claude-sonnet-4.5',
+     branchCount:
+@@ -36,7 +44,7 @@ async function chat(
+   modelOverride?: string,
+   label = 'chat',
+ ): Promise<string> {
+-  const { apiKey, model: configModel } = getConfig()
++  const { apiKey, model: configModel, endpointUrl } = getConfig()
+   const model = modelOverride || configModel
+ 
+   if (!apiKey) {
+@@ -58,7 +66,7 @@ async function chat(
+     for (let attempt = 0; attempt <= maxRetries; attempt++) {
+       let res: Response
+       try {
+-        res = await fetch(OPENROUTER_URL, {
++        res = await fetch(endpointUrl, {
+           method: 'POST',
+           headers: {
+             Authorization: `Bearer ${apiKey}`,
+@@ -218,6 +226,7 @@ export async function compose(texts: string[]): Promise<string> {
+ }
+ 
+ export async function generateProjectName(seed: string): Promise<string> {
++  const { namingModel } = getConfig()
+   const raw = await chat(
+     [
+       {
+@@ -230,7 +239,7 @@ export async function generateProjectName(seed: string): Promise<string> {
+         content: `Seed: ${seed}`,
+       },
+     ],
+-    NAMING_MODEL,
++    namingModel,
+     'project-name',
+   )
+ 
+diff --git a/src/lib/config.ts b/src/lib/config.ts
+index bc6c928..10d2fab 100644
+--- a/src/lib/config.ts
++++ b/src/lib/config.ts
+@@ -3,8 +3,10 @@ import { useSyncExternalStore } from 'react'
+ export const CONFIG_KEY = 'openrouter-config'
+ 
+ export type OpenRouterConfig = {
++  endpointUrl?: string
+   apiKey: string
+   model?: string
++  namingModel?: string
+   branchCount?: number
+   systemPrompt?: string
+ }

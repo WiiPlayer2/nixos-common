@@ -21,6 +21,8 @@ buildNpmPackage (finalAttrs: {
     cp ${./package-lock.json} package-lock.json
   '';
 
+  patches = [ ./01-custom-endpoint.patch ];
+
   npmDepsHash = "sha256-AW8LatGd8jDzlhQs5AP6iYYSZz9lnlUDXoU9UkBo8Ws=";
 
   # Static site, no installable node package
