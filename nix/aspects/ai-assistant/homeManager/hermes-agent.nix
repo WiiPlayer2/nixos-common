@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 let
@@ -28,6 +29,15 @@ in
     enable = true;
     gateway.enable = true;
     backend.mode = "dashboard";
+
+    extraPlugins = [
+      (pkgs.fetchFromGitHub {
+        owner = "BkashJEE";
+        repo = "hermes-bot-forge";
+        rev = "v0.22.0";
+        hash = "sha256-kwXieTQqbvXZZ3S+a3/IuBGsDqD/NmSJs+SlhVKbyW4=";
+      })
+    ];
 
     settings = {
       terminal.cwd = null;
