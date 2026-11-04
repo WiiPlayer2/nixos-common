@@ -23,6 +23,17 @@ buildNpmPackage (finalAttrs: {
 
   patches = [ ./01-custom-endpoint.patch ];
 
+  # Build-time defaults for the endpoint URL and naming model. Empty = use the
+  # OpenRouter defaults baked into the source. Override per-host via the
+  # overlays.overrides.henro entry (see overlays/overrides.nix).
+  env = {
+    VITE_ENDPOINT_URL = finalAttrs.endpointUrl or "";
+    VITE_NAMING_MODEL = finalAttrs.namingModel or "";
+  };
+
+  endpointUrl = "";
+  namingModel = "";
+
   npmDepsHash = "sha256-AW8LatGd8jDzlhQs5AP6iYYSZz9lnlUDXoU9UkBo8Ws=";
 
   # Static site, no installable node package

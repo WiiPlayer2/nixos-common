@@ -110,5 +110,15 @@ in
           The version in nixpkgs is very old and doesn't work correctly.
         '';
       };
+
+      henro = prev.henro.overrideAttrs (
+        finalAttrs: prevAttrs: {
+          # Bake a custom endpoint URL and naming model into the built static
+          # site. Empty (the default) keeps the OpenRouter defaults. Per-browser
+          # overrides still work via the Settings UI at runtime.
+          endpointUrl = prevAttrs.endpointUrl or "";
+          namingModel = prevAttrs.namingModel or "";
+        }
+      );
     };
 }
