@@ -4,6 +4,8 @@
   fetchFromGitHub,
   replaceVars,
   nix-update-script,
+  copyDesktopItems,
+  makeDesktopItem,
 
   zig_0_16,
   makeWrapper,
@@ -77,6 +79,7 @@ python3Packages.buildPythonApplication (finalAttrs: {
     qt6.qttools
     qt6.wrapQtAppsHook
     makeWrapper
+    copyDesktopItems
   ];
 
   buildInputs = [
@@ -173,12 +176,27 @@ python3Packages.buildPythonApplication (finalAttrs: {
     EOF
     chmod +x $out/bin/pince
 
+    mkdir -p $out/share/icons/hicolor/512x512/apps
+    ln -s $out/lib/pince/media/logo/ozgurozbek/pince_appimage.png $out/share/icons/hicolor/512x512/apps/pince.png
+
     runHook postInstall
   '';
 
   postFixup = ''
     wrapPythonProgramsIn "$out/lib/pince" "$out ''${pythonPath[*]}"
   '';
+
+  desktopItems = [
+    (makeDesktopItem {
+      name = "pince";
+      desktopName = "Pince";
+      icon = "pince";
+      categories = [
+        "Game"
+      ];
+      exec = "pince";
+    })
+  ];
 
   passthru = {
     updateScript = nix-update-script { };
