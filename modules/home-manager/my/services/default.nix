@@ -2,6 +2,5 @@
 {
   imports = [
     ./nextcloud-client.nix
-    ./picom.nix
   ];
 }

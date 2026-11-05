@@ -16,11 +16,6 @@ in
     notification = false;
   }
   # {
-  #   command = "systemctl --user restart picom";
-  #   # notification = false;
-  #   always = true;
-  # }
-  # {
   #   command = "env XDG_SESSION_DESKTOP=i3 variety";
   #   notification = false;
   # }

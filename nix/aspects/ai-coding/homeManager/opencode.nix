@@ -40,7 +40,7 @@ in
         "4090"
         "--print-logs"
         "--log-level"
-        "INFO"
+        "info"
       ];
     };
     skills = {
