@@ -13,7 +13,17 @@ with lib;
           ];
           leftWidgets = [
             "bongoCat"
-            "workspaceSwitcher"
+            {
+              id = "workspaceSwitcher";
+              enabled = true;
+              showWorkspaceApps = true;
+              showWorkspaceName = true;
+              showWorkspaceIndex = false;
+              showOccupiedWorkspacesOnly = true;
+              workspaceIndicatorCompact = false;
+              workspaceIndicatorRoundness = -1;
+              workspaceIndicatorStyle = "pills";
+            }
             "musicLyrics"
           ];
           centerWidgets = [
@@ -32,7 +42,16 @@ with lib;
             "dankDiskUsage"
             "notificationButton"
             "privacyIndicator"
-            "controlCenterButton"
+            {
+              id = "controlCenterButton";
+              enabled = true;
+              showBluetoothIcon = false;
+              showAudioIcon = false;
+              showAudioPercent = false;
+              showBatteryIcon = true;
+              showPrinterIcon = true;
+              showIdleInhibitorIcon = true;
+            }
           ];
           openOnOverview = true;
           transparency = 0.8;
@@ -81,29 +100,51 @@ with lib;
       controlCenterShowPrinterIcon = true;
       controlCenterWidgets =
         let
-          widget = id: width: {
-            inherit id width;
-            enabled = true;
-          };
+          widget =
+            id: col: row: w: h:
+            widget' id col row w h { };
+          widget' =
+            id: col: row: w: h: attrs:
+            {
+              inherit
+                id
+                col
+                row
+                w
+                h
+                ;
+              enabled = true;
+            }
+            // attrs;
         in
         [
-          (widget "idleInhibitor" 25)
-          (widget "nightMode" 25)
-          (widget "darkMode" 25)
-          (widget "battery" 25)
+          (widget "user" 0 0 5 1)
+          (widget "settings" 5 0 1 1)
+          (widget "lock" 6 0 1 1)
+          (widget "power" 7 0 1 1)
 
-          (widget "volumeSlider" 50)
-          (widget "brightnessSlider" 50)
+          (widget "idleInhibitor" 0 1 2 1)
+          (widget "nightMode" 2 1 2 1)
+          (widget "darkMode" 4 1 2 1)
+          (widget' "battery" 6 1 2 1 {
+            batteryStyle = "solid";
+            batteryColorMode = "theme";
+          })
 
-          (widget "wifi" 25)
-          (widget "builtin_vpn" 50)
-          (widget "bluetooth" 25)
+          (widget "volumeSlider" 0 2 4 1)
+          (widget "brightnessSlider" 4 2 4 1)
 
-          (widget "builtin_cups" 50)
-          (widget "plugin_nextBootSelector" 50)
+          (widget "wifi" 0 3 2 1)
+          (widget "builtin_vpn" 2 3 4 1)
+          (widget "bluetooth" 6 3 2 1)
 
-          (widget "audioOutput" 50)
-          (widget "audioInput" 50)
+          (widget "builtin_cups" 0 4 4 1)
+          (widget "plugin_nextBootSelector" 4 4 4 1)
+
+          (widget "audioOutput" 0 5 4 1)
+          (widget "audioInput" 4 5 4 1)
+
+          (widget "edit" 7 6 1 1)
         ];
 
       useAutoLocation = true; # TODO: maybe hardcode location

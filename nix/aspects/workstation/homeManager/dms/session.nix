@@ -2,6 +2,9 @@
 with lib;
 {
   programs.dank-material-shell.session = {
+    # TODO:: maybe move to styling module
+    wallpaperPath = config.stylix.image;
+
     # Gamma Control
     nightModeEnabled = true;
     nightModeTemperature = 2500;
