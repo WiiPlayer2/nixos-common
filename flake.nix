@@ -158,6 +158,7 @@
       url = "github:TASEmulators/BizHawk/2.11.1"; # Archipelago in nixpkgs only supports up to 2.10
       flake = false;
     };
+    # nixpkgs-bizhawk.url = "github:NixOS/nixpkgs/nixos-26.05";
     import-tree.url = "github:vic/import-tree";
     inhibridge.url = "git+https://codeberg.org/Scrumplex/inhibridge";
     flake-aspects.url = "git+https://tangled.org/oeiuwq.com/flake-aspects";

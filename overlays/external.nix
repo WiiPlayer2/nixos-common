@@ -22,7 +22,7 @@ in
       bizhawk =
         (import inputs.bizhawk {
           system = prev.stdenv.hostPlatform.system;
-          pkgs = final;
+          # pkgs = inputs.nixpkgs-bizhawk.legacyPackages.${prev.stdenv.hostPlatform.system};
         }).emuhawk;
 
       # again no overlay T_T

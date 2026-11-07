@@ -1,3 +1,4 @@
+# TODO: migrate away from gtk2
 {
   fetchzip,
   stdenv,
