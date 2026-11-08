@@ -301,7 +301,7 @@ in
         {
           window-rule = {
             match._props = {
-              app-id = "firefox$";
+              app-id = "^firefox$|^FFPWA-";
               title = "^Picture-in-Picture$";
             };
             open-floating = true;
@@ -310,7 +310,7 @@ in
         {
           window-rule = {
             match._props = {
-              app-id = "firefox$";
+              app-id = "^firefox$|^FFPWA-";
             };
             open-maximized = true;
           };
@@ -422,6 +422,15 @@ in
           window-rule = {
             match._props.app-id = "thunderbird";
             open-on-workspace = "comms";
+          };
+        }
+        {
+          window-rule = {
+            match._props = {
+              app-id = ''^org\.keepassxc\.KeePassXC$'';
+              title = ''^KeePassXC\ -\ Passkey\ credentials$'';
+            };
+            open-floating = true;
           };
         }
       ];
