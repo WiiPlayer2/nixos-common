@@ -428,7 +428,7 @@ in
           window-rule = {
             match._props = {
               app-id = ''^org\.keepassxc\.KeePassXC$'';
-              title = ''^KeePassXC\ -\ Passkey\ credentials$'';
+              title = ''^KeePassXC\ -\ (Passkey\ credentials|Browser\ Access\ Request)$'';
             };
             open-floating = true;
           };
