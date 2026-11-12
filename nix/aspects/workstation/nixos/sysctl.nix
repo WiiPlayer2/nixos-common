@@ -1,5 +1,5 @@
 {
   boot = {
-    kernel.sysctl."fs.inotify.max_user_watches" = 524288 * 2;
+    kernel.sysctl."fs.inotify.max_user_watches" = 2097152;
   };
 }
