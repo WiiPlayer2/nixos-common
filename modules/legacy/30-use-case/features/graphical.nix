@@ -8,9 +8,6 @@ in
     graphical = {
       enable = mkEnableOption "Graphical environment";
       drivers = {
-        displaylink = {
-          enable = mkEnableOption "DisplayLink driver";
-        };
         nvidia = {
           enable = mkEnableOption "Proprietary NVidia driver";
         };
