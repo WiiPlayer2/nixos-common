@@ -49,6 +49,7 @@ with lib;
       dankPomodoroTimer = installAndEnable;
       dankStickerSearch = installAndEnable;
       dankTodo = installAndEnable;
+      discordVoice = installAndEnable;
       dockerManager = installAndEnable;
       gitmojiLauncher = installAndEnable;
       homeAssistantMonitor = installAndEnable;
